@@ -128,6 +128,8 @@ footer{margin-top:30px;font-size:12px;color:var(--muted);line-height:1.6}
 .sched li.due{color:var(--gold)}
 .sched li.missed .box{border-color:var(--alert)}
 .sched li.missed{color:var(--alert)}
+/* Long past and not actionable. Opening the app at 4pm should not be a wall of red. */
+.sched li.gone{opacity:.42}
 .pat li{display:flex;gap:10px;align-items:baseline;padding:10px 0;
   border-bottom:1px solid var(--line);font-size:14px;color:var(--muted)}
 .pat b{color:var(--paper);font-weight:600;font-variant-numeric:tabular-nums;
@@ -405,6 +407,28 @@ const WALK_PER_MONTH = 5.0;
 const PLAY = { min:15, max:30, perDay:3 };
 const BACKDATE_MIN = [0, 15, 30, 60, 90, 120, 150, 180, 210, 240];
 const SEED_MEMBERS = [{name:"Ariel", color:"#E8B04B"}, {name:"Shira", color:"#5FBF8F"}, {name:"Chayim", color:"#7FA6E8"}];
+const PLAN_MISSED_WINDOW = 120;
+const PLAN = [
+  ["p01","04:40","Out, then Walk 1","Walk","N/A",10],
+  ["p02","06:15","Out, in from the gym","Potty Trip","N/A",5,"Out"],
+  ["p03","07:15","Out after your call","Potty Trip","N/A",5,"Out"],
+  ["p04","07:20","Breakfast","Meal","N/A",0],
+  ["p05","07:40","Out after breakfast","Potty Trip","N/A",5],
+  ["p06","08:10","Play 1 (20 min), then out","Play","N/A",20],
+  ["p07","09:45","Potty trip","Potty Trip","N/A",5],
+  ["p08","11:30","Lunch","Meal","N/A",0],
+  ["p09","11:50","Out after lunch","Potty Trip","N/A",5],
+  ["p10","12:05","Play 2 (20 min), then out","Play","N/A",20],
+  ["p11","13:15","Out before you leave","Potty Trip","N/A",5,"Out"],
+  ["p12","16:00","Mid-block break","Potty Trip","N/A",10,"Afternoon visit"],
+  ["p13","18:30","Out, in the door","Potty Trip","N/A",5,"Out"],
+  ["p14","18:45","Dinner","Meal","N/A",0],
+  ["p15","19:05","Walk 2","Walk","N/A",10],
+  ["p16","19:30","Play 3 (20 min), then out","Play","N/A",20],
+  ["p17","20:00","Pick up the water bowl","Water Up","N/A",0],
+  ["p18","20:30","Potty trip","Potty Trip","N/A",5],
+  ["p19","22:00","Last call, then crate","Potty Trip","N/A",5]
+];
 const GYM_MINUTES = 75;
 const GYM_DEFAULT = {0:null, 1:null, 2:null, 3:null, 4:null, 5:null, 6:null};
 const YOMTOV = [
@@ -897,27 +921,7 @@ function todays(){ const k=dayKey(new Date());
   return events.filter(e=>e.event!=='Join' && dayKey(new Date(e.ts))===k); }
 
 /* ---- schedule ---- */
-const PLAN = [
-  ['p1','04:40','Out, then Walk 1','Walk','N/A',10],
-  ['p2','06:15','Out, in from the gym','Potty Trip','N/A',5,'Out'],
-  ['p3','07:15','Out after your call','Potty Trip','N/A',5,'Out'],
-  ['p4','07:20','Breakfast','Meal','N/A',0],
-  ['p5','07:40','Out after breakfast','Potty Trip','N/A',5],
-  ['p5b','08:10','Play 1 (20 min), then out','Play','N/A',20],
-  ['p6','09:45','Potty trip','Potty Trip','N/A',5],
-  ['p7','11:30','Lunch','Meal','N/A',0],
-  ['p8','11:50','Out after lunch','Potty Trip','N/A',5],
-  ['p8b','12:05','Play 2 (20 min), then out','Play','N/A',20],
-  ['p9','13:15','Out before you leave','Potty Trip','N/A',5,'Out'],
-  ['p10','16:00','Mid-block break','Potty Trip','N/A',10,'Afternoon visit'],
-  ['p11','18:30','Out, in the door','Potty Trip','N/A',5,'Out'],
-  ['p12','18:45','Dinner','Meal','N/A',0],
-  ['p13','19:05','Walk 2','Walk','N/A',10],
-  ['p13b','19:30','Play 3 (20 min), then out','Play','N/A',20],
-  ['p14','20:00','Pick up the water bowl','Water Up','N/A',0],
-  ['p15','20:30','Potty trip','Potty Trip','N/A',5],
-  ['p16','22:00','Last call, then crate','Potty Trip','N/A',5],
-];
+/* PLAN and PLAN_MISSED_WINDOW are generated from config.schedule.daily. */
 function minsNow(){ const d=new Date(); return d.getHours()*60+d.getMinutes(); }
 /* Which plan rows count as done today.
    Explicit taps win first, then anything you logged with the normal buttons is matched
@@ -1378,7 +1382,8 @@ function render(){
     const done=doneIds.has(id);
     if(done) li.className='done';
     else if(firstOpen && firstOpen[0]===id) li.className='due';
-    else if(toMins(time)<now-30) li.className='missed';
+    else if(toMins(time)<now-30 && toMins(time)>=now-PLAN_MISSED_WINDOW) li.className='missed';
+    else if(toMins(time)<now-30) li.className='gone';
     const [h,m]=time.split(':').map(Number);
     const ap=h>=12?'PM':'AM', h12=h%12||12;
     li.innerHTML='<span class="box">&#10003;</span><span class="t">'+h12+':'+pad(m)+' '+ap+
