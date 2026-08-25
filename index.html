@@ -34,7 +34,24 @@ h1 img{width:30px;height:30px;border-radius:50%;object-fit:cover;flex:none;
   border:1.5px solid var(--gold)}
 h2{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);
   font-weight:600;margin:26px 0 10px}
-.wrap{max-width:520px;margin:0 auto}
+.wrap{max-width:520px;margin:0 auto;padding-bottom:calc(78px + env(safe-area-inset-bottom))}
+
+/* ---- tabs ----
+   Logging is what happens twenty times a day, so it owns the first screen and the
+   once-a-week panels move off it entirely. */
+.tab{display:none}
+.tab.on{display:block}
+.tab > h2:first-child{margin-top:18px}
+#tabbar{position:fixed;left:0;right:0;bottom:0;z-index:15;display:flex;
+  background:rgba(20,26,46,.94);backdrop-filter:blur(12px);
+  border-top:1px solid var(--line);
+  padding:6px 4px calc(6px + env(safe-area-inset-bottom))}
+#tabbar button{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;
+  background:transparent;border:0;padding:8px 2px 6px;border-radius:12px;
+  color:var(--muted);font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+  font-weight:600;font-family:inherit}
+#tabbar button .ti{font-size:13px;line-height:1}
+#tabbar button.on{color:var(--gold)}
 
 /* ---- signature: the ceiling clock ---- */
 .clock{position:relative;background:var(--raised);border:1px solid var(--line);
@@ -225,6 +242,8 @@ footer{margin-top:30px;font-size:12px;color:var(--muted);line-height:1.6}
   <div class="verdict" id="verdict">Log her first outing to start the clock.</div>
 </div>
 
+<section class="tab on" id="tab-log">
+
 <h2>When did it happen</h2>
 <div class="when" id="when"></div>
 <p class="whenhint" id="whenhint">Every tap below stamps the real clock time and works out
@@ -246,12 +265,6 @@ the gaps for you.</p>
   <button class="b-acc" onclick="logPoop('Indoor Accident')">Poop<span class="hint">inside</span></button>
 </div>
 
-<div id="ownerOnly">
-<h2>Your week</h2>
-<ul class="week" id="week"></ul>
-<p class="playnote" id="gymnote"></p>
-</div>
-
 <h2>Other</h2>
 <div class="grid">
   <button class="small" onclick="log('Meal','N/A')">Meal</button>
@@ -266,6 +279,10 @@ the gaps for you.</p>
 her. Always go straight out afterward, then crate her for a nap. An overtired puppy gets
 mouthy, not sleepy.</p>
 
+</section>
+
+<section class="tab" id="tab-day">
+
 <h2>Today</h2>
 <ul class="log" id="loglist"></ul>
 <div class="stat">
@@ -278,11 +295,21 @@ mouthy, not sleepy.</p>
 <h2 id="planHead">Today's plan &middot; tap to check off</h2>
 <ul class="sched" id="sched"></ul>
 
+</section>
+
+<section class="tab" id="tab-trends">
+
 <h2>What she actually does</h2>
 <ul class="pat" id="pat"></ul>
 
 <h2>Last 10 days</h2>
 <ul class="hist" id="hist"></ul>
+
+<div id="ownerOnly">
+<h2>Your week</h2>
+<ul class="week" id="week"></ul>
+<p class="playnote" id="gymnote"></p>
+</div>
 
 <h2>Data</h2>
 <div class="row">
@@ -299,7 +326,18 @@ mouthy, not sleepy.</p>
   Export the CSV and paste it into the Log tab of your workbook.
   <span id="nstate"></span>
 </footer>
+
+</section>
 </div>
+
+<nav id="tabbar">
+  <button class="on" data-tab="log" onclick="showTab('log')">
+    <span class="ti">&#9679;</span><span>Log</span></button>
+  <button data-tab="day" onclick="showTab('day')">
+    <span class="ti">&#9776;</span><span>Day</span></button>
+  <button data-tab="trends" onclick="showTab('trends')">
+    <span class="ti">&#9650;</span><span>Trends</span></button>
+</nav>
 
 <script>
 /* ---- BEGIN GENERATED FROM config.json ---- */
@@ -1018,6 +1056,19 @@ function renderHistory(){
       '</span><span class="bars">'+bars+'</span><b>'+v.out+' out &middot; '+v.acc+' acc</b>';
     ul.appendChild(li);
   });
+}
+
+/* ---- tabs ----
+   Always opens on Log. The point of the tab bar is that the clock and the buttons are
+   the first thing you see, so we deliberately do not restore the last tab. */
+function showTab(name){
+  document.querySelectorAll('.tab').forEach(s=>{
+    s.classList.toggle('on', s.id === 'tab-'+name);
+  });
+  document.querySelectorAll('#tabbar button').forEach(b=>{
+    b.classList.toggle('on', b.dataset.tab === name);
+  });
+  window.scrollTo(0,0);
 }
 
 /* ---- render ---- */
