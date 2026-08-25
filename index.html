@@ -123,10 +123,12 @@ footer{margin-top:30px;font-size:12px;color:var(--muted);line-height:1.6}
 .pat b{color:var(--paper);font-weight:600;font-variant-numeric:tabular-nums;
   margin-left:auto;text-align:right}
 .pat .gold{color:var(--gold)}
-#toast{position:fixed;left:12px;right:12px;bottom:calc(16px + env(safe-area-inset-bottom));
+/* Sits above the tab bar, which is z-index 15 and ~57px tall. At the original
+   bottom:16px / z-index:9 every toast rendered behind it and was invisible. */
+#toast{position:fixed;left:12px;right:12px;bottom:calc(84px + env(safe-area-inset-bottom));
   background:var(--gold);color:#1A1200;padding:14px 16px;border-radius:14px;
   font-size:14px;font-weight:500;line-height:1.35;opacity:0;transform:translateY(14px);
-  transition:opacity .22s,transform .22s;pointer-events:none;z-index:9;
+  transition:opacity .22s,transform .22s;pointer-events:none;z-index:16;
   box-shadow:0 8px 28px rgba(0,0,0,.45);max-width:496px;margin:0 auto}
 #toast.show{opacity:1;transform:translateY(0)}
 #toast.acc{background:var(--alert);color:#fff}
@@ -170,6 +172,17 @@ footer{margin-top:30px;font-size:12px;color:var(--muted);line-height:1.6}
 .when button.on.back{background:var(--gold);border-color:var(--gold);color:var(--ground)}
 .whenhint{font-size:11px;color:var(--muted);margin:0 0 12px}
 .whenhint.armed{color:var(--gold)}
+
+/* The last few entries, on the Log tab itself. Without this the only confirmation a tap
+   worked was a toast that vanishes, and the full list lives on another tab now. */
+.recent{list-style:none;margin:14px 0 2px;padding:0}
+.recent li{display:flex;gap:10px;align-items:baseline;padding:7px 11px;margin-bottom:5px;
+  background:var(--raised);border:1px solid var(--line);border-radius:10px;font-size:13px}
+.recent li.fresh{border-color:var(--gold)}
+.recent .t{font-variant-numeric:tabular-nums;color:var(--muted);font-size:12px;flex:none}
+.recent .w{margin-left:auto;font-size:11px;color:var(--muted);flex:none}
+.recent li.acc .w{color:var(--alert)}
+.recent li.out .w{color:var(--ok)}
 
 /* tap sheet */
 #veil{position:fixed;inset:0;background:rgba(10,14,26,.72);opacity:0;pointer-events:none;
@@ -243,6 +256,8 @@ footer{margin-top:30px;font-size:12px;color:var(--muted);line-height:1.6}
 </div>
 
 <section class="tab on" id="tab-log">
+
+<ul class="recent" id="recent"></ul>
 
 <h2>When did it happen</h2>
 <div class="when" id="when"></div>
@@ -338,6 +353,17 @@ mouthy, not sleepy.</p>
   <button data-tab="trends" onclick="showTab('trends')">
     <span class="ti">&#9650;</span><span>Trends</span></button>
 </nav>
+
+<!-- The tap sheet and the toast. The CSS for these was always here; the markup was
+     missing, so every toast() threw and took the rest of push() down with it. -->
+<div id="veil" onclick="closeSheet()"></div>
+<div id="sheet" role="dialog" aria-modal="true" aria-labelledby="sh-title">
+  <h3 id="sh-title"></h3>
+  <p id="sh-sub"></p>
+  <div class="opts" id="sh-opts"></div>
+  <button class="cancel" onclick="closeSheet()">Cancel</button>
+</div>
+<div id="toast" role="status" aria-live="polite"></div>
 
 <script>
 /* ---- BEGIN GENERATED FROM config.json ---- */
@@ -707,7 +733,12 @@ function push(event, where, extra){
   const e = Object.assign({ id: uid(), ts: stamp(), by: me, event, where }, extra||{});
   events.push(e);
   events.sort((a,b)=>a.ts-b.ts);
-  save(); feedback(e); render(); queue(e);
+  /* Order matters. feedback() is cosmetic and goes LAST, so if it ever fails again it
+     cannot cost us the redraw or, worse, the sync. That is exactly what happened when
+     the toast element was missing: the entry saved, the screen never updated, and the
+     event was never queued to the shared log. */
+  save(); render(); queue(e);
+  try { feedback(e); } catch(err) { console.error('feedback failed', err); }
   return e;
 }
 
@@ -716,6 +747,13 @@ function togglePlan(id){
   const k=dayKey(new Date());
   const i=events.findIndex(e=>e.planId===id && dayKey(new Date(e.ts))===k);
   if(i>=0){ events.splice(i,1); save(); render(); toast('Unchecked. That entry was removed.'); return; }
+  /* Rows ticked automatically by a matching entry have no planId to remove. Deleting
+     the real entry from under the row would be destructive and surprising, so say what
+     is holding the tick and send them to Today to remove it deliberately. */
+  if(planDoneIds(k).has(id)){
+    toast('Already covered by something you logged.<br>Remove it under Day if that is wrong.');
+    return;
+  }
   const p=PLAN.find(x=>x[0]===id);
   if(!p) return;
   if(p[3]==='Water Up'){ push('Water Up','N/A',{planId:id}); return; }
@@ -746,13 +784,26 @@ function logPoop(where){
     STOOL, v => push('Poop', where, v ? {stool:v} : {}));
 }
 
-function remove(i){
+/* Keyed on the entry's id, not its array position. events is re-sorted by timestamp on
+   every insert, so a back-dated entry shifts every index after it and an index captured
+   at render time can point at the wrong row by the time you tap the x. */
+function remove(id){
+  const i=events.findIndex(x=>x.id===id);
+  if(i<0) return;
   const e=events[i];
-  if(e && e.id){ deletes.push(e.id); const p=pending.findIndex(x=>x.id===e.id); if(p>=0) pending.splice(p,1); }
+  if(e.id){ deletes.push(e.id); const p=pending.findIndex(x=>x.id===e.id); if(p>=0) pending.splice(p,1); }
   events.splice(i,1); save(); render(); if(SYNC_URL) pull(false);
 }
 
-function wipe(){ if(confirm('Clear the copy on this phone? If sharing is on, the shared log keeps everything and will sync back.')){ events=[]; pending=[]; save(); render(); pull(false); } }
+function wipe(){
+  if(!confirm('Clear the copy on this phone? If sharing is on, the shared log keeps everything and will sync back.')) return;
+  /* deletes has to go too. It is a persisted list of ids to remove from the shared log,
+     and leaving it behind replays those deletions against the shared sheet after a wipe. */
+  events=[]; pending=[]; deletes=[];
+  try{ localStorage.removeItem('mercy.timer'); }catch(e){}
+  timer=null;
+  save(); render(); pull(false);
+}
 
 /* ---- derived ---- */
 function lastOutside(){
@@ -788,6 +839,43 @@ const PLAN = [
   ['p16','22:00','Last call, then crate','Potty Trip','N/A',5],
 ];
 function minsNow(){ const d=new Date(); return d.getHours()*60+d.getMinutes(); }
+/* Which plan rows count as done today.
+   Explicit taps win first, then anything you logged with the normal buttons is matched
+   to the nearest unclaimed row of the right kind. Before this, logging breakfast with
+   the Meal button left the 7:20 Breakfast row unticked and it went red as "missed",
+   which scored you as having skipped a meal you actually gave her. */
+const PLAN_TOLERANCE_MIN = 90;
+
+function satisfies(planEvent, e){
+  if(e.where==='Indoor Accident' || e.where==='Crate Accident') return false;  // never
+  if(planEvent==='Potty Trip')
+    return e.event==='Potty Trip' || e.event==='Walk' || e.where==='Outside';
+  if(planEvent==='Walk') return e.event==='Walk';
+  return e.event===planEvent;
+}
+
+function planDoneIds(k){
+  const done=new Set();
+  const today=events.filter(e=>dayKey(new Date(e.ts))===k);
+
+  // 1. rows you ticked by hand
+  today.forEach(e=>{ if(e.planId) done.add(e.planId); });
+
+  // 2. everything else, nearest unclaimed row of a matching kind
+  const claimed=new Set(done);
+  today.filter(e=>!e.planId).forEach(e=>{
+    const d=new Date(e.ts), mins=d.getHours()*60+d.getMinutes();
+    let best=null, bestGap=Infinity;
+    PLAN.forEach(p=>{
+      if(claimed.has(p[0]) || !satisfies(p[3], e)) return;
+      const gap=Math.abs(toMins(p[1])-mins);
+      if(gap<bestGap && gap<=PLAN_TOLERANCE_MIN){ best=p[0]; bestGap=gap; }
+    });
+    if(best){ claimed.add(best); done.add(best); }
+  });
+  return done;
+}
+
 function toMins(s){ const [h,m]=s.split(':').map(Number); return h*60+m; }
 
 /* ---- Shabbat and yom tov ---- */
@@ -1007,7 +1095,7 @@ function patterns(){
     if(e.where==='Indoor Accident') accHours.push(new Date(e.ts).getHours());
   });
   const mode=a=>{ if(!a.length) return null; const c={}; let best=null;
-    a.forEach(h=>{c[h]=(c[h]||0)+1; if(!best||c[h]>c[best])best=h;}); return +best; };
+    a.forEach(h=>{c[h]=(c[h]||0)+1; if(best===null||c[h]>c[best])best=h;}); return +best; };
   const hr=h=>{ if(h===null) return null; const ap=h>=12?'PM':'AM'; return (h%12||12)+' '+ap; };
 
   return [
@@ -1071,6 +1159,29 @@ function showTab(name){
   window.scrollTo(0,0);
 }
 
+/* Last three entries today, newest first. The most recent gets a gold edge for a few
+   seconds so a tap visibly lands even when the clock does not move (a meal or a nap
+   does not reset the outside clock, which is why those felt completely dead). */
+function renderRecent(){
+  const box=document.getElementById('recent');
+  if(!box) return;
+  const t=todays().filter(e=>e.event!=='Join');
+  if(!t.length){ box.innerHTML=''; return; }
+  box.innerHTML='';
+  t.slice(-3).reverse().forEach((e,idx)=>{
+    const li=document.createElement('li');
+    const acc = e.where==='Indoor Accident' || e.where==='Crate Accident';
+    const out = e.where==='Outside' || OUTSIDE.includes(e.event);
+    if(acc) li.className='acc'; else if(out) li.className='out';
+    if(idx===0 && Date.now()-e.ts < 8000) li.className+=' fresh';
+    let w = acc ? 'accident' : (out ? 'outside' : '');
+    if(e.mins) w = (w?w+' · ':'')+e.mins+'m';
+    li.innerHTML='<span class="t">'+hhmm(new Date(e.ts))+'</span><span>'+e.event+
+      '</span><span class="w">'+w+'</span>';
+    box.appendChild(li);
+  });
+}
+
 /* ---- render ---- */
 function applyRole(){
   const own=isOwner();
@@ -1119,13 +1230,14 @@ function render(){
       verdict.textContent='Fine for about '+Math.round((hold-el)*60)+' more minutes.'; }
   }
 
+  renderRecent();
+
   const t=todays();
   const list=document.getElementById('loglist');
   if(!t.length){ list.innerHTML='<li class="empty">Nothing logged yet today.</li>'; }
   else{
     list.innerHTML='';
     t.slice().reverse().forEach(e=>{
-      const i=events.indexOf(e);
       const li=document.createElement('li');
       let cls='tag', label=e.where;
       if(e.where==='Indoor Accident'){ cls='tag acc'; label='accident'; }
@@ -1138,7 +1250,7 @@ function render(){
       li.innerHTML='<span class="t">'+hhmm(new Date(e.ts))+'</span><span>'+name+'</span>'+
         (label?'<span class="'+cls+'">'+label+'</span>':'')+byTag+
         '<button class="x" aria-label="Delete">remove</button>';
-      li.querySelector('.x').onclick=()=>remove(i);
+      li.querySelector('.x').onclick=()=>remove(e.id);
       list.appendChild(li);
     });
   }
@@ -1168,7 +1280,7 @@ function render(){
   }
   const now=minsNow(), sched=document.getElementById('sched');
   const k=dayKey(new Date());
-  const doneIds=new Set(events.filter(e=>e.planId && dayKey(new Date(e.ts))===k).map(e=>e.planId));
+  const doneIds=planDoneIds(k);
   sched.innerHTML='';
   const firstOpen=PLAN.find(p=>!doneIds.has(p[0]) && toMins(p[1])<=now+20);
   PLAN.forEach(p=>{
