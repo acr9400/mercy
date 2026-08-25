@@ -143,11 +143,16 @@ footer{margin-top:30px;font-size:12px;color:var(--muted);line-height:1.6}
   font-weight:600;padding:12px 18px;border-radius:12px}
 
 /* when-selector */
-.when{display:flex;gap:6px;margin:0 0 4px}
-.when button{flex:1;padding:9px 4px;font-size:12px;border-radius:10px;background:transparent;
-  color:var(--muted);border:1px solid var(--line)}
+.when{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin:0 0 6px}
+.when button{padding:10px 2px;font-size:13px;border-radius:10px;background:transparent;
+  color:var(--muted);border:1px solid var(--line);font-variant-numeric:tabular-nums;
+  transition:background .12s,color .12s,border-color .12s}
+.when button:first-child{font-weight:600;color:var(--paper)}
 .when button.on{background:var(--paper);color:var(--ground);border-color:var(--paper);font-weight:600}
+/* A back-dated tap is easy to leave armed by accident, so it goes gold, not white. */
+.when button.on.back{background:var(--gold);border-color:var(--gold);color:var(--ground)}
 .whenhint{font-size:11px;color:var(--muted);margin:0 0 12px}
+.whenhint.armed{color:var(--gold)}
 
 /* tap sheet */
 #veil{position:fixed;inset:0;background:rgba(10,14,26,.72);opacity:0;pointer-events:none;
@@ -310,6 +315,7 @@ const MEALS_UNTIL_6MO = 3;
 const MEALS_AFTER_6MO = 2;
 const WALK_PER_MONTH = 5.0;
 const PLAY = { min:15, max:30, perDay:3 };
+const BACKDATE_MIN = [0, 15, 30, 60, 90, 120, 150, 180, 210, 240];
 const GYM_MINUTES = 75;
 const GYM_DEFAULT = {0:null, 1:null, 2:null, 3:null, 4:null, 5:null, 6:null};
 const YOMTOV = [
@@ -460,25 +466,36 @@ function targetOutings(){ return Math.max(4, Math.round(16/holdHours()) + mealsP
 /* ---- logging ---- */
 /* ---- when: log at now, or a few minutes back if you forgot ---- */
 let offsetMin = 0;
-const OFFSETS = [[0,'Now'],[15,'15m ago'],[30,'30m ago'],[60,'1h ago']];
+/* BACKDATE_MIN comes from config.json (app.backdate_minutes). Labels are derived so
+   config only ever holds numbers. */
+function offsetLabel(m){
+  if(m===0) return 'Now';
+  if(m<60) return m+'m';
+  const h=Math.floor(m/60), r=m%60;
+  if(r===0) return h+'h';
+  if(r===30) return h+'½h';
+  return h+'h '+r+'m';
+}
 function renderWhen(){
   const bar=document.getElementById('when');
   bar.innerHTML='';
-  OFFSETS.forEach(([m,label])=>{
+  BACKDATE_MIN.forEach(m=>{
     const b=document.createElement('button');
-    b.textContent=label;
-    if(m===offsetMin) b.className='on';
+    b.textContent=offsetLabel(m);
+    b.className = m===offsetMin ? (m===0 ? 'on' : 'on back') : '';
     b.onclick=()=>{ offsetMin=m; renderWhen(); hint(); };
     bar.appendChild(b);
   });
 }
 function hint(){
   const h=document.getElementById('whenhint');
+  h.className = 'whenhint' + (offsetMin ? ' armed' : '');
   if(offsetMin===0){
     h.textContent='Every tap below stamps the real clock time and works out the gaps for you.';
   } else {
     const t=new Date(Date.now()-offsetMin*60000);
-    h.innerHTML='Next tap will be logged at <b>'+hhmm(t)+'</b>, then this resets to Now.';
+    h.innerHTML='Next tap logs at <b>'+hhmm(t)+'</b>, '+offsetLabel(offsetMin)+
+      ' ago. Resets to Now straight after.';
   }
 }
 function stamp(){ const t=Date.now()-offsetMin*60000; offsetMin=0; renderWhen(); hint(); return t; }
