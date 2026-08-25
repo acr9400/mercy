@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#141A2E">
+<meta name="theme-color" content="#FBF6EC" id="themecolor">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Mercy">
@@ -12,17 +12,27 @@
 <link rel="icon" type="image/png" sizes="32x32" href="./favicon-32.png">
 <title>Mercy</title>
 <style>
+/* ---- BEGIN THEME FROM config.json ---- */
+/* Cream & Honey. Change app.theme in config.json and re-run this script. */
 :root{
-  --ground:#141A2E;
-  --raised:#1E2740;
-  --line:#2C3856;
-  --paper:#F2EFE7;
-  --muted:#8B97B8;
-  --gold:#E8B04B;
-  --alert:#E4572E;
-  --ok:#5FBF8F;
+  --ground:#FBF6EC;
+  --raised:#FFFFFF;
+  --line:#EADFC8;
+  --paper:#3B2F1E;
+  --muted:#8A7A62;
+  --gold:#D9902A;
+  --alert:#C4502A;
+  --ok:#4E8C61;
+  --navbg:rgba(255,255,255,.94);
+  --veil:rgba(59,47,30,.42);
+  --shadow:0 8px 28px rgba(150,120,70,.22);
+  --onaccent:#FFFFFF;
+  --tint:rgba(217,144,42,.10);
+  --shab:rgba(120,150,200,.12);
+  --shabline:rgba(120,150,200,.40);
   --pad:16px;
 }
+/* ---- END THEME FROM config.json ---- */
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{margin:0;background:var(--ground);color:var(--paper);
   font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
@@ -42,8 +52,8 @@ h2{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--mute
 .tab{display:none}
 .tab.on{display:block}
 .tab > h2:first-child{margin-top:18px}
-#tabbar{position:fixed;left:0;right:0;bottom:0;z-index:15;display:flex;
-  background:rgba(20,26,46,.94);backdrop-filter:blur(12px);
+#tabbar{position:fixed;left:0;right:0;bottom:0;z-index:15;display:flex;box-shadow:0 -2px 14px rgba(0,0,0,.05);
+  background:var(--navbg);backdrop-filter:blur(12px);
   border-top:1px solid var(--line);
   padding:6px 4px calc(6px + env(safe-area-inset-bottom))}
 #tabbar button{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;
@@ -126,10 +136,10 @@ footer{margin-top:30px;font-size:12px;color:var(--muted);line-height:1.6}
 /* Sits above the tab bar, which is z-index 15 and ~57px tall. At the original
    bottom:16px / z-index:9 every toast rendered behind it and was invisible. */
 #toast{position:fixed;left:12px;right:12px;bottom:calc(84px + env(safe-area-inset-bottom));
-  background:var(--gold);color:#1A1200;padding:14px 16px;border-radius:14px;
+  background:var(--gold);color:var(--onaccent);padding:14px 16px;border-radius:14px;
   font-size:14px;font-weight:500;line-height:1.35;opacity:0;transform:translateY(14px);
   transition:opacity .22s,transform .22s;pointer-events:none;z-index:16;
-  box-shadow:0 8px 28px rgba(0,0,0,.45);max-width:496px;margin:0 auto}
+  box-shadow:var(--shadow);max-width:496px;margin:0 auto}
 #toast.show{opacity:1;transform:translateY(0)}
 #toast.acc{background:var(--alert);color:#fff}
 .who{display:flex;gap:7px;flex-wrap:wrap;margin:0 0 14px}
@@ -158,7 +168,7 @@ footer{margin-top:30px;font-size:12px;color:var(--muted);line-height:1.6}
 #timer.on{display:flex}
 #timer .lbl{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
 #timer .run{font-size:30px;font-weight:200;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
-#timer button{margin-left:auto;background:var(--gold);color:#1A1200;border:none;
+#timer button{margin-left:auto;background:var(--gold);color:var(--onaccent);border:none;
   font-weight:600;padding:12px 18px;border-radius:12px}
 
 /* when-selector */
@@ -169,7 +179,7 @@ footer{margin-top:30px;font-size:12px;color:var(--muted);line-height:1.6}
 .when button:first-child{font-weight:600;color:var(--paper)}
 .when button.on{background:var(--paper);color:var(--ground);border-color:var(--paper);font-weight:600}
 /* A back-dated tap is easy to leave armed by accident, so it goes gold, not white. */
-.when button.on.back{background:var(--gold);border-color:var(--gold);color:var(--ground)}
+.when button.on.back{background:var(--gold);border-color:var(--gold);color:var(--onaccent)}
 .whenhint{font-size:11px;color:var(--muted);margin:0 0 12px}
 .whenhint.armed{color:var(--gold)}
 
@@ -185,10 +195,10 @@ footer{margin-top:30px;font-size:12px;color:var(--muted);line-height:1.6}
 .recent li.out .w{color:var(--ok)}
 
 /* tap sheet */
-#veil{position:fixed;inset:0;background:rgba(10,14,26,.72);opacity:0;pointer-events:none;
+#veil{position:fixed;inset:0;background:var(--veil);opacity:0;pointer-events:none;
   transition:opacity .2s;z-index:20}
 #veil.on{opacity:1;pointer-events:auto}
-#sheet{position:fixed;left:0;right:0;bottom:0;background:var(--raised);
+#sheet{position:fixed;left:0;right:0;bottom:0;background:var(--raised);box-shadow:var(--shadow);
   border-top:1px solid var(--line);border-radius:22px 22px 0 0;
   padding:20px 16px calc(24px + env(safe-area-inset-bottom));
   transform:translateY(100%);transition:transform .24s;z-index:21;max-width:520px;margin:0 auto}
@@ -202,7 +212,7 @@ footer{margin-top:30px;font-size:12px;color:var(--muted);line-height:1.6}
 #sheet input{width:100%;padding:15px 14px;font:inherit;font-size:17px;color:var(--paper);
   background:var(--ground);border:1px solid var(--line);border-radius:13px;margin:0 0 10px}
 #sheet input:focus{outline:none;border-color:var(--gold)}
-#sheet .go{width:100%;background:var(--gold);color:#1A1200;border-color:var(--gold);
+#sheet .go{width:100%;background:var(--gold);color:var(--onaccent);border-color:var(--gold);
   font-weight:600;padding:15px}
 #sheet .swatches{display:flex;gap:8px;margin:0 0 14px}
 #sheet .swatches button{flex:1;height:36px;padding:0;border-radius:10px;border:2px solid transparent}
@@ -214,7 +224,7 @@ footer{margin-top:30px;font-size:12px;color:var(--muted);line-height:1.6}
   text-align:center;border:1px solid var(--line);border-radius:6px;margin-right:9px;
   font-size:12px;color:transparent;vertical-align:-4px}
 #sheet .ownerbtn.on{color:var(--paper);border-style:solid;border-color:var(--gold)}
-#sheet .ownerbtn.on .tick{background:var(--gold);border-color:var(--gold);color:var(--ground)}
+#sheet .ownerbtn.on .tick{background:var(--gold);border-color:var(--gold);color:var(--onaccent)}
 .mename{margin-left:auto;font-size:12px;color:var(--muted);background:none;border:none;
   padding:4px 6px;text-decoration:underline}
 #sheet .cancel{width:100%;margin-top:12px;background:transparent;color:var(--muted);
@@ -222,12 +232,12 @@ footer{margin-top:30px;font-size:12px;color:var(--muted);line-height:1.6}
 .week li{display:flex;gap:10px;align-items:center;padding:9px 0;border-bottom:1px solid var(--line)}
 .week .dayb{width:52px;flex:none;padding:8px 0;font-size:12px;border-radius:9px;
   background:transparent;color:var(--muted);border:1px solid var(--line);font-weight:600}
-.week .dayb.on{background:var(--gold);color:#1A1200;border-color:var(--gold)}
+.week .dayb.on{background:var(--gold);color:var(--onaccent);border-color:var(--gold)}
 .week input[type=time]{background:var(--ground);color:var(--paper);border:1px solid var(--line);
   border-radius:9px;padding:8px 10px;font:inherit;font-size:14px}
 .week input:disabled{opacity:.3}
 .week .back{margin-left:auto;font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
-.shab{display:none;background:rgba(127,166,232,.14);border:1px solid rgba(127,166,232,.45);
+.shab{display:none;background:var(--shab);border:1px solid var(--shabline);
   border-radius:16px;padding:14px 16px;margin:0 0 14px;font-size:14px;line-height:1.45;color:var(--paper)}
 .shab.on{display:block}
 .shab.pre{background:rgba(232,176,75,.14);border-color:rgba(232,176,75,.45)}
@@ -388,6 +398,7 @@ const MEALS_AFTER_6MO = 2;
 const WALK_PER_MONTH = 5.0;
 const PLAY = { min:15, max:30, perDay:3 };
 const BACKDATE_MIN = [0, 15, 30, 60, 90, 120, 150, 180, 210, 240];
+const SEED_MEMBERS = [{name:"Ariel", color:"#E8B04B"}, {name:"Shira", color:"#5FBF8F"}, {name:"Chayim", color:"#7FA6E8"}];
 const GYM_MINUTES = 75;
 const GYM_DEFAULT = {0:null, 1:null, 2:null, 3:null, 4:null, 5:null, 6:null};
 const YOMTOV = [
@@ -430,8 +441,14 @@ const isOwner = () => role === 'owner';
 /* Members are not hardcoded. Anyone who opens the app names themselves once, which
    writes a Join row to the shared log. Everyone else picks that name up on next sync. */
 function rebuildMembers(){
-  const seen={}, out=[{name:OWNER, color:PALETTE[0]}];
-  seen[OWNER.toLowerCase()]=true;
+  /* Starts from SEED_MEMBERS (config.json members) so the people who help are tappable
+     on first open with nothing typed. Anyone else appears once they sign in. */
+  const seen={}, out=[];
+  SEED_MEMBERS.forEach(m=>{
+    if(seen[m.name.toLowerCase()]) return;
+    seen[m.name.toLowerCase()]=true;
+    out.push({name:m.name, color:m.color});
+  });
   events.filter(e=>e.event==='Join').forEach(e=>{
     const n=(e.by||'').trim();
     if(!n || seen[n.toLowerCase()]) return;
@@ -671,7 +688,7 @@ function openJoin(first){
   };
   box.appendChild(go);
 
-  if(!first || MEMBERS.length>1){
+  if(!first || MEMBERS.length>0){
     const others=document.createElement('p');
     others.style.cssText='font-size:12px;color:var(--muted);margin:14px 0 6px';
     others.textContent = 'Or tap a name already here:';
