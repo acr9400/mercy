@@ -1,4 +1,4 @@
-const CACHE = 'mercy-v6';
+const CACHE = 'mercy-v7';
 const ASSETS = ['./', './index.html', './manifest.json',
   './icon-192.png', './icon-512.png',
   './icon-192-maskable.png', './icon-512-maskable.png',
@@ -16,6 +16,10 @@ self.addEventListener('activate', e => {
 
 self.addEventListener('fetch', e => {
   if (e.request.method !== 'GET') return;
+  // Never touch the shared-log API. It is cross-origin, it must always hit the network,
+  // and its URL carries a cache-buster, so caching it would both serve stale data and
+  // grow the cache by one entry every poll.
+  if (new URL(e.request.url).origin !== self.location.origin) return;
   e.respondWith(
     caches.match(e.request).then(hit => hit || fetch(e.request).then(res => {
       const copy = res.clone();
