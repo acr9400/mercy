@@ -182,6 +182,11 @@ footer{margin-top:30px;font-size:12px;color:var(--muted);line-height:1.6}
 .when button.on.back{background:var(--gold);border-color:var(--gold);color:var(--onaccent)}
 .whenhint{font-size:11px;color:var(--muted);margin:0 0 12px}
 .whenhint.armed{color:var(--gold)}
+.filterbar{font-size:12px;color:var(--muted);background:var(--tint);border:1px solid var(--line);
+  border-radius:11px;padding:9px 12px;margin:0 0 10px}
+.filterbar button{background:none;border:0;color:var(--gold);font-family:inherit;font-size:12px;
+  font-weight:600;text-decoration:underline;padding:0 0 0 4px}
+.who button.filtering{box-shadow:0 0 0 2px var(--tint)}
 
 /* The last few entries, on the Log tab itself. Without this the only confirmation a tap
    worked was a toast that vanishes, and the full list lives on another tab now. */
@@ -317,6 +322,7 @@ mouthy, not sleepy.</p>
 <section class="tab" id="tab-day">
 
 <h2>Today</h2>
+<p class="filterbar" id="filterbar" style="display:none"></p>
 <ul class="log" id="loglist"></ul>
 <div class="stat">
   <span>Outings <b id="sOut">0</b> of <b id="sTarget">0</b></span>
@@ -482,6 +488,15 @@ function setMe(n){
   render();
 }
 
+/* Tapping a name filters the day to that person. It used to switch who you were
+   logging as, which is a trap: you tap a helper's name to see what they did and then
+   quietly log everything under their name. Changing identity lives on "Not you?". */
+let filterBy = null;
+function toggleFilter(n){
+  filterBy = (filterBy === n) ? null : n;
+  showTab('day');
+  render();
+}
 function renderWho(){
   rebuildMembers();
   const bar=document.getElementById('who');
@@ -491,7 +506,10 @@ function renderWho(){
     b.textContent=m.name;
     b.style.borderColor=m.color+'88';
     if(m.name===me){ b.className='on'; b.style.background=m.color; b.style.borderColor=m.color; }
-    b.onclick=()=>setMe(m.name);
+    if(m.name===filterBy){ b.className=(b.className?b.className+' ':'')+'filtering';
+                           b.style.borderColor=m.color; }
+    b.title='Show only what '+m.name+' logged';
+    b.onclick=()=>toggleFilter(m.name);
     bar.appendChild(b);
   });
   const chg=document.createElement('button');
@@ -519,7 +537,7 @@ async function pull(loud){
       const data=await res.json();
       if(data.error) throw new Error(data.error);
       pending=[]; deletes=[];
-      merge(data.events);
+      merge(data.events, true);
     } else {
       /* The unique _ param and no-store matter. Without them this URL is identical on
          every poll, so the browser and Google's edge serve a cached body and the app
@@ -528,7 +546,7 @@ async function pull(loud){
         '&since=0&_='+Date.now(), {cache:'no-store'});
       const data=await res.json();
       if(data.error) throw new Error(data.error);
-      merge(data.events);
+      merge(data.events, true);
     }
     save(); render();
     syncState('on','Shared'+(MEMBERS.length>1?' with '+(MEMBERS.length-1)+' others':''));
@@ -538,9 +556,19 @@ async function pull(loud){
     if(loud) toast('Could not reach the shared log. Your entries are saved and will send later.', true);
   }
 }
-function merge(remote){
+/* A since=0 pull returns the whole shared log, so it is the truth, not a supplement.
+   Merging only additively meant a row deleted from the sheet lived on forever on every
+   phone that had already downloaded it, including the member list built from Join rows.
+   Anything still waiting in pending is protected, so an entry logged offline is never
+   thrown away for not being on the server yet. */
+function merge(remote, authoritative){
   const have={}; events.forEach(e=>{ if(e.id) have[e.id]=true; });
   (remote||[]).forEach(r=>{ if(r.id && !have[r.id]) events.push(r); });
+  if(authoritative){
+    const keep={}; (remote||[]).forEach(r=>{ if(r.id) keep[r.id]=true; });
+    pending.forEach(p=>{ if(p.id) keep[p.id]=true; });
+    events = events.filter(e => !e.id || keep[e.id]);
+  }
   events.sort((a,b)=>a.ts-b.ts);
 }
 /* Only dog events are ever sent. Your week, the gym times, your role and your name
@@ -1284,9 +1312,17 @@ function render(){
 
   renderRecent();
 
-  const t=todays();
+  const tAll=todays();
+  const t = filterBy ? tAll.filter(e=>e.by===filterBy) : tAll;
   const list=document.getElementById('loglist');
-  if(!t.length){ list.innerHTML='<li class="empty">Nothing logged yet today.</li>'; }
+  const fb=document.getElementById('filterbar');
+  if(filterBy){
+    fb.style.display='';
+    fb.innerHTML='Showing only <b style="color:'+colorOf(filterBy)+'">'+filterBy+'</b> &middot; '+
+      t.length+' of '+tAll.length+' today <button onclick="toggleFilter(null)">Show everyone</button>';
+  } else { fb.style.display='none'; fb.innerHTML=''; }
+  if(!t.length){ list.innerHTML='<li class="empty">'+
+    (filterBy ? filterBy+' has not logged anything today.' : 'Nothing logged yet today.')+'</li>'; }
   else{
     list.innerHTML='';
     t.slice().reverse().forEach(e=>{
