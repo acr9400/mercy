@@ -207,6 +207,14 @@ footer{margin-top:30px;font-size:12px;color:var(--muted);line-height:1.6}
 #sheet .swatches{display:flex;gap:8px;margin:0 0 14px}
 #sheet .swatches button{flex:1;height:36px;padding:0;border-radius:10px;border:2px solid transparent}
 #sheet .swatches button.on{border-color:var(--paper)}
+#sheet .ownerclaim{margin:0 0 10px}
+#sheet .ownerbtn{width:100%;text-align:left;background:transparent;border:1px dashed var(--line);
+  color:var(--muted);padding:12px 14px;border-radius:13px;font-size:14px}
+#sheet .ownerbtn .tick{display:inline-block;width:20px;height:20px;line-height:19px;
+  text-align:center;border:1px solid var(--line);border-radius:6px;margin-right:9px;
+  font-size:12px;color:transparent;vertical-align:-4px}
+#sheet .ownerbtn.on{color:var(--paper);border-style:solid;border-color:var(--gold)}
+#sheet .ownerbtn.on .tick{background:var(--gold);border-color:var(--gold);color:var(--ground)}
 .mename{margin-left:auto;font-size:12px;color:var(--muted);background:none;border:none;
   padding:4px 6px;text-decoration:underline}
 #sheet .cancel{width:100%;margin-top:12px;background:transparent;color:var(--muted);
@@ -372,7 +380,7 @@ const DOB = new Date(2026,5,19);   /* 19 June 2026. Months are zero based. */
 const SYNC_URL = "https://script.google.com/macros/s/AKfycbxEABPCdnof_NQiUvu72xPrsUtP39lf6J-4eq1ietRKE9CiE-faMkTbUTnH-EtvSRoP/exec";
 const SYNC_TOKEN = "5HEKZTS6zCpp4L6qqwda8jNtEI3sK6y5";
 const OWNER = "Ariel";
-const OWNER_KEY = "quartz-ridge-51";
+const OWNER_KEY = "Mercy";
 const HOLD_PER_MONTH = 1.0;
 const HOLD_MAX = 6.0;
 const MEALS_UNTIL_6MO = 3;
@@ -449,10 +457,11 @@ const save = () => { try {
 const uid = () => Date.now().toString(36)+Math.random().toString(36).slice(2,8);
 const colorOf = n => (MEMBERS.find(m=>m.name===n)||{}).color || '#8B97B8';
 
+/* The name you sign in with no longer decides anything except whose name goes on an
+   entry. Ownership comes from the passcode alone, so two people can share a first
+   name and only the one who knows it gets the owner view. */
 function setMe(n){
-  if(n.toLowerCase()===OWNER.toLowerCase() && !isOwner()){ openJoin(false); return; }
   me=n; localStorage.setItem('mercy.me', n);
-  if(n.toLowerCase()!==OWNER.toLowerCase()){ role='helper'; localStorage.setItem('mercy.role','helper'); }
   render();
 }
 
@@ -614,29 +623,51 @@ function openJoin(first){
   });
   box.appendChild(sw);
 
+  /* Owner is a passcode, not a name. Helpers never touch this row. */
+  let claimOwner = isOwner();
+  const ownerRow=document.createElement('div');
+  ownerRow.className='ownerclaim';
+  const ownerBtn=document.createElement('button');
+  ownerBtn.type='button';
+  ownerBtn.className='ownerbtn'+(claimOwner?' on':'');
+  ownerBtn.innerHTML='<span class="tick">&#10003;</span> I am the owner';
+  const keyIn=document.createElement('input');
+  keyIn.type='password'; keyIn.placeholder='Owner passcode';
+  keyIn.setAttribute('autocapitalize','none');
+  keyIn.style.display = claimOwner ? '' : 'none';
+  ownerBtn.onclick=()=>{
+    claimOwner=!claimOwner;
+    ownerBtn.className='ownerbtn'+(claimOwner?' on':'');
+    keyIn.style.display = claimOwner ? '' : 'none';
+    if(claimOwner) keyIn.focus(); else keyIn.value='';
+  };
+  ownerRow.appendChild(ownerBtn);
+  box.appendChild(ownerRow);
+  box.appendChild(keyIn);
+
   const go=document.createElement('button');
   go.className='go'; go.textContent = first ? "That's me" : 'Save';
   go.onclick=()=>{
     const n=input.value.trim();
     if(!n){ input.focus(); return; }
-    if(n.toLowerCase()===OWNER.toLowerCase() && !isOwner()){
-      const k=(prompt("That is the owner's name. Enter the owner key to continue, or Cancel and use your own name.")||'').trim();
-      if(k.toLowerCase()!==OWNER_KEY.toLowerCase()){
-        toast('Wrong key. Use your own name instead.', true);
-        input.value=''; input.focus(); return;
+    if(claimOwner && !isOwner()){
+      if(keyIn.value.trim().toLowerCase()!==OWNER_KEY.toLowerCase()){
+        toast('That passcode is not right. Leave the owner box off to sign in as a helper.', true);
+        keyIn.value=''; keyIn.focus(); return;
       }
     }
     const clash=MEMBERS.find(m=>m.name.toLowerCase()===n.toLowerCase() && m.name!==me);
     closeSheet();
     box.style.display='';
-    role = (n.toLowerCase()===OWNER.toLowerCase()) ? 'owner' : 'helper';
+    role = claimOwner ? 'owner' : 'helper';
     localStorage.setItem('mercy.role', role);
     if(clash){ setMe(clash.name); toast('<b>Welcome back, '+clash.name+'</b><br>Picking up where you left off.'); return; }
     me=n; localStorage.setItem('mercy.me', n);
     const e={id:uid(), ts:Date.now(), by:n, event:'Join', where:'N/A', notes:color};
     events.push(e); events.sort((a,b)=>a.ts-b.ts);
     rebuildMembers(); save(); render(); queue(e);
-    toast('<b>You are logged in as '+n+'</b><br>Everything you log from now on says so.');
+    toast('<b>You are logged in as '+n+'</b><br>Everything you log from now on says so.'+
+      (claimOwner?'<br>Owner view unlocked.':''));
   };
   box.appendChild(go);
 
