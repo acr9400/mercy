@@ -1,0 +1,1178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#141A2E">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Mercy">
+<link rel="manifest" href="./manifest.json">
+<link rel="apple-touch-icon" href="./apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="./favicon-32.png">
+<title>Mercy</title>
+<style>
+:root{
+  --ground:#141A2E;
+  --raised:#1E2740;
+  --line:#2C3856;
+  --paper:#F2EFE7;
+  --muted:#8B97B8;
+  --gold:#E8B04B;
+  --alert:#E4572E;
+  --ok:#5FBF8F;
+  --pad:16px;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--ground);color:var(--paper);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  font-size:16px;line-height:1.4;overscroll-behavior-y:contain}
+body{padding:max(12px,env(safe-area-inset-top)) var(--pad) calc(28px + env(safe-area-inset-bottom))}
+h1{font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);
+  font-weight:600;margin:0 0 14px;display:flex;align-items:center;gap:10px}
+h1 img{width:30px;height:30px;border-radius:50%;object-fit:cover;flex:none;
+  border:1.5px solid var(--gold)}
+h2{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);
+  font-weight:600;margin:26px 0 10px}
+.wrap{max-width:520px;margin:0 auto}
+
+/* ---- signature: the ceiling clock ---- */
+.clock{position:relative;background:var(--raised);border:1px solid var(--line);
+  border-radius:20px;padding:22px 20px 18px;overflow:hidden}
+.fill{position:absolute;inset:0;width:0%;background:linear-gradient(90deg,
+  rgba(232,176,75,.13),rgba(232,176,75,.26));transition:width .6s ease,background .6s ease}
+.clock.over .fill{background:linear-gradient(90deg,rgba(228,87,46,.20),rgba(228,87,46,.38))}
+.clock>*{position:relative}
+.since{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.big{font-size:58px;line-height:1;font-weight:200;letter-spacing:-.03em;
+  font-variant-numeric:tabular-nums;margin:6px 0 2px}
+.clock.over .big{color:var(--alert);font-weight:400}
+.ceil{font-size:14px;color:var(--muted);font-variant-numeric:tabular-nums}
+.ceil b{color:var(--paper);font-weight:500}
+.verdict{margin-top:12px;font-size:14px;font-weight:500}
+.verdict.ok{color:var(--ok)}
+.verdict.warn{color:var(--gold)}
+.verdict.over{color:var(--alert)}
+
+/* ---- buttons ---- */
+.grid{display:grid;gap:9px;grid-template-columns:1fr 1fr}
+button{font:inherit;color:var(--paper);background:var(--raised);border:1px solid var(--line);
+  border-radius:14px;padding:16px 10px;cursor:pointer;font-weight:500;
+  transition:transform .08s,background .15s}
+button:active{transform:scale(.97)}
+button:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.b-out{background:rgba(232,176,75,.14);border-color:rgba(232,176,75,.42)}
+.b-acc{background:rgba(228,87,46,.13);border-color:rgba(228,87,46,.4)}
+.small{font-size:14px;padding:13px 8px;color:var(--muted)}
+.hint{display:block;font-size:11px;color:var(--muted);font-weight:400;margin-top:3px;
+  letter-spacing:.04em}
+
+/* ---- schedule + log ---- */
+ul{list-style:none;margin:0;padding:0}
+.sched li{display:flex;gap:12px;align-items:center;padding:11px 0;
+  border-bottom:1px solid var(--line);font-size:15px}
+.sched .t{font-variant-numeric:tabular-nums;color:var(--muted);width:72px;flex:none;font-size:13px}
+.sched li.done{color:var(--muted)}
+.sched li.done .t{text-decoration:line-through}
+.sched li.now{color:var(--gold)}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--line);flex:none}
+.sched li.done .dot{background:var(--ok)}
+.sched li.now .dot{background:var(--gold);box-shadow:0 0 0 4px rgba(232,176,75,.18)}
+.log li{display:flex;gap:10px;align-items:baseline;padding:9px 0;
+  border-bottom:1px solid var(--line);font-size:15px}
+.log .t{font-variant-numeric:tabular-nums;color:var(--muted);width:72px;flex:none;font-size:13px}
+.log .x{margin-left:auto;color:var(--muted);font-size:12px;background:none;border:none;padding:4px 6px}
+.tag{font-size:11px;padding:2px 7px;border-radius:99px;border:1px solid var(--line);color:var(--muted)}
+.tag.acc{color:var(--alert);border-color:rgba(228,87,46,.45)}
+.tag.out{color:var(--gold);border-color:rgba(232,176,75,.4)}
+.stat{display:flex;gap:20px;font-size:13px;color:var(--muted);margin-top:12px;flex-wrap:wrap}
+.stat b{color:var(--paper);font-weight:600;font-variant-numeric:tabular-nums}
+.empty{color:var(--muted);font-size:14px;padding:14px 0}
+.row{display:flex;gap:9px;margin-top:9px}
+.row button{flex:1}
+footer{margin-top:30px;font-size:12px;color:var(--muted);line-height:1.6}
+.sched li{cursor:pointer;user-select:none}
+.sched li:active{opacity:.6}
+.box{width:22px;height:22px;border-radius:7px;border:1.5px solid var(--line);flex:none;
+  display:flex;align-items:center;justify-content:center;font-size:13px;color:transparent}
+.sched li.done .box{background:var(--ok);border-color:var(--ok);color:var(--ground)}
+.sched li.done{color:var(--muted)}
+.sched li.due .box{border-color:var(--gold);box-shadow:0 0 0 4px rgba(232,176,75,.16)}
+.sched li.due{color:var(--gold)}
+.sched li.missed .box{border-color:var(--alert)}
+.sched li.missed{color:var(--alert)}
+.pat li{display:flex;gap:10px;align-items:baseline;padding:10px 0;
+  border-bottom:1px solid var(--line);font-size:14px;color:var(--muted)}
+.pat b{color:var(--paper);font-weight:600;font-variant-numeric:tabular-nums;
+  margin-left:auto;text-align:right}
+.pat .gold{color:var(--gold)}
+#toast{position:fixed;left:12px;right:12px;bottom:calc(16px + env(safe-area-inset-bottom));
+  background:var(--gold);color:#1A1200;padding:14px 16px;border-radius:14px;
+  font-size:14px;font-weight:500;line-height:1.35;opacity:0;transform:translateY(14px);
+  transition:opacity .22s,transform .22s;pointer-events:none;z-index:9;
+  box-shadow:0 8px 28px rgba(0,0,0,.45);max-width:496px;margin:0 auto}
+#toast.show{opacity:1;transform:translateY(0)}
+#toast.acc{background:var(--alert);color:#fff}
+.who{display:flex;gap:7px;flex-wrap:wrap;margin:0 0 14px}
+.who button{flex:1;min-width:76px;padding:9px 6px;font-size:13px;border-radius:11px;
+  background:transparent;color:var(--muted);border:1px solid var(--line)}
+.who button.on{color:var(--ground);font-weight:600}
+.sync{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);
+  margin:-6px 0 14px;display:flex;gap:6px;align-items:center}
+.sync .led{width:7px;height:7px;border-radius:50%;background:var(--line)}
+.sync.on .led{background:var(--ok)}
+.sync.pending .led{background:var(--gold)}
+.sync.off .led{background:var(--line)}
+.log .by{font-size:11px;color:var(--muted);border:1px solid var(--line);
+  border-radius:99px;padding:2px 7px}
+.hist li{display:flex;gap:10px;align-items:baseline;padding:9px 0;
+  border-bottom:1px solid var(--line);font-size:14px}
+.hist .d{width:78px;flex:none;color:var(--muted);font-size:13px}
+.hist .bars{flex:1;display:flex;gap:3px;align-items:center}
+.hist .bar{height:9px;border-radius:2px;background:var(--gold);min-width:3px}
+.hist .bar.a{background:var(--alert)}
+.hist b{font-variant-numeric:tabular-nums;font-weight:600;font-size:13px}
+.playnote{font-size:12px;color:var(--muted);margin:8px 0 0;line-height:1.5}
+/* running timer banner */
+#timer{display:none;background:rgba(232,176,75,.16);border:1px solid rgba(232,176,75,.5);
+  border-radius:16px;padding:14px 16px;margin:0 0 14px;align-items:center;gap:12px}
+#timer.on{display:flex}
+#timer .lbl{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
+#timer .run{font-size:30px;font-weight:200;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+#timer button{margin-left:auto;background:var(--gold);color:#1A1200;border:none;
+  font-weight:600;padding:12px 18px;border-radius:12px}
+
+/* when-selector */
+.when{display:flex;gap:6px;margin:0 0 4px}
+.when button{flex:1;padding:9px 4px;font-size:12px;border-radius:10px;background:transparent;
+  color:var(--muted);border:1px solid var(--line)}
+.when button.on{background:var(--paper);color:var(--ground);border-color:var(--paper);font-weight:600}
+.whenhint{font-size:11px;color:var(--muted);margin:0 0 12px}
+
+/* tap sheet */
+#veil{position:fixed;inset:0;background:rgba(10,14,26,.72);opacity:0;pointer-events:none;
+  transition:opacity .2s;z-index:20}
+#veil.on{opacity:1;pointer-events:auto}
+#sheet{position:fixed;left:0;right:0;bottom:0;background:var(--raised);
+  border-top:1px solid var(--line);border-radius:22px 22px 0 0;
+  padding:20px 16px calc(24px + env(safe-area-inset-bottom));
+  transform:translateY(100%);transition:transform .24s;z-index:21;max-width:520px;margin:0 auto}
+#sheet.on{transform:translateY(0)}
+#sheet h3{margin:0 0 4px;font-size:17px;font-weight:600}
+#sheet p{margin:0 0 16px;font-size:13px;color:var(--muted);line-height:1.45}
+#sheet .opts{display:grid;gap:8px;grid-template-columns:repeat(auto-fit,minmax(72px,1fr))}
+#sheet .opts button{padding:15px 6px;font-size:15px}
+#sheet .opts button small{display:block;font-size:10px;color:var(--muted);margin-top:3px;
+  font-weight:400;line-height:1.2}
+#sheet input{width:100%;padding:15px 14px;font:inherit;font-size:17px;color:var(--paper);
+  background:var(--ground);border:1px solid var(--line);border-radius:13px;margin:0 0 10px}
+#sheet input:focus{outline:none;border-color:var(--gold)}
+#sheet .go{width:100%;background:var(--gold);color:#1A1200;border-color:var(--gold);
+  font-weight:600;padding:15px}
+#sheet .swatches{display:flex;gap:8px;margin:0 0 14px}
+#sheet .swatches button{flex:1;height:36px;padding:0;border-radius:10px;border:2px solid transparent}
+#sheet .swatches button.on{border-color:var(--paper)}
+.mename{margin-left:auto;font-size:12px;color:var(--muted);background:none;border:none;
+  padding:4px 6px;text-decoration:underline}
+#sheet .cancel{width:100%;margin-top:12px;background:transparent;color:var(--muted);
+  border-color:transparent}
+.week li{display:flex;gap:10px;align-items:center;padding:9px 0;border-bottom:1px solid var(--line)}
+.week .dayb{width:52px;flex:none;padding:8px 0;font-size:12px;border-radius:9px;
+  background:transparent;color:var(--muted);border:1px solid var(--line);font-weight:600}
+.week .dayb.on{background:var(--gold);color:#1A1200;border-color:var(--gold)}
+.week input[type=time]{background:var(--ground);color:var(--paper);border:1px solid var(--line);
+  border-radius:9px;padding:8px 10px;font:inherit;font-size:14px}
+.week input:disabled{opacity:.3}
+.week .back{margin-left:auto;font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+.shab{display:none;background:rgba(127,166,232,.14);border:1px solid rgba(127,166,232,.45);
+  border-radius:16px;padding:14px 16px;margin:0 0 14px;font-size:14px;line-height:1.45;color:var(--paper)}
+.shab.on{display:block}
+.shab.pre{background:rgba(232,176,75,.14);border-color:rgba(232,176,75,.45)}
+.shab b{font-size:13px;letter-spacing:.1em;text-transform:uppercase}
+#timer.over{background:rgba(228,87,46,.2);border-color:rgba(228,87,46,.6)}
+#timer.over .lbl{color:var(--alert)}
+#timer.over button{background:var(--alert);color:#fff}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1><img src="./avatar.jpg" alt="" onerror="this.style.display='none'">
+  <span>Mercy &middot; <span id="age"></span></span></h1>
+<div class="who" id="who"></div>
+<div class="sync off" id="sync"><span class="led"></span><span id="synctext">Local only</span></div>
+
+<div class="shab" id="shab"></div>
+
+<div id="timer">
+  <div>
+    <div class="lbl" id="tlabel">Walk</div>
+    <div class="run" id="trun">0:00</div>
+  </div>
+  <button onclick="stopTimer()">Done</button>
+</div>
+
+<div class="clock" id="clock">
+  <div class="fill" id="fill"></div>
+  <div class="since">Since she was outside</div>
+  <div class="big" id="elapsed">--:--</div>
+  <div class="ceil">Her ceiling today is <b id="ceiling">2:12</b></div>
+  <div class="verdict" id="verdict">Log her first outing to start the clock.</div>
+</div>
+
+<h2>When did it happen</h2>
+<div class="when" id="when"></div>
+<p class="whenhint" id="whenhint">Every tap below stamps the real clock time and works out
+the gaps for you.</p>
+
+<h2>She went outside</h2>
+<div class="grid">
+  <button class="b-out" onclick="log('Pee','Outside')">Pee<span class="hint">outside</span></button>
+  <button class="b-out" onclick="logPoop('Outside')">Poop<span class="hint">outside</span></button>
+</div>
+<div class="row">
+  <button class="small" onclick="log('Potty Trip','N/A')">Out, nothing</button>
+  <button class="small" onclick="startTimer('Walk')">Start walk</button>
+</div>
+
+<h2>Accident indoors</h2>
+<div class="grid">
+  <button class="b-acc" onclick="log('Pee','Indoor Accident')">Pee<span class="hint">inside</span></button>
+  <button class="b-acc" onclick="logPoop('Indoor Accident')">Poop<span class="hint">inside</span></button>
+</div>
+
+<div id="ownerOnly">
+<h2>Your week</h2>
+<ul class="week" id="week"></ul>
+<p class="playnote" id="gymnote"></p>
+</div>
+
+<h2>Other</h2>
+<div class="grid">
+  <button class="small" onclick="log('Meal','N/A')">Meal</button>
+  <button class="small" onclick="log('Water','N/A')">Water</button>
+  <button class="small" onclick="log('Nap','N/A')">Nap</button>
+  <button class="small" id="gymBtn" onclick="goGym()">Going to the gym</button>
+  <button class="small" onclick="startTimer('Alone')">Leaving her</button>
+  <button class="small" onclick="startTimer('Play')">Start play</button>
+  <button class="small" onclick="log('Training','N/A')">Training</button>
+</div>
+<p class="playnote">Play is 15 to 30 minutes, about three times a day, and you end it, not
+her. Always go straight out afterward, then crate her for a nap. An overtired puppy gets
+mouthy, not sleepy.</p>
+
+<h2>Today</h2>
+<ul class="log" id="loglist"></ul>
+<div class="stat">
+  <span>Outings <b id="sOut">0</b> of <b id="sTarget">0</b></span>
+  <span>Accidents <b id="sAcc">0</b></span>
+  <span>Walk mins <b id="sWalk">0</b></span>
+  <span>Longest gap <b id="sGap">--</b></span>
+</div>
+
+<h2 id="planHead">Today's plan &middot; tap to check off</h2>
+<ul class="sched" id="sched"></ul>
+
+<h2>What she actually does</h2>
+<ul class="pat" id="pat"></ul>
+
+<h2>Last 10 days</h2>
+<ul class="hist" id="hist"></ul>
+
+<h2>Data</h2>
+<div class="row">
+  <button class="small" onclick="exportCsv()">Export CSV</button>
+  <button class="small" onclick="askNotify()">Alerts on</button>
+</div>
+<div class="row">
+  <button class="small" onclick="catchUp()">Catch up</button>
+  <button class="small" onclick="pull(true)">Sync now</button>
+  <button class="small" onclick="wipe()">Clear this phone</button>
+</div>
+<footer>
+  Everything is stored on this phone only. Nothing is uploaded anywhere.
+  Export the CSV and paste it into the Log tab of your workbook.
+  <span id="nstate"></span>
+</footer>
+</div>
+
+<script>
+/* ---- BEGIN GENERATED FROM config.json ---- */
+/* Do not edit by hand. Run scripts/sync_app_config.py and re-upload this file. */
+const DOB = new Date(2026,5,19);   /* 19 June 2026. Months are zero based. */
+const SYNC_URL = "";
+const SYNC_TOKEN = "CHANGE-THIS-TO-A-RANDOM-STRING";
+const OWNER = "Ariel";
+const OWNER_KEY = "mercy";
+const HOLD_PER_MONTH = 1.0;
+const HOLD_MAX = 6.0;
+const MEALS_UNTIL_6MO = 3;
+const MEALS_AFTER_6MO = 2;
+const WALK_PER_MONTH = 5.0;
+const PLAY = { min:15, max:30, perDay:3 };
+const GYM_MINUTES = 75;
+const GYM_DEFAULT = {0:"07:00", 1:null, 2:"05:00", 3:null, 4:"05:00", 5:"06:00", 6:null};
+const YOMTOV = [
+  ["2026-09-11","2026-09-13","Rosh Hashanah"],
+  ["2026-09-20","2026-09-21","Yom Kippur"],
+  ["2026-09-25","2026-10-02","Sukkot"],
+  ["2026-10-02","2026-10-03","Shemini Atzeret"],
+  ["2026-10-03","2026-10-04","Simchat Torah"]
+];
+/* ---- END GENERATED FROM config.json ---- */
+const KEY = 'mercy.events.v2';
+const OUTSIDE = ['Walk','Potty Trip'];
+
+/* ---- sharing ----
+   SYNC_URL, SYNC_TOKEN and OWNER_KEY are generated above from config.json.
+   Leave sync.url empty in config.json and the app stays on this phone only.
+   To share with your neighbour, a walker or a sitter, follow
+   docs/shared-log-setup.md, put the Apps Script /exec URL in config.json,
+   then run scripts/sync_app_config.py. */
+const PALETTE = ['#E8B04B','#5FBF8F','#7FA6E8','#C58FE0','#E4915F','#6FD3D3','#D48FB0','#A8C86B'];
+let MEMBERS = [{name:OWNER, color:PALETTE[0]}];
+const DAYS = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+/* OWNER_KEY is generated above from sync.owner_key in config.json. Anyone claiming the
+   owner name has to know it. Change it to something only you know. It is not real
+   security, it just stops a helper from wandering into your week. */
+/* Saturdays and yom tov are expected no-log windows. The app goes quiet and the
+   numbers skip them, so a quiet Shabbat never reads as a failed day. YOMTOV is
+   generated above from observance.yom_tov in config.json. */
+
+let events = [];
+try { events = JSON.parse(localStorage.getItem(KEY) || '[]'); } catch(e) { events = []; }
+
+let me = localStorage.getItem('mercy.me') || '';
+let role = localStorage.getItem('mercy.role') || '';
+const isOwner = () => role === 'owner';
+
+/* Your week, the gym times and anything about your day live on this phone only.
+   They are never queued, never posted, never in the shared log. Helpers cannot see them. */
+
+/* Members are not hardcoded. Anyone who opens the app names themselves once, which
+   writes a Join row to the shared log. Everyone else picks that name up on next sync. */
+function rebuildMembers(){
+  const seen={}, out=[{name:OWNER, color:PALETTE[0]}];
+  seen[OWNER.toLowerCase()]=true;
+  events.filter(e=>e.event==='Join').forEach(e=>{
+    const n=(e.by||'').trim();
+    if(!n || seen[n.toLowerCase()]) return;
+    seen[n.toLowerCase()]=true;
+    out.push({name:n, color:e.notes || PALETTE[out.length % PALETTE.length]});
+  });
+  MEMBERS=out;
+}
+function nextColor(){
+  const used=MEMBERS.map(m=>m.color);
+  return PALETTE.find(c=>used.indexOf(c)===-1) || PALETTE[MEMBERS.length % PALETTE.length];
+}
+let pending = [];
+try { pending = JSON.parse(localStorage.getItem('mercy.pending') || '[]'); } catch(e){ pending=[]; }
+let deletes = [];
+try { deletes = JSON.parse(localStorage.getItem('mercy.deletes') || '[]'); } catch(e){ deletes=[]; }
+
+const save = () => { try {
+  localStorage.setItem(KEY, JSON.stringify(events));
+  localStorage.setItem('mercy.pending', JSON.stringify(pending));
+  localStorage.setItem('mercy.deletes', JSON.stringify(deletes));
+} catch(e){} };
+const uid = () => Date.now().toString(36)+Math.random().toString(36).slice(2,8);
+const colorOf = n => (MEMBERS.find(m=>m.name===n)||{}).color || '#8B97B8';
+
+function setMe(n){
+  if(n.toLowerCase()===OWNER.toLowerCase() && !isOwner()){ openJoin(false); return; }
+  me=n; localStorage.setItem('mercy.me', n);
+  if(n.toLowerCase()!==OWNER.toLowerCase()){ role='helper'; localStorage.setItem('mercy.role','helper'); }
+  render();
+}
+
+function renderWho(){
+  rebuildMembers();
+  const bar=document.getElementById('who');
+  bar.innerHTML='';
+  MEMBERS.forEach(m=>{
+    const b=document.createElement('button');
+    b.textContent=m.name;
+    b.style.borderColor=m.color+'88';
+    if(m.name===me){ b.className='on'; b.style.background=m.color; b.style.borderColor=m.color; }
+    b.onclick=()=>setMe(m.name);
+    bar.appendChild(b);
+  });
+  const chg=document.createElement('button');
+  chg.className='mename';
+  chg.textContent = me ? 'Not you?' : 'Sign in';
+  chg.style.flex='0 0 auto';
+  chg.onclick=()=>openJoin(!me);
+  bar.appendChild(chg);
+}
+
+/* ---- sync ---- */
+function syncState(cls, text){
+  const el=document.getElementById('sync');
+  el.className='sync '+cls;
+  document.getElementById('synctext').textContent=text;
+}
+async function pull(loud){
+  if(!SYNC_URL){ if(loud) toast('Sharing is off. See shared-log-setup.md to turn it on.'); return; }
+  syncState('pending','Syncing');
+  try{
+    if(pending.length || deletes.length){
+      const res=await fetch(SYNC_URL,{method:'POST',
+        headers:{'Content-Type':'text/plain;charset=utf-8'},
+        body:JSON.stringify({token:SYNC_TOKEN,events:pending,deletes:deletes})});
+      const data=await res.json();
+      if(data.error) throw new Error(data.error);
+      pending=[]; deletes=[];
+      merge(data.events);
+    } else {
+      const res=await fetch(SYNC_URL+'?token='+encodeURIComponent(SYNC_TOKEN)+'&since=0');
+      const data=await res.json();
+      if(data.error) throw new Error(data.error);
+      merge(data.events);
+    }
+    save(); render();
+    syncState('on','Shared'+(MEMBERS.length>1?' with '+(MEMBERS.length-1)+' others':''));
+    if(loud) toast('Up to date.');
+  }catch(err){
+    syncState('pending', pending.length ? pending.length+' waiting to send' : 'Offline');
+    if(loud) toast('Could not reach the shared log. Your entries are saved and will send later.', true);
+  }
+}
+function merge(remote){
+  const have={}; events.forEach(e=>{ if(e.id) have[e.id]=true; });
+  (remote||[]).forEach(r=>{ if(r.id && !have[r.id]) events.push(r); });
+  events.sort((a,b)=>a.ts-b.ts);
+}
+/* Only dog events are ever sent. Your week, the gym times, your role and your name
+   preference stay in this phone's storage and are never posted anywhere. */
+function queue(e){ if(!SYNC_URL) return; pending.push(e); save(); pull(false); }
+const pad  = n => String(n).padStart(2,'0');
+const hhmm = d => { let h=d.getHours(), m=d.getMinutes(), ap=h>=12?'PM':'AM';
+                    h=h%12||12; return h+':'+pad(m)+' '+ap; };
+const dayKey = d => d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
+
+function ageMonths(){ return (Date.now()-DOB)/(1000*60*60*24*30.4375); }
+function ageWeeks(){ return (Date.now()-DOB)/(1000*60*60*24*7); }
+function holdHours(){ return Math.min(HOLD_MAX, ageMonths()*HOLD_PER_MONTH); }
+function mealsPerDay(){ return ageMonths() >= 6 ? MEALS_AFTER_6MO : MEALS_UNTIL_6MO; }
+function targetOutings(){ return Math.max(4, Math.round(16/holdHours()) + mealsPerDay()); }
+
+/* ---- logging ---- */
+/* ---- when: log at now, or a few minutes back if you forgot ---- */
+let offsetMin = 0;
+const OFFSETS = [[0,'Now'],[15,'15m ago'],[30,'30m ago'],[60,'1h ago']];
+function renderWhen(){
+  const bar=document.getElementById('when');
+  bar.innerHTML='';
+  OFFSETS.forEach(([m,label])=>{
+    const b=document.createElement('button');
+    b.textContent=label;
+    if(m===offsetMin) b.className='on';
+    b.onclick=()=>{ offsetMin=m; renderWhen(); hint(); };
+    bar.appendChild(b);
+  });
+}
+function hint(){
+  const h=document.getElementById('whenhint');
+  if(offsetMin===0){
+    h.textContent='Every tap below stamps the real clock time and works out the gaps for you.';
+  } else {
+    const t=new Date(Date.now()-offsetMin*60000);
+    h.innerHTML='Next tap will be logged at <b>'+hhmm(t)+'</b>, then this resets to Now.';
+  }
+}
+function stamp(){ const t=Date.now()-offsetMin*60000; offsetMin=0; renderWhen(); hint(); return t; }
+
+/* ---- tap sheet, so nothing needs typing ---- */
+let sheetPick=null;
+function openSheet(title, sub, opts, onPick){
+  document.getElementById('sh-title').textContent=title;
+  document.getElementById('sh-sub').textContent=sub||'';
+  const box=document.getElementById('sh-opts');
+  box.innerHTML='';
+  opts.forEach(o=>{
+    const b=document.createElement('button');
+    b.innerHTML=o.label+(o.note?'<small>'+o.note+'</small>':'');
+    if(o.accent) b.className='b-out';
+    b.onclick=()=>{ closeSheet(); onPick(o.value); };
+    box.appendChild(b);
+  });
+  document.getElementById('veil').classList.add('on');
+  document.getElementById('sheet').classList.add('on');
+}
+function openJoin(first){
+  rebuildMembers();
+  let color=nextColor();
+  document.getElementById('sh-title').textContent = first ? 'Who are you?' : 'Change your name';
+  document.getElementById('sh-sub').textContent = first
+    ? 'Type your name once. Everything you log gets stamped with it, so Ariel can see who took Mercy out and when. You will only ever see Mercy\u2019s side of things, never his calendar.'
+    : 'This renames you on everything you log from now on.';
+  const box=document.getElementById('sh-opts');
+  box.innerHTML='';
+  box.style.display='block';
+
+  const input=document.createElement('input');
+  input.type='text'; input.placeholder='Your name';
+  input.setAttribute('autocapitalize','words');
+  input.value = first ? '' : me;
+  box.appendChild(input);
+
+  const sw=document.createElement('div');
+  sw.className='swatches';
+  PALETTE.slice(0,5).forEach(c=>{
+    const b=document.createElement('button');
+    b.style.background=c;
+    b.setAttribute('aria-label','Pick colour');
+    if(c===color) b.className='on';
+    b.onclick=()=>{ color=c; [...sw.children].forEach(x=>x.className=''); b.className='on'; };
+    sw.appendChild(b);
+  });
+  box.appendChild(sw);
+
+  const go=document.createElement('button');
+  go.className='go'; go.textContent = first ? "That's me" : 'Save';
+  go.onclick=()=>{
+    const n=input.value.trim();
+    if(!n){ input.focus(); return; }
+    if(n.toLowerCase()===OWNER.toLowerCase() && !isOwner()){
+      const k=(prompt("That is the owner's name. Enter the owner key to continue, or Cancel and use your own name.")||'').trim();
+      if(k.toLowerCase()!==OWNER_KEY.toLowerCase()){
+        toast('Wrong key. Use your own name instead.', true);
+        input.value=''; input.focus(); return;
+      }
+    }
+    const clash=MEMBERS.find(m=>m.name.toLowerCase()===n.toLowerCase() && m.name!==me);
+    closeSheet();
+    box.style.display='';
+    role = (n.toLowerCase()===OWNER.toLowerCase()) ? 'owner' : 'helper';
+    localStorage.setItem('mercy.role', role);
+    if(clash){ setMe(clash.name); toast('<b>Welcome back, '+clash.name+'</b><br>Picking up where you left off.'); return; }
+    me=n; localStorage.setItem('mercy.me', n);
+    const e={id:uid(), ts:Date.now(), by:n, event:'Join', where:'N/A', notes:color};
+    events.push(e); events.sort((a,b)=>a.ts-b.ts);
+    rebuildMembers(); save(); render(); queue(e);
+    toast('<b>You are logged in as '+n+'</b><br>Everything you log from now on says so.');
+  };
+  box.appendChild(go);
+
+  if(!first || MEMBERS.length>1){
+    const others=document.createElement('p');
+    others.style.cssText='font-size:12px;color:var(--muted);margin:14px 0 6px';
+    others.textContent = 'Or tap a name already here:';
+    box.appendChild(others);
+    const row=document.createElement('div');
+    row.className='opts';
+    MEMBERS.forEach(m=>{
+      const b=document.createElement('button');
+      b.textContent=m.name;
+      b.style.borderColor=m.color+'88';
+      b.onclick=()=>{ closeSheet(); box.style.display=''; setMe(m.name); };
+      row.appendChild(b);
+    });
+    box.appendChild(row);
+  }
+
+  document.getElementById('veil').classList.add('on');
+  document.getElementById('sheet').classList.add('on');
+  setTimeout(()=>input.focus(), 260);
+}
+
+function closeSheet(){
+  document.getElementById('sh-opts').style.display='';
+  document.getElementById('veil').classList.remove('on');
+  document.getElementById('sheet').classList.remove('on');
+}
+
+/* ---- live timer: start when you leave, stop when you are back ---- */
+let timer=null, tick=null;
+try{ timer=JSON.parse(localStorage.getItem('mercy.timer')||'null'); }catch(e){ timer=null; }
+
+function startTimer(kind){
+  if(timer){ toast('A '+timer.kind.toLowerCase()+' timer is already running.', true); return; }
+  timer={kind:kind, start:stamp(), by:me};
+  localStorage.setItem('mercy.timer', JSON.stringify(timer));
+  drawTimer();
+  toast('<b>'+kind+' started '+hhmm(new Date(timer.start))+'</b><br>Tap Done when you are back and it works out the minutes.');
+}
+function stopTimer(){
+  if(!timer) return;
+  const mins=Math.max(1, Math.round((Date.now()-timer.start)/60000));
+  const kind=timer.kind;
+  const startTs=timer.start;
+  timer=null; localStorage.removeItem('mercy.timer'); drawTimer();
+  const e=Object.assign({id:uid(), ts:startTs, by:me, event:kind, where:'N/A', mins:mins});
+  events.push(e); events.sort((a,b)=>a.ts-b.ts);
+  save(); render(); queue(e);
+  let msg='<b>'+kind+' logged, '+mins+' min</b><br>'+hhmm(new Date(startTs))+' to '+hhmm(new Date());
+  let bad=false;
+  const cap=Math.round(ageMonths()*WALK_PER_MONTH);
+  if(kind==='Walk' && mins>cap){ msg+='<br>Over her '+cap+' min ceiling for structured walking.'; bad=true; }
+  if(kind==='Play' && mins>PLAY.max){ msg+='<br>Over the '+PLAY.max+' min play ceiling.'; bad=true; }
+  if(kind==='Alone' && mins/60>holdHours()){ msg+='<br>Longer than her '+holdHours().toFixed(1)+'h hold. Check for an accident.'; bad=true; }
+  toast(msg, bad);
+  if(kind==='Play') setTimeout(()=>toast('<b>Now take her out</b><br>Straight after play, then crate her for a nap.'),2800);
+}
+function ceilingFor(kind){
+  if(kind==='Walk') return Math.max(5, Math.round(ageMonths()*WALK_PER_MONTH));
+  if(kind==='Play') return PLAY.max;
+  if(kind==='Alone') return Math.round(holdHours()*60);
+  return null;
+}
+function drawTimer(){
+  const el=document.getElementById('timer');
+  if(!timer){ el.classList.remove('on'); el.classList.remove('over');
+    if(tick){clearInterval(tick);tick=null;} return; }
+  el.classList.add('on');
+  const cap=ceilingFor(timer.kind);
+  const paint=()=>{
+    const secs=Math.floor((Date.now()-timer.start)/1000);
+    const mins=secs/60;
+    document.getElementById('trun').textContent=Math.floor(secs/60)+':'+pad(secs%60);
+    let lbl=timer.kind+' since '+hhmm(new Date(timer.start));
+    if(cap){
+      const left=Math.round(cap-mins);
+      lbl += left>=0 ? '  \u00b7  '+left+' min left' : '  \u00b7  '+Math.abs(left)+' min over';
+      el.classList.toggle('over', mins>cap);
+      if(mins>cap && !timer.warned){
+        timer.warned=true; localStorage.setItem('mercy.timer', JSON.stringify(timer));
+        const msg = timer.kind==='Walk' ? 'That is past her '+cap+' minute walking ceiling. Head home.'
+                  : timer.kind==='Play' ? 'Past '+cap+' minutes of play. End it now, then out, then a nap.'
+                  : 'She has been alone past her '+ (cap/60).toFixed(1) +' hour hold. Get back or send someone.';
+        alarm('Mercy: '+timer.kind+' at '+cap+' min', msg);
+      }
+      if(mins>cap && Math.floor(mins-cap)>0 && Math.floor(mins-cap)%10===0 && Math.floor(secs%60)===0) beep(2);
+    }
+    document.getElementById('tlabel').textContent=lbl;
+  };
+  paint();
+  if(!tick) tick=setInterval(paint,1000);
+}
+
+function push(event, where, extra){
+  const e = Object.assign({ id: uid(), ts: stamp(), by: me, event, where }, extra||{});
+  events.push(e);
+  events.sort((a,b)=>a.ts-b.ts);
+  save(); feedback(e); render(); queue(e);
+  return e;
+}
+
+/* tapping a plan row logs it at the real clock time, tapping again undoes it */
+function togglePlan(id){
+  const k=dayKey(new Date());
+  const i=events.findIndex(e=>e.planId===id && dayKey(new Date(e.ts))===k);
+  if(i>=0){ events.splice(i,1); save(); render(); toast('Unchecked. That entry was removed.'); return; }
+  const p=PLAN.find(x=>x[0]===id);
+  if(!p) return;
+  if(p[3]==='Water Up'){ push('Water Up','N/A',{planId:id}); return; }
+  if(p[3]==='Walk' || p[3]==='Play'){
+    openSheet(p[2], 'Time it live so the length is exact, or log the planned '+p[5]+' minutes now.',
+      [{value:'timer',label:'Start timer',note:'exact',accent:true},
+       {value:'now',label:'Log '+p[5]+'m',note:'planned'}],
+      v => v==='timer' ? startTimer(p[3])
+                       : push(p[3], p[4], {planId:id, mins:p[5]}));
+    return;
+  }
+  push(p[3], p[4], Object.assign({planId:id}, p[5]?{mins:p[5]}:{}));
+}
+function log(event, where){ push(event, where); }
+const STOOL = [
+  {value:1,label:'1',note:'hard pellets'},
+  {value:2,label:'2',note:'firm, segmented'},
+  {value:3,label:'3',note:'ideal log'},
+  {value:4,label:'4',note:'moist, loses shape'},
+  {value:5,label:'5',note:'very moist, piles'},
+  {value:6,label:'6',note:'mushy, no shape'},
+  {value:7,label:'7',note:'watery'},
+  {value:0,label:'Skip',note:'did not look'},
+];
+function logPoop(where){
+  openSheet('Stool score',
+    'Tap one. Two days running at 5 or above is a vet question, not a training one.',
+    STOOL, v => push('Poop', where, v ? {stool:v} : {}));
+}
+
+function remove(i){
+  const e=events[i];
+  if(e && e.id){ deletes.push(e.id); const p=pending.findIndex(x=>x.id===e.id); if(p>=0) pending.splice(p,1); }
+  events.splice(i,1); save(); render(); if(SYNC_URL) pull(false);
+}
+
+function wipe(){ if(confirm('Clear the copy on this phone? If sharing is on, the shared log keeps everything and will sync back.')){ events=[]; pending=[]; save(); render(); pull(false); } }
+
+/* ---- derived ---- */
+function lastOutside(){
+  for(let i=events.length-1;i>=0;i--){
+    const e=events[i];
+    if(OUTSIDE.includes(e.event) || (e.where==='Outside')) return e.ts;
+  }
+  return null;
+}
+function todays(){ const k=dayKey(new Date());
+  return events.filter(e=>e.event!=='Join' && dayKey(new Date(e.ts))===k); }
+
+/* ---- schedule ---- */
+const PLAN = [
+  ['p1','04:40','Out, then Walk 1','Walk','N/A',10],
+  ['p2','06:15','Out, in from the gym','Potty Trip','N/A',5,'Out'],
+  ['p3','07:15','Out after your call','Potty Trip','N/A',5,'Out'],
+  ['p4','07:20','Breakfast','Meal','N/A',0],
+  ['p5','07:40','Out after breakfast','Potty Trip','N/A',5],
+  ['p5b','08:10','Play 1 (20 min), then out','Play','N/A',20],
+  ['p6','09:45','Potty trip','Potty Trip','N/A',5],
+  ['p7','11:30','Lunch','Meal','N/A',0],
+  ['p8','11:50','Out after lunch','Potty Trip','N/A',5],
+  ['p8b','12:05','Play 2 (20 min), then out','Play','N/A',20],
+  ['p9','13:15','Out before you leave','Potty Trip','N/A',5,'Out'],
+  ['p10','16:00','Mid-block break','Potty Trip','N/A',10,'Afternoon visit'],
+  ['p11','18:30','Out, in the door','Potty Trip','N/A',5,'Out'],
+  ['p12','18:45','Dinner','Meal','N/A',0],
+  ['p13','19:05','Walk 2','Walk','N/A',10],
+  ['p13b','19:30','Play 3 (20 min), then out','Play','N/A',20],
+  ['p14','20:00','Pick up the water bowl','Water Up','N/A',0],
+  ['p15','20:30','Potty trip','Potty Trip','N/A',5],
+  ['p16','22:00','Last call, then crate','Potty Trip','N/A',5],
+];
+function minsNow(){ const d=new Date(); return d.getHours()*60+d.getMinutes(); }
+function toMins(s){ const [h,m]=s.split(':').map(Number); return h*60+m; }
+
+/* ---- Shabbat and yom tov ---- */
+function noLogDay(dt){
+  dt = dt || new Date();
+  if(dt.getDay()===6) return 'Shabbat';
+  const k=dayKey(dt);
+  const hit=YOMTOV.find(([a,b])=> k>=a && k<=b);
+  return hit ? hit[2] : null;
+}
+function preWindow(){
+  const d=new Date();
+  if(d.getDay()===5 && d.getHours()>=12) return 'Shabbat';
+  const t=new Date(Date.now()+86400000);
+  const nx=noLogDay(t);
+  if(nx && d.getHours()>=12 && !noLogDay(d)) return nx;
+  return null;
+}
+
+function catchUp(){
+  openSheet('Catch up',
+    'Roughly how many times did she go outside since you last logged? An estimate is fine, it is marked as one.',
+    [4,6,8,10,12].map(n=>({value:n,label:String(n),note:'outings'})),
+    outs => setTimeout(()=>openSheet('Any accidents?',
+      'Same again, a rough number.',
+      [0,1,2,3,4].map(n=>({value:n,label:String(n),note:n===1?'accident':'accidents'})),
+      accs => fillGap(outs, accs)), 240));
+}
+function fillGap(outs, accs){
+  const last = events.length ? events[events.length-1].ts : Date.now()-86400000;
+  const span = Math.max(3600000, Date.now()-last);
+  const total = outs+accs;
+  const made=[];
+  for(let i=0;i<total;i++){
+    const ts = last + Math.round(span*(i+1)/(total+1));
+    made.push({ id:uid(), ts:ts, by:me,
+      event: i<outs ? 'Potty Trip' : 'Pee',
+      where: i<outs ? 'N/A' : 'Indoor Accident',
+      notes:'estimated, logged after Shabbat or yom tov' });
+  }
+  made.forEach(e=>events.push(e));
+  events.sort((a,b)=>a.ts-b.ts);
+  save(); render();
+  made.forEach(queue);
+  toast('<b>'+total+' estimated entries added</b><br>Marked as estimates so the record has no hole in it.');
+}
+
+function shabbatBanner(){
+  const el=document.getElementById('shab');
+  const now=noLogDay(), pre=preWindow();
+  if(now){
+    el.className='shab on';
+    el.innerHTML='<b>'+now+'</b><br>The app is quiet. Use the printed card. '+
+      'Out before you go anywhere, out the moment you are back. Tap Catch up afterwards.';
+  } else if(pre){
+    el.className='shab on pre';
+    el.innerHTML='<b>'+pre+' is coming in</b><br>Log anything outstanding now. '+
+      'Card on the fridge. Her pegs: before candles, home from shul, after the meal, before bed.';
+  } else {
+    el.className='shab';
+  }
+}
+
+/* ---- sound and buzz, for when the phone is in your pocket ---- */
+let audio=null;
+function unlockAudio(){
+  if(audio) return;
+  try{ audio=new (window.AudioContext||window.webkitAudioContext)(); }catch(e){}
+}
+document.addEventListener('touchstart', unlockAudio, {once:true});
+document.addEventListener('click', unlockAudio, {once:true});
+
+function beep(times){
+  if(navigator.vibrate) navigator.vibrate([220,120,220,120,320]);
+  if(!audio) return;
+  if(audio.state==='suspended') audio.resume();
+  for(let i=0;i<(times||3);i++){
+    const t=audio.currentTime + i*0.42;
+    const o=audio.createOscillator(), g=audio.createGain();
+    o.type='sine'; o.frequency.setValueAtTime(i%2?740:988, t);
+    g.gain.setValueAtTime(0.0001, t);
+    g.gain.exponentialRampToValueAtTime(0.35, t+0.02);
+    g.gain.exponentialRampToValueAtTime(0.0001, t+0.30);
+    o.connect(g); g.connect(audio.destination);
+    o.start(t); o.stop(t+0.32);
+  }
+}
+function alarm(title, body){
+  beep(3);
+  toast('<b>'+title+'</b><br>'+body, true);
+  if(typeof Notification!=='undefined' && Notification.permission==='granted'){
+    try{ new Notification(title,{body:body, tag:'mercy-alarm', renotify:true}); }catch(e){}
+  }
+}
+
+/* ---- your gym week ---- */
+let gym={};
+try{ gym=JSON.parse(localStorage.getItem('mercy.gym')||'null') || Object.assign({},GYM_DEFAULT); }
+catch(e){ gym=Object.assign({},GYM_DEFAULT); }
+const saveGym=()=>localStorage.setItem('mercy.gym', JSON.stringify(gym));
+
+function addMin(hhmmStr, mins){
+  const [h,m]=hhmmStr.split(':').map(Number);
+  const d=new Date(); d.setHours(h, m+mins, 0, 0);
+  return d;
+}
+function gymToday(){ return gym[new Date().getDay()] || null; }
+
+function renderWeek(){
+  const ul=document.getElementById('week');
+  ul.innerHTML='';
+  DAYS.forEach((name,i)=>{
+    const li=document.createElement('li');
+    const b=document.createElement('button');
+    b.className='dayb'+(gym[i]?' on':''); b.textContent=name;
+    b.onclick=()=>{ gym[i]= gym[i] ? null : (GYM_DEFAULT[i]||'05:00'); saveGym(); render(); };
+    const t=document.createElement('input');
+    t.type='time'; t.value=gym[i]||''; t.disabled=!gym[i];
+    t.onchange=()=>{ if(t.value){ gym[i]=t.value; saveGym(); render(); } };
+    const back=document.createElement('span');
+    back.className='back';
+    back.textContent = gym[i] ? 'back '+hhmm(addMin(gym[i], GYM_MINUTES)) : 'no gym';
+    li.appendChild(b); li.appendChild(t); li.appendChild(back);
+    ul.appendChild(li);
+  });
+  const g=gymToday();
+  const note=document.getElementById('gymnote');
+  if(g){
+    note.innerHTML='Gym today at <b>'+hhmm(addMin(g,0))+'</b>, back around <b>'+
+      hhmm(addMin(g,GYM_MINUTES))+'</b>. Take her out in the ten minutes before you leave. '+
+      'Tap Going to the gym and the app will sound an alert if she is alone past her '+
+      holdHours().toFixed(1)+' hour hold.';
+  } else {
+    note.textContent='No gym today. Tap a day to turn it on, then set the time. '+
+      'This is stored on your phone and drives the reminders below.';
+  }
+}
+
+function goGym(){
+  const last=lastOutside();
+  const g=gymToday();
+  const backAt = g ? hhmm(addMin(g,GYM_MINUTES)) : hhmm(new Date(Date.now()+GYM_MINUTES*60000));
+  if(last===null || (Date.now()-last)/60000 > 20){
+    openSheet('Take her out first',
+      'She has not been outside in the last twenty minutes. A five minute trip now is the difference between coming home to a clean floor and not.',
+      [{value:'out',label:'Out now',note:'then start the timer',accent:true},
+       {value:'skip',label:'Skip it',note:'start anyway'}],
+      v => { if(v==='out') push('Potty Trip','N/A');
+             startTimer('Alone');
+             toast('<b>Gym timer running</b><br>Back around '+backAt+'. You will get an alert if she goes past her hold.'); });
+    return;
+  }
+  startTimer('Alone');
+  toast('<b>Gym timer running</b><br>Back around '+backAt+'. She went out '+
+        Math.round((Date.now()-last)/60000)+' min ago.');
+}
+
+/* ---- toast with the intervals, computed the moment you tap ---- */
+let toastTimer=null;
+function toast(msg, bad){
+  const t=document.getElementById('toast');
+  t.innerHTML=msg;
+  t.classList.toggle('acc', !!bad);
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>t.classList.remove('show'), 5200);
+}
+function gapText(ms){
+  const m=Math.round(ms/60000);
+  if(m<60) return m+' min';
+  return Math.floor(m/60)+'h '+pad(m%60)+'m';
+}
+function lastBefore(ts, test){
+  for(let i=events.length-1;i>=0;i--){
+    const e=events[i];
+    if(e.ts<ts && test(e)) return e;
+  }
+  return null;
+}
+function feedback(e){
+  const bits=[];
+  const meal=lastBefore(e.ts, x=>x.event==='Meal');
+  const water=lastBefore(e.ts, x=>x.event==='Water');
+  const out=lastBefore(e.ts, x=>OUTSIDE.includes(x.event)||x.where==='Outside');
+  const same=lastBefore(e.ts, x=>x.event===e.event);
+
+  if((e.event==='Pee'||e.event==='Poop')){
+    if(meal && e.ts-meal.ts < 6*3600000) bits.push(gapText(e.ts-meal.ts)+' after her meal');
+    if(water && e.ts-water.ts < 3*3600000) bits.push(gapText(e.ts-water.ts)+' after drinking');
+    if(same) bits.push(gapText(e.ts-same.ts)+' since her last '+e.event.toLowerCase());
+  }
+  if(e.where==='Indoor Accident' && out) bits.push('only '+gapText(e.ts-out.ts)+' after she was outside');
+
+  const head=(e.where==='Indoor Accident' ? 'Accident logged ' : e.event+' logged ')+hhmm(new Date(e.ts));
+  toast('<b>'+head+'</b>'+(bits.length?'<br>'+bits.join(' &middot; '):''), e.where==='Indoor Accident');
+}
+
+/* ---- her real patterns, learned from the log ---- */
+function median(a){ if(!a.length) return null; a=a.slice().sort((x,y)=>x-y);
+  const m=Math.floor(a.length/2); return a.length%2?a[m]:(a[m-1]+a[m])/2; }
+
+function patterns(){
+  const mealToPoop=[], mealToPee=[], peeGaps=[], poopHours=[], accHours=[];
+  let lastPee=null;
+  events.filter(e=>e.event!=='Join').forEach(e=>{
+    if(e.event==='Poop'){
+      const m=lastBefore(e.ts,x=>x.event==='Meal');
+      if(m && e.ts-m.ts<6*3600000) mealToPoop.push(e.ts-m.ts);
+      poopHours.push(new Date(e.ts).getHours());
+    }
+    if(e.event==='Pee'){
+      const m=lastBefore(e.ts,x=>x.event==='Meal');
+      if(m && e.ts-m.ts<3*3600000) mealToPee.push(e.ts-m.ts);
+      if(lastPee && e.ts-lastPee<8*3600000) peeGaps.push(e.ts-lastPee);
+      lastPee=e.ts;
+    }
+    if(e.where==='Indoor Accident') accHours.push(new Date(e.ts).getHours());
+  });
+  const mode=a=>{ if(!a.length) return null; const c={}; let best=null;
+    a.forEach(h=>{c[h]=(c[h]||0)+1; if(!best||c[h]>c[best])best=h;}); return +best; };
+  const hr=h=>{ if(h===null) return null; const ap=h>=12?'PM':'AM'; return (h%12||12)+' '+ap; };
+
+  return [
+    ['Her meal to poop window', mealToPoop.length>=3 ? gapText(median(mealToPoop)) : null,
+     mealToPoop.length, 'Take her out at this mark, not the generic 15 min.'],
+    ['Her meal to pee window', mealToPee.length>=3 ? gapText(median(mealToPee)) : null, mealToPee.length, ''],
+    ['Typical gap between pees', peeGaps.length>=4 ? gapText(median(peeGaps)) : null, peeGaps.length, ''],
+    ['Most common poop hour', poopHours.length>=4 ? hr(mode(poopHours)) : null, poopHours.length, ''],
+    ['Riskiest hour for accidents', accHours.length>=3 ? hr(mode(accHours)) : null, accHours.length, ''],
+  ];
+}
+
+function renderPatterns(){
+  const ul=document.getElementById('pat');
+  ul.innerHTML='';
+  patterns().forEach(([label,val,n,note])=>{
+    const li=document.createElement('li');
+    li.innerHTML='<span>'+label+(val&&note?'<br><span style="font-size:12px">'+note+'</span>':'')+
+      '</span><b class="'+(val?'gold':'')+'">'+(val||('needs '+Math.max(0,(n<3?3:4)-n)+' more'))+'</b>';
+    ul.appendChild(li);
+  });
+}
+
+function renderHistory(){
+  const ul=document.getElementById('hist');
+  ul.innerHTML='';
+  const byDay={};
+  events.filter(e=>e.event!=='Join').forEach(e=>{
+    const k=dayKey(new Date(e.ts));
+    byDay[k]=byDay[k]||{out:0,acc:0,walk:0,play:0};
+    if(OUTSIDE.includes(e.event)||e.where==='Outside') byDay[k].out++;
+    if(e.where==='Indoor Accident'||e.where==='Crate Accident') byDay[k].acc++;
+    if(e.event==='Walk') byDay[k].walk+=(e.mins||0);
+    if(e.event==='Play') byDay[k].play+=(e.mins||0);
+  });
+  const days=Object.keys(byDay).sort().slice(-10).reverse();
+  if(!days.length){ ul.innerHTML='<li class="empty">No history yet.</li>'; return; }
+  days.forEach(k=>{
+    const v=byDay[k], parts=k.split('-');
+    const dt=new Date(+parts[0],+parts[1]-1,+parts[2]);
+    const li=document.createElement('li');
+    let bars='';
+    for(let i=0;i<v.out;i++) bars+='<span class="bar" style="flex:1"></span>';
+    for(let i=0;i<v.acc;i++) bars+='<span class="bar a" style="flex:1"></span>';
+    li.innerHTML='<span class="d">'+dt.toLocaleDateString(undefined,{weekday:'short',month:'numeric',day:'numeric'})+
+      '</span><span class="bars">'+bars+'</span><b>'+v.out+' out &middot; '+v.acc+' acc</b>';
+    ul.appendChild(li);
+  });
+}
+
+/* ---- render ---- */
+function applyRole(){
+  const own=isOwner();
+  document.getElementById('ownerOnly').style.display = own ? '' : 'none';
+  document.getElementById('gymBtn').style.display = own ? '' : 'none';
+  document.getElementById('planHead').innerHTML = own
+    ? "Today's plan &middot; tap to check off"
+    : "Mercy's day &middot; tap what you did";
+}
+
+function render(){
+  renderWho();
+  renderWhen();
+  hint();
+  drawTimer();
+  applyRole();
+  shabbatBanner();
+  if(isOwner()) renderWeek();
+  document.getElementById('age').textContent = ageWeeks().toFixed(1)+' weeks old';
+
+  const hold = holdHours();
+  const ch = Math.floor(hold), cm = Math.round((hold-ch)*60);
+  document.getElementById('ceiling').textContent = ch+':'+pad(cm);
+
+  const last = lastOutside();
+  const clock = document.getElementById('clock');
+  const verdict = document.getElementById('verdict');
+  if(last===null){
+    document.getElementById('elapsed').textContent='--:--';
+    document.getElementById('fill').style.width='0%';
+    clock.classList.remove('over');
+    verdict.className='verdict';
+    verdict.textContent='Log her first outing to start the clock.';
+  } else {
+    const el=(Date.now()-last)/3600000;
+    document.getElementById('elapsed').textContent =
+      Math.floor(el)+':'+pad(Math.floor((el%1)*60));
+    const pct=Math.min(100, el/hold*100);
+    document.getElementById('fill').style.width=pct+'%';
+    const over = el>hold;
+    clock.classList.toggle('over', over);
+    if(over){ verdict.className='verdict over'; verdict.textContent='Past her ceiling. Take her out now.'; }
+    else if(pct>75){ verdict.className='verdict warn';
+      verdict.textContent='Getting close. About '+Math.round((hold-el)*60)+' minutes left.'; }
+    else { verdict.className='verdict ok';
+      verdict.textContent='Fine for about '+Math.round((hold-el)*60)+' more minutes.'; }
+  }
+
+  const t=todays();
+  const list=document.getElementById('loglist');
+  if(!t.length){ list.innerHTML='<li class="empty">Nothing logged yet today.</li>'; }
+  else{
+    list.innerHTML='';
+    t.slice().reverse().forEach(e=>{
+      const i=events.indexOf(e);
+      const li=document.createElement('li');
+      let cls='tag', label=e.where;
+      if(e.where==='Indoor Accident'){ cls='tag acc'; label='accident'; }
+      else if(e.where==='Outside'||OUTSIDE.includes(e.event)){ cls='tag out'; label='outside'; }
+      else label='';
+      let name=e.event;
+      if(e.mins) name+=' '+e.mins+'m';
+      if(e.stool) name+=' &middot; stool '+e.stool;
+      const byTag = e.by ? '<span class="by" style="color:'+colorOf(e.by)+';border-color:'+colorOf(e.by)+'55">'+e.by+'</span>' : '';
+      li.innerHTML='<span class="t">'+hhmm(new Date(e.ts))+'</span><span>'+name+'</span>'+
+        (label?'<span class="'+cls+'">'+label+'</span>':'')+byTag+
+        '<button class="x" aria-label="Delete">remove</button>';
+      li.querySelector('.x').onclick=()=>remove(i);
+      list.appendChild(li);
+    });
+  }
+
+  const outs=t.filter(e=>OUTSIDE.includes(e.event)||e.where==='Outside').length;
+  const accs=t.filter(e=>e.where==='Indoor Accident').length;
+  const wmin=t.filter(e=>e.event==='Walk').reduce((s,e)=>s+(e.mins||0),0);
+  document.getElementById('sOut').textContent=outs;
+  document.getElementById('sTarget').textContent=targetOutings();
+  document.getElementById('sAcc').textContent=accs;
+  document.getElementById('sWalk').textContent=wmin;
+
+  const outTimes=t.filter(e=>OUTSIDE.includes(e.event)||e.where==='Outside').map(e=>e.ts);
+  let gap=0;
+  for(let i=1;i<outTimes.length;i++) gap=Math.max(gap,outTimes[i]-outTimes[i-1]);
+  if(outTimes.length) gap=Math.max(gap, Date.now()-outTimes[outTimes.length-1]);
+  document.getElementById('sGap').textContent =
+    outTimes.length ? (Math.floor(gap/3600000)+':'+pad(Math.floor((gap%3600000)/60000))) : '--';
+
+  const g = isOwner() ? gymToday() : null;
+  if(isOwner()){
+    PLAN.forEach(p=>{
+      if(p[0]==='p1') p[1]= g ? addMin(g,-20).toTimeString().slice(0,5) : '06:00';
+      if(p[0]==='p2'){ p[1]= g ? addMin(g,GYM_MINUTES).toTimeString().slice(0,5) : '07:00';
+                       p[2]= g ? 'Out, in from the gym' : 'Out'; }
+    });
+  }
+  const now=minsNow(), sched=document.getElementById('sched');
+  const k=dayKey(new Date());
+  const doneIds=new Set(events.filter(e=>e.planId && dayKey(new Date(e.ts))===k).map(e=>e.planId));
+  sched.innerHTML='';
+  const firstOpen=PLAN.find(p=>!doneIds.has(p[0]) && toMins(p[1])<=now+20);
+  PLAN.forEach(p=>{
+    const [id,time]=p;
+    const label = (!isOwner() && p[6]) ? p[6] : p[2];
+    const li=document.createElement('li');
+    const done=doneIds.has(id);
+    if(done) li.className='done';
+    else if(firstOpen && firstOpen[0]===id) li.className='due';
+    else if(toMins(time)<now-30) li.className='missed';
+    const [h,m]=time.split(':').map(Number);
+    const ap=h>=12?'PM':'AM', h12=h%12||12;
+    li.innerHTML='<span class="box">&#10003;</span><span class="t">'+h12+':'+pad(m)+' '+ap+
+      '</span><span>'+label+'</span>';
+    li.onclick=()=>togglePlan(id);
+    li.setAttribute('role','button');
+    li.tabIndex=0;
+    li.onkeydown=ev=>{ if(ev.key==='Enter'||ev.key===' '){ ev.preventDefault(); togglePlan(id); } };
+    sched.appendChild(li);
+  });
+
+  renderPatterns();
+  renderHistory();
+}
+
+/* ---- export ---- */
+function exportCsv(){
+  const rows=[['Date','Time','Event','Where','Duration (min)','Stool Score','Amount (cups)','Notes','Logged By']];
+  events.filter(e=>e.event!=='Join').forEach(e=>{
+    const d=new Date(e.ts);
+    rows.push([
+      (d.getMonth()+1)+'/'+d.getDate()+'/'+d.getFullYear(),
+      hhmm(d), e.event, e.where||'N/A', e.mins||'', e.stool||'', e.cups||'', e.notes||'', e.by||''
+    ]);
+  });
+  const csv=rows.map(r=>r.map(c=>'"'+String(c).replace(/"/g,'""')+'"').join(',')).join('\n');
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));
+  a.download='mercy-log-'+dayKey(new Date())+'.csv';
+  a.click();
+}
+
+/* ---- reminders (only while the app is open) ---- */
+function askNotify(){
+  unlockAudio(); beep(1);
+  if(!('Notification' in window)){ toast('This browser cannot show notifications, but the sound and buzz still work while the app is open. Use the calendar file for background alerts.'); return; }
+  Notification.requestPermission().then(p=>{
+    document.getElementById('nstate').textContent =
+      p==='granted' ? ' Reminders are on while this app is open.'
+                    : ' Reminders are off. Use the calendar file for alerts that work in the background.';
+  });
+}
+let warned=false;
+setInterval(()=>{
+  render();
+  const last=lastOutside(); if(last===null) return;
+  const el=(Date.now()-last)/3600000, hold=holdHours();
+  if(el>hold && !warned && !noLogDay()){
+    alarm('Mercy is past her ceiling', 'She has not been out in '+el.toFixed(1)+' hours.');
+    warned=true;
+  }
+  if(el<hold) warned=false;
+}, 30000);
+
+if('serviceWorker' in navigator){
+  window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
+}
+rebuildMembers();
+render();
+if(SYNC_URL){ pull(false); setInterval(()=>pull(false), 120000); }
+else syncState('off','Local only');
+if(!me) setTimeout(()=>openJoin(true), 400);
+</script>
+</body>
+</html>
