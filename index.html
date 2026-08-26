@@ -218,6 +218,31 @@ footer{margin-top:30px;font-size:12px;color:var(--muted);line-height:1.6}
 .when button.on.back{background:var(--gold);border-color:var(--gold);color:var(--onaccent)}
 .whenhint{font-size:11px;color:var(--muted);margin:0 0 12px}
 .whenhint.armed{color:var(--gold)}
+.covernote{font-size:12px;color:var(--muted);line-height:1.5;margin:0 0 12px}
+.daystrip{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;margin-bottom:14px;
+  -webkit-overflow-scrolling:touch}
+.daystrip button{flex:0 0 auto;padding:8px 11px;border-radius:11px;background:var(--raised);
+  border:1px solid var(--line);color:var(--muted);font-family:inherit;font-size:12px;
+  line-height:1.25;text-align:center;font-weight:600}
+.daystrip button b{display:block;font-size:15px;color:var(--paper);font-weight:700}
+.daystrip button.on{background:var(--gold);border-color:var(--gold);color:var(--onaccent)}
+.daystrip button.on b{color:var(--onaccent)}
+.daystrip button .n{display:block;font-size:10px;font-weight:700;color:var(--alert)}
+.daystrip button.on .n{color:var(--onaccent)}
+.slots{list-style:none;margin:0;padding:0}
+.slots li{display:flex;align-items:center;gap:11px;padding:11px 12px;margin-bottom:6px;
+  background:var(--raised);border:1px solid var(--line);border-radius:12px}
+.slots li.needed{border-color:var(--gold);background:var(--tint)}
+.slots li.taken{opacity:.72}
+.slots .t{font-variant-numeric:tabular-nums;font-size:13px;color:var(--muted);
+  width:62px;flex:none}
+.slots .w{flex:1;font-size:14px}
+.slots .w small{display:block;font-size:11px;color:var(--gold);font-weight:600}
+.slots .who{font-size:12px;font-weight:700;padding:5px 9px;border-radius:8px;
+  border:1px solid;flex:none}
+.slots button{flex:none;font-size:12px;font-weight:600;padding:8px 12px;border-radius:9px;
+  background:var(--gold);border:1px solid var(--gold);color:var(--onaccent);font-family:inherit}
+.slots button.drop{background:transparent;border-color:var(--line);color:var(--muted)}
 .alertcard{background:var(--raised);border:1px solid var(--line);border-radius:14px;
   padding:14px 15px;margin-bottom:6px}
 .alertcard .st{display:flex;align-items:center;gap:9px;font-size:15px;margin-bottom:7px}
@@ -419,6 +444,13 @@ mouthy, not sleepy.</p>
 
 </section>
 
+<section class="tab" id="tab-cover">
+<h2>Who is covering her</h2>
+<p class="covernote" id="covernote"></p>
+<div class="daystrip" id="daystrip"></div>
+<ul class="slots" id="slots"></ul>
+</section>
+
 <section class="tab" id="tab-papers">
 
 <h2>Still open</h2>
@@ -436,8 +468,11 @@ mouthy, not sleepy.</p>
 <h2>Dates off the contract</h2>
 <ul class="dl" id="pw-dl"></ul>
 
+<div id="pw-moneywrap">
 <h2>What she cost</h2>
 <ul class="ids" id="pw-money"></ul>
+<p class="playnote">Only you see this. It is not in the page for anyone else.</p>
+</div>
 
 <footer>
   Read off the four scanned documents, August 2026. Every date here is derived from
@@ -455,6 +490,8 @@ mouthy, not sleepy.</p>
     <span class="ti">&#9776;</span><span>Day</span></button>
   <button data-tab="trends" onclick="showTab('trends')">
     <span class="ti">&#9650;</span><span>Trends</span></button>
+  <button data-tab="cover" onclick="showTab('cover')">
+    <span class="ti">&#9788;</span><span>Cover</span></button>
   <button data-tab="papers" onclick="showTab('papers')">
     <span class="ti">&#9632;</span><span>Papers</span></button>
 </nav>
@@ -518,7 +555,7 @@ const YOMTOV = [
   ["2026-10-02","2026-10-03","Shemini Atzeret"],
   ["2026-10-03","2026-10-04","Simchat Torah"]
 ];
-const PAPERS = {"acquired": "2026-08-23", "ids": [["Microchip", "901011000071695"], ["AKC number", "SS57826901"], ["AKC PIN", "87063"], ["AKC type", "limited"], ["Store ID", "4130"], ["Sire", "Vikings King, AKC SS26012808"], ["Dam", "Vikings Cream Lovina, AKC SS21167809"]], "contacts": [{"who": "Sayrebrook Veterinary Hospital", "role": "Vet", "phone": "732-727-1303", "note": "Dr. Chiosi, 1400 Main St, Sayreville NJ 08872"}, {"who": "Household Pet Protection, Inc.", "role": "Warranty claims", "phone": "303-923-3872", "note": "Within 30 days, with full records. submitdocs@selectapuppy.com"}, {"who": "Select A Puppy", "role": "Seller", "phone": "732-706-7600", "note": "Ask what LMP Better Enrollment is, and whether it rebills."}, {"who": "American Kennel Club", "role": "Registration", "phone": "919-233-9767", "note": "akc.org/dogreg"}, {"who": "NJ Consumer Affairs", "role": "If the store will not honour a claim", "phone": "973-504-6200", "note": "The store is under Middletown Twp."}], "deadlines": [["2026-09-06", "NJ refund window closes", "Strongest cover you have. A vet certification inside it is worth a refund plus vet fees to twice the purchase price."], ["2026-09-11", "Rabies can be given", "Get the certificate with the tag number: the licence needs it."], ["2026-09-22", "Free exam offer ends", "Call ahead and bring the vaccination record."], ["2026-10-09", "Socialisation window closes", "Does not reopen."], ["2026-10-19", "NYC licence fee rises", "$8.50 before, $34.00 after until she is spayed. Required from this date either way."], ["2027-02-19", "NJ congenital window closes, warranty starts", "Statutory cover ends, the $538 warranty picks up. No gap."], ["2027-02-23", "Hip, elbow and heart guarantees active", "Needs x-rays or an echo and a written diagnosis. Replacement only, vet bills stay yours."], ["2027-06-29", "AKC late fee starts", "$36, then $66 a year later."], ["2029-02-19", "Extended warranty ends", "24 months, up to $5380."], ["2030-08-23", "Last store guarantee expires", "The congenital and genetic defect clause."]], "money": [["Purchase price", 5380.0], ["Doc fee", 199.0], ["LMP enrollment", 49.99], ["Tax", 359.74], ["Extended warranty", 538.0], ["Crate", 357.12], ["Total paid", 6907.51], ["Financed, United CFS", 4988.73]], "todo": ["Register the microchip to you. Nothing in the packet does it.", "File the AKC application. New Owner section is blank.", "Decide on insurance while her record is still clean.", "NYC licence, after rabies and before her 4 month birthday.", "Get an emergency hospital near Far Rockaway from the vet.", "Set up direct billing. It needs prior authorisation.", "Find and read the United CFS financing agreement.", "Food brand, once the vet weighs in on large-breed puppy formula."], "insurance": {"decided": false, "provider": null, "phone": null, "claims_phone": null, "policy_number": null, "portal": null, "underwriter": null, "monthly_premium": null, "deductible": null, "reimbursement_pct": null, "annual_limit": null, "started": null, "accident_waiting_days": null, "illness_waiting_days": null, "orthopedic_waiting_days": null, "orthopedic_waiver_done": false, "renewal_month": null, "akc_free_30_day_included": true, "akc_underwriter": "PetPartners, Inc., 1-866-725-2747, akcpetinsurance.com/certificate", "note": "Researched Aug 2026 from actual New York policy forms. In NY, ASPCA, Spot and Pumpkin are literally the same contract (US Fire form PET-P-20000-NY-0920), so this is a price and service decision, not a coverage one.\nFill provider, phone and policy_number the day a policy is bought, set decided true, then run scripts/sync_app_config.py and re-upload app/index.html. The Papers tab swaps the shortlist for your actual policy and the numbers stay tap-to-dial.\northopedic_waiting_days matters more than the premium for this breed. If the policy offers a waiver, do it at the vet visit and set orthopedic_waiver_done true.\nPre-existing conditions are excluded for life, so the widest cover she will ever qualify for is the cover bought while her record is still clean.", "target_plan": {"deductible": 500, "reimbursement_pct": 80, "annual_limit": 10000, "wellness_rider": false, "note": "What to ask for on the phone. Skip the wellness rider: you must use about 73% of the ceiling to break even, on care you would buy anyway. Also ask the $1,000 deductible price, since a higher deductible blunts the annual escalation by compounding on a smaller base. Confirm exam fees included, no per-incident or lifetime caps, and hereditary and congenital covered in the base plan."}, "ask_before_binding": ["What happens at year three? The NY form auto-reissues for 3 years and a new enrollment restarts waiting periods. Get written confirmation it does not reset pre-existing status.", "Name the policy form number. Pumpkin's published NY PDF says United States Fire, their live system says Independence American under an unpublished form.", "Are exam fees included, or an add-on?", "What is the bilateral clause? If one knee goes, what happens to the other?"], "shortlist": [{"rank": 1, "provider": "Pumpkin", "phone": "1-866-273-6369", "hours": "Mon-Fri 8am-8pm, Sat 9am-5pm ET", "projected": "$65-90/mo", "why": "Best claims record of the three by a wide margin: the only brand where BBB and Trustpilot agree. Same NY policy as ASPCA and Spot.", "against": "14-day accident wait with no waiver in NY. No money-back guarantee here."}, {"rank": 2, "provider": "ASPCA Pet Health Insurance", "phone": "888-716-1203", "hours": "new policies; existing policies 1-866-204-6764", "projected": "$60-85/mo", "why": "The most thoroughly documented NY form. Identical coverage to Pumpkin.", "against": "Mediocre claims service record."}, {"rank": 3, "provider": "Spot", "phone": "1-800-905-1595", "hours": "Mon-Fri 8am-8pm ET", "projected": "$60-85/mo", "why": "Same policy again, but offers an unlimited annual limit with no per-incident or lifetime caps.", "against": "Identical price and paper to ASPCA, so quoting both is not shopping."}, {"rank": 4, "provider": "MetLife (backup)", "phone": "855-545-4858", "hours": "", "projected": "$75-100/mo", "why": "No orthopedic wait at all, richest base bundle. Better if your employer offers it.", "against": "Worst complaint record in the group: 1.06 of 5 across 391 BBB reviews."}, {"rank": 5, "provider": "Trupanion (backup)", "phone": "888-733-2685", "hours": "24/7, 365 days", "projected": "$120-180/mo", "why": "No payout limits ever, per-condition lifetime deductible, pays the vet directly.", "against": "Expensive. Reported denial calling a cruciate tear a disease, not an injury."}], "avoid": ["AKC / PetPartners: hip, elbow and OCD excluded entirely without a paid rider. The free 30-day certificate in the registration paperwork is not sold in New York.", "Nationwide: 12-month cruciate wait in every plan, and it is cutting NY policyholders now.", "Embrace in NY: excludes cruciate, hip, IVDD and patella 180 days, then pre-existing for life.", "Healthy Paws: 12-month hip dysplasia wait, unwaivable in NY.", "Figo: folds osteosarcoma into its 6-month orthopedic window.", "Fetch: orthopedic waiver covers knees only, the 180-day hip exclusion cannot be waived.", "Pets Best: no curable-restoration provision in the NY form; cruciate never counts as accident.", "ManyPets: exited the US in Nov 2024, not purchasable."]}, "vet": {"practice": "Sayrebrook Veterinary Hospital", "doctor": "Dr. Chiosi", "phone": "732-727-1303", "address": "1400 Main St, Sayreville NJ 08872", "license": "29V100201400", "offer": "Free exam and fecal within 30 days, free distemper and parvo boosters to completion, 50% off the 2nd and 3rd exams, direct billing with prior authorization, emergency visits", "emergency_hospital": null, "direct_billing_arranged": false, "note": "She performed the pre-sale exam on 2026-08-18, so there is already a baseline in her file. The 20% off spay and neuter belongs to Central Jersey Animal Hospital in Freehold, not to Sayrebrook. emergency_hospital is open: ask for one near Far Rockaway, because Sayreville is an hour away."}};
+const PAPERS = {"acquired": "2026-08-23", "ids": [["Microchip", "901011000071695"], ["AKC number", "SS57826901"], ["AKC PIN", "87063"], ["AKC type", "limited"], ["Store ID", "4130"], ["Sire", "Vikings King, AKC SS26012808"], ["Dam", "Vikings Cream Lovina, AKC SS21167809"]], "contacts": [{"who": "Sayrebrook Veterinary Hospital", "role": "Vet", "phone": "732-727-1303", "note": "Dr. Chiosi, 1400 Main St, Sayreville NJ 08872"}, {"who": "Household Pet Protection, Inc.", "role": "Warranty claims", "phone": "303-923-3872", "note": "Within 30 days, with full records. submitdocs@selectapuppy.com"}, {"who": "Select A Puppy", "role": "Seller", "phone": "732-706-7600", "note": "Ask what LMP Better Enrollment is, and whether it rebills."}, {"who": "American Kennel Club", "role": "Registration", "phone": "919-233-9767", "note": "akc.org/dogreg"}, {"who": "NJ Consumer Affairs", "role": "If the store will not honour a claim", "phone": "973-504-6200", "note": "The store is under Middletown Twp."}], "deadlines": [["2026-09-06", "NJ refund window closes", "Strongest cover you have. A vet certification inside it is worth a refund plus vet fees to twice the purchase price."], ["2026-09-11", "Rabies can be given", "Get the certificate with the tag number: the licence needs it."], ["2026-09-22", "Free exam offer ends", "Call ahead and bring the vaccination record."], ["2026-10-09", "Socialisation window closes", "Does not reopen."], ["2026-10-19", "NYC licence fee rises", "$8.50 before, $34.00 after until she is spayed. Required from this date either way."], ["2027-02-19", "NJ congenital window closes, warranty starts", "Statutory cover ends, the extended warranty picks up. No gap."], ["2027-02-23", "Hip, elbow and heart guarantees active", "Needs x-rays or an echo and a written diagnosis. Replacement only, vet bills stay yours."], ["2027-06-29", "AKC late fee starts", "$36, then $66 a year later."], ["2029-02-19", "Extended warranty ends", "24 months of hereditary and congenital cover, up to the purchase price."], ["2030-08-23", "Last store guarantee expires", "The congenital and genetic defect clause."]], "money": [], "todo": ["Register the microchip to you. Nothing in the packet does it.", "File the AKC application. New Owner section is blank.", "Decide on insurance while her record is still clean.", "NYC licence, after rabies and before her 4 month birthday.", "Get an emergency hospital near Far Rockaway from the vet.", "Set up direct billing. It needs prior authorisation.", "Find and read the United CFS financing agreement.", "Food brand, once the vet weighs in on large-breed puppy formula."], "insurance": {"decided": false, "provider": null, "phone": null, "claims_phone": null, "policy_number": null, "portal": null, "underwriter": null, "monthly_premium": null, "deductible": null, "reimbursement_pct": null, "annual_limit": null, "started": null, "accident_waiting_days": null, "illness_waiting_days": null, "orthopedic_waiting_days": null, "orthopedic_waiver_done": false, "renewal_month": null, "akc_free_30_day_included": true, "akc_underwriter": "PetPartners, Inc., 1-866-725-2747, akcpetinsurance.com/certificate", "note": "Researched Aug 2026 from actual New York policy forms. In NY, ASPCA, Spot and Pumpkin are literally the same contract (US Fire form PET-P-20000-NY-0920), so this is a price and service decision, not a coverage one.\nFill provider, phone and policy_number the day a policy is bought, set decided true, then run scripts/sync_app_config.py and re-upload app/index.html. The Papers tab swaps the shortlist for your actual policy and the numbers stay tap-to-dial.\northopedic_waiting_days matters more than the premium for this breed. If the policy offers a waiver, do it at the vet visit and set orthopedic_waiver_done true.\nPre-existing conditions are excluded for life, so the widest cover she will ever qualify for is the cover bought while her record is still clean.", "target_plan": {"deductible": 500, "reimbursement_pct": 80, "annual_limit": 10000, "wellness_rider": false, "note": "What to ask for on the phone. Skip the wellness rider: you must use about 73% of the ceiling to break even, on care you would buy anyway. Also ask the $1,000 deductible price, since a higher deductible blunts the annual escalation by compounding on a smaller base. Confirm exam fees included, no per-incident or lifetime caps, and hereditary and congenital covered in the base plan."}, "ask_before_binding": ["What happens at year three? The NY form auto-reissues for 3 years and a new enrollment restarts waiting periods. Get written confirmation it does not reset pre-existing status.", "Name the policy form number. Pumpkin's published NY PDF says United States Fire, their live system says Independence American under an unpublished form.", "Are exam fees included, or an add-on?", "What is the bilateral clause? If one knee goes, what happens to the other?"], "shortlist": [{"rank": 1, "provider": "Pumpkin", "phone": "1-866-273-6369", "hours": "Mon-Fri 8am-8pm, Sat 9am-5pm ET", "projected": "$65-90/mo", "why": "Best claims record of the three by a wide margin: the only brand where BBB and Trustpilot agree. Same NY policy as ASPCA and Spot.", "against": "14-day accident wait with no waiver in NY. No money-back guarantee here."}, {"rank": 2, "provider": "ASPCA Pet Health Insurance", "phone": "888-716-1203", "hours": "new policies; existing policies 1-866-204-6764", "projected": "$60-85/mo", "why": "The most thoroughly documented NY form. Identical coverage to Pumpkin.", "against": "Mediocre claims service record."}, {"rank": 3, "provider": "Spot", "phone": "1-800-905-1595", "hours": "Mon-Fri 8am-8pm ET", "projected": "$60-85/mo", "why": "Same policy again, but offers an unlimited annual limit with no per-incident or lifetime caps.", "against": "Identical price and paper to ASPCA, so quoting both is not shopping."}, {"rank": 4, "provider": "MetLife (backup)", "phone": "855-545-4858", "hours": "", "projected": "$75-100/mo", "why": "No orthopedic wait at all, richest base bundle. Better if your employer offers it.", "against": "Worst complaint record in the group: 1.06 of 5 across 391 BBB reviews."}, {"rank": 5, "provider": "Trupanion (backup)", "phone": "888-733-2685", "hours": "24/7, 365 days", "projected": "$120-180/mo", "why": "No payout limits ever, per-condition lifetime deductible, pays the vet directly.", "against": "Expensive. Reported denial calling a cruciate tear a disease, not an injury."}], "avoid": ["AKC / PetPartners: hip, elbow and OCD excluded entirely without a paid rider. The free 30-day certificate in the registration paperwork is not sold in New York.", "Nationwide: 12-month cruciate wait in every plan, and it is cutting NY policyholders now.", "Embrace in NY: excludes cruciate, hip, IVDD and patella 180 days, then pre-existing for life.", "Healthy Paws: 12-month hip dysplasia wait, unwaivable in NY.", "Figo: folds osteosarcoma into its 6-month orthopedic window.", "Fetch: orthopedic waiver covers knees only, the 180-day hip exclusion cannot be waived.", "Pets Best: no curable-restoration provision in the NY form; cruciate never counts as accident.", "ManyPets: exited the US in Nov 2024, not purchasable."]}, "vet": {"practice": "Sayrebrook Veterinary Hospital", "doctor": "Dr. Chiosi", "phone": "732-727-1303", "address": "1400 Main St, Sayreville NJ 08872", "license": "29V100201400", "offer": "Free exam and fecal within 30 days, free distemper and parvo boosters to completion, 50% off the 2nd and 3rd exams, direct billing with prior authorization, emergency visits", "emergency_hospital": null, "direct_billing_arranged": false, "note": "She performed the pre-sale exam on 2026-08-18, so there is already a baseline in her file. The 20% off spay and neuter belongs to Central Jersey Animal Hospital in Freehold, not to Sayrebrook. emergency_hospital is open: ask for one near Far Rockaway, because Sayreville is an hour away."}};
 /* ---- END GENERATED FROM config.json ---- */
 const KEY = 'mercy.events.v2';
 const OUTSIDE = ['Walk','Potty Trip'];
@@ -1062,8 +1099,12 @@ function lastOutside(){
   }
   return null;
 }
+/* A Cover claim rides in the same shared log as everything else, so no backend change
+   was needed. It is not something Mercy did, though, so it is excluded from every count,
+   every export and every trend. */
+const isLogEvent = e => e.event!=='Join' && e.event!=='Cover';
 function todays(){ const k=dayKey(new Date());
-  return events.filter(e=>e.event!=='Join' && dayKey(new Date(e.ts))===k); }
+  return events.filter(e=>isLogEvent(e) && dayKey(new Date(e.ts))===k); }
 
 /* ---- schedule ---- */
 /* PLAN and PLAN_MISSED_WINDOW are generated from config.schedule.daily. */
@@ -1310,7 +1351,7 @@ function median(a){ if(!a.length) return null; a=a.slice().sort((x,y)=>x-y);
 function patterns(){
   const mealToPoop=[], mealToPee=[], peeGaps=[], poopHours=[], accHours=[];
   let lastPee=null;
-  events.filter(e=>e.event!=='Join').forEach(e=>{
+  events.filter(e=>isLogEvent(e)).forEach(e=>{
     if(e.event==='Poop'){
       const m=lastBefore(e.ts,x=>x.event==='Meal');
       if(m && e.ts-m.ts<6*3600000) mealToPoop.push(e.ts-m.ts);
@@ -1353,7 +1394,7 @@ function renderHistory(){
   const ul=document.getElementById('hist');
   ul.innerHTML='';
   const byDay={};
-  events.filter(e=>e.event!=='Join').forEach(e=>{
+  events.filter(e=>isLogEvent(e)).forEach(e=>{
     const k=dayKey(new Date(e.ts));
     byDay[k]=byDay[k]||{out:0,acc:0,walk:0,play:0};
     if(OUTSIDE.includes(e.event)||e.where==='Outside') byDay[k].out++;
@@ -1488,8 +1529,16 @@ function renderPapers(){
       + `<div class="dn">${esc(shown)} &middot; ${esc(note)}</div></li>`;
   }).join(''));
 
-  set('pw-money', PAPERS.money.map(([k,v])=>
-    `<li><span class="k">${esc(k)}</span><span class="v">$${v.toFixed(2)}</span></li>`).join(''));
+  /* Cost is owner-only, and only present at all when purchase.publish is true in
+     config.json. Both gates matter: isOwner() keeps it off a helper's screen, and the
+     sync-time omission keeps it out of the public page source, which CSS cannot do. */
+  const mwrap=document.getElementById('pw-moneywrap');
+  const showMoney = PAPERS.money && PAPERS.money.length && isOwner();
+  if(mwrap) mwrap.style.display = showMoney ? '' : 'none';
+  if(showMoney){
+    set('pw-money', PAPERS.money.map(([k,v])=>
+      `<li><span class="k">${esc(k)}</span><span class="v">$${v.toFixed(2)}</span></li>`).join(''));
+  }
 }
 
 /* Last three entries today, newest first. The most recent gets a gold edge for a few
@@ -1498,7 +1547,7 @@ function renderPapers(){
 function renderRecent(){
   const box=document.getElementById('recent');
   if(!box) return;
-  const t=todays().filter(e=>e.event!=='Join');
+  const t=todays().filter(e=>isLogEvent(e));
   if(!t.length){ box.innerHTML=''; return; }
   box.innerHTML='';
   t.slice(-3).reverse().forEach((e,idx)=>{
@@ -1512,6 +1561,143 @@ function renderRecent(){
     li.innerHTML='<span class="t">'+hhmm(new Date(e.ts))+'</span><span>'+e.event+
       '</span><span class="w">'+w+'</span>';
     box.appendChild(li);
+  });
+}
+
+/* ---- cover ----
+   No slots are posted. Every day already has its outings from config.schedule.daily,
+   so the whole schedule is the list and anyone can claim a row on a date that suits
+   them. A claim is an event: {event:'Cover', ts: that slot's clock time on that date,
+   by: whoever claimed it, notes: the plan row id}. Un-claiming deletes it, which the
+   sync already handles. */
+let coverDay = 0;                                  // days ahead of today
+const COVER_DAYS = 14;
+
+function slotDate(offset){ const d=new Date(); d.setDate(d.getDate()+offset);
+  d.setHours(0,0,0,0); return d; }
+function slotTs(dayOffset, hhmmStr){
+  const d=slotDate(dayOffset), [h,m]=hhmmStr.split(':').map(Number);
+  d.setHours(h,m,0,0); return d.getTime();
+}
+function coverFor(dayOffset){
+  const k=dayKey(slotDate(dayOffset));
+  const out={};
+  events.filter(e=>e.event==='Cover' && dayKey(new Date(e.ts))===k)
+        .forEach(e=>{ out[e.notes]=e; });
+  return out;
+}
+/* Rows where you are most likely to actually need someone: the mid-block break on the
+   days you are out, and everything on Shabbat and yom tov. */
+function slotNeeded(p, dayOffset){
+  const d=slotDate(dayOffset);
+  /* Shabbat and yom tov are deliberately not claimable. Everyone helping keeps them,
+     so nobody can tap to accept, nobody can be reminded, and a row saying "19 open"
+     is the app pretending to solve the one day it cannot touch. Those get arranged in
+     person beforehand and written on the fridge card. */
+  if(noLogDay(d)) return false;
+  if(p[0]==='p12' && d.getDay()>=1 && d.getDay()<=4) return true;
+  return false;
+}
+function claimSlot(p, dayOffset){
+  if(!me){ openJoin(true); return; }
+  const ts=slotTs(dayOffset, p[1]);
+  const e={id:uid(), ts:ts, by:me, event:'Cover', where:'N/A', notes:p[0]};
+  events.push(e); events.sort((a,b)=>a.ts-b.ts);
+  save(); render(); queue(e);
+  const when=slotDate(dayOffset).toLocaleDateString(undefined,{weekday:'long', month:'short', day:'numeric'});
+  openSheet('Thanks, that is yours',
+    when+', '+hhmm(new Date(ts))+'. '+labelFor(p)+
+    '. Add it to your own calendar and your phone will remind you, whatever happens to the app.',
+    [{value:'ics', label:'Add to my calendar', note:'one tap', accent:true},
+     {value:'no', label:'Not now', note:''}],
+    v => { if(v==='ics') downloadShift(p, dayOffset, ts); });
+}
+function dropSlot(p, dayOffset){
+  const c=coverFor(dayOffset)[p[0]];
+  if(!c) return;
+  if(c.by!==me && !isOwner()){ toast(c.by+' took that one. Ask them, or Ariel can free it.', true); return; }
+  remove(c.id);
+  toast('<b>Released</b><br>That slot is open again.');
+}
+const labelFor = p => (!isOwner() && p[6]) ? p[6] : p[2];
+
+function downloadShift(p, dayOffset, ts){
+  const pad2=n=>String(n).padStart(2,'0');
+  const f=d=>d.getFullYear()+pad2(d.getMonth()+1)+pad2(d.getDate())+'T'+
+             pad2(d.getHours())+pad2(d.getMinutes())+'00';
+  const st=new Date(ts), en=new Date(ts+(p[5]||10)*60000);
+  const ics=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Mercy//Cover//EN','BEGIN:VEVENT',
+    'UID:cover-'+p[0]+'-'+ts+'@mercy.local',
+    'DTSTAMP:'+f(new Date())+'Z','DTSTART:'+f(st),'DTEND:'+f(en),
+    'SUMMARY:Mercy - '+labelFor(p).replace(/,/g,'\,'),
+    'DESCRIPTION:You are covering this one. Log it in the app afterwards: '+
+      location.href.replace(/,/g,'\,'),
+    'BEGIN:VALARM','TRIGGER:-PT30M','ACTION:DISPLAY','DESCRIPTION:Mercy in 30 minutes',
+    'END:VALARM','END:VEVENT','END:VCALENDAR'].join('\r\n');
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob([ics],{type:'text/calendar'}));
+  a.download='mercy-cover.ics'; a.click();
+  setTimeout(()=>URL.revokeObjectURL(a.href), 4000);
+}
+
+function renderCover(){
+  const strip=document.getElementById('daystrip'), list=document.getElementById('slots'),
+        note=document.getElementById('covernote');
+  if(!strip) return;
+  note.textContent = isOwner()
+    ? 'Every outing on her schedule, for the next two weeks. Anything with a name against it is covered. Gold rows are the ones you usually need someone for.'
+    : 'These are the times Mercy needs to go out. Take any that suit you and it will show on Ariel\u2019s phone. Add it to your calendar and you will be reminded.';
+
+  strip.innerHTML='';
+  for(let i=0;i<COVER_DAYS;i++){
+    const d=slotDate(i), taken=Object.keys(coverFor(i)).length;
+    const gaps=PLAN.filter(p=>slotNeeded(p,i)).length - 
+               PLAN.filter(p=>slotNeeded(p,i) && coverFor(i)[p[0]]).length;
+    const b=document.createElement('button');
+    const q=noLogDay(d);
+    b.innerHTML=(i===0?'Today':d.toLocaleDateString(undefined,{weekday:'short'}))+
+      '<b>'+d.getDate()+'</b>'+
+      (q ? '<span class="n" style="color:var(--muted)">'+
+             (q==='Shabbat'?'Shabbat':q.split(' ')[0])+'</span>'
+         : gaps>0 ? '<span class="n">'+gaps+' open</span>'
+         : taken ? '<span class="n" style="color:var(--ok)">'+taken+'</span>' : '');
+    if(i===coverDay) b.className='on';
+    b.onclick=()=>{ coverDay=i; renderCover(); };
+    strip.appendChild(b);
+  }
+
+  const claims=coverFor(coverDay), d=slotDate(coverDay), quiet=noLogDay(d);
+  list.innerHTML='';
+  if(quiet){
+    const li=document.createElement('li');
+    li.className='needed';
+    li.innerHTML='<span class="w"><b>'+quiet+'</b><small>Not a sign-up day. Everyone '+
+      'helping keeps it, so this gets arranged face to face beforehand and written on '+
+      'the card on the fridge. The times below are what she needs, for reference.</small></span>';
+    list.appendChild(li);
+  }
+  PLAN.forEach(p=>{
+    const c=claims[p[0]], need=slotNeeded(p,coverDay);
+    const li=document.createElement('li');
+    li.className=(c?'taken':'')+(need&&!c?' needed':'');
+    const [h,m]=p[1].split(':').map(Number), ap=h>=12?'PM':'AM', h12=h%12||12;
+    let html='<span class="t">'+h12+':'+String(m).padStart(2,'0')+' '+ap+'</span>'+
+             '<span class="w">'+labelFor(p)+
+             (need&&!c?'<small>usually needs someone</small>':'')+'</span>';
+    if(c){
+      html+='<span class="who" style="color:'+colorOf(c.by)+';border-color:'+colorOf(c.by)+'66">'+
+            c.by+'</span>';
+    }
+    li.innerHTML=html;
+    if(!quiet){
+      const b=document.createElement('button');
+      if(c){ b.textContent = (c.by===me||isOwner()) ? 'Release' : ''; b.className='drop';
+             if(!b.textContent) b.style.display='none';
+             b.onclick=()=>dropSlot(p,coverDay); }
+      else { b.textContent="I'll take it"; b.onclick=()=>claimSlot(p,coverDay); }
+      li.appendChild(b);
+    }
+    list.appendChild(li);
   });
 }
 
@@ -1647,12 +1833,13 @@ function render(){
   renderPatterns();
   renderHistory();
   renderAlerts();
+  renderCover();
 }
 
 /* ---- export ---- */
 function exportCsv(){
   const rows=[['Date','Time','Event','Where','Duration (min)','Stool Score','Amount (cups)','Notes','Logged By']];
-  events.filter(e=>e.event!=='Join').forEach(e=>{
+  events.filter(e=>isLogEvent(e)).forEach(e=>{
     const d=new Date(e.ts);
     rows.push([
       (d.getMonth()+1)+'/'+d.getDate()+'/'+d.getFullYear(),
