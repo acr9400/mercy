@@ -46,6 +46,40 @@ h2{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--mute
   font-weight:600;margin:26px 0 10px}
 .wrap{max-width:520px;margin:0 auto;padding-bottom:calc(78px + env(safe-area-inset-bottom))}
 
+/* ---- Papers ----
+   The reference tab. Nothing here is logged or edited; it exists so the microchip
+   number, the vet and the insurer are one tap away at the moment you need them,
+   which is never the moment you can find the folder. */
+.todo,.calls,.ids,.dl{list-style:none;margin:8px 0 0;padding:0;display:flex;flex-direction:column;gap:8px}
+.todo li{background:var(--raised);border:1px solid var(--line);border-left:3px solid var(--alert);
+  border-radius:10px;padding:10px 12px;font-size:14px;line-height:1.45}
+.calls li{background:var(--raised);border:1px solid var(--line);border-radius:12px;
+  padding:11px 13px;display:flex;align-items:center;gap:11px}
+.calls .cw{flex:1;min-width:0}
+.calls .cr{font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted)}
+.calls .cn{font-weight:600;font-size:15px;margin-top:1px}
+.calls .cd{font-size:12px;color:var(--muted);line-height:1.4;margin-top:2px}
+.calls a.dial{flex:none;background:var(--gold);color:var(--onaccent);text-decoration:none;
+  font-size:13px;font-weight:600;padding:9px 15px;border-radius:999px;white-space:nowrap}
+.calls a.dial:active{opacity:.7}
+.ids li{background:var(--raised);border:1px solid var(--line);border-radius:10px;padding:9px 12px;
+  display:flex;justify-content:space-between;align-items:baseline;gap:12px;font-size:14px}
+.ids .k{color:var(--muted);flex:none}
+.ids .v{font-weight:600;font-variant-numeric:tabular-nums;text-align:right;
+  word-break:break-all;-webkit-user-select:all;user-select:all}
+.dl li{background:var(--raised);border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+.dl li.past{opacity:.45}
+.dl li.soon{border-color:var(--alert)}
+.dl .dr{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.dl .dd{font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums;flex:none}
+.dl li.soon .dd{color:var(--alert);font-weight:600}
+.dl .dt{font-weight:600;font-size:14px;line-height:1.35}
+.dl .dn{font-size:12px;color:var(--muted);line-height:1.45;margin-top:3px}
+.insbox{background:var(--raised);border:1px solid var(--line);border-radius:12px;padding:13px;
+  font-size:14px;line-height:1.5}
+.insbox.none{border-left:3px solid var(--alert)}
+.insbox .big{font-weight:600;font-size:16px}
+
 /* ---- tabs ----
    Logging is what happens twenty times a day, so it owns the first screen and the
    once-a-week panels move off it entirely. */
@@ -184,6 +218,15 @@ footer{margin-top:30px;font-size:12px;color:var(--muted);line-height:1.6}
 .when button.on.back{background:var(--gold);border-color:var(--gold);color:var(--onaccent)}
 .whenhint{font-size:11px;color:var(--muted);margin:0 0 12px}
 .whenhint.armed{color:var(--gold)}
+.alertcard{background:var(--raised);border:1px solid var(--line);border-radius:14px;
+  padding:14px 15px;margin-bottom:6px}
+.alertcard .st{display:flex;align-items:center;gap:9px;font-size:15px;margin-bottom:7px}
+.alertcard .led{width:10px;height:10px;border-radius:50%;background:var(--muted);flex:none}
+.alertcard.on .led{background:var(--ok);box-shadow:0 0 0 4px rgba(94,158,97,.18)}
+.alertcard.off .led{background:var(--alert)}
+.alertcard p{font-size:12px;color:var(--muted);line-height:1.5;margin:0 0 11px}
+.alertcard button{width:100%}
+.alertcard.on button{display:none}
 .filterbar{font-size:12px;color:var(--muted);background:var(--tint);border:1px solid var(--line);
   border-radius:11px;padding:9px 12px;margin:0 0 10px}
 .filterbar button{background:none;border:0;color:var(--gold);font-family:inherit;font-size:12px;
@@ -352,10 +395,16 @@ mouthy, not sleepy.</p>
 <p class="playnote" id="gymnote"></p>
 </div>
 
+<h2>Alerts</h2>
+<div class="alertcard" id="alertcard">
+  <div class="st"><span class="led" id="aled"></span><b id="astate">Checking</b></div>
+  <p id="awhat"></p>
+  <button class="small" id="abtn" onclick="askNotify()">Turn alerts on</button>
+</div>
+
 <h2>Data</h2>
 <div class="row">
   <button class="small" onclick="exportCsv()">Export CSV</button>
-  <button class="small" onclick="askNotify()">Alerts on</button>
 </div>
 <div class="row">
   <button class="small" onclick="catchUp()">Catch up</button>
@@ -363,9 +412,37 @@ mouthy, not sleepy.</p>
   <button class="small" onclick="wipe()">Clear this phone</button>
 </div>
 <footer>
-  Everything is stored on this phone only. Nothing is uploaded anywhere.
-  Export the CSV and paste it into the Log tab of your workbook.
+  Entries are kept on this phone and in the shared log, so nothing is lost if you
+  refresh. Export the CSV weekly into <code>data/log.csv</code> for the workbook.
   <span id="nstate"></span>
+</footer>
+
+</section>
+
+<section class="tab" id="tab-papers">
+
+<h2>Still open</h2>
+<ul class="todo" id="pw-todo"></ul>
+
+<h2>Insurance</h2>
+<div id="pw-ins"></div>
+
+<h2>Call</h2>
+<ul class="calls" id="pw-calls"></ul>
+
+<h2>Her numbers</h2>
+<ul class="ids" id="pw-ids"></ul>
+
+<h2>Dates off the contract</h2>
+<ul class="dl" id="pw-dl"></ul>
+
+<h2>What she cost</h2>
+<ul class="ids" id="pw-money"></ul>
+
+<footer>
+  Read off the four scanned documents, August 2026. Every date here is derived from
+  her birthday and the purchase date, so this tab, the calendar and the workbook
+  cannot disagree. Edit <b>config.json</b>, run <b>sync_app_config.py</b>, re-upload.
 </footer>
 
 </section>
@@ -378,6 +455,8 @@ mouthy, not sleepy.</p>
     <span class="ti">&#9776;</span><span>Day</span></button>
   <button data-tab="trends" onclick="showTab('trends')">
     <span class="ti">&#9650;</span><span>Trends</span></button>
+  <button data-tab="papers" onclick="showTab('papers')">
+    <span class="ti">&#9632;</span><span>Papers</span></button>
 </nav>
 
 <!-- The tap sheet and the toast. The CSS for these was always here; the markup was
@@ -439,6 +518,7 @@ const YOMTOV = [
   ["2026-10-02","2026-10-03","Shemini Atzeret"],
   ["2026-10-03","2026-10-04","Simchat Torah"]
 ];
+const PAPERS = {"acquired": "2026-08-23", "ids": [["Microchip", "901011000071695"], ["AKC number", "SS57826901"], ["AKC PIN", "87063"], ["AKC type", "limited"], ["Store ID", "4130"], ["Sire", "Vikings King, AKC SS26012808"], ["Dam", "Vikings Cream Lovina, AKC SS21167809"]], "contacts": [{"who": "Sayrebrook Veterinary Hospital", "role": "Vet", "phone": "732-727-1303", "note": "Dr. Chiosi, 1400 Main St, Sayreville NJ 08872"}, {"who": "Household Pet Protection, Inc.", "role": "Warranty claims", "phone": "303-923-3872", "note": "Within 30 days, with full records. submitdocs@selectapuppy.com"}, {"who": "Select A Puppy", "role": "Seller", "phone": "732-706-7600", "note": "Ask what LMP Better Enrollment is, and whether it rebills."}, {"who": "American Kennel Club", "role": "Registration", "phone": "919-233-9767", "note": "akc.org/dogreg"}, {"who": "NJ Consumer Affairs", "role": "If the store will not honour a claim", "phone": "973-504-6200", "note": "The store is under Middletown Twp."}], "deadlines": [["2026-09-06", "NJ refund window closes", "Strongest cover you have. A vet certification inside it is worth a refund plus vet fees to twice the purchase price."], ["2026-09-11", "Rabies can be given", "Get the certificate with the tag number: the licence needs it."], ["2026-09-22", "Free exam offer ends", "Call ahead and bring the vaccination record."], ["2026-10-09", "Socialisation window closes", "Does not reopen."], ["2026-10-19", "NYC licence fee rises", "$8.50 before, $34.00 after until she is spayed. Required from this date either way."], ["2027-02-19", "NJ congenital window closes, warranty starts", "Statutory cover ends, the $538 warranty picks up. No gap."], ["2027-02-23", "Hip, elbow and heart guarantees active", "Needs x-rays or an echo and a written diagnosis. Replacement only, vet bills stay yours."], ["2027-06-29", "AKC late fee starts", "$36, then $66 a year later."], ["2029-02-19", "Extended warranty ends", "24 months, up to $5380."], ["2030-08-23", "Last store guarantee expires", "The congenital and genetic defect clause."]], "money": [["Purchase price", 5380.0], ["Doc fee", 199.0], ["LMP enrollment", 49.99], ["Tax", 359.74], ["Extended warranty", 538.0], ["Crate", 357.12], ["Total paid", 6907.51], ["Financed, United CFS", 4988.73]], "todo": ["Register the microchip to you. Nothing in the packet does it.", "File the AKC application. New Owner section is blank.", "Decide on insurance while her record is still clean.", "NYC licence, after rabies and before her 4 month birthday.", "Get an emergency hospital near Far Rockaway from the vet.", "Set up direct billing. It needs prior authorisation.", "Find and read the United CFS financing agreement.", "Food brand, once the vet weighs in on large-breed puppy formula."], "insurance": {"decided": false, "provider": null, "phone": null, "claims_phone": null, "policy_number": null, "portal": null, "underwriter": null, "monthly_premium": null, "deductible": null, "reimbursement_pct": null, "annual_limit": null, "started": null, "accident_waiting_days": null, "illness_waiting_days": null, "orthopedic_waiting_days": null, "orthopedic_waiver_done": false, "renewal_month": null, "akc_free_30_day_included": true, "akc_underwriter": "PetPartners, Inc., 1-866-725-2747, akcpetinsurance.com/certificate", "note": "Researched Aug 2026 from actual New York policy forms. In NY, ASPCA, Spot and Pumpkin are literally the same contract (US Fire form PET-P-20000-NY-0920), so this is a price and service decision, not a coverage one.\nFill provider, phone and policy_number the day a policy is bought, set decided true, then run scripts/sync_app_config.py and re-upload app/index.html. The Papers tab swaps the shortlist for your actual policy and the numbers stay tap-to-dial.\northopedic_waiting_days matters more than the premium for this breed. If the policy offers a waiver, do it at the vet visit and set orthopedic_waiver_done true.\nPre-existing conditions are excluded for life, so the widest cover she will ever qualify for is the cover bought while her record is still clean.", "target_plan": {"deductible": 500, "reimbursement_pct": 80, "annual_limit": 10000, "wellness_rider": false, "note": "What to ask for on the phone. Skip the wellness rider: you must use about 73% of the ceiling to break even, on care you would buy anyway. Also ask the $1,000 deductible price, since a higher deductible blunts the annual escalation by compounding on a smaller base. Confirm exam fees included, no per-incident or lifetime caps, and hereditary and congenital covered in the base plan."}, "ask_before_binding": ["What happens at year three? The NY form auto-reissues for 3 years and a new enrollment restarts waiting periods. Get written confirmation it does not reset pre-existing status.", "Name the policy form number. Pumpkin's published NY PDF says United States Fire, their live system says Independence American under an unpublished form.", "Are exam fees included, or an add-on?", "What is the bilateral clause? If one knee goes, what happens to the other?"], "shortlist": [{"rank": 1, "provider": "Pumpkin", "phone": "1-866-273-6369", "hours": "Mon-Fri 8am-8pm, Sat 9am-5pm ET", "projected": "$65-90/mo", "why": "Best claims record of the three by a wide margin: the only brand where BBB and Trustpilot agree. Same NY policy as ASPCA and Spot.", "against": "14-day accident wait with no waiver in NY. No money-back guarantee here."}, {"rank": 2, "provider": "ASPCA Pet Health Insurance", "phone": "888-716-1203", "hours": "new policies; existing policies 1-866-204-6764", "projected": "$60-85/mo", "why": "The most thoroughly documented NY form. Identical coverage to Pumpkin.", "against": "Mediocre claims service record."}, {"rank": 3, "provider": "Spot", "phone": "1-800-905-1595", "hours": "Mon-Fri 8am-8pm ET", "projected": "$60-85/mo", "why": "Same policy again, but offers an unlimited annual limit with no per-incident or lifetime caps.", "against": "Identical price and paper to ASPCA, so quoting both is not shopping."}, {"rank": 4, "provider": "MetLife (backup)", "phone": "855-545-4858", "hours": "", "projected": "$75-100/mo", "why": "No orthopedic wait at all, richest base bundle. Better if your employer offers it.", "against": "Worst complaint record in the group: 1.06 of 5 across 391 BBB reviews."}, {"rank": 5, "provider": "Trupanion (backup)", "phone": "888-733-2685", "hours": "24/7, 365 days", "projected": "$120-180/mo", "why": "No payout limits ever, per-condition lifetime deductible, pays the vet directly.", "against": "Expensive. Reported denial calling a cruciate tear a disease, not an injury."}], "avoid": ["AKC / PetPartners: hip, elbow and OCD excluded entirely without a paid rider. The free 30-day certificate in the registration paperwork is not sold in New York.", "Nationwide: 12-month cruciate wait in every plan, and it is cutting NY policyholders now.", "Embrace in NY: excludes cruciate, hip, IVDD and patella 180 days, then pre-existing for life.", "Healthy Paws: 12-month hip dysplasia wait, unwaivable in NY.", "Figo: folds osteosarcoma into its 6-month orthopedic window.", "Fetch: orthopedic waiver covers knees only, the 180-day hip exclusion cannot be waived.", "Pets Best: no curable-restoration provision in the NY form; cruciate never counts as accident.", "ManyPets: exited the US in Nov 2024, not purchasable."]}, "vet": {"practice": "Sayrebrook Veterinary Hospital", "doctor": "Dr. Chiosi", "phone": "732-727-1303", "address": "1400 Main St, Sayreville NJ 08872", "license": "29V100201400", "offer": "Free exam and fecal within 30 days, free distemper and parvo boosters to completion, 50% off the 2nd and 3rd exams, direct billing with prior authorization, emergency visits", "emergency_hospital": null, "direct_billing_arranged": false, "note": "She performed the pre-sale exam on 2026-08-18, so there is already a baseline in her file. The 20% off spay and neuter belongs to Central Jersey Animal Hospital in Freehold, not to Sayrebrook. emergency_hospital is open: ask for one near Far Rockaway, because Sayreville is an hour away."}};
 /* ---- END GENERATED FROM config.json ---- */
 const KEY = 'mercy.events.v2';
 const OUTSIDE = ['Walk','Potty Trip'];
@@ -678,16 +758,26 @@ function logDuration(kind){
   const opts = (DURATIONS[kind] || [5,10,15,20,30]).map(m=>({
     value:m, label:m+'m',
     note: kind==='Walk' && m>walkCeiling() ? 'over her limit'
-        : kind==='Play' && m>PLAY.max ? 'too long' : ''
+        : kind==='Play' && m>PLAY.max ? 'too long'
+        : 'ends '+hhmm(new Date(Date.now()-offsetMin*60000+m*60000))
   }));
+  /* Deliberately tense-neutral. You might be logging a walk you just finished, one you
+     are on, or one you are about to start. The entry is the same either way: an event
+     at a time with a length, so the clock and the totals work regardless. Heading out
+     now and picking 10m is a promise the app then holds you to. */
   const sub = kind==='Walk'
-      ? 'Her structured walk limit today is about '+walkCeiling()+' minutes. Potty trips do not count toward it.'
+      ? 'Finished, out now, or heading out. Her structured limit today is about '+
+        walkCeiling()+' minutes. Potty trips do not count toward it.'
     : kind==='Play'
-      ? 'You end it, not her. Then straight out, then a nap.'
-      : 'Roughly how long was she on her own?';
-  const title = kind==='Alone' ? 'How long was she alone?' : 'How long was the '+kind.toLowerCase()+'?';
+      ? 'Starting or finished, either way. You end it, not her, then straight out and a nap.'
+      : 'Starting or finished. Roughly how long is she on her own?';
+  const title = kind==='Alone' ? 'How long alone?' : 'How long is the '+kind.toLowerCase()+'?';
   openSheet(title, sub, opts, m => {
+    const endsAt = hhmm(new Date(Date.now()-offsetMin*60000+m*60000));
     push(kind, 'N/A', {mins:m});
+    if(kind==='Walk' && m<=walkCeiling() && kind==='Walk')
+      toast('<b>'+m+' minute walk logged</b><br>If you are heading out now, back by '+
+            endsAt+'.');
     if(kind==='Walk' && m>walkCeiling())
       toast('<b>'+m+' minutes logged</b><br>Past her '+walkCeiling()+
             ' minute limit today. Growth plates, not fussiness.', true);
@@ -1296,7 +1386,110 @@ function showTab(name){
   document.querySelectorAll('#tabbar button').forEach(b=>{
     b.classList.toggle('on', b.dataset.tab === name);
   });
+  if(name === 'papers') renderPapers();
   window.scrollTo(0,0);
+}
+
+/* ---- Papers ----
+   Read-only. PAPERS is generated by scripts/sync_app_config.py from the paperwork
+   block in config.json, dates already resolved, so nothing is recomputed here and
+   the app cannot drift from the calendar. If the block is missing the tab hides
+   rather than rendering empty headings. */
+function telHref(p){ return 'tel:' + String(p).replace(/[^0-9+]/g,''); }
+
+function renderPapers(){
+  if(typeof PAPERS === 'undefined' || !PAPERS){
+    const b=document.querySelector('#tabbar button[data-tab="papers"]');
+    if(b) b.style.display='none';
+    return;
+  }
+  const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,
+    c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  const set=(id,html)=>{ const n=document.getElementById(id); if(n) n.innerHTML=html; };
+
+  set('pw-todo', PAPERS.todo.length
+    ? PAPERS.todo.map(t=>`<li>${esc(t)}</li>`).join('')
+    : '<li style="border-left-color:var(--ok)">Nothing outstanding.</li>');
+
+  const I=PAPERS.insurance;
+  if(I && I.decided && I.provider){
+    let r=`<div class="insbox"><div class="big">${esc(I.provider)}</div>`;
+    if(I.policy_number) r+=`<div>Policy ${esc(I.policy_number)}</div>`;
+    const bits=[];
+    if(I.monthly_premium!=null) bits.push('$'+I.monthly_premium+'/mo');
+    if(I.deductible!=null) bits.push('$'+I.deductible+' deductible');
+    if(I.reimbursement_pct!=null) bits.push(I.reimbursement_pct+'% back');
+    if(I.annual_limit!=null) bits.push('$'+I.annual_limit+' a year');
+    if(bits.length) r+=`<div style="color:var(--muted)">${esc(bits.join(' &middot; '))}</div>`;
+    if(I.orthopedic_waiting_days!=null){
+      r+=`<div style="color:var(--muted);margin-top:4px">Orthopedic wait `
+       + `${I.orthopedic_waiting_days} days`
+       + (I.orthopedic_waiver_done ? ', waiver submitted' : ', waiver NOT submitted')+'</div>';
+    }
+    r+='</div>';
+    set('pw-ins', r);
+  } else {
+    /* No policy yet, so the tab becomes the call sheet instead of an empty box. */
+    let r='<div class="insbox none">No policy yet. Pre-existing conditions are excluded for '
+      + 'life, so the widest cover she will ever qualify for is the one bought while her '
+      + 'record is still clean.';
+    const T=I&&I.target_plan;
+    if(T){
+      r+=`<div style="margin-top:8px"><b>Ask for: $${T.deductible} deductible &middot; `
+       + `${T.reimbursement_pct}% &middot; $${T.annual_limit.toLocaleString()} a year`
+       + `${T.wellness_rider===false?', no wellness rider':''}.</b></div>`;
+    }
+    r+='</div>';
+    if(I&&I.shortlist&&I.shortlist.length){
+      r+='<ul class="calls" style="margin-top:10px">'+I.shortlist.map(s=>
+        `<li><div class="cw"><div class="cr">${esc(s.rank)}. ${esc(s.projected||'')}`
+        + `${s.hours?' &middot; '+esc(s.hours):''}</div>`
+        + `<div class="cn">${esc(s.provider)}</div>`
+        + (s.why?`<div class="cd">${esc(s.why)}</div>`:'')
+        + (s.against?`<div class="cd" style="color:var(--alert)">${esc(s.against)}</div>`:'')
+        + `</div>`
+        + (s.phone?`<a class="dial" href="${esc(telHref(s.phone))}">${esc(s.phone)}</a>`:'')
+        + `</li>`).join('')+'</ul>';
+    }
+    if(I&&I.ask_before_binding&&I.ask_before_binding.length){
+      r+='<h3 style="margin:16px 0 0;font-size:14px">Ask before you pay</h3><ul class="todo">'
+       + I.ask_before_binding.map(q=>`<li>${esc(q)}</li>`).join('')+'</ul>';
+    }
+    if(I&&I.avoid&&I.avoid.length){
+      r+='<h3 style="margin:16px 0 0;font-size:14px">Do not buy</h3><ul class="todo">'
+       + I.avoid.map(a=>`<li style="border-left-color:var(--muted);color:var(--muted)">`
+       + `${esc(a)}</li>`).join('')+'</ul>';
+    }
+    set('pw-ins', r);
+  }
+
+  set('pw-calls', PAPERS.contacts.map(c=>
+    `<li><div class="cw"><div class="cr">${esc(c.role)}</div>`
+    + `<div class="cn">${esc(c.who)}</div>`
+    + (c.note?`<div class="cd">${esc(c.note)}</div>`:'')
+    + `</div>`
+    + (c.phone?`<a class="dial" href="${esc(telHref(c.phone))}">${esc(c.phone)}</a>`:'')
+    + `</li>`).join(''));
+
+  set('pw-ids', PAPERS.ids.map(([k,v])=>
+    `<li><span class="k">${esc(k)}</span><span class="v">${esc(v)}</span></li>`).join(''));
+
+  const today=new Date(); today.setHours(0,0,0,0);
+  const DAY=864e5;
+  set('pw-dl', PAPERS.deadlines.map(([iso,label,note])=>{
+    const p=iso.split('-').map(Number), dt=new Date(p[0],p[1]-1,p[2]);
+    const days=Math.round((dt-today)/DAY);
+    const cls = days<0 ? 'past' : (days<=30 ? 'soon' : '');
+    const when = days<0 ? 'passed' : days===0 ? 'today'
+               : days===1 ? 'tomorrow' : days+'d';
+    const shown = dt.toLocaleDateString(undefined,{day:'numeric',month:'short',year:'numeric'});
+    return `<li class="${cls}"><div class="dr"><span class="dt">${esc(label)}</span>`
+      + `<span class="dd">${esc(when)}</span></div>`
+      + `<div class="dn">${esc(shown)} &middot; ${esc(note)}</div></li>`;
+  }).join(''));
+
+  set('pw-money', PAPERS.money.map(([k,v])=>
+    `<li><span class="k">${esc(k)}</span><span class="v">$${v.toFixed(2)}</span></li>`).join(''));
 }
 
 /* Last three entries today, newest first. The most recent gets a gold edge for a few
@@ -1453,6 +1646,7 @@ function render(){
 
   renderPatterns();
   renderHistory();
+  renderAlerts();
 }
 
 /* ---- export ---- */
@@ -1473,13 +1667,50 @@ function exportCsv(){
 }
 
 /* ---- reminders (only while the app is open) ---- */
+/* The old version was a button labelled "Alerts on" that never changed and reported its
+   result into a footer span, so there was no way to tell whether alerts were actually
+   working. This shows the real state every time the tab is drawn. */
+function renderAlerts(){
+  const card=document.getElementById('alertcard');
+  if(!card) return;
+  const st=document.getElementById('astate'), what=document.getElementById('awhat'),
+        btn=document.getElementById('abtn');
+  const armed = localStorage.getItem('mercy.audio')==='1';
+  const perm = ('Notification' in window) ? Notification.permission : 'unsupported';
+  let on=false, label='', body='';
+  if(perm==='granted' && armed){
+    on=true; label='Alerts are on';
+    body='This phone will beep, buzz and show a notification when she goes past her '+
+         'hold, or a walk or play session runs over. Only while the app is open, which '+
+         'is a browser limit: the calendar file is what wakes you when it is closed.';
+  } else if(perm==='denied'){
+    label='Blocked by iOS';
+    body='You said no to notifications. Turn them back on in Settings, Mercy, '+
+         'Notifications, then tap below. The sound and buzz still work meanwhile.';
+    btn.textContent='Enable sound and buzz';
+  } else {
+    label='Alerts are off';
+    body='Tap once on this phone. You will get a beep, a buzz and a notification when '+
+         'she is past her hold. Everyone using the app has to do this on their own phone.';
+    btn.textContent='Turn alerts on';
+  }
+  card.className='alertcard '+(on?'on':'off');
+  st.textContent=label; what.textContent=body;
+}
 function askNotify(){
   unlockAudio(); beep(1);
-  if(!('Notification' in window)){ toast('This browser cannot show notifications, but the sound and buzz still work while the app is open. Use the calendar file for background alerts.'); return; }
+  try{ localStorage.setItem('mercy.audio','1'); }catch(e){}
+  if(!('Notification' in window)){
+    toast('This browser cannot show notifications, but the sound and buzz now work while '+
+          'the app is open. The calendar file covers you when it is closed.');
+    renderAlerts(); return;
+  }
   Notification.requestPermission().then(p=>{
-    document.getElementById('nstate').textContent =
-      p==='granted' ? ' Reminders are on while this app is open.'
-                    : ' Reminders are off. Use the calendar file for alerts that work in the background.';
+    renderAlerts();
+    toast(p==='granted'
+      ? '<b>Alerts on</b><br>Beep, buzz and a notification while the app is open.'
+      : '<b>Notifications refused</b><br>Sound and buzz still work. Turn notifications on in iOS Settings if you want the banner too.',
+      p!=='granted');
   });
 }
 let warned=false;
