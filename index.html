@@ -296,7 +296,7 @@ the gaps for you.</p>
 </div>
 <div class="row">
   <button class="small" onclick="log('Potty Trip','N/A')">Out, nothing</button>
-  <button class="small" onclick="startTimer('Walk')">Start walk</button>
+  <button class="small" onclick="logDuration('Walk')">Walk</button>
 </div>
 
 <h2>Accident indoors</h2>
@@ -311,8 +311,8 @@ the gaps for you.</p>
   <button class="small" onclick="log('Water','N/A')">Water</button>
   <button class="small" onclick="log('Nap','N/A')">Nap</button>
   <button class="small" id="gymBtn" onclick="goGym()">Going to the gym</button>
-  <button class="small" onclick="startTimer('Alone')">Leaving her</button>
-  <button class="small" onclick="startTimer('Play')">Start play</button>
+  <button class="small" onclick="logDuration('Alone')">Left her alone</button>
+  <button class="small" onclick="logDuration('Play')">Play</button>
   <button class="small" onclick="log('Training','N/A')">Training</button>
 </div>
 <p class="playnote">Play is 15 to 30 minutes, about three times a day, and you end it, not
@@ -408,6 +408,7 @@ const PLAY = { min:15, max:30, perDay:3 };
 const BACKDATE_MIN = [0, 15, 30, 60, 90, 120, 150, 180, 210, 240];
 const SEED_MEMBERS = [{name:"Ariel", color:"#E8B04B"}, {name:"Shira", color:"#5FBF8F"}, {name:"Chayim", color:"#7FA6E8"}];
 const PLAN_MISSED_WINDOW = 120;
+const DURATIONS = {"Walk": [5, 10, 15, 20, 30], "Play": [10, 15, 20, 25, 30], "Alone": [30, 60, 90, 120, 180, 300]};
 const PLAN = [
   ["p01","04:40","Out, then Walk 1","Walk","N/A",10],
   ["p02","06:15","Out, in from the gym","Potty Trip","N/A",5,"Out"],
@@ -646,6 +647,33 @@ function hint(){
 }
 function stamp(){ const t=Date.now()-offsetMin*60000; offsetMin=0; renderWhen(); hint(); return t; }
 
+/* Live timers were the single biggest source of bad data: forget to tap Done and a five
+   minute walk records as three hours, which then poisons the walk-minutes trend. You now
+   say how long it was when you log it. One extra tap, and no clock can be left running. */
+function walkCeiling(){ return Math.max(5, Math.round(ageMonths()*WALK_PER_MONTH)); }
+function logDuration(kind){
+  const opts = (DURATIONS[kind] || [5,10,15,20,30]).map(m=>({
+    value:m, label:m+'m',
+    note: kind==='Walk' && m>walkCeiling() ? 'over her limit'
+        : kind==='Play' && m>PLAY.max ? 'too long' : ''
+  }));
+  const sub = kind==='Walk'
+      ? 'Her structured walk limit today is about '+walkCeiling()+' minutes. Potty trips do not count toward it.'
+    : kind==='Play'
+      ? 'You end it, not her. Then straight out, then a nap.'
+      : 'Roughly how long was she on her own?';
+  const title = kind==='Alone' ? 'How long was she alone?' : 'How long was the '+kind.toLowerCase()+'?';
+  openSheet(title, sub, opts, m => {
+    push(kind, 'N/A', {mins:m});
+    if(kind==='Walk' && m>walkCeiling())
+      toast('<b>'+m+' minutes logged</b><br>Past her '+walkCeiling()+
+            ' minute limit today. Growth plates, not fussiness.', true);
+    else if(kind==='Play' && m>PLAY.max)
+      toast('<b>'+m+' minutes logged</b><br>Over '+PLAY.max+
+            ' minutes. An overtired puppy gets mouthy, not sleepy.', true);
+  });
+}
+
 /* ---- tap sheet, so nothing needs typing ---- */
 let sheetPick=null;
 function openSheet(title, sub, opts, onPick){
@@ -770,8 +798,13 @@ function closeSheet(){
 
 /* ---- live timer: start when you leave, stop when you are back ---- */
 let timer=null, tick=null;
-try{ timer=JSON.parse(localStorage.getItem('mercy.timer')||'null'); }catch(e){ timer=null; }
+/* A timer left running by the previous build would keep counting and eventually log a
+   multi-hour walk. Nothing starts one now, so any stored timer is stale: drop it. */
+try{ localStorage.removeItem('mercy.timer'); }catch(e){}
+timer = null;
 
+/* Nothing starts a timer any more. Kept so one left running by the old build can
+   still be closed out, and so drawTimer has something to clear. */
 function startTimer(kind){
   if(timer){ toast('A '+timer.kind.toLowerCase()+' timer is already running.', true); return; }
   timer={kind:kind, start:stamp(), by:me};
@@ -862,11 +895,10 @@ function togglePlan(id){
   if(!p) return;
   if(p[3]==='Water Up'){ push('Water Up','N/A',{planId:id}); return; }
   if(p[3]==='Walk' || p[3]==='Play'){
-    openSheet(p[2], 'Time it live so the length is exact, or log the planned '+p[5]+' minutes now.',
-      [{value:'timer',label:'Start timer',note:'exact',accent:true},
-       {value:'now',label:'Log '+p[5]+'m',note:'planned'}],
-      v => v==='timer' ? startTimer(p[3])
-                       : push(p[3], p[4], {planId:id, mins:p[5]}));
+    const opts=(DURATIONS[p[3]]||[p[5]]).map(m=>({value:m,label:m+'m',
+      note:m===p[5]?'planned':''}));
+    openSheet(p[2], 'How long was it?', opts,
+      m => push(p[3], p[4], {planId:id, mins:m}));
     return;
   }
   push(p[3], p[4], Object.assign({planId:id}, p[5]?{mins:p[5]}:{}));
@@ -1108,12 +1140,13 @@ function goGym(){
       [{value:'out',label:'Out now',note:'then start the timer',accent:true},
        {value:'skip',label:'Skip it',note:'start anyway'}],
       v => { if(v==='out') push('Potty Trip','N/A');
-             startTimer('Alone');
-             toast('<b>Gym timer running</b><br>Back around '+backAt+'. You will get an alert if she goes past her hold.'); });
+             push('Alone','N/A',{mins:GYM_MINUTES});
+             toast('<b>Logged '+GYM_MINUTES+' minutes alone</b><br>Back around '+backAt+
+                   '. Straight out the moment you are in the door.'); });
     return;
   }
-  startTimer('Alone');
-  toast('<b>Gym timer running</b><br>Back around '+backAt+'. She went out '+
+  push('Alone','N/A',{mins:GYM_MINUTES});
+  toast('<b>Logged '+GYM_MINUTES+' minutes alone</b><br>Back around '+backAt+'. She went out '+
         Math.round((Date.now()-last)/60000)+' min ago.');
 }
 
