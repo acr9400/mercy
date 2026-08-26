@@ -243,6 +243,8 @@ footer{margin-top:30px;font-size:12px;color:var(--muted);line-height:1.6}
 .slots button{flex:none;font-size:12px;font-weight:600;padding:8px 12px;border-radius:9px;
   background:var(--gold);border:1px solid var(--gold);color:var(--onaccent);font-family:inherit}
 .slots button.drop{background:transparent;border-color:var(--line);color:var(--muted)}
+.slots button.ask{background:transparent;border-color:var(--gold);color:var(--gold);
+  padding:8px 10px}
 .alertcard{background:var(--raised);border:1px solid var(--line);border-radius:14px;
   padding:14px 15px;margin-bottom:6px}
 .alertcard .st{display:flex;align-items:center;gap:9px;font-size:15px;margin-bottom:7px}
@@ -1640,6 +1642,30 @@ function downloadShift(p, dayOffset, ts){
   setTimeout(()=>URL.revokeObjectURL(a.href), 4000);
 }
 
+/* Asking for cover goes out through whatever messaging app they already use, rather
+   than a push notification. A WhatsApp from Ariel gets read; a push from a dog app gets
+   swiped away by week two. It also fails loudly: a message either sent or it did not,
+   where a push can silently never arrive and you find out when nobody turns up.
+   navigator.share means no phone numbers have to be stored anywhere. */
+function askCover(p, dayOffset){
+  const d=slotDate(dayOffset), ts=slotTs(dayOffset,p[1]);
+  const when=d.toLocaleDateString(undefined,{weekday:'long', month:'short', day:'numeric'});
+  const text='Can you take Mercy out '+when+' at '+hhmm(new Date(ts))+'? '+
+             labelFor(p)+', about '+(p[5]||10)+' minutes.\n\nTap to claim it: '+
+             location.href.split('#')[0];
+  if(navigator.share){
+    navigator.share({text:text}).then(()=>{
+      toast('<b>Asked</b><br>They can claim it from the link. It shows here once they do.');
+    }).catch(()=>{});
+  } else if(navigator.clipboard){
+    navigator.clipboard.writeText(text).then(()=>{
+      toast('<b>Copied</b><br>Paste it into WhatsApp or Messages.');
+    });
+  } else {
+    openSheet('Send this', text, [{value:'ok',label:'Close',note:''}], ()=>{});
+  }
+}
+
 function renderCover(){
   const strip=document.getElementById('daystrip'), list=document.getElementById('slots'),
         note=document.getElementById('covernote');
@@ -1690,6 +1716,12 @@ function renderCover(){
     }
     li.innerHTML=html;
     if(!quiet){
+      if(!c && isOwner()){
+        const ask=document.createElement('button');
+        ask.className='ask'; ask.textContent='Ask';
+        ask.onclick=()=>askCover(p,coverDay);
+        li.appendChild(ask);
+      }
       const b=document.createElement('button');
       if(c){ b.textContent = (c.by===me||isOwner()) ? 'Release' : ''; b.className='drop';
              if(!b.textContent) b.style.display='none';
