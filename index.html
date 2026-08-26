@@ -496,11 +496,18 @@ let pending = [];
 try { pending = JSON.parse(localStorage.getItem('mercy.pending') || '[]'); } catch(e){ pending=[]; }
 let deletes = [];
 try { deletes = JSON.parse(localStorage.getItem('mercy.deletes') || '[]'); } catch(e){ deletes=[]; }
+/* Ids this phone has actually seen on the server. It is the difference between "the
+   sheet does not have this because someone deleted it" and "the sheet does not have
+   this because it never got up there". The first should be dropped, the second sent. */
+let synced = {};
+try { (JSON.parse(localStorage.getItem('mercy.synced') || '[]')).forEach(i=>synced[i]=1); }
+catch(e){ synced={}; }
 
 const save = () => { try {
   localStorage.setItem(KEY, JSON.stringify(events));
   localStorage.setItem('mercy.pending', JSON.stringify(pending));
   localStorage.setItem('mercy.deletes', JSON.stringify(deletes));
+  localStorage.setItem('mercy.synced', JSON.stringify(Object.keys(synced)));
 } catch(e){} };
 const uid = () => Date.now().toString(36)+Math.random().toString(36).slice(2,8);
 const colorOf = n => (MEMBERS.find(m=>m.name===n)||{}).color || '#8B97B8';
@@ -590,9 +597,25 @@ function merge(remote, authoritative){
   const have={}; events.forEach(e=>{ if(e.id) have[e.id]=true; });
   (remote||[]).forEach(r=>{ if(r.id && !have[r.id]) events.push(r); });
   if(authoritative){
-    const keep={}; (remote||[]).forEach(r=>{ if(r.id) keep[r.id]=true; });
-    pending.forEach(p=>{ if(p.id) keep[p.id]=true; });
-    events = events.filter(e => !e.id || keep[e.id]);
+    const onServer={}; (remote||[]).forEach(r=>{ if(r.id) onServer[r.id]=true; });
+    const queued={}; pending.forEach(p=>{ if(p.id) queued[p.id]=true; });
+    const rescued=[];
+    events = events.filter(e => {
+      if(!e.id || onServer[e.id] || queued[e.id]) return true;
+      if(synced[e.id]) return false;      // was up there, someone deleted it
+      rescued.push(e); return true;       // never made it up; send it, do not bin it
+    });
+    if(rescued.length){
+      rescued.forEach(e=>pending.push(e));
+      toast('<b>'+rescued.length+' entr'+(rescued.length===1?'y':'ies')+
+            ' had not reached the shared log</b><br>Sending '+
+            (rescued.length===1?'it':'them')+' now.');
+    }
+    // everything the server just showed us is confirmed up there
+    (remote||[]).forEach(r=>{ if(r.id) synced[r.id]=1; });
+    // keep the ledger from growing forever
+    const live={}; events.forEach(e=>{ if(e.id) live[e.id]=1; });
+    Object.keys(synced).forEach(i=>{ if(!live[i] && !onServer[i]) delete synced[i]; });
   }
   events.sort((a,b)=>a.ts-b.ts);
 }
@@ -935,7 +958,7 @@ function wipe(){
   if(!confirm('Clear the copy on this phone? If sharing is on, the shared log keeps everything and will sync back.')) return;
   /* deletes has to go too. It is a persisted list of ids to remove from the shared log,
      and leaving it behind replays those deletions against the shared sheet after a wipe. */
-  events=[]; pending=[]; deletes=[];
+  events=[]; pending=[]; deletes=[]; synced={};
   try{ localStorage.removeItem('mercy.timer'); }catch(e){}
   timer=null;
   save(); render(); pull(false);
