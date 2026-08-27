@@ -2027,6 +2027,91 @@
    "why": "Dogs have limited lactase and dairy is a common cause of loose stool. Right now, with a food transition and a recent Panacur course, added dairy mostly muddies your stool signal. Realistically wait until 4 to 5 months. The probiotic claim for supermarket yogurt is weakly evidenced; a veterinary probiotic is the better tool if one is actually needed."
   },
   {
+   "id": "b-when-needed",
+   "kind": "do",
+   "cat": "Bathing & grooming",
+   "title": "Does she actually need a bath, or just a clean?",
+   "tags": [
+    "dirty",
+    "muddy",
+    "mud",
+    "rain",
+    "poop on her",
+    "stepped in",
+    "pee on her",
+    "rolled in",
+    "spot clean",
+    "wipe",
+    "wash",
+    "when",
+    "need a bath",
+    "messy",
+    "grass",
+    "vomit",
+    "sticky",
+    "reasons",
+    "garbage",
+    "diarrhoea",
+    "diarrhea"
+   ],
+   "now": [
+    "Three different things, and only one of them is a bath. Pick the smallest one that does the job.",
+    "WIPE, damp cloth, no water, 20 seconds: wet or muddy paws after rain, salt in winter, food and slobber round her mouth, dust, a bit of grass, tear crust at the eyes.",
+    "SPOT CLEAN, warm water and a cloth on one area, rinsed and dried: she stepped in poop, she sat in her own pee, her rear is dirty after a soft stool, mud up her legs and belly from wet grass, she vomited on herself, one sticky patch, she lay in something damp in the street.",
+    "FULL BATH, the whole dog with shampoo: she rolled in something foul, she got into the garbage, she is dirty all over rather than in one place, she genuinely smells, or diarrhoea has gone up her legs and tail as well as her rear.",
+    "For a poopy rear or a dirty sanitary area: warm water and a cloth, or hold just that end under the tap. She does not need to get in the tub for it.",
+    "If she stepped in poop, wash the foot properly rather than wiping it. She scavenges, so whatever is on that foot goes in her mouth.",
+    "Dry whatever you washed, properly, especially between the toes and anywhere the coat is dense."
+   ],
+   "not": [
+    "Do not full-bath her for a dirty patch. That is the mistake that turns bathe when dirty into bathe twice a week, and the full bath is the only one of the three that costs her anything.",
+    "Do not use shampoo for a spot clean unless the thing is greasy. Warm water and a cloth handles almost all of it.",
+    "Do not leave her damp after a spot clean either. A wet patch under dense coat is how a hot spot starts, whether it came from a bath or a puddle.",
+    "Do not bathe her after surgery or with stitches in until the vet says the date."
+   ],
+   "why": "Rain and wet grass in a city produce a genuinely muddy dog several times a week, and if every one becomes a bath you strip her coat and undo the work of teaching her to accept the tub. Almost all real-world dirt on an apartment puppy is on the feet, legs, belly, rear and face, which are exactly the places a cloth reaches. A full bath is for whole-dog dirt.",
+   "vet": "Repeatedly dirty at the rear, or a soft stool leaving her messy day after day, is a stool question rather than a washing one. Bring it up."
+  },
+  {
+   "id": "b-damp-cold",
+   "kind": "do",
+   "cat": "Bathing & grooming",
+   "title": "Will she get sick if she is not totally dry? And the air conditioning",
+   "tags": [
+    "damp",
+    "wet",
+    "dry",
+    "cold",
+    "air conditioning",
+    "ac",
+    "aircon",
+    "sick",
+    "chill",
+    "shiver",
+    "hypothermia",
+    "hot spot",
+    "draft",
+    "fan",
+    "temperature"
+   ],
+   "now": [
+    "Turn the air conditioning off, or well up, before the bath starts. Leave it off until she is dry to the skin.",
+    "Keep her out of any direct airflow while she is damp: AC vent, fan, open window, doorway draft.",
+    "Bathe in a warm room, at least 72F. Warm the towels first if you can.",
+    "Dry her properly rather than fast. Part the coat and touch the skin at the neck, under the elbows, chest, base of the tail and behind the ears. Cool skin or damp roots means keep going.",
+    "If she does get chilled: dry towels, a warm room, a blanket, let her curl up. Do not use a hairdryer on heat, a hot water bottle or a heat pad on her, and do not put her in warm water. Warming a cold puppy too fast is its own problem.",
+    "Watch for shivering. That is her telling you she is losing heat, and it is the signal to stop and dry her."
+   ],
+   "not": [
+    "Do not let her out onto a balcony or into a hallway while damp.",
+    "Do not take her outside for one to two hours after a bath, longer in winter.",
+    "Do not leave her in a crate with a fan or a dryer aimed at it. Ever, at home or at a groomer. Dogs have died of heat stroke in cage dryers.",
+    "Do not assume the surface tells you anything. A double coat feels dry on top long before the undercoat is."
+   ],
+   "why": "Being wet does not give her a cold. Colds and kennel cough come from viruses and bacteria, not from temperature, and a damp dog in a warm room is not catching anything. So the honest answer to will she get sick is: not in the way you are picturing. There are two real risks though, and they are different from each other. CHILLING is a heat problem: she is small, she has a lot of surface area for her body mass and not much fat, and evaporating water pulls heat off her fast. Moving cold air makes it much faster, which is exactly what an AC vent is. That is why the AC matters and a still warm room does not. THE DAMP COAT is a skin problem: moisture trapped under a dense double coat is how acute moist dermatitis starts, which is what a hot spot is, and dense-coated breeds get them most. That is the one that is genuinely caused by leaving her not quite dry, and it shows up as a red, wet, painful patch that appears fast and that she will not leave alone. One more term, since it comes up: hypothermia is too cold, hyperthermia is too hot. She is at risk of the first from a cold draft while wet, and of the second from a hot dryer or a hot car, never from both at once.",
+   "vet": "A red, wet, painful patch that appeared within a day and that she keeps licking or chewing is a hot spot: same-day call, they spread fast. Shivering that does not stop once she is dry and warm, or a puppy who goes limp, weak or unusually quiet after getting cold, is also a call."
+  },
+  {
    "id": "b-drying",
    "kind": "do",
    "cat": "Bathing & grooming",
@@ -2321,6 +2406,49 @@
    ],
    "say": "If you call: say how often it happens, how much, what her posture was, and whether anyone was approaching her at the time.",
    "note": "Telling the four causes apart. NEEDED TO GO: normal squat, full puddle, she was loose and relaxed, not being approached. DELAYED STRESS: normal volume, once, on the floor after a stressful event; arousal suppresses urinating during the event and the bladder empties when it drops. SUBMISSIVE: happens when a person approaches, reaches or looms; ears back, lips pulled back, avoiding eye contact, cowering or rolling over; usually a dribble not a full void. EXCITEMENT: no submissive body language, happens standing or walking during greeting or play. Never scold her for any of them. Reprimanding a submissive pee makes her more anxious at the next approach, and with a puppy already unsure about baths you would be attaching that anxiety to you. Clean it up in silence. Prevention: take her out immediately before every bath and again after drying, and the question disappears."
+  },
+  {
+   "id": "b-urgent-wash",
+   "kind": "vet",
+   "cat": "Bathing & grooming",
+   "title": "Something is ON her coat and she is trying to lick it off",
+   "tags": [
+    "chemical",
+    "oil",
+    "grease",
+    "paint",
+    "tar",
+    "antifreeze",
+    "de-icer",
+    "cleaning product",
+    "toxic",
+    "licking",
+    "urgent",
+    "spill",
+    "sap",
+    "gum",
+    "skunk"
+   ],
+   "lead": "This is a poisoning question, not a grooming one. Whatever is on her coat, she will lick off, and a puppy will start within seconds. Stop her getting to it first, then work out what it is.",
+   "now": [
+    "STOP HER LICKING. That comes before washing, before phoning, before anything.",
+    "Antifreeze, of any amount, at any time. Sweet-tasting and lethal. Emergency.",
+    "Petrol, motor oil, tar, paint, paint stripper, solvent, or any cleaning product",
+    "Rat bait or slug bait powder in her coat",
+    "A de-icer or salt product she is chewing at rather than just walking through",
+    "Anything you cannot identify that came off a street or a basement floor",
+    "Call ASPCA Animal Poison Control on (888) 426-4435 or Pet Poison Helpline on (855) 764-7661 BEFORE you start washing, and have the container if you have it. Some things are made worse by water."
+   ],
+   "today": [
+    "Something sticky and non-toxic: tree sap, chewing gum, food. Not urgent, but do not cut it out with scissors, you will cut her skin. Work it out with oil or a proper detangler, then wash the area.",
+    "Skunk. Not dangerous, but do not use water first, it sets the smell. Look up the peroxide, baking soda and dish soap recipe before you start, and keep it out of her eyes."
+   ],
+   "mention": [
+    "Where in the building or the street she found it, so it can be moved"
+   ],
+   "normal": [],
+   "say": "Say what it is if you know, how much, how long ago, whether she has licked any, and her weight and age. Ask whether to wash it off and with what, because for some substances water is the wrong first move.",
+   "note": "Grease and oil are the one case where dish soap on a dog is legitimate, because you need a degreaser. Use it on that patch only, rinse hard, and phone the vet afterwards anyway. For everything else, dish soap stays away from her."
   },
   {
    "id": "v-belly",

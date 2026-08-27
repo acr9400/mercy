@@ -496,6 +496,7 @@ the gaps for you.</p>
   <button class="small" onclick="logDuration('Alone')">Left her alone</button>
   <button class="small" onclick="logDuration('Play')">Play</button>
   <button class="small" onclick="log('Training','N/A')">Training</button>
+  <button class="small" onclick="logWash()">Washed her</button>
 </div>
 <p class="playnote">Play is 15 to 30 minutes, about three times a day, and you end it, not
 her. Always go straight out afterward, then crate her for a nap. An overtired puppy gets
@@ -2551,6 +2552,33 @@ function renderDaySel(){
     b.onclick = () => setVariant(v);
     box.appendChild(b);
   });
+}
+
+
+/* ---- washing ----------------------------------------------------------------
+   Three different things get called "giving her a bath" and they are not the
+   same event. A full bath is the one with a cost: it strips coat oils, it takes
+   an hour to dry a double coat properly, and it is the one whose frequency the
+   guide says to keep low. A spot clean and a paw wipe have no such cost and
+   should not be counted against it. Logging them apart is the only way the
+   record answers "when was she last actually bathed". */
+const WASH = [
+  {value:'Full bath',  label:'Full bath',  note:'whole dog, shampoo, dried through'},
+  {value:'Spot clean', label:'Spot clean', note:'one dirty area washed, rinsed'},
+  {value:'Wipe',       label:'Wipe',       note:'damp cloth, paws or legs, no water'},
+];
+function logWash(){
+  openSheet('What did she get?',
+    'Only a full bath counts against how often she is bathed. A spot clean or a wipe costs her coat nothing, so do those freely.',
+    WASH, v => { if(v) push('Bath','N/A',{notes:v}); });
+}
+
+/* Days since her last full bath, or null if there has never been one logged.
+   Spot cleans and wipes are deliberately not counted. */
+function lastFullBath(){
+  const b = events.filter(e => e.event==='Bath' && e.notes==='Full bath');
+  if(!b.length) return null;
+  return Math.floor((Date.now() - b[b.length-1].ts) / 86400000);
 }
 
 </script>
