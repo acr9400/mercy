@@ -432,6 +432,10 @@ body.gon .wrap>h1{margin-bottom:10px}
 #daysel button small{display:block;font-size:10px;font-weight:600;opacity:.8;
   letter-spacing:.04em;margin-top:2px}
 body.gon #daysel{display:none}
+#daycap{font-size:12px;color:var(--muted);line-height:1.4;margin:-8px 0 14px;padding:0 4px}
+#daycap b{color:var(--paper);font-weight:600}
+#daycap a{color:var(--gold);font-weight:600;text-decoration:none;border-bottom:1px solid}
+body.gon #daycap{display:none}
 
 </style>
 </head>
@@ -453,6 +457,7 @@ body.gon #daysel{display:none}
 </div>
 
 <div id="daysel"></div>
+<div id="daycap" hidden></div>
 
 <div class="clock" id="clock">
   <div class="fill" id="fill"></div>
@@ -726,7 +731,7 @@ const PLANS = {
     ["p19","21:45","Last call, then crate","Potty Trip","N/A",5]
   ]
 };
-const VARIANTS = {"gym":{label:"Gym day",short:"Gym"},"home":{label:"Home morning",short:"Home"},"mon":{label:"Monday",short:"Mon",hint:"shiur 7\u20138:30"}};
+const VARIANTS = {"gym":{label:"Gym day",short:"Gym"},"home":{label:"Home morning",short:"Home"},"mon":{label:"Monday",short:"Mon",hint:"shiur 7\u20138:30",sel:false}};
 const DEFAULT_VARIANT = ["home","mon","gym","home","gym","home","home"];   /* by weekday, Sunday first */
 const GYM_MINUTES = 75;
 const GYM_DEFAULT = {0:null, 1:null, 2:null, 3:null, 4:null, 5:null, 6:null};
@@ -2554,12 +2559,21 @@ function setVariant(v){
   toast('<b>'+VARIANTS[v].label+'</b><br>Her times have moved to match.');
 }
 
+/* A shape carrying sel:false is not a button. Monday is not a decision: the date
+   already answers it, and putting it in the row read as "pick one", which is the
+   opposite of what it does. The caption below says what today is, and the buttons
+   stay as the escape hatch for a Monday with no shiur. Once a day has been
+   overridden the caption offers its own default back by name, which is the only
+   way back to a shape that has no button. */
 function renderDaySel(){
   const box = document.getElementById('daysel');
+  const cap = document.getElementById('daycap');
   if(!box) return;
   const cur = variantFor();
+  const def = DEFAULT_VARIANT[new Date().getDay()];
   box.innerHTML = '';
   Object.keys(PLANS).forEach(v => {
+    if(VARIANTS[v].sel === false) return;
     const b = document.createElement('button');
     const first = PLANS[v][0];
     b.className = v===cur ? 'on' : '';
@@ -2568,6 +2582,21 @@ function renderDaySel(){
     b.onclick = () => setVariant(v);
     box.appendChild(b);
   });
+  if(!cap) return;
+  if(cur !== def){
+    cap.innerHTML = 'Changed for today only. <a href="#" id="dayundo">Back to ' +
+                    VARIANTS[def].label + '</a>';
+    cap.hidden = false;
+    const a = document.getElementById('dayundo');
+    if(a) a.onclick = ev => { ev.preventDefault(); setVariant(def); };
+  } else if(VARIANTS[cur].sel === false){
+    cap.innerHTML = 'Today is <b>' + VARIANTS[cur].label + '</b>' +
+                    (VARIANTS[cur].hint ? ', ' + VARIANTS[cur].hint : '') +
+                    '. Set by the date, nothing to tap.';
+    cap.hidden = false;
+  } else {
+    cap.hidden = true;
+  }
 }
 
 
