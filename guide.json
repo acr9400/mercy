@@ -315,6 +315,46 @@
    "vet": "Worth asking your vet at the next visit: who do you use out of hours, and where should I take her."
   },
   {
+   "id": "s-session",
+   "kind": "do",
+   "cat": "Starting out",
+   "title": "How to run a two minute training session",
+   "tags": [
+    "session",
+    "training session",
+    "how long",
+    "how to train",
+    "two minutes",
+    "reps",
+    "repetitions",
+    "timing",
+    "how to give a treat",
+    "deliver",
+    "hold",
+    "when to train",
+    "when to stop",
+    "attention span",
+    "new owner"
+   ],
+   "now": [
+    "FOUR QUESTIONS FIRST. Has she been out to pee in the last 30 minutes? Is she awake and bright, not frantic and not sleepy? Is the food already in your pocket? Is the room quiet, TV off, door shut? Any no at all, and you do not train. You have lost nothing; there is another session in three hours.",
+    "COUNT REPS, NOT MINUTES. Six to ten repetitions is a session. That is about 60 to 90 seconds.",
+    "HOW TO HAND HER FOOD. One piece, held between finger and thumb, delivered down low at her mouth height. Food held up high is how you teach a dog to jump for it. If she is grabby and catches your fingers, put the piece flat on an open palm instead.",
+    "MARKER FIRST, HAND SECOND. Say YES or click, wait one beat, and THEN your hand moves to your pocket. Getting this backwards is the most common mistake there is, and it is why some dogs only work when they can see food.",
+    "STOP WHILE SHE STILL WANTS MORE. If you are thinking one more rep, that is the rep to skip.",
+    "WRONG TWICE MEANS YOU WENT TOO FAST. Not that she is stubborn. Drop back one step, get three easy wins, and end there."
+   ],
+   "not": [
+    "Do not train a puppy who needs to pee, who is overtired, or who has just eaten a full meal. None of those is a training problem and none of them improves with practice.",
+    "Do not repeat a cue she is ignoring. Every unanswered cue teaches her that the cue is optional, and that is very hard to undo.",
+    "Do not walk off to fetch the food mid-session. It goes in your pocket before you start.",
+    "Do not train for twenty minutes once. Two minutes, three times a day, beats it comfortably.",
+    "Do not add food for any of this. It comes out of the day's one container."
+   ],
+   "why": "A ten week old puppy has a working attention span measured in seconds. A session that runs past it does not teach her more. It teaches her that training is the thing that makes her bored and frustrated, and that costs you months. Short and often is not a compromise, it is the method.",
+   "vet": ""
+  },
+  {
    "id": "s-buy",
    "kind": "do",
    "cat": "Starting out",
@@ -3833,6 +3873,48 @@
    ],
    "why": "Her growth plates are open. They are soft cartilage at the ends of the long bones, and they are where a big puppy's bones are still lengthening. Repeated impact through an open plate can damage it, and the damage shows up as a joint problem years later rather than on the day it happens. In large breeds the plates are not closed until roughly 12 to 18 months, sometimes later. She is estimated at about 65 pounds grown, so she is at the wrong end of that range.",
    "vet": "Limping, a yelp on a jump, a leg she will not put weight on, or stiffness after she has been lying down: see she is limping. Do not give it a week."
+  },
+  {
+   "id": "g-toys-two-weeks",
+   "kind": "do",
+   "cat": "Home & care",
+   "title": "The first two weeks with the new toys, day by day",
+   "tags": [
+    "toys",
+    "plan",
+    "two weeks",
+    "first week",
+    "day 1",
+    "day one",
+    "where to start",
+    "order",
+    "schedule",
+    "clicker",
+    "puzzle",
+    "bell",
+    "play gym",
+    "tug",
+    "overwhelmed",
+    "what do I do first"
+   ],
+   "now": [
+    "DAY 1. Clicker: charge it, ten reps, twice. Click, wait one beat, then food; she does not have to do anything. Puzzle: stand it on a towel and scatter ten pieces AROUND it, none inside. Play gym: build it, stand it where she lives, and ignore it completely all day.",
+    "DAY 2. Clicker: same ten reps, but click when she is looking away, so you can see her head snap round. Puzzle: level 1, half the food sitting on top in plain sight where she can just eat it. Gym: pay her for glancing at it, food delivered away from the frame.",
+    "DAYS 3 AND 4. Clicker: no more sessions ever; from here you just use it inside everything else. Bell: hold the button flat on your open palm, off the wall, on its lowest volume, and pay the nose touch only. Eight reps, twice a day. Gym: pay a step toward it, then a nose on it.",
+    "DAY 5. Puzzle: level 1 properly, nothing on top. Bell: mount it by the potty door at her nose height and point at it at the start of every trip. Gym: kibble on the floor inside the frame, so her head and shoulders go under the bar.",
+    "DAYS 6 AND 7. Bell: point at it every trip, all three of you. Gym: let her tug one hanging toy for ten seconds while you hold it steady. Then the first 90 second tug game with the suction toy, your hand on the rope the whole time.",
+    "DAYS 8 TO 14. Everything stays where it is. Start fading the food out of the bell so the door opening becomes the payment. Move the gym to a different room. Tug once or twice a day.",
+    "THE TALKING BUTTONS stay in the cupboard until about six months."
+   ],
+   "not": [
+    "Do not start all of them on the same day. The order is deliberate: the clicker is first because every other item on the list is paid through it.",
+    "Do not move up a level or a stage because a date arrived. Move up when that skill's own rule says so, and when you are unsure, stay where you are another week.",
+    "Do not run both bells. One device, one signal, or she learns neither.",
+    "Do not leave the puzzle, the tug or the play gym on the floor when nobody is watching. Rope, squeakers and small parts.",
+    "Do not treat a missed day as a setback. Skipping a day costs nothing. Rushing her costs weeks."
+   ],
+   "why": "There is no day 15 here on purpose. Two weeks is enough to introduce every toy properly, and after that the pace comes from her rather than from the calendar. Nothing is lost by going slowly. Quite a lot is lost by going fast, because a puppy who has failed at something once is much harder to get back than one who has never seen it.",
+   "vet": ""
   }
  ],
  "categories": [
