@@ -60,7 +60,7 @@
     "towel",
     "blanket",
     "bed",
-    "mattress",
+    "cushion",
     "soft",
     "pee",
     "wee",
@@ -68,20 +68,23 @@
     "stuffing",
     "chewing",
     "swallow",
-    "what to put"
+    "what to put",
+    "head",
+    "bolster"
    ],
    "now": [
-    "ONE flat washable layer. Not a pile. A crate pad or a folded towel or her bed, whichever she is not chewing.",
-    "Check it every single morning. The moment you find it chewed, pulled apart, or with a seam open, it comes out.",
-    "If she soils it: strip the crate to the bare tray for a week. Once she has had seven clean nights, put one layer back.",
-    "Divider set so she can stand up, turn around and lie down. No more than that."
+    "One flat washable layer to lie on. A crate pad, a folded towel, or her bed.",
+    "Something to rest her head against is fine, and for some puppies it genuinely helps them settle. Dogs like a raised edge to lean on. That is why bolster beds exist.",
+    "Check everything every morning. You are looking for tooth marks, a pulled seam, or a corner starting to come apart.",
+    "Divider set so she can stand up, turn around and lie down. No more than that.",
+    "Re-check the whole arrangement at 12 to 16 weeks. That is when the adult teeth push through and chewing steps up sharply. A puppy who ignored her bedding at 10 weeks may start shredding it at 14."
    ],
    "not": [
-    "No pillow. A pillow wicks urine down into the stuffing, so she is dry and comfortable a minute after peeing. That removes the only thing motivating her to hold it, and puppies who soil absorbent bedding tend to carry on. The stuffing is also the exact kind of thing a teething puppy swallows, and fabric in the gut is surgery.",
-    "Not a pillow AND a towel AND a bed. Three soft layers give her a bathroom at one end and a bed at the other, which is precisely what the crate size rule exists to prevent.",
-    "Nothing she can shred while you are not watching. Blankets with a loose weave, anything with a seam she has already found."
+    "Do not keep soft bedding in there if she is soiling it. Absorbent bedding wicks urine away, so she is dry and comfortable a minute after peeing, and that removes the only thing motivating her to hold it. If she pees on it, strip the crate to the bare tray for a week, then put one layer back once she has had seven clean nights.",
+    "Do not keep anything she has started to chew. The moment you find a seam open or stuffing showing, it comes out that day. Swallowed fabric is a blockage, and a blockage is surgery.",
+    "Do not stack three soft layers. A pillow and a towel and a bed together give her somewhere to move away from a wet corner, which is exactly what the crate size rule exists to prevent."
    ],
-   "why": "Crate training works on one mechanism: most puppies will not lie in their own mess. Everything else follows from that. Absorbent bedding removes the discomfort, and extra space lets her move away from it, so between them they dismantle the only thing doing the work. A fouled crate almost always means the crate is too big, the bedding is too absorbent, or she was left too long. Fix those before you conclude anything about her.",
+   "why": "Two separate questions get muddled here, and they have different answers. CHEWING is about this individual puppy: if she does not touch her bedding, the risk is low right now, and you will see it change before it becomes dangerous as long as you check daily. SOILING is about the mechanism crate training runs on: most puppies will not lie in their own mess, and absorbent bedding removes that discomfort. So the honest rule is not a blanket no. It is: soft bedding is fine while she is neither chewing it nor peeing on it, and the day either of those changes, it comes out.",
    "vet": "Repeated crate soiling in a puppy who was previously clean can be medical. Mention it."
   },
   {
