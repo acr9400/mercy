@@ -21,6 +21,44 @@
  ],
  "entries": [
   {
+   "id": "g-prefers-indoors",
+   "kind": "do",
+   "cat": "House training",
+   "title": "She will pee happily indoors but not outside",
+   "tags": [
+    "indoors",
+    "inside",
+    "prefers",
+    "wont go outside",
+    "holds it",
+    "accident",
+    "house training",
+    "surface",
+    "substrate",
+    "comes back in",
+    "straight after",
+    "reward",
+    "carpet",
+    "floor"
+   ],
+   "now": [
+    "PAY IT THE INSTANT SHE FINISHES, OUTSIDE. Within two seconds, with food, while her feet are still on the pavement. Not praise when you get back in. She cannot connect a reward indoors to something she did outdoors two minutes ago.",
+    "Take good food out with you every single time. Chicken or cheese, not kibble. This is one of the two things worth spending real value on.",
+    "STOP ENDING THE WALK WHEN SHE GOES. If peeing outside is immediately followed by going home, she learns that holding it makes the walk last longer. After she goes, carry on for another five minutes of sniffing. That is the payment.",
+    "If she does NOT go outside, she does not get free run of the apartment when you come in. Crate or a lead attached to you for fifteen minutes, then straight back out and try again. Repeat.",
+    "If she DOES go outside, she gets thirty to forty minutes of freedom indoors. That is the deal, and it is the single most effective piece of management here.",
+    "Give her longer outside. A five minute trip where she spends four minutes sniffing may not leave her time to actually go. Stand still in one spot and be boring for a few minutes.",
+    "Clean every indoor accident with an enzymatic cleaner, properly soaked and left the full time. Any spot that still smells of urine to her is a spot she will use again."
+   ],
+   "not": [
+    "Do not scold her, show her the mess, or rub her nose in it. She cannot connect it, and what she learns is not to go in front of you, which is far worse and much harder to undo.",
+    "Do not assume she is being stubborn or spiteful. She is not.",
+    "Do not stand outside with her for two minutes and then give up and go in. That is the pattern that teaches her indoors is where it happens."
+   ],
+   "why": "Two things are happening and both are learning, not defiance. FIRST, dogs form surface and place preferences. Every successful pee on your floor is a rep: the relief itself is the reward, so the floor gets reinforced every single time it happens, whether you are watching or not. If the count is running five indoors to three outdoors, the floor is winning on volume. SECOND, a city sidewalk is an overwhelming place for a ten week old who is not fully vaccinated. Traffic, other dogs, noise, a hundred smells. Emptying a bladder requires a degree of relaxation, and an overstimulated puppy often cannot do it, then goes the moment she is home and calm. That is not her preferring your floor for its own sake, it is her only being relaxed enough to go once she gets there. The third cause is the one people never spot: if going outside reliably ends the walk, she has a reason to hold on.",
+   "vet": "Peeing small amounts frequently, or going again shortly after being emptied, is worth ruling out medically before you treat it purely as training. In a young female golden it is a specific thing to ask about. She has done it several times in the log."
+  },
+  {
    "id": "g-accident-floor",
    "kind": "do",
    "title": "She had an accident on the floor",
