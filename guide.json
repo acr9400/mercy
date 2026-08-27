@@ -2743,6 +2743,76 @@
    "vet": "Constant licking at one foot, limping, redness between the toes, or a smell from the paws."
   },
   {
+   "id": "b-boots",
+   "kind": "do",
+   "cat": "Bathing & grooming",
+   "title": "Booties: mostly no, and the one time yes",
+   "tags": [
+    "boots",
+    "booties",
+    "shoes",
+    "paw protectors",
+    "winter",
+    "salt",
+    "ice melt",
+    "de-icer",
+    "hot pavement",
+    "asphalt",
+    "dirty paws",
+    "clean",
+    "traction",
+    "pads"
+   ],
+   "now": [
+    "Not for keeping her clean. A damp cloth at the door takes twenty seconds and costs her nothing.",
+    "Not at ten weeks. Boots change how the ground feels and plenty of puppies simply stop walking in them. Her live problem is getting her to toilet outside, so this is the wrong month to add a reason not to move.",
+    "WINTER SALT is the real case, and it is a New York case. Ice melt pellets wedge between her pads and burn, and then she licks them off. Buy them around November.",
+    "The other genuine cases: hot asphalt in summer, though walking at cooler hours is the better answer; an injured or post-surgical paw on vet instruction; broken glass, ice or rough ground.",
+    "Fit matters more than price. Measure her paw width on a hard floor WITH HER WEIGHT ON IT, because the pad spreads when she stands. Too loose and they fly off, too tight and they rub.",
+    "Take them off indoors. They are for the twenty minutes outside, not for the day."
+   ],
+   "not": [
+    "Do not put all four on for the first time and go for a walk. That produces the high-stepping cartoon walk, and if that is her first experience she will fight them every winter after.",
+    "Do not leave them on a damp paw for hours. A closed warm boot on a wet foot is how yeast between the toes starts.",
+    "Do not use them to keep her pads soft and clean. Pads are supposed to toughen with use, and permanently covered feet stay soft, which makes every barefoot walk worse."
+   ],
+   "why": "Her pads are a sense organ. They are full of nerve endings and she uses them to feel the ground, judge grip and know where her feet are, and boots blunt all of that. Bare pads also grip better than most boot soles, especially on smooth or wet surfaces, so boots often make a dog less sure-footed rather than more. Dogs shed some heat through their paws too, which boots trap. Honest caveat: most of this is mechanism and veterinary consensus rather than controlled trials. Nobody has run the study. But the reasoning is consistent and the everyday cost of boots is real, so the bar for using them should be a specific hazard rather than tidiness.",
+   "vet": "Constant licking at one foot, limping, or redness between the toes is worth a look regardless of whether she wears boots."
+  },
+  {
+   "id": "b-boots-training",
+   "kind": "do",
+   "cat": "Bathing & grooming",
+   "title": "Teaching her to wear boots, before you need them",
+   "tags": [
+    "boots",
+    "booties",
+    "training",
+    "desensitise",
+    "desensitize",
+    "winter",
+    "introduce",
+    "steps",
+    "wont walk",
+    "high stepping"
+   ],
+   "now": [
+    "Do this in November, before the salt goes down, not on the first icy morning.",
+    "Step 1: boot on the floor. She sniffs it, she gets food. That is the whole session.",
+    "Step 2: touch the boot to one paw, food, take it away. Five reps.",
+    "Step 3: one boot ON for three seconds, food, off. Five reps.",
+    "Step 4: one boot on, walk two steps, food, off.",
+    "Step 5: two boots. Then four. Then four plus a short walk indoors.",
+    "Two to five minutes a session, twice a day. She should be eating throughout."
+   ],
+   "not": [
+    "Do not go straight to four boots. That is the mistake, and it is the one that produces a dog who refuses boots for life.",
+    "Do not push on when she stops taking food. That means she is over threshold, and the answer is to drop back a step."
+   ],
+   "why": "Exactly the same protocol as the bath, and for the same reason: the first several experiences decide whether this is a normal thing that happens or a thing she fights. Boots are worth twenty minutes of preparation in November because the alternative is wrestling four boots onto a 50 lb dog on a freezing morning when the pavement is already salted.",
+   "vet": ""
+  },
+  {
    "id": "b-shampoo",
    "kind": "do",
    "cat": "Bathing & grooming",
