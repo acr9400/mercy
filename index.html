@@ -2515,7 +2515,12 @@ function variantFor(d){
   const k = dayKey(d);
   const picks = events.filter(e => e.event==='Day' && PLANS[e.notes]
                                    && dayKey(new Date(e.ts))===k);
-  if(picks.length) return picks[picks.length-1].notes;
+  if(picks.length){
+    /* ids are time-ordered (uid() prefixes Date.now() in base 36), so the highest id
+       is the most recent tap even when the timestamps are identical. */
+    picks.sort(function(a,b){ return String(a.id) < String(b.id) ? -1 : 1; });
+    return picks[picks.length-1].notes;
+  }
   return DEFAULT_VARIANT[d.getDay()];
 }
 
@@ -2527,10 +2532,21 @@ function setVariant(v){
   if(variantFor() === v) return;
   const d = new Date(); d.setHours(12,0,0,0);       /* noon, so it cannot slide a day */
   const k = dayKey(d);
-  /* one choice per day: drop any earlier one rather than stacking them */
+  /* One choice per day. Splicing it out of `events` is not enough: a row that has
+     already reached the shared sheet comes straight back on the next pull unless its
+     id is queued in `deletes`, which is how remove() does it. Without that, every tap
+     left another copy on the sheet, and since they all carry the same noon timestamp
+     there was no stable answer to which one won. */
   for(let i=events.length-1; i>=0; i--){
     const e = events[i];
-    if(e.event==='Day' && dayKey(new Date(e.ts))===k) events.splice(i,1);
+    if(e.event==='Day' && dayKey(new Date(e.ts))===k){
+      if(e.id){
+        deletes.push(e.id);
+        const q = pending.findIndex(x => x.id===e.id);
+        if(q>=0) pending.splice(q,1);
+      }
+      events.splice(i,1);
+    }
   }
   const e = {id:uid(), ts:d.getTime(), by:me, event:'Day', where:'N/A', notes:v};
   events.push(e); events.sort((a,b)=>a.ts-b.ts);
