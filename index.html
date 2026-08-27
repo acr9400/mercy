@@ -2490,9 +2490,12 @@ function gRender(){
 }
 
 
-/* ---- which morning is today? ------------------------------------------------
-   Two shapes of morning, generated into PLANS from config.schedule.daily: a gym
-   day and a home morning. They differ only in the rows before 08:10.
+/* ---- which shape is today? --------------------------------------------------
+   Three shapes, generated into PLANS from config.schedule.daily: a gym day, a home
+   morning, and Monday. The first two differ only in the rows before 08:10. Monday
+   is a home morning with a different evening, because the 19:00 to 20:30 shiur sits
+   on top of Walk 2 and Play 3. Nothing here counts the shapes, so a fourth costs
+   only a config change.
 
    The choice rides in the shared log as {event:'Day', notes:<variant>}, the same
    trick the Cover tab uses, so switching it on one phone reaches everyone else's
