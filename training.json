@@ -103,6 +103,24 @@
     "why": "Feed the meal in the crate. Costs no extra time."
    },
    {
+    "when": "One meal a day, instead of the bowl",
+    "what": "The food puzzle",
+    "mins": 10,
+    "skills": [
+     "t-puzzle"
+    ],
+    "why": "Costs no extra time and no extra food. It is a meal she has to think about."
+   },
+   {
+    "when": "Every potty trip, at the door",
+    "what": "The bell",
+    "mins": 0,
+    "skills": [
+     "t-doorbell"
+    ],
+    "why": "Ten seconds, every trip, all three of you. It only works if it is every time."
+   },
+   {
     "when": "Coming back in from a toilet trip",
     "what": "Clean paws",
     "mins": 1,
@@ -120,6 +138,16 @@
      "t-down"
     ],
     "why": "After sleep she can think. Before a nap she cannot."
+   },
+   {
+    "when": "After a nap, when she is mouthy",
+    "what": "Tug with rules",
+    "mins": 2,
+    "skills": [
+     "t-tug",
+     "t-dropit"
+    ],
+    "why": "The legal thing to do with a retriever's mouth, and where drop it gets tested for real."
    },
    {
     "when": "Before lunch",
@@ -150,6 +178,15 @@
      "t-handling"
     ],
     "why": "When she is sleepy and already still. Do not do this when she is wound up."
+   },
+   {
+    "when": "Late afternoon, with you in the room",
+    "what": "The play gym",
+    "mins": 5,
+    "skills": [
+     "t-gym"
+    ],
+    "why": "A strange object she chooses to walk up to. Supervised, on carpet, never as a jump."
    },
    {
     "when": "While you cook",
@@ -193,7 +230,8 @@
    "Total formal training: about 15 minutes a day, in pieces of two.",
    "If she gets something wrong twice in a row, make it easier and stop after three easy wins.",
    "Stop while she still wants more. Always.",
-   "An overtired puppy cannot learn. If she is frantic, that is a nap, not a session."
+   "An overtired puppy cannot learn. If she is frantic, that is a nap, not a session.",
+   "Puzzle time, tug and gym time are play, not training. They come out of her three play sessions, and everything she earns off them comes out of the day's one container."
   ]
  },
  "skills": [
@@ -203,43 +241,52 @@
    "title": "The marker word",
    "priority": 1,
    "age": "Start today. Everything else is built on it.",
-   "sessions": "2 minutes, twice a day, for two days. Then it just lives inside every other skill.",
+   "sessions": "2 minutes, twice a day, for two days. The clicker is charged the same way and separately. Then it just lives inside every other skill.",
    "why": "This is the piece almost everyone skips, and it is the reason their training is slow. The marker is a sound that means: that, right there, is what earned you food. It buys you the one second you need to get a treat out of your pocket, without the delay blurring what she was paid for.",
    "need": [
     "20 pieces of her kibble",
+    "The clicker, on your wrist so you cannot leave it in another room",
     "A quiet room",
     "No distractions"
    ],
    "steps": [
     {
      "n": 1,
-     "do": "Pick your word and write it down for all three of you. YES is good: short, sharp, and you do not use it in normal conversation the way you use good girl.",
-     "look": "Nothing yet. You are just choosing.",
-     "reps": "Once, and never change it."
+     "do": "Pick your markers and write them down for all three of you. You own a clicker now, so use two: the CLICKER for sit-on-the-floor sessions at home, the word YES for everywhere else, walks, the door, hands full of leash.",
+     "look": "Both mean exactly the same thing to her: that, right there, earned you food. Two markers is fine and is what most trainers do. Two words for one behavior is not. The clicker is sharper and identical every time, which is why it teaches new things faster; the word is the one you always have.",
+     "reps": "Once, and never change them."
     },
     {
      "n": 2,
-     "do": "Stand with her. Say YES in a bright, clipped tone, then immediately hand her a piece of kibble. Not at the same time. Word first, food a beat later.",
+     "do": "Stand with her. Click once, or say YES in a bright clipped tone, then immediately hand her a piece of kibble. Not at the same time. Marker first, food a beat later.",
      "look": "She eats it. That is all you need.",
-     "reps": "10 times. Then stop."
+     "reps": "10 times with the clicker. Then 10 with the word, later in the day."
     },
     {
      "n": 3,
-     "do": "Wait until she is looking away or slightly distracted. Say YES. Then feed.",
-     "look": "Her head snaps round to you when she hears the word. THAT is the marker working. She has learned the sound predicts food.",
-     "reps": "10 times, spread across the day."
+     "do": "Wait until she is looking away or slightly distracted. Mark. Then feed.",
+     "look": "Her head snaps round to you. THAT is the marker working. She has learned the sound predicts food. Test each marker separately; charging one does not charge the other.",
+     "reps": "10 times each, spread across the day."
     },
     {
      "n": 4,
-     "do": "From now on, in every other skill on this list: the instant her body does the right thing, say YES, and then reach for the food.",
+     "do": "From now on, in every other skill on this list: the instant her body does the right thing, mark, and then reach for the food.",
      "look": "The order matters and people get it backwards. Marker first, then your hand moves. If your hand moves first, the hand becomes the cue and you are back to luring forever.",
      "reps": "Forever."
+    },
+    {
+     "n": 5,
+     "do": "Clicker mechanics, which are fiddly for about a day. Hold it low at your side or behind your back, never up near her ear. One click, never two, never a rattle of excitement.",
+     "look": "She looks for the food on the click rather than on your hand. Every click gets paid, including the ones you fire by accident, or the sound stops meaning anything.",
+     "reps": "Every session until it is automatic."
     }
    ],
    "wrong": [
-    "Saying YES and moving your hand to the treat pouch at the same time. Now the hand movement is the real marker and the word is decoration.",
-    "Using YES to try to interrupt her doing something wrong. The marker only ever means food is coming. If you use it as an interrupter you break it.",
-    "Saying it flatly. Make it sound like a starting pistol, not a shrug."
+    "Marking and moving your hand to the treat pouch at the same time. Now the hand movement is the real marker and the click is decoration.",
+    "Using the marker to try to interrupt her doing something wrong. It only ever means food is coming. If you use it as an interrupter you break it.",
+    "Saying YES flatly. Make it sound like a starting pistol, not a shrug.",
+    "Clicking twice for something especially good. The click carries no volume control. Pay a jackpot with more food instead, not with more clicks.",
+    "Letting her chew the clicker or the wrist strap. It is a small hard plastic object with a metal tongue in it. It lives on your wrist or in a drawer."
    ],
    "next": [
     "t-name",
@@ -250,11 +297,14 @@
     "yes",
     "clicker",
     "click",
+    "clicker training",
     "reward",
     "timing",
-    "charge"
+    "charge",
+    "charging",
+    "wrist strap"
    ],
-   "note": "A clicker works identically and is slightly sharper. A word is one less thing to hold and one less thing to leave in another room. Either is fine. Pick one.",
+   "note": "The clicker is the cheapest and most useful thing you bought. It is not a remote control and it does nothing on its own: it is a sound that has been paid for so many times that it means food, which buys you the one second you need to get your hand to your pocket without blurring what she was paid for. If juggling two markers is one thing too many with three people involved, drop the clicker and use YES for everything. That is a real option and it is better than doing both badly.",
    "criteria": [
     {
      "level": "Charged",
@@ -772,6 +822,236 @@
    ]
   },
   {
+   "id": "t-tug",
+   "cat": "Foundation",
+   "title": "Tug, with rules",
+   "priority": 2,
+   "age": "Gentle tug now. Real tug waits for her adult teeth, around six or seven months.",
+   "sessions": "60 to 90 seconds, two or three times a day. Always ended by you.",
+   "why": "Tug is the best reward you own that is not food, and you will need it for recall later, when kibble stops outbidding another dog. It is the legal outlet for a retriever's mouth. And it is where DROP IT gets tested under real excitement, which is the only test that counts. Tug does not make a dog aggressive. A tug game with no rules makes a dog rude, and the rules are the entire point of the exercise.",
+   "need": [
+    "A long soft tug toy, so her teeth are nowhere near your hand",
+    "DROP IT already working in a quiet room",
+    "The suction cup toy: yes, but read step 6 first"
+   ],
+   "steps": [
+    {
+     "n": 1,
+     "do": "You start it, always. Bring the toy out, wiggle it LOW along the floor like something running away, and say TAKE IT.",
+     "look": "She grabs it. If she is already leaping and snatching before the game starts, put it away and try after her next nap.",
+     "reps": "Once per game."
+    },
+    {
+     "n": 2,
+     "do": "Keep it low and side to side. Never up in the air, never lifting her front feet off the ground, never shaking her.",
+     "look": "Her feet stay down. She is ten weeks old, those are milk teeth, and her neck, shoulders and growth plates are years from finished.",
+     "reps": "The whole game."
+    },
+    {
+     "n": 3,
+     "do": "Every 15 or 20 seconds, freeze. Go completely still and boring, hold the toy dead, and say DROP once.",
+     "look": "She lets go. Marker, food, and then TAKE IT again straight away. Restarting the game is the real payment, and it is why the drop stays reliable instead of decaying.",
+     "reps": "4 or 5 freezes per game."
+    },
+    {
+     "n": 4,
+     "do": "You end it while she still wants more. Toy goes away, out of her reach, out of sight.",
+     "look": "She is still keen when it disappears. That is what you want, every time.",
+     "reps": "Once per game."
+    },
+    {
+     "n": 5,
+     "do": "Teeth on skin ends the game instantly. No telling off, no noise. Stand up, toy behind your back, ten seconds, then try again.",
+     "look": "She learns that her aim is what keeps the game running.",
+     "reps": "Whenever it happens."
+    },
+    {
+     "n": 6,
+     "do": "The suction cup toy, and what is wrong with the box. It is sold as self-play and while-you-are-out. Do not use it that way. Stick it down, sit next to it, keep a hand on the rope, and play exactly the game above.",
+     "look": "Two reasons, and both are real. A floor anchor has no give, so she pulls against her own body weight with milk teeth and there is nobody there to freeze and cue DROP. And it is rope: swallowed strands are a linear foreign body, which is worse than swallowing a solid object and is a surgical emergency.",
+     "reps": "Every time it comes out."
+    },
+    {
+     "n": 7,
+     "do": "Check the rope every single time, before and after. Then put it away.",
+     "look": "Fraying, a loose strand, a chewed-through section, a suction base she has started working at: bin it. Nothing is indestructible and the listing that says so is selling something.",
+     "reps": "Every time."
+    }
+   ],
+   "wrong": [
+    "Letting her end the game by snatching it and running off. Who ends it is the difference between a rule and a scuffle.",
+    "Lifting her off the floor, swinging her, or letting her hang. Not at any age, and absolutely not at ten weeks.",
+    "Growling and wrestling back. Keep it light and keep it a game.",
+    "Leaving any tug toy on the floor. Tug is a game with a person in it. A tug toy without you is just a rope she can eat.",
+    "Playing tug with an overtired puppy. If she cannot hear DROP, she needed a nap twenty minutes ago."
+   ],
+   "next": [
+    "t-dropit",
+    "t-retrieve"
+   ],
+   "tags": [
+    "tug",
+    "tug of war",
+    "suction cup",
+    "rope",
+    "pull",
+    "take it",
+    "chew",
+    "teething",
+    "mouth",
+    "self play",
+    "boredom",
+    "anchored"
+   ],
+   "note": "The one thing about this toy that is genuinely good: it lets you play tug one-handed, or with the rope anchored while you cue her from a step away, which is a nice way to build a drop at distance later. The one thing about it that is genuinely bad is everything the listing promises. Use it as a toy you supervise and it is fine.",
+   "criteria": [
+    {
+     "level": "Takes on cue",
+     "test": "TAKE IT starts the game, with the toy low on the floor.",
+     "pass": "5 out of 6.",
+     "id": "t-tug-c1"
+    },
+    {
+     "level": "Drops in a quiet room",
+     "test": "You freeze and say DROP once, no food visible.",
+     "pass": "5 out of 6.",
+     "id": "t-tug-c2"
+    },
+    {
+     "level": "Drops mid-game",
+     "test": "She is fully into it and you cue DROP once.",
+     "pass": "4 out of 5.",
+     "id": "t-tug-c3"
+    },
+    {
+     "level": "No teeth on skin",
+     "test": "A full 90 second game.",
+     "pass": "No contact at all, 4 sessions out of 5.",
+     "id": "t-tug-c4"
+    },
+    {
+     "level": "Ends clean",
+     "test": "You end it and put the toy away while she still wants more.",
+     "pass": "She settles within a minute rather than barking at you, 4 out of 5.",
+     "id": "t-tug-c5"
+    }
+   ]
+  },
+  {
+   "id": "t-doorbell",
+   "cat": "Foundation",
+   "title": "Ringing to ask to go out",
+   "priority": 2,
+   "age": "Start now. It will not pay off until about four months, and that is normal.",
+   "sessions": "Ten seconds at every potty trip. Never a session of its own.",
+   "why": "It gives her one clear way to tell you, instead of pacing, circling and whining, which three different people will read three different ways. Be honest about what it is not: it does not house-train her. The clock and the schedule do that. What the bell buys you is everything from about four months onward, when she can actually hold it and needs a way to say so.",
+   "need": [
+    "ONE bell. Not both of them.",
+    "The one door she always goes out of for potty",
+    "Her kibble for the first week or so, then nothing"
+   ],
+   "steps": [
+    {
+     "n": 1,
+     "do": "Pick one device and put the other in a cupboard. Use the wireless button: mount it by the potty door at her nose height, on the LOWEST volume.",
+     "look": "The doorknob bells jingle on their own every time anybody opens or shuts that door, which is a false alarm several times a day and teaches her the sound means nothing. The button only makes a noise when she touches it, and the chime carries to another room, which matters when three people share her and one of you is on a Zoom shiur. Keep the doorknob bells as the spare, or for a house where there is nowhere to mount a button.",
+     "reps": "Once."
+    },
+    {
+     "n": 2,
+     "do": "Charge it as a target first, in your hand, off the wall, volume at its lowest. Hold it out flat. The instant her nose touches it: marker, food.",
+     "look": "Nose, not paw. Pay the nose and ignore the paw and you will get a nose for life. A hundred and fifteen decibels six inches from a ten week old puppy's face is how you get a puppy who is frightened of the door, so start quiet and turn it up over a fortnight.",
+     "reps": "6 to 8, twice a day, for two days."
+    },
+    {
+     "n": 3,
+     "do": "Mount it low by the door. At the START of every single potty trip, point at it. She touches it, marker, food, and you open the door immediately.",
+     "look": "The door opening becomes the real reward. Fade the food out over about a week and let the door do the paying.",
+     "reps": "Every trip. All three of you, every time."
+    },
+    {
+     "n": 4,
+     "do": "Stop pointing. Stand at the door with the leash and wait three to five seconds, saying nothing.",
+     "look": "She touches it on her own. If she does not, point once, pay, and make the next one easier. Never stand there repeating a cue at her.",
+     "reps": "Every trip."
+    },
+    {
+     "n": 5,
+     "do": "Out on the leash, straight to the potty spot, and be boring. No walk, no sniffing tour, no saying hello to anyone. She goes, you pay her out there at the spot, and you come back in.",
+     "look": "This step, and only this step, decides whether the bell comes to mean 'I need to pee' or 'I want to go outside'. What is on the other side of the door is the whole lesson.",
+     "reps": "Every trip, for months."
+    },
+    {
+     "n": 6,
+     "do": "From around four months, when she can genuinely hold it: any unprompted touch gets answered. Every time, however inconvenient, for the first month.",
+     "look": "A bell that works only sometimes is a bell she stops using. After that first month, if she is ringing constantly, read the bell entry in the Guide.",
+     "reps": "Every time."
+    }
+   ],
+   "wrong": [
+    "Running both the doorknob bells and the button. Two signals for one need, and she learns neither.",
+    "Also teaching an OUTSIDE button on the soundboard. That is the same mistake a third time.",
+    "Full volume on her first press. Start at the lowest setting.",
+    "Treating it as house training. It is not. She is about ten weeks, she can hold roughly two and a half hours awake, and she does not yet feel it coming in advance. Until four months or so this is you building a habit she will use later.",
+    "Ringing it for her over and over hoping she copies you. She will learn that the noise happens near the door and nothing more. Shape the nose touch.",
+    "Playing outside straight after a bell trip. That is how you buy yourself a dog who rings it forty times a day."
+   ],
+   "next": [
+    "t-paws",
+    "t-door"
+   ],
+   "tags": [
+    "bell",
+    "bells",
+    "doorbell",
+    "door bell",
+    "button",
+    "potty bell",
+    "ring",
+    "ringing",
+    "ask to go out",
+    "signal",
+    "house training",
+    "wireless",
+    "chime",
+    "luckyiren",
+    "doorknob"
+   ],
+   "note": "Two bells arrived for one job. Pick the button, and do not feel bad about the other one costing eight dollars: running both is worse than owning one. The doorknob bells are the better choice in exactly one situation, which is somewhere you cannot fix a button to the wall, so keep them in the trip bag.",
+   "criteria": [
+    {
+     "level": "Targets it",
+     "test": "The button held out flat in your hand, off the wall.",
+     "pass": "Nose touch, 5 out of 6.",
+     "id": "t-doorbell-c1"
+    },
+    {
+     "level": "Touches it when pointed at",
+     "test": "Mounted by the door, you point once at the start of a trip.",
+     "pass": "5 out of 6 trips across a day.",
+     "id": "t-doorbell-c2"
+    },
+    {
+     "level": "Touches it unpointed",
+     "test": "You stand at the door with the leash and wait five seconds.",
+     "pass": "4 out of 5 trips.",
+     "id": "t-doorbell-c3"
+    },
+    {
+     "level": "Uses it on her own",
+     "test": "She goes to the door and touches it without you being there first.",
+     "pass": "Three separate times in a week. Expect this from about four months, not before.",
+     "id": "t-doorbell-c4"
+    },
+    {
+     "level": "It means potty",
+     "test": "She rings, you take her straight out, and she actually eliminates.",
+     "pass": "8 out of 10 rings over two weeks. Below that, read the bell entry in the Guide.",
+     "id": "t-doorbell-c5"
+    }
+   ]
+  },
+  {
    "id": "t-paws",
    "cat": "Foundation",
    "title": "Clean paws at the door",
@@ -970,6 +1250,124 @@
      "test": "A mock exam somewhere unfamiliar, on a table or a towel.",
      "pass": "Whole sequence, calm, once.",
      "id": "t-handling-c5"
+    }
+   ]
+  },
+  {
+   "id": "t-gym",
+   "cat": "Foundation",
+   "title": "The play gym, and confidence with new things",
+   "priority": 3,
+   "age": "Now, and it has a deadline: the confidence half closes with the socialization window at 16 weeks.",
+   "sessions": "3 to 5 minutes, once a day, with you in the room. It counts as play, not as training.",
+   "why": "Two things it is genuinely good for, and one it is not. It is a novel object: something new-shaped, wobbly and noisy standing in the middle of the living room, and a puppy who learns to walk up to strange things and investigate is doing socialization work against a real deadline. And its hanging toys give her somewhere legal to put her mouth. What it is NOT is agility equipment, whatever the listing says. She is a large-breed puppy and repetitive jumping is the one thing she must not do.",
+   "need": [
+    "The frame, standing on carpet or a rug, never on tile or wood",
+    "Kibble from the day's container",
+    "You, in the room, the whole time it is out"
+   ],
+   "steps": [
+    {
+     "n": 1,
+     "do": "Build it, stand it where she lives, and then ignore it completely for a day. Scatter three pieces of kibble a foot away from it, not underneath.",
+     "look": "She walks past it without giving it a wide berth. If she is worried by it, more distance and better food, never a nudge toward it.",
+     "reps": "One day of nothing."
+    },
+    {
+     "n": 2,
+     "do": "Pay her for noticing it. Every glance at it: marker, food, delivered away from the frame.",
+     "look": "She starts looking at it deliberately to make you pay. That is exactly right.",
+     "reps": "6 to 8."
+    },
+    {
+     "n": 3,
+     "do": "Pay a step toward it, then a nose on it, then a paw on the base.",
+     "look": "Each rung is her choice. She approaches; you never carry her to it.",
+     "reps": "6 to 8, over two or three days."
+    },
+    {
+     "n": 4,
+     "do": "Feed her under and through it. Kibble on the floor inside the frame so she has to put her head and shoulders under the bar.",
+     "look": "Head under, body relaxed, tail loose. That is the confidence repetition and it is the whole point of the thing.",
+     "reps": "5 or 6."
+    },
+    {
+     "n": 5,
+     "do": "Now the hanging toys. Take one, hold it steady, wiggle it, let her tug it for ten seconds and cue DROP. The tug rules apply here in full.",
+     "look": "She engages the toy, not the frame, and lets go on the cue.",
+     "reps": "3 or 4 short goes."
+    },
+    {
+     "n": 6,
+     "do": "Harder, and this is the only harder that is safe: MOVE it. A different room, a different floor, next to something noisy, with different toys clipped on. Not higher. Never a jump.",
+     "look": "She approaches it the same way somewhere she has never seen it.",
+     "reps": "Twice a week."
+    },
+    {
+     "n": 7,
+     "do": "Retire it when she outgrows it, which will be soon. It is a 17 inch cube built for small dogs and rated to about six months.",
+     "look": "Her back level with the top bar, or her able to drag the whole frame, means it is done. She is heading for about 65 pounds. Do not replace it with a bigger one; put the money into a class.",
+     "reps": "Once."
+    }
+   ],
+   "wrong": [
+    "Using it as a jump, or as something to climb on and off. Her growth plates are open and stay open until roughly 12 to 18 months in a large breed. Repeated impact through an open growth plate shows up as a joint problem years later, not on the day.",
+    "Leaving her alone with it. It is a wooden frame with rope and squeaky toys hanging off it, which is precisely the list of things that must never be in front of her unsupervised.",
+    "Standing it on wood or tile. She slips, it slides, and what she learns is that the thing is dangerous.",
+    "Lifting her onto it or pushing her under it. Every rung here has to be her choosing to move toward it.",
+    "Reading it as exercise. It is a thinking toy that happens to be a climbing frame shape. Her exercise limit is five minutes of walk per month of age, twice a day, and this does not change that."
+   ],
+   "next": [
+    "t-handling",
+    "t-scentwork"
+   ],
+   "tags": [
+    "play gym",
+    "playgym",
+    "jungle gym",
+    "playground",
+    "agility",
+    "hanging toys",
+    "wooden",
+    "frame",
+    "confidence",
+    "novel object",
+    "socialization",
+    "enrichment",
+    "jumping",
+    "climbing"
+   ],
+   "note": "Every time she chooses to walk up to a new thing on her own and gets paid for it, you are buying an adult dog who is not frightened of the vet's scale, a folded umbrella, or a steel plate on the sidewalk. That is what this frame is actually for, and the frame itself is disposable. Of the seven things you bought, this is the one with the shortest useful life.",
+   "criteria": [
+    {
+     "level": "Not bothered by it",
+     "test": "It stands in the room where she lives.",
+     "pass": "She walks past it without a wide berth or a startle.",
+     "id": "t-gym-c1"
+    },
+    {
+     "level": "Approaches it",
+     "test": "You wait and pay her for moving toward it.",
+     "pass": "She goes to it on her own, 5 out of 6 offers.",
+     "id": "t-gym-c2"
+    },
+    {
+     "level": "Head and shoulders under",
+     "test": "Kibble on the floor inside the frame.",
+     "pass": "She puts her head under the bar with a loose body, 5 out of 6.",
+     "id": "t-gym-c3"
+    },
+    {
+     "level": "Tugs and drops",
+     "test": "A hanging toy, you holding it steady.",
+     "pass": "She tugs, and lets go on one DROP, 4 out of 5.",
+     "id": "t-gym-c4"
+    },
+    {
+     "level": "Somewhere new",
+     "test": "The frame moved to a different room or a different floor.",
+     "pass": "Same approach and same head-under, first time, 4 out of 5.",
+     "id": "t-gym-c5"
     }
    ]
   },
@@ -1293,6 +1691,124 @@
      "test": "She settles while you cook, or while someone is at the door.",
      "pass": "Ten minutes, twice, in two different situations.",
      "id": "t-settle-c5"
+    }
+   ]
+  },
+  {
+   "id": "t-puzzle",
+   "cat": "Foundation",
+   "title": "The food puzzle",
+   "priority": 1,
+   "age": "Now. Level 1 at one meal today.",
+   "sessions": "One meal a day through it, about 10 minutes. This is not a training session and it does not come out of the 15 minutes. It replaces a bowl.",
+   "why": "Sniffing and problem-solving tire a puppy in a way walking does not, which matters enormously for a large-breed puppy who must not be exercised hard. It slows her eating down. And it is what you use when a walk is not happening: rain, a storm, the Monday shiur, a Shabbat afternoon. It costs nothing, because it IS her meal, not an extra.",
+   "need": [
+    "The puzzle, on a rug or a towel so it cannot slide",
+    "Her measured kibble, out of the day's one container",
+    "A spot where nobody has to step over her"
+   ],
+   "steps": [
+    {
+     "n": 1,
+     "do": "Before she ever sees it work: stand it on the floor and scatter ten pieces of kibble AROUND it, none inside. Let her eat off the floor next to it and walk away.",
+     "look": "She eats near it without backing off from it. That is the whole first day.",
+     "reps": "Once or twice."
+    },
+    {
+     "n": 2,
+     "do": "Level 1, made free. Every opening wide open, and half the food sitting on top in plain sight where she can just take it.",
+     "look": "She gets food within about three seconds of putting her nose on it. The first experience has to be almost free or she quits, and a puppy who has quit on a puzzle once is hard to get back.",
+     "reps": "2 or 3 sessions."
+    },
+    {
+     "n": 3,
+     "do": "Level 1 properly. Food inside the open wells only, nothing on top.",
+     "look": "She noses and paws at it and keeps working for two or three minutes without walking off.",
+     "reps": "Once a day for about a week."
+    },
+    {
+     "n": 4,
+     "do": "Level 2, and only when she empties level 1 in under two minutes on three days running. If she stalls, go back to level 1 for a week. There is no prize for getting through the levels fast.",
+     "look": "She works at it. Barking at it or flipping it means it is too hard.",
+     "reps": "Once a day."
+    },
+    {
+     "n": 5,
+     "do": "Level 3, same rule again. Three easy days at level 2 first.",
+     "look": "Steady work, no giving up, no smashing.",
+     "reps": "Once a day."
+    },
+    {
+     "n": 6,
+     "do": "Once level 3 is easy, make it harder the OTHER way: same puzzle, new room, on carpet instead of tile, with you further away, or with something mildly distracting going on.",
+     "look": "She still settles into it somewhere unfamiliar.",
+     "reps": "A few times a week."
+    },
+    {
+     "n": 7,
+     "do": "Rotate. Two or three different food toys taking turns beats one puzzle every single day, which stops being work and becomes a routine.",
+     "look": "She still gets interested when it comes out.",
+     "reps": "Ongoing."
+    }
+   ],
+   "wrong": [
+    "Starting at level 3 because she seems clever. The first go has to be nearly free. Frustration at a food toy is the one failure that makes her worse at the next one.",
+    "Helping her. Do not dig the food out for her. If she has not solved it in about five minutes, take it up without a word and make it easier tomorrow. Helping teaches her to look at you when a thing gets hard, which is the opposite of what the toy is for.",
+    "Leaving it down when it is empty. It becomes a chew toy, and it has a squeaker in it. See the crate toys entry in the Guide.",
+    "Reaching in or hovering over her while she works. That is how you build a dog who guards a food toy.",
+    "Adding food for it. Everything in there came out of the day's container, so the bowl gets less that day. It is not an extra meal."
+   ],
+   "next": [
+    "t-settle",
+    "t-scentwork"
+   ],
+   "tags": [
+    "puzzle",
+    "food puzzle",
+    "puzzle toy",
+    "treat dispenser",
+    "level 1",
+    "level 2",
+    "level 3",
+    "enrichment",
+    "boredom",
+    "rainy day",
+    "slow feeder",
+    "brain",
+    "mental stimulation",
+    "iq"
+   ],
+   "note": "The listing calls it levels 1 to 3 and that is a genuine progression, so use it: it means you do not have to guess how hard to make it. But the level is only one of the two dials. The other is where she does it and what else is going on, and that dial is the one that transfers to real life.",
+   "criteria": [
+    {
+     "level": "Free wins",
+     "test": "Level 1 with every opening wide and half the food on top.",
+     "pass": "She works it for two minutes without walking away, 3 sessions running.",
+     "id": "t-puzzle-c1"
+    },
+    {
+     "level": "Level 1",
+     "test": "Food inside the open wells only.",
+     "pass": "She empties it, 4 sessions out of 5.",
+     "id": "t-puzzle-c2"
+    },
+    {
+     "level": "Level 2",
+     "test": "The next difficulty setting.",
+     "pass": "She empties it inside three minutes, 4 out of 5.",
+     "id": "t-puzzle-c3"
+    },
+    {
+     "level": "Level 3",
+     "test": "The hardest setting.",
+     "pass": "She empties it inside three minutes, 4 out of 5.",
+     "id": "t-puzzle-c4"
+    },
+    {
+     "level": "Sticks at it",
+     "test": "A puzzle she cannot solve straight away, somewhere unfamiliar.",
+     "pass": "She keeps working for a full minute without barking at it, biting it or walking off. 4 out of 5.",
+     "id": "t-puzzle-c5"
     }
    ]
   },
@@ -2845,6 +3361,120 @@
      "test": "She learns a brand new trick in under three sessions.",
      "pass": "Twice, with two different tricks.",
      "id": "t-tricks-c5"
+    }
+   ]
+  },
+  {
+   "id": "t-buttons",
+   "cat": "Advanced",
+   "title": "Talking buttons",
+   "priority": 4,
+   "age": "Not yet. From about six months, and only once ten words are genuinely solid.",
+   "sessions": "One button. Thirty seconds a day, attached to something that already happens.",
+   "why": "Worth knowing what the research actually says, because the box overstates it and the internet dismisses it. Rossano's group at UC San Diego has published the first real studies on soundboard dogs. In 2024 they showed that button presses are non-random and non-imitative, including meaningful two-button combinations like outside plus potty, and separately that dogs respond appropriately when a HUMAN presses a word button, which rules out the dog simply reading the person. So it is real: word comprehension and deliberate requesting. It is not language, grammar or conversation, and she will never tell you her hip hurts. Treat it as a good enrichment game for a clever retriever and a bad substitute for training.",
+   "need": [
+    "ONE button. The other seven stay in the box.",
+    "A word she already responds to reliably",
+    "Her marker, and a lot of patience"
+   ],
+   "steps": [
+    {
+     "n": 1,
+     "do": "Wait. She is ten weeks old and does not have a charged marker yet. Everything on this board needs her to already know what words mean. The box goes in a cupboard until about six months.",
+     "look": "Nothing. This step is you not doing it yet.",
+     "reps": "Once."
+    },
+    {
+     "n": 2,
+     "do": "When you do start: one button, and NOT outside or potty. The door bell already owns that meaning and she cannot have two channels for one need. Start with PLAY.",
+     "look": "Record it in a flat, ordinary voice, the same voice every time. Not a silly voice, because you will not reproduce it.",
+     "reps": "Once."
+    },
+    {
+     "n": 3,
+     "do": "YOU press it, and then immediately do the thing. Press PLAY, then play. Every single time, for a fortnight, before she is ever expected to press it.",
+     "look": "This is charging, exactly like the marker. The sound has to mean the event before it can mean a request.",
+     "reps": "3 or 4 times a day."
+    },
+    {
+     "n": 4,
+     "do": "Make it available. Put it on a non-slip mat on the floor, where she already is when she wants that thing.",
+     "look": "She investigates it. Do not lure her onto it and do not shape a paw press with food.",
+     "reps": "Leave it there."
+    },
+    {
+     "n": 5,
+     "do": "Honour every press for the first month, including the inconvenient ones and the accidental ones.",
+     "look": "A button that works sometimes is a button she abandons.",
+     "reps": "Every press."
+    },
+    {
+     "n": 6,
+     "do": "A second button only once she uses the first one deliberately, which means she presses it and then looks at YOU rather than at the button. That takes weeks, not days.",
+     "look": "The look back is the whole test. Without it she has learned that pressing makes a noise.",
+     "reps": "One new word at a time."
+    },
+    {
+     "n": 7,
+     "do": "Never test her. No lining buttons up and asking her to choose.",
+     "look": "Testing turns a game into a chore, and that is the fastest way to kill it.",
+     "reps": "Never."
+    }
+   ],
+   "wrong": [
+    "An OUTSIDE or POTTY button while she is using the door bell. Pick one channel and stay on it.",
+    "Eight buttons on day one. She learns that pressing things makes noise, and nothing else, and it is hard to come back from.",
+    "Different voices for the same word, or three people each recording their own. One person, one recording, one tone.",
+    "Reading meaning into a press you wanted to see. She pressed OUTSIDE and then vomited does not mean she told you she felt sick.",
+    "Using it instead of training. It is a hobby you do together. It is not a route around the marker, recall or leave it, and if you are skipping those for this, you have the trade backwards."
+   ],
+   "next": [
+    "t-tricks"
+   ],
+   "tags": [
+    "buttons",
+    "talking buttons",
+    "soundboard",
+    "sound board",
+    "recordable",
+    "communication",
+    "words",
+    "speech",
+    "fluentpet",
+    "dciaer",
+    "talk"
+   ],
+   "note": "This is the one item on the list she does not need. Nothing goes wrong if the box stays shut for good. It is a nice thing to do with a clever dog and an owner who enjoys it, and the honest cost is your consistency, which is the same currency recall and leave it are paid in.",
+   "criteria": [
+    {
+     "level": "Charged",
+     "test": "You have pressed PLAY and then played, every time, for two weeks.",
+     "pass": "You have done it consistently. There is nothing to see from her yet, and that is correct.",
+     "id": "t-buttons-c1"
+    },
+    {
+     "level": "First deliberate press",
+     "test": "She presses it and then looks at you rather than at the button.",
+     "pass": "Three separate times, unprompted.",
+     "id": "t-buttons-c2"
+    },
+    {
+     "level": "In context",
+     "test": "She presses PLAY when she wants to play, not when she wants food or the door.",
+     "pass": "Clearly more right than wrong over two weeks.",
+     "id": "t-buttons-c3"
+    },
+    {
+     "level": "Second and third words",
+     "test": "One new button at a time, each charged the same way.",
+     "pass": "Each used in the right context 4 presses out of 5 before the next one is added.",
+     "id": "t-buttons-c4"
+    },
+    {
+     "level": "A combination",
+     "test": "Two buttons pressed together in a way that makes sense.",
+     "pass": "It happens on its own. If you engineered it, it does not count.",
+     "id": "t-buttons-c5"
     }
    ]
   },
