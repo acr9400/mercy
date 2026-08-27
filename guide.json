@@ -356,6 +356,49 @@
    "vet": ""
   },
   {
+   "id": "g-stool-scale",
+   "kind": "do",
+   "cat": "House training",
+   "title": "Reading her poop: what the 1 to 7 score actually means",
+   "tags": [
+    "stool",
+    "poop",
+    "score",
+    "scale",
+    "1 to 7",
+    "firm",
+    "hard",
+    "soft",
+    "normal",
+    "ideal",
+    "what should it look like",
+    "bristol",
+    "pellets",
+    "log",
+    "constipated",
+    "diarrhoea",
+    "diarrhea"
+   ],
+   "now": [
+    "THE TEST: pick it up. Does it leave anything behind? That one question separates most of the scale.",
+    "1 — separate hard little balls, like rabbit droppings. They roll. Picks up leaving nothing. TOO HARD.",
+    "2 — log shaped but lumpy, clearly made of pellets stuck together, and it often breaks into pieces. Firm, picks up clean. STILL TOO HARD.",
+    "3 — a smooth log. Firm, holds its shape, picks up clean and leaves nothing on the ground. THIS IS THE ONE YOU WANT.",
+    "4 — log shaped but soft. Loses its shape when you pick it up and leaves a mark behind. A bit loose.",
+    "5 — piles rather than logs. Very moist, no real shape, hard to pick up cleanly.",
+    "6 — mushy, no shape at all.",
+    "7 — liquid. A puddle.",
+    "Short version: 3 picks up clean and holds together. 1 and 2 are too hard. 4 and up are too soft.",
+    "If you did not look properly, tap Skip. A guessed number in the record is worse than a gap."
+   ],
+   "not": [
+    "Do not score from memory hours later. Look at the time, or skip it.",
+    "Do not read one odd stool as a problem. It is the run of them that matters."
+   ],
+   "why": "The scale exists so that three people can describe the same thing the same way, and so that a week of stools can be compared rather than remembered. It is only worth anything if everyone scores it the same, which is why the pick-up test is the wording here rather than words like firm or ideal, which mean nothing until you already know the answer.",
+   "vet": "Two days running at 5 or above is a vet question, not a training one. So is several days running at 1 or 2, especially in a puppy passing only one or two stools a day when three to five would be normal. Take the actual scores and times, not a description."
+  },
+  {
    "id": "g-accident-floor",
    "kind": "do",
    "title": "She had an accident on the floor",

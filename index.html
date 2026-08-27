@@ -1353,19 +1353,25 @@ function togglePlan(id){
   push(p[3], p[4], Object.assign({planId:id}, p[5]?{mins:p[5]}:{}));
 }
 function log(event, where){ push(event, where); }
+/* The notes used to read "firm, segmented" and "ideal log", which assumes you
+   already know the scale. He scored three stools without knowing what the numbers
+   meant. The pick-up test is the thing that actually discriminates, so it is in
+   the wording now. */
 const STOOL = [
-  {value:1,label:'1',note:'hard pellets'},
-  {value:2,label:'2',note:'firm, segmented'},
-  {value:3,label:'3',note:'ideal log'},
-  {value:4,label:'4',note:'moist, loses shape'},
-  {value:5,label:'5',note:'very moist, piles'},
-  {value:6,label:'6',note:'mushy, no shape'},
-  {value:7,label:'7',note:'watery'},
+  {value:1,label:'1',note:'separate hard balls, they roll'},
+  {value:2,label:'2',note:'log shaped but lumpy, breaks apart'},
+  {value:3,label:'3',note:'smooth log, picks up clean. This is the one you want'},
+  {value:4,label:'4',note:'soft log, loses shape, leaves a mark'},
+  {value:5,label:'5',note:'piles rather than logs, no real shape'},
+  {value:6,label:'6',note:'mushy, no shape at all'},
+  {value:7,label:'7',note:'liquid, a puddle'},
   {value:0,label:'Skip',note:'did not look'},
 ];
 function logPoop(where){
   openSheet('Stool score',
-    'Tap one. Two days running at 5 or above is a vet question, not a training one.',
+    'The test: pick it up. Does it leave anything behind? 3 picks up clean. ' +
+    'Two days running at 5 or above is a vet question, not a training one, and so is ' +
+    'several days running at 1 or 2.',
     STOOL, v => push('Poop', where, v ? {stool:v} : {}));
 }
 
