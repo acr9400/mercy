@@ -437,6 +437,34 @@ body.gon #daysel{display:none}
 #daycap a{color:var(--gold);font-weight:600;text-decoration:none;border-bottom:1px solid}
 body.gon #daycap{display:none}
 
+
+/* ---- day history ---- */
+#datenav{display:flex;align-items:center;gap:10px;margin:18px 0 4px}
+#datenav button{background:var(--raised);border:1px solid var(--line);border-radius:11px;
+  width:38px;height:38px;font:inherit;font-size:17px;color:var(--paper);flex:0 0 auto;
+  display:flex;align-items:center;justify-content:center}
+#datenav button:disabled{opacity:.3}
+#datelabel{flex:1;text-align:center;font-size:15px;font-weight:600;line-height:1.25}
+#datelabel small{display:block;font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--muted);font-weight:600;margin-top:2px}
+#todaybtn{background:transparent;border:0;color:var(--gold);font:inherit;font-size:12px;
+  font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:4px 0 0;
+  width:auto;height:auto;display:block;margin:0 auto}
+#todaybtn[hidden]{display:none}
+
+#dayhist{display:flex;gap:3px;align-items:flex-end;margin:12px 0 6px;height:52px}
+#dayhist .hd{flex:1;display:flex;flex-direction:column;justify-content:flex-end;gap:2px;
+  cursor:pointer;min-width:0}
+#dayhist .hb{border-radius:3px 3px 0 0;min-height:2px}
+#dayhist .hb.out{background:var(--ok)}
+#dayhist .hb.acc{background:var(--alert)}
+#dayhist .hl{font-size:9px;color:var(--muted);text-align:center;letter-spacing:.02em;
+  white-space:nowrap;overflow:hidden}
+#dayhist .hd.on .hl{color:var(--gold);font-weight:700}
+.histkey{font-size:11px;color:var(--muted);margin:0 0 14px;display:flex;gap:12px}
+.histkey i{display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:4px}
+.histkey i.out{background:var(--ok)} .histkey i.acc{background:var(--alert)}
+
 </style>
 </head>
 <body>
@@ -511,7 +539,16 @@ mouthy, not sleepy.</p>
 
 <section class="tab" id="tab-day">
 
-<h2>Today</h2>
+<div id="datenav">
+  <button id="dprev" onclick="dayBack(-1)" aria-label="Previous day">&lsaquo;</button>
+  <div id="datelabel"></div>
+  <button id="dnext" onclick="dayBack(1)" aria-label="Next day">&rsaquo;</button>
+</div>
+<button id="todaybtn" onclick="dayGo(0)" hidden>Back to today</button>
+
+<div id="dayhist"></div>
+<p class="histkey"><span><i class="out"></i>outside</span><span><i class="acc"></i>accidents</span></p>
+
 <p class="filterbar" id="filterbar" style="display:none"></p>
 <ul class="log" id="loglist"></ul>
 <div class="stat">
@@ -749,6 +786,12 @@ const PAPERS = {"acquired": "2026-08-23", "ids": [["Microchip", "901011000071695
    the variant helpers below because render() reaches it long before that point,
    and a `let` read before its declaration line runs is a TypeError, not undefined. */
 let PLAN = PLANS[DEFAULT_VARIANT[new Date().getDay()]];
+
+/* Which day the Day tab is showing. Never positive: 0 is today, -1 yesterday.
+   Declared up here for the same reason PLAN is: render() reaches it near the top,
+   long before the helpers below, and a `let` read before its declaration line runs
+   throws rather than reading undefined. */
+let dayView = 0;
 const KEY = 'mercy.events.v2';
 const OUTSIDE = ['Walk','Potty Trip'];
 
@@ -1989,6 +2032,8 @@ function applyRole(){
 function render(){
   syncPlan();
   renderDaySel();
+  renderDateNav();
+  renderHist();
   renderWho();
   renderWhen();
   hint();
@@ -2028,17 +2073,18 @@ function render(){
 
   renderRecent();
 
-  const tAll=todays();
+  const tAll=eventsOn(dayView);
   const t = filterBy ? tAll.filter(e=>e.by===filterBy) : tAll;
   const list=document.getElementById('loglist');
   const fb=document.getElementById('filterbar');
   if(filterBy){
     fb.style.display='';
     fb.innerHTML='Showing only <b style="color:'+colorOf(filterBy)+'">'+filterBy+'</b> &middot; '+
-      t.length+' of '+tAll.length+' today <button onclick="toggleFilter(null)">Show everyone</button>';
+      t.length+' of '+tAll.length+' <button onclick="toggleFilter(null)">Show everyone</button>';
   } else { fb.style.display='none'; fb.innerHTML=''; }
   if(!t.length){ list.innerHTML='<li class="empty">'+
-    (filterBy ? filterBy+' has not logged anything today.' : 'Nothing logged yet today.')+'</li>'; }
+    (filterBy ? filterBy+' logged nothing this day.'
+              : dayView===0 ? 'Nothing logged yet today.' : 'Nothing logged this day.')+'</li>'; }
   else{
     list.innerHTML='';
     t.slice().reverse().forEach(e=>{
@@ -2070,7 +2116,12 @@ function render(){
   const outTimes=t.filter(e=>OUTSIDE.includes(e.event)||e.where==='Outside').map(e=>e.ts);
   let gap=0;
   for(let i=1;i<outTimes.length;i++) gap=Math.max(gap,outTimes[i]-outTimes[i-1]);
-  if(outTimes.length) gap=Math.max(gap, Date.now()-outTimes[outTimes.length-1]);
+  if(outTimes.length){
+    /* running the last gap up to "now" is only meaningful for today; on a past day
+       it would measure from her last outing to this minute. */
+    const end = dayView===0 ? Date.now() : viewDate().getTime()+86400000;
+    gap=Math.max(gap, end-outTimes[outTimes.length-1]);
+  }
   document.getElementById('sGap').textContent =
     outTimes.length ? (Math.floor(gap/3600000)+':'+pad(Math.floor((gap%3600000)/60000))) : '--';
 
@@ -2624,6 +2675,76 @@ function lastFullBath(){
   const b = events.filter(e => e.event==='Bath' && e.notes==='Full bath');
   if(!b.length) return null;
   return Math.floor((Date.now() - b[b.length-1].ts) / 86400000);
+}
+
+
+/* ---- reading the log back ---------------------------------------------------
+   The Day tab used to be today only, which is fine for running the day and no use
+   at all in a vet's consulting room. dayView is an offset in days, never positive:
+   0 is today, -1 yesterday. Everything on the tab reads from it. */
+
+function viewDate(){ const d=new Date(); d.setDate(d.getDate()+dayView);
+  d.setHours(0,0,0,0); return d; }
+function eventsOn(offset){
+  const d=new Date(); d.setDate(d.getDate()+offset);
+  const k=dayKey(d);
+  return events.filter(e => isLogEvent(e) && dayKey(new Date(e.ts))===k);
+}
+function dayBack(n){
+  const next = dayView + n;
+  if(next > 0) return;                       /* the future holds no log */
+  dayView = next; render(); window.scrollTo(0,0);
+}
+function dayGo(n){ dayView = n; render(); window.scrollTo(0,0); }
+
+function dayCounts(offset){
+  const t = eventsOn(offset);
+  return {
+    out: t.filter(e=>OUTSIDE.includes(e.event)||e.where==='Outside').length,
+    acc: t.filter(e=>e.where==='Indoor Accident'||e.where==='Crate Accident').length,
+    n: t.length,
+  };
+}
+
+function renderDateNav(){
+  const lab=document.getElementById('datelabel'); if(!lab) return;
+  const d=viewDate();
+  const name = dayView===0 ? 'Today' : dayView===-1 ? 'Yesterday'
+    : d.toLocaleDateString(undefined,{weekday:'long'});
+  lab.innerHTML = name + '<small>' +
+    d.toLocaleDateString(undefined,{day:'numeric', month:'long'}) + '</small>';
+  document.getElementById('dnext').disabled = dayView >= 0;
+  const tb=document.getElementById('todaybtn');
+  if(tb) tb.hidden = dayView === 0;
+}
+
+/* Fourteen days at a glance. Green is outings, red is accidents, and the point of
+   showing them stacked is that the ratio is the thing worth looking at. */
+function renderHist(){
+  const box=document.getElementById('dayhist'); if(!box) return;
+  const days=[];
+  for(let i=-13;i<=0;i++) days.push({i:i, c:dayCounts(i)});
+  const peak=Math.max(4, ...days.map(d=>d.c.out+d.c.acc));
+  box.innerHTML='';
+  days.forEach(d=>{
+    const col=document.createElement('div');
+    col.className='hd'+(d.i===dayView?' on':'');
+    col.title=(d.c.out+' outside, '+d.c.acc+' accidents');
+    const h=36;
+    const acc=document.createElement('div');
+    acc.className='hb acc';
+    acc.style.height=Math.round(d.c.acc/peak*h)+'px';
+    const out=document.createElement('div');
+    out.className='hb out';
+    out.style.height=Math.round(d.c.out/peak*h)+'px';
+    const lab=document.createElement('div');
+    lab.className='hl';
+    const dd=new Date(); dd.setDate(dd.getDate()+d.i);
+    lab.textContent = d.i===0 ? 'today' : String(dd.getDate());
+    col.appendChild(acc); col.appendChild(out); col.appendChild(lab);
+    col.onclick=()=>dayGo(d.i);
+    box.appendChild(col);
+  });
 }
 
 </script>
