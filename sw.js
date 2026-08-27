@@ -1,4 +1,4 @@
-const CACHE = 'mercy-v17';
+const CACHE = 'mercy-v18';
 const ASSETS = ['./', './index.html', './manifest.json',
   './icon-192.png', './icon-512.png',
   './icon-192-maskable.png', './icon-512-maskable.png',
@@ -27,6 +27,25 @@ self.addEventListener('fetch', e => {
       return res;
     }).catch(() => caches.match('./index.html')))
   );
+});
+
+/* Arrives from the push server even with the app closed. */
+self.addEventListener('push', e => {
+  let d = { title: 'Mercy', body: '' };
+  try { d = Object.assign(d, e.data.json()); } catch (err) { try { d.body = e.data.text(); } catch (e2) {} }
+  e.waitUntil(self.registration.showNotification(d.title, {
+    body: d.body, icon: './icon-192.png', badge: './icon-192.png',
+    tag: d.tag || 'mercy-push', renotify: true, data: { url: d.url || './index.html' }
+  }));
+});
+
+self.addEventListener('notificationclick', e => {
+  e.notification.close();
+  const target = (e.notification.data && e.notification.data.url) || './index.html';
+  e.waitUntil(clients.matchAll({ type: 'window', includeUncontrolled: true }).then(list => {
+    for (const c of list) if ('focus' in c) return c.focus();
+    return clients.openWindow(target);
+  }));
 });
 
 self.addEventListener('message', e => {

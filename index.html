@@ -428,6 +428,11 @@ mouthy, not sleepy.</p>
   <p id="awhat"></p>
   <button class="small" id="abtn" onclick="askNotify()">Turn alerts on</button>
 </div>
+<div class="alertcard" id="pushrow" style="display:none">
+  <div class="st"><span class="led"></span><b>Lock screen</b></div>
+  <p id="pushtext"></p>
+  <button class="small" id="pushbtn" onclick="enablePush()">Turn on lock screen alerts</button>
+</div>
 
 <h2>Data</h2>
 <div class="row">
@@ -527,6 +532,8 @@ const BACKDATE_MIN = [0, 15, 30, 60, 90, 120, 150, 180, 210, 240];
 const SEED_MEMBERS = [{name:"Ariel", color:"#E8B04B"}, {name:"Shira", color:"#5FBF8F"}, {name:"Chayim", color:"#7FA6E8"}];
 const PLAN_MISSED_WINDOW = 120;
 const DURATIONS = {"Walk": [5, 10, 15, 20, 30], "Play": [10, 15, 20, 25, 30], "Alone": [30, 60, 90, 120, 180, 300]};
+const PUSH_URL = "";
+const VAPID_KEY = "";
 const PLAN = [
   ["p01","04:40","Out, then Walk 1","Walk","N/A",10],
   ["p02","06:15","Out, in from the gym","Potty Trip","N/A",5,"Out"],
@@ -1889,6 +1896,49 @@ function exportCsv(){
 /* The old version was a button labelled "Alerts on" that never changed and reported its
    result into a footer span, so there was no way to tell whether alerts were actually
    working. This shows the real state every time the tab is drawn. */
+/* ---- lock screen notifications ----
+   Only offered when a push server exists. With PUSH_URL empty the whole option stays
+   hidden, so nothing looks half-built while there is nothing to subscribe to.
+   The tunnel hostname is needed only for this handshake. Afterwards the server pushes
+   to Apple directly, so the URL changing never breaks a phone already signed up. */
+const pushReady = () => !!(PUSH_URL && VAPID_KEY && 'serviceWorker' in navigator &&
+                           'PushManager' in window);
+function b64ToU8(b64){
+  const pad='='.repeat((4-b64.length%4)%4);
+  const raw=atob((b64+pad).replace(/-/g,'+').replace(/_/g,'/'));
+  return Uint8Array.from([...raw].map(c=>c.charCodeAt(0)));
+}
+async function pushState(){
+  if(!pushReady()) return 'unavailable';
+  try{
+    const reg=await navigator.serviceWorker.ready;
+    return (await reg.pushManager.getSubscription()) ? 'on' : 'off';
+  }catch(e){ return 'off'; }
+}
+async function enablePush(){
+  if(!pushReady()){ toast('No push server configured yet.', true); return; }
+  if(!me){ openJoin(true); return; }
+  try{
+    const perm=await Notification.requestPermission();
+    if(perm!=='granted'){
+      toast('<b>Not allowed</b><br>iOS blocked it. Settings, Mercy, Notifications, then try again.', true);
+      return;
+    }
+    const reg=await navigator.serviceWorker.ready;
+    let sub=await reg.pushManager.getSubscription();
+    if(!sub) sub=await reg.pushManager.subscribe({
+      userVisibleOnly:true, applicationServerKey:b64ToU8(VAPID_KEY)});
+    const res=await fetch(PUSH_URL.replace(/\/$/,'')+'/subscribe',{
+      method:'POST', headers:{'Content-Type':'text/plain;charset=utf-8'},
+      body:JSON.stringify({subscription:sub, name:me})});
+    if(!res.ok) throw new Error('server said '+res.status);
+    toast('<b>Lock screen alerts on</b><br>You will be pinged even with the app closed.');
+  }catch(err){
+    toast('<b>Could not turn it on</b><br>'+(err.message||'The push server did not answer.'), true);
+  }
+  renderAlerts();
+}
+
 function renderAlerts(){
   const card=document.getElementById('alertcard');
   if(!card) return;
@@ -1915,6 +1965,24 @@ function renderAlerts(){
   }
   card.className='alertcard '+(on?'on':'off');
   st.textContent=label; what.textContent=body;
+
+  const row=document.getElementById('pushrow');
+  if(!row) return;
+  if(!pushReady()){ row.style.display='none'; return; }
+  row.style.display='';
+  pushState().then(ps=>{
+    const b=document.getElementById('pushbtn'), t=document.getElementById('pushtext');
+    if(ps==='on'){
+      t.textContent='Lock screen alerts are on for this phone. You will be pinged when '+
+        'Ariel asks for cover, and an hour before any slot you have taken, even with the '+
+        'app closed.';
+      b.style.display='none';
+    } else {
+      t.textContent='Get pinged on the lock screen when cover is needed, without opening '+
+        'the app. Tap once on this phone. Nothing is sent from Friday evening to Saturday night.';
+      b.style.display=''; b.textContent='Turn on lock screen alerts';
+    }
+  });
 }
 function askNotify(){
   unlockAudio(); beep(1);
