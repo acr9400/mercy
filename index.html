@@ -465,6 +465,18 @@ body.gon #daycap{display:none}
 .histkey i{display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:4px}
 .histkey i.out{background:var(--ok)} .histkey i.acc{background:var(--alert)}
 
+
+/* ---- asleep hold ---- */
+.clock.asleep{border-color:rgba(120,150,200,.45)}
+.clock.asleep .fill{background:linear-gradient(90deg,var(--shab),rgba(120,150,200,.26))}
+.clock.asleep .big{color:var(--paper);font-weight:200}
+#holdbtn{display:block;width:100%;margin-top:14px;background:var(--raised);
+  border:1px solid var(--line);border-radius:13px;padding:13px 14px;font:inherit;
+  font-size:14px;font-weight:600;color:var(--paper)}
+#holdbtn.wake{background:var(--gold);border-color:var(--gold);color:var(--onaccent)}
+#holdbtn[hidden]{display:none}
+.verdict.asleep{color:#5A7AA8}
+
 </style>
 </head>
 <body>
@@ -489,10 +501,11 @@ body.gon #daycap{display:none}
 
 <div class="clock" id="clock">
   <div class="fill" id="fill"></div>
-  <div class="since">Since she was outside</div>
+  <div class="since" id="sincelbl">Since she was outside</div>
   <div class="big" id="elapsed">--:--</div>
   <div class="ceil">Her ceiling today is <b id="ceiling">2:12</b></div>
   <div class="verdict" id="verdict">Log her first outing to start the clock.</div>
+  <button id="holdbtn" hidden onclick="holdTap()"></button>
 </div>
 
 <section class="tab on" id="tab-log">
@@ -2053,9 +2066,11 @@ function render(){
   if(last===null){
     document.getElementById('elapsed').textContent='--:--';
     document.getElementById('fill').style.width='0%';
-    clock.classList.remove('over');
+    clock.classList.remove('over','asleep');
     verdict.className='verdict';
     verdict.textContent='Log her first outing to start the clock.';
+    const hb=document.getElementById('holdbtn'); if(hb) hb.hidden=true;
+    const sl=document.getElementById('sincelbl'); if(sl) sl.textContent='Since she was outside';
   } else {
     const el=(Date.now()-last)/3600000;
     document.getElementById('elapsed').textContent =
@@ -2063,12 +2078,15 @@ function render(){
     const pct=Math.min(100, el/hold*100);
     document.getElementById('fill').style.width=pct+'%';
     const over = el>hold;
-    clock.classList.toggle('over', over);
-    if(over){ verdict.className='verdict over'; verdict.textContent='Past her ceiling. Take her out now.'; }
-    else if(pct>75){ verdict.className='verdict warn';
-      verdict.textContent='Getting close. About '+Math.round((hold-el)*60)+' minutes left.'; }
-    else { verdict.className='verdict ok';
-      verdict.textContent='Fine for about '+Math.round((hold-el)*60)+' more minutes.'; }
+    /* A running hold owns the whole card: no red, no take her out now. */
+    if(!paintHold(el, hold)){
+      clock.classList.toggle('over', over);
+      if(over){ verdict.className='verdict over'; verdict.textContent='Past her ceiling. Take her out now.'; }
+      else if(pct>75){ verdict.className='verdict warn';
+        verdict.textContent='Getting close. About '+Math.round((hold-el)*60)+' minutes left.'; }
+      else { verdict.className='verdict ok';
+        verdict.textContent='Fine for about '+Math.round((hold-el)*60)+' more minutes.'; }
+    }
   }
 
   renderRecent();
@@ -2096,6 +2114,10 @@ function render(){
       let name=e.event;
       if(e.mins) name+=' '+e.mins+'m';
       if(e.stool) name+=' &middot; stool '+e.stool;
+      /* Held and Bath carry their reason in notes, and the row is meaningless
+         without it: "Held" alone does not explain a four hour gap. */
+      if((e.event==='Held'||e.event==='Bath') && e.notes)
+        name+=' &middot; '+String(e.notes).split('|')[0].trim();
       const byTag = e.by ? '<span class="by" style="color:'+colorOf(e.by)+';border-color:'+colorOf(e.by)+'55">'+e.by+'</span>' : '';
       li.innerHTML='<span class="t">'+hhmm(new Date(e.ts))+'</span><span>'+name+'</span>'+
         (label?'<span class="'+cls+'">'+label+'</span>':'')+byTag+
@@ -2761,6 +2783,84 @@ function renderHist(){
     col.onclick=()=>dayGo(d.i);
     box.appendChild(col);
   });
+}
+
+
+/* ---- holding the ceiling because she is asleep -------------------------------
+   A sleeping puppy should not be woken to hit a number. She needs 18 to 20 hours
+   a day and the ceiling is a guide, not an instruction. But an unexplained four
+   hour gap in the log reads exactly like forgetting, which matters when the log
+   is being shown to a vet.
+
+   So the hold is recorded. {event:'Held', notes:'asleep'} goes into the shared log
+   like anything else, which means the gap explains itself to anyone reading it
+   later, and Shira and Chayim see that the decision was deliberate rather than
+   wondering whether they should take her out. It ends the moment any outing is
+   logged after it. */
+function holdActive(){
+  var lastOut = null;
+  for (var i = events.length - 1; i >= 0; i--) {
+    var e = events[i];
+    if (OUTSIDE.includes(e.event) || e.where === 'Outside') { lastOut = e.ts; break; }
+  }
+  var h = null;
+  for (var j = events.length - 1; j >= 0; j--) {
+    var x = events[j];
+    if (x.event === 'Held' && x.notes && x.notes.indexOf('asleep') === 0) { h = x; break; }
+  }
+  if (!h) return null;
+  if (lastOut !== null && lastOut >= h.ts) return null;   /* an outing ended it */
+  return h;
+}
+
+function holdTap(){
+  if (!me) { openJoin(true); return; }
+  var h = holdActive();
+  if (h) {                       /* she is awake: go and log the outing */
+    showTab('log');
+    toast('<b>Good. Straight out.</b><br>Log the pee the moment she goes.');
+    return;
+  }
+  var e = { id: uid(), ts: Date.now(), by: me, event: 'Held', where: 'N/A',
+            notes: 'asleep, outing deferred' };
+  events.push(e); events.sort(function(a,b){ return a.ts - b.ts; });
+  save(); queue(e); render();
+  toast('<b>Holding her ceiling</b><br>Recorded, so the gap explains itself later. ' +
+        'Out the moment she wakes.');
+}
+
+/* How the clock reads while a hold is running. Called from render(). */
+function paintHold(el, hold){
+  var h = holdActive();
+  var btn = document.getElementById('holdbtn');
+  var clock = document.getElementById('clock');
+  var verdict = document.getElementById('verdict');
+  var lbl = document.getElementById('sincelbl');
+  if (!btn) return false;
+
+  if (h) {
+    clock.classList.add('asleep');
+    clock.classList.remove('over');
+    lbl.textContent = 'Asleep since ' + hhmm(new Date(h.ts));
+    verdict.className = 'verdict asleep';
+    var mins = Math.round((Date.now() - h.ts) / 60000);
+    verdict.textContent = (el > hold ? 'Past her ceiling, and that is fine. ' : '') +
+      'Asleep ' + (mins < 60 ? mins + ' min' : Math.floor(mins/60) + 'h ' + (mins%60) + 'm') +
+      '. Out the moment she wakes.';
+    btn.hidden = false;
+    btn.className = 'wake';
+    btn.textContent = 'She is awake, taking her out';
+    return true;
+  }
+
+  clock.classList.remove('asleep');
+  lbl.textContent = 'Since she was outside';
+  /* offer the hold from fifteen minutes before the ceiling onward */
+  var left = (hold - el) * 60;
+  btn.hidden = !(left <= 15);
+  btn.className = '';
+  btn.textContent = 'She is asleep, hold it';
+  return false;
 }
 
 </script>
