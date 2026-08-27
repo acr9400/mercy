@@ -970,6 +970,76 @@
    "cat": "Behavior"
   },
   {
+   "id": "g-rain",
+   "kind": "do",
+   "cat": "Out & about",
+   "title": "It is pouring. What do you do?",
+   "tags": [
+    "rain",
+    "raining",
+    "pouring",
+    "wet",
+    "storm",
+    "weather",
+    "snow",
+    "cold",
+    "wont go out",
+    "refuses",
+    "umbrella",
+    "raincoat",
+    "scaffolding",
+    "cover",
+    "skip"
+   ],
+   "now": [
+    "You still take her out. Rain does not change her bladder, and skipping trips is how you get a day full of accidents.",
+    "Change what the trip IS. Toilet trip, not a walk. Out, one spot, wait, back in. Two or three minutes. No sniffing tour.",
+    "FIND COVER. Outdoors but not under the sky: your building entrance or awning, scaffolding, a covered stoop, a doorway, the edge of a parking garage. In this city there is scaffolding on half the blocks and it is a dry corridor.",
+    "Pick one covered spot and use the same one every time. It becomes her rain spot.",
+    "Gear: a raincoat for her, and an umbrella you hold over HER, not over you. She is the one who has to relax enough to squat.",
+    "Towels by the door before you leave, not after you get back. Paws, belly, chest, then dry her properly. A damp undercoat does not care whether the water came from a tub or the sky.",
+    "Pay it enormously when she goes in the rain. Chicken, not kibble. Going in the rain is genuinely harder than going in sunshine and it should be worth more."
+   ],
+   "not": [
+    "Do not skip the trip and hope. She will go indoors instead, and that is a rep that trains the floor.",
+    "Do not rush her once you are out there. Stand still and be boring. Hurrying her is what makes her hold it.",
+    "Do not drag her straight back in the second she goes, even in rain. Same rule as always: that teaches her holding it makes the outing shorter.",
+    "Do not use the balcony or a pad for ordinary rain. That teaches her a surface at home is a bathroom, and you will be undoing it for months."
+   ],
+   "why": "The bigger point is the timing. She is in her socialisation window until about 16 weeks, and a puppy who goes out in rain a few times now files it as normal and unremarkable for life. A dog who first meets heavy rain at eight months can decide she is not doing that, and then you have twelve years of a dog who will not toilet in bad weather. So take her out in MILD rain deliberately, before you are forced to in a downpour. It is the cheapest it will ever be.",
+   "vet": ""
+  },
+  {
+   "id": "g-storm",
+   "kind": "do",
+   "cat": "Out & about",
+   "title": "A real storm, where going outside is not safe",
+   "tags": [
+    "storm",
+    "lightning",
+    "thunder",
+    "hurricane",
+    "blizzard",
+    "unsafe",
+    "emergency",
+    "pad",
+    "indoors",
+    "exception"
+   ],
+   "now": [
+    "Lightning, or a storm severe enough that being outside is genuinely unsafe, is a different thing from rain.",
+    "For that, a pee pad indoors for that one occasion is better than her holding until she is in pain.",
+    "Put it as far from her crate and her bed as the apartment allows, and pick it up the moment the weather clears.",
+    "Take her back to the normal routine at the very next trip."
+   ],
+   "not": [
+    "Do not leave the pad down afterwards. The exception stops being an exception the second it becomes furniture.",
+    "Do not do this for ordinary rain. See the rain entry."
+   ],
+   "why": "Expect it to cost you a little. She will be slightly more willing to go indoors afterwards, because she has now had one successful rep on an indoor surface. That is an acceptable price for a once-a-year situation and not an acceptable price for weather you could have walked her in.",
+   "vet": "Thunder fear is a real and common thing in dogs, and it usually gets worse with age rather than better. If she is frightened rather than just wet, mention it early: it is far more treatable at ten weeks than at three years."
+  },
+  {
    "id": "g-eating-ground",
    "kind": "do",
    "title": "She is eating grass, leaves, mulch or another dog's poop",
