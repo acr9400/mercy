@@ -415,6 +415,17 @@ body.gon .wrap>h1{margin-bottom:10px}
 .crit .cl{display:block;font-size:14px;font-weight:600;line-height:1.35}
 .crit .ct{display:block;font-size:13px;color:var(--muted);line-height:1.5;margin-top:3px}
 .crit .cp{display:block;font-size:12.5px;color:var(--gold);font-weight:600;margin-top:4px}
+/* Kit tab. The tick rows are .crit; these are the few things it does not cover. */
+.kbuy{display:inline-block;margin:-5px 0 11px 32px;font-size:12.5px;font-weight:600;
+  color:var(--gold);text-decoration:none}
+.kbuy:active{opacity:.55}
+.kalt{margin:-5px 0 11px 32px;font-size:12.5px;color:var(--muted);line-height:1.5}
+.kprog{font-size:13px;color:var(--muted);margin:0 0 11px}
+.kprog b{color:var(--ok);font-weight:600}
+.kskip{background:var(--raised);border:1px solid var(--line);border-left:3px solid var(--alert);
+  border-radius:10px;padding:11px 13px;margin-bottom:9px}
+.kskip .cl{display:block;font-size:14px;font-weight:600;line-height:1.35}
+.kskip .ct{display:block;font-size:13px;color:var(--muted);line-height:1.5;margin-top:3px}
 
 .nextlink{display:block;width:100%;text-align:left;background:var(--tint);
   border:1px solid rgba(217,144,42,.35);border-radius:14px;padding:13px 15px;
@@ -690,6 +701,7 @@ mouthy, not sleepy.</p>
     <div class="seg" id="gseg">
       <button class="on" data-m="sit" onclick="gMode('sit')">Situations</button>
       <button data-m="train" onclick="gMode('train')">Training</button>
+      <button data-m="kit" onclick="gMode('kit')">Kit</button>
     </div>
   </div>
   <div id="gbody"></div>
@@ -2372,10 +2384,41 @@ if(!me) setTimeout(()=>openJoin(true), 400);
    than twice the size of this file, and the service worker caches them so the tab
    works offline like everything else. Ticked training criteria live in
    localStorage under mercy.train. */
-var GUIDE = null, TRAIN = null, gLoading = false;
+var GUIDE = null, TRAIN = null, KIT = null, gLoading = false;
 var gmode = 'sit', gopen = null, gq = '';
 var TDONE = {};
 try { TDONE = JSON.parse(localStorage.getItem('mercy.train') || '{}'); } catch (e) { TDONE = {}; }
+/* Kit ticks. Same shape as mercy.train: an id map, absent means not ticked. The
+   difference is the seed. Items in kit.json flagged have:true are things already in
+   the house, so on a phone that has never opened this tab we write them in once,
+   and the list starts as a true inventory rather than as empty boxes. A separate
+   flag records that the seeding happened, because a genuine untick must survive. */
+var KDONE = {};
+try { KDONE = JSON.parse(localStorage.getItem('mercy.kit') || '{}'); } catch (e) { KDONE = {}; }
+function kSeed(){
+  if (!KIT || localStorage.getItem('mercy.kit.seeded')) return;
+  KIT.groups.forEach(function(g){
+    if (!g.track) return;
+    g.items.forEach(function(it){ if (it.have) KDONE[it.id] = 1; });
+  });
+  try {
+    localStorage.setItem('mercy.kit', JSON.stringify(KDONE));
+    localStorage.setItem('mercy.kit.seeded', '1');
+  } catch (e) {}
+}
+function kTick(id){
+  KDONE[id] = !KDONE[id];
+  if (!KDONE[id]) delete KDONE[id];
+  try { localStorage.setItem('mercy.kit', JSON.stringify(KDONE)); } catch (e) {}
+  gRender();
+}
+function kItems(){
+  var out = [];
+  if (KIT) KIT.groups.forEach(function(g){
+    g.items.forEach(function(it){ out.push(it); });
+  });
+  return out;
+}
 
 function gesc(s){ return String(s == null ? '' : s)
   .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
@@ -2387,9 +2430,14 @@ function gLoad(){
   document.getElementById('gbody').innerHTML = '<p class="gempty">Loading&hellip;</p>';
   Promise.all([
     fetch('guide.json').then(function(r){ return r.json(); }),
-    fetch('training.json').then(function(r){ return r.json(); })
+    fetch('training.json').then(function(r){ return r.json(); }),
+    /* kit.json must never be able to take the tab down with it. A phone still running
+       an older service worker has it cached out of ASSETS, so this fetch 404s there,
+       and an un-caught rejection would lose Situations and Training too. */
+    fetch('kit.json').then(function(r){ return r.json(); })
+      .catch(function(){ return { groups: [] }; })
   ]).then(function(v){
-    GUIDE = v[0]; TRAIN = v[1]; gLoading = false; gRender();
+    GUIDE = v[0]; TRAIN = v[1]; KIT = v[2]; gLoading = false; kSeed(); gRender();
   }).catch(function(err){
     gLoading = false;
     document.getElementById('gbody').innerHTML =
@@ -2435,7 +2483,8 @@ function gTick(cid, sid){
 /* ---- search across both files ---- */
 function gHay(o){
   var p = [o.title || '', (o.tags || []).join(' ')];
-  if (o.kind) { p.push(o.line||'', o.why||'', o.lead||'', o.amount||'', o.prep||'', o.note||'');
+  if (o.kind === 'kit') { p.push(o.why||'', o.how||'', o.price||'', o.search||'', o.alt||''); }
+  else if (o.kind) { p.push(o.line||'', o.why||'', o.lead||'', o.amount||'', o.prep||'', o.note||'');
     ['now','not','today','mention','normal'].forEach(function(k){
       if (o[k]) p.push(o[k].join(' ')); }); }
   else { p.push(o.why||'', o.note||'', (o.need||[]).join(' '), (o.wrong||[]).join(' '));
@@ -2460,6 +2509,7 @@ function gResults(q){
   function hit(o){ var h = gHay(o); return words.every(function(w){ return h.indexOf(w) >= 0; }); }
   GUIDE.entries.forEach(function(e){ if (hit(e)) out.push({k:'g', o:e}); });
   TRAIN.skills.forEach(function(s){ if (hit(s)) out.push({k:'t', o:s}); });
+  kItems().forEach(function(it){ if (hit(it)) out.push({k:'k', o:it}); });
   /* Rank: title match first, then an exact tag, then a body-text match. Without the
      tag rung, searching "ears" put two entries that merely contain the phrase "ears
      back" above the entry actually about cleaning her ears. */
@@ -2490,6 +2540,42 @@ function gRowGuide(e){
     + (sub ? '<div class="gs">' + gesc(sub) + (sub.length >= 95 ? '&hellip;' : '') + '</div>' : '')
     + '<span class="arw">&rsaquo;</span></button>';
 }
+/* A kit row IS the whole entry: there is no detail page to open, so the row carries
+   the why and the how. `track` false renders it as a flat card with no tick. */
+function kRow(it, tracked){
+  if (!tracked) return '<div class="kskip">'
+    + '<span class="cl">' + gesc(it.title) + '</span>'
+    + '<span class="ct">' + gesc(it.why) + (it.how ? ' ' + gesc(it.how) : '') + '</span></div>';
+  var h = '<button class="crit' + (KDONE[it.id] ? ' on' : '') + '" onclick="kTick(\'' + it.id + '\')">'
+    + '<span class="bx">&#10003;</span><span>'
+    + '<span class="cl">' + gesc(it.title) + '</span>'
+    + '<span class="ct">' + gesc(it.why) + '</span>'
+    + (it.how ? '<span class="ct">' + gesc(it.how) + '</span>' : '')
+    + (it.price ? '<span class="cp">' + gesc(it.price) + '</span>' : '')
+    + '</span></button>';
+  if (it.link) h += '<a class="kbuy" href="' + gesc(it.link) + '" target="_blank" rel="noopener">'
+    + 'View on Amazon &rsaquo;</a>';
+  if (it.alt) h += '<p class="kalt">' + gesc(it.alt) + '</p>';
+  return h;
+}
+
+function kBody(){
+  if (!KIT || !KIT.groups.length) return '<p class="gempty">The kit list did not load.'
+    + '<br>Close the app fully and reopen it, so it can pick up the new files.</p>';
+  var h = '';
+  KIT.groups.forEach(function(g){
+    h += '<h4 class="ghead">' + gesc(g.name) + '</h4>';
+    if (g.note) h += '<p class="gnote">' + gesc(g.note) + '</p>';
+    if (g.track){
+      var done = g.items.filter(function(it){ return KDONE[it.id]; }).length;
+      h += '<p class="kprog"><b>' + done + '</b> of ' + g.items.length + ' '
+        + (g.id === 'free' ? 'tried' : 'in the house') + '</p>';
+    }
+    h += g.items.map(function(it){ return kRow(it, g.track); }).join('');
+  });
+  return h;
+}
+
 function gRowSkill(s){
   return '<button class="grow" onclick="gOpen(\'' + s.id + '\')">'
     + '<div class="gt">' + gesc(s.title) + '</div>'
@@ -2598,12 +2684,17 @@ function gRender(){
     if (!r.length){ body.innerHTML = '<p class="gempty">Nothing found for &ldquo;'
       + gesc(gq) + '&rdquo;.<br>Try a simpler word: pee, bite, food, crate, grapes.</p>'; return; }
     body.innerHTML = '<h4 class="ghead">' + r.length + ' result' + (r.length===1?'':'s') + '</h4>'
-      + r.map(function(x){ return x.k === 'g' ? gRowGuide(x.o) : gRowSkill(x.o); }).join('');
+      + r.map(function(x){ return x.k === 'g' ? gRowGuide(x.o)
+                          : x.k === 'k' ? kRow(x.o, true) : gRowSkill(x.o); }).join('');
     return;
   }
   document.getElementById('gseg').style.display = '';
 
   var h = '';
+  if (gmode === 'kit'){
+    body.innerHTML = kBody();
+    return;
+  }
   if (gmode === 'sit'){
     GUIDE.categories.forEach(function(cat){
       var rows = GUIDE.entries.filter(function(e){ return e.cat === cat; });
