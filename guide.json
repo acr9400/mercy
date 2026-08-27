@@ -1,0 +1,2568 @@
+{
+ "_note": "The Help tab. Situations, not lessons. Two kinds: kind 'do' gives real how-to; kind 'vet' is a triage ladder that always ends at a human. Nothing here treats anything. Edit, then run scripts/sync_app_config.py and re-upload the app.",
+ "_sources": "AVSAB position statements, ASPCA, AKC, Fear Free, Cornell Riney Canine Health Center, Merck Veterinary Manual, VCA, UC Davis. Research: Ziv 2017; Vieira de Castro 2020; Herron 2009; Horowitz 2009; Hart 2018; Sueda & Hart 2008; Pauli 2006.",
+ "rules": [
+  {
+   "t": "Nobody punishes her. Ever.",
+   "b": "No shouting, no scruffing, no muzzle-holding, no alpha rolls, no spray bottle, no leash jerk, no shutting her in a room. This is the position of the American Veterinary Society of Animal Behavior: there is no evidence aversive methods work better, and there is evidence they cause harm. Herron 2009 measured what happens when people try them: growling at the dog provoked aggression in 41 percent, forcing something from her mouth 39 percent, an alpha roll 31 percent."
+  },
+  {
+   "t": "She cannot connect a telling-off to something she did minutes ago.",
+   "b": "Horowitz 2009 tested this properly. The guilty look tracks being scolded, not the misdeed; the most guilty-looking dogs were innocent ones told off anyway. Scolding her over a puddle teaches her that eliminating in front of a person is dangerous, so she learns to go behind the sofa. Your accident count drops while the problem gets worse."
+  },
+  {
+   "t": "At ten weeks almost everything here is a management problem, not a training problem.",
+   "b": "If you are helping out, your job is prevention and de-escalation. You are not running behaviour programmes on someone else's puppy."
+  },
+  {
+   "t": "Two things that matter more than any technique.",
+   "b": "Enzymatic cleaner for every accident, never ammonia based, because ammonia smells like urine to her and re-marks the spot. And a harness, never the collar, for anything with leash tension. Pauli 2006 measured a significant rise in eye pressure when force went through a collar but not a harness. Her collar carries the ID tag and nothing else."
+  }
+ ],
+ "entries": [
+  {
+   "id": "g-accident-floor",
+   "kind": "do",
+   "title": "She had an accident on the floor",
+   "tags": [
+    "accident",
+    "pee",
+    "poop",
+    "floor",
+    "carpet",
+    "wee",
+    "housetraining",
+    "toilet",
+    "caught"
+   ],
+   "now": [
+    "Caught in the act: one small neutral sound, an uh-oh or a light clap. Just enough to pause her, not to frighten her. Then carry her to the toilet spot.",
+    "If she finishes in the right place, pay her there and then. Praise plus two or three treats, at the spot, not once you are back inside.",
+    "Found it afterwards: clean it, say nothing, note the time. That is the whole protocol.",
+    "Enzymatic cleaner. If it smells like a toilet to her it stays a toilet."
+   ],
+   "not": [
+    "No scolding, no pointing at it, no nose-rubbing, no shutting her in a room.",
+    "Do not startle her hard mid-pee. Sources differ on whether to interrupt at all; the safe version is the smallest sound that gets her to pause."
+   ],
+   "why": "An accident is a scheduling miss by a person. Out on waking, within fifteen minutes of every meal, after every play bout, and at least every two hours between. Look at the thirty minutes before it happened; almost every accident traces back to a missed trigger.",
+   "cat": "House training"
+  },
+  {
+   "id": "g-crate-crying",
+   "kind": "do",
+   "title": "She is crying or barking in the crate at night",
+   "tags": [
+    "crate",
+    "crying",
+    "barking",
+    "night",
+    "whining",
+    "sleep",
+    "bedtime",
+    "howling"
+   ],
+   "now": [
+    "Crate stays beside the bed. Put your hand down so your fingers touch it. That alone settles many puppies.",
+    "Tell fussing from distress. Grumbling and shifting that resettles within a minute or two is fussing, leave it. Escalating, screaming, panting, scrabbling at the door is distress, respond.",
+    "If she has been asleep two hours or more and starts up, assume bladder. Carry her out so she does not fully wake, no talking, no play, no treats, straight back.",
+    "A frozen stuffed Kong at lights-out, and an unwashed t-shirt of Ariel's in the crate."
+   ],
+   "not": [
+    "Do not let her scream herself out. It can build a lasting bad association with the crate, and if you lose the crate you lose the tool everything else depends on.",
+    "Do not lift her into your bed at 3am. Once is enough for her to learn that screaming produces the bed.",
+    "Do not open the door at the peak of a protest bark. Wait for one breath of quiet."
+   ],
+   "why": "Sources genuinely disagree on whether to ignore night crying and there is no controlled trial. Everyone agrees on the fussing versus distress line, so use that rather than a rule.",
+   "cat": "Crate & sleep"
+  },
+  {
+   "id": "g-crate-soiled",
+   "kind": "do",
+   "title": "She peed or pooped in her crate",
+   "tags": [
+    "crate",
+    "pee",
+    "poop",
+    "accident",
+    "bed",
+    "wee",
+    "urine",
+    "mess",
+    "soiled",
+    "night"
+   ],
+   "now": [
+    "Get her out and straight to the toilet spot, calmly. She may not be finished.",
+    "Everything out of the crate. Wipe her clean with a warm damp cloth and dry her properly with a towel. No bath at 9pm.",
+    "Enzymatic cleaner on the tray, left for the time the label says. Bedding in the wash, pre-treated, cool or warm, never hot: heat sets the stain and kills the enzymes.",
+    "Clean dry layer down before she goes back in."
+   ],
+   "not": [
+    "Do not scold her, show her the mess, or rub her nose in it. She cannot connect it, and what she learns is to hide where she goes.",
+    "No ammonia based cleaner.",
+    "Do not read the guilty look as understanding. It is a response to your face and tone."
+   ],
+   "why": "Most puppies will not soil where they sleep, so a fouled crate usually means the crate is too big, she was left too long, or she was already holding it. Check the divider is set so she can stand, turn and lie down and no more. If it keeps happening, fix the schedule, not the puppy.",
+   "vet": "Repeated crate soiling can be medical. Mention it.",
+   "cat": "Crate & sleep"
+  },
+  {
+   "id": "g-digging-bed",
+   "kind": "do",
+   "title": "She is scratching and digging at her bedding",
+   "tags": [
+    "digging",
+    "scratching",
+    "bedding",
+    "nesting",
+    "bed",
+    "kicking",
+    "shredding"
+   ],
+   "now": [
+    "Usually nothing. Circling, scratching and digging before lying down is normal nesting, the canine version of fluffing a pillow.",
+    "If she is shredding rather than arranging, take the bedding out and give her a chew instead. Swallowed stuffing is the real risk, not the digging.",
+    "If it happens every time she is confined and comes with panting and scrabbling at the door, that is not nesting. See the alone entry."
+   ],
+   "not": [
+    "Do not tell her off for a normal pre-sleep ritual.",
+    "Do not leave her with shredded fabric she can swallow."
+   ],
+   "cat": "Crate & sleep"
+  },
+  {
+   "id": "g-early-waking",
+   "kind": "do",
+   "title": "She is waking too early",
+   "tags": [
+    "early",
+    "waking",
+    "morning",
+    "sleep",
+    "5am",
+    "alarm",
+    "barking"
+   ],
+   "now": [
+    "Say nothing. No eye contact. Get up on an alarm, not on her noise.",
+    "If she genuinely needs to pee, take her: dark, silent, boring, straight back to bed. No lights, no breakfast, no chat.",
+    "Feed breakfast twenty to thirty minutes after you are up, not the moment you are up.",
+    "Drape part of the crate and run a fan or white noise. Rubbish trucks and hallway noise are real inputs here."
+   ],
+   "not": [
+    "Do not start the day at whatever hour she picks. Unlike night crying, this one is not contested: early waking really does get reinforced.",
+    "Do not scold her at 5am. You are adding attention to a puppy who is now fully awake."
+   ],
+   "why": "Fix it over days: set your alarm five minutes earlier than her current wake time for a week, then push it five minutes later each week. She learns the alarm starts the day, not her barking.",
+   "cat": "Crate & sleep"
+  },
+  {
+   "id": "g-overtired",
+   "kind": "do",
+   "title": "She has gone wild and bitey this evening",
+   "tags": [
+    "wild",
+    "bitey",
+    "biting",
+    "crazy",
+    "overtired",
+    "evening",
+    "witching hour",
+    "nipping",
+    "manic"
+   ],
+   "now": [
+    "Stop. Stand up, fold your arms, disengage completely. End the interaction.",
+    "Quick toilet trip.",
+    "Crate or pen with a chew or a stuffed Kong, delivered calmly and cheerfully with a treat. This is a nap, not a punishment, and it must never be delivered angrily.",
+    "Leave her. She may complain for a few minutes and then crash hard. Expect that."
+   ],
+   "not": [
+    "Do not read it as surplus energy and play harder or go out again. An overtired puppy looks exactly like an over-energised one. That is the whole trap.",
+    "No grabbing her muzzle, no scruffing, no pinning, no shouting."
+   ],
+   "why": "Say it out loud: the frantic bitiness is the sleep deprivation. That is why the answer is a nap and not a walk.",
+   "cat": "Crate & sleep"
+  },
+  {
+   "id": "g-soiled-bed-bedtime",
+   "kind": "do",
+   "title": "The bed is soiled and there is no time to wash it",
+   "tags": [
+    "bed",
+    "bedtime",
+    "crate",
+    "wash",
+    "soiled",
+    "wet",
+    "night",
+    "towel",
+    "laundry"
+   ],
+   "now": [
+    "Best: any clean dry substitute. A folded bath towel, a blanket, a fleece, a clean sweatshirt. It does not have to be dog bedding, and it takes thirty seconds.",
+    "Second best: wipe the tray with enzymatic cleaner, let it dry, and give her the bare crate floor. A bare floor beats a soiled bed.",
+    "Wipe her down and dry her before she goes in. A damp puppy on damp bedding is the worst combination.",
+    "Set an alarm for a toilet trip in two to three hours."
+   ],
+   "not": [
+    "Do not just flip it over. The scent and the damp are still there.",
+    "Do not spray perfume or air freshener over it.",
+    "Do not move her to your bed or the sofa as a workaround. One night of that teaches a fast learner something you will have to undo.",
+    "Do not skip drying her because she seems fine."
+   ],
+   "why": "Two reasons, neither about tidiness. Lying in urine is genuinely irritating to skin, and the smell tells her the crate is a legitimate toilet, which undoes the housetraining she is in the middle of.",
+   "vet": "If her skin looks red or raw where she has been lying, say so.",
+   "cat": "Crate & sleep"
+  },
+  {
+   "id": "g-wont-settle",
+   "kind": "do",
+   "title": "She will not settle. Pacing, will not lie down",
+   "tags": [
+    "settle",
+    "pacing",
+    "restless",
+    "wont lie down",
+    "evening",
+    "wired",
+    "calm"
+   ],
+   "now": [
+    "Toilet first, always. Pacing is the classic I-need-to-go tell.",
+    "Then shrink her world: pen or crate, lights down, no talking, no eye contact. A loose puppy in an open room cannot switch off.",
+    "Give her a licking or chewing job. Frozen stuffed Kong, lickmat, safe chew.",
+    "Sit nearby and be boring. When she lies down, keep being boring."
+   ],
+   "not": [
+    "Do not read pacing as needing more exercise and play harder or go out again. That escalates it and you get a wilder puppy twenty minutes later.",
+    "Do not repeat settle, settle, lie down. Talking to her is attention, and attention is fuel."
+   ],
+   "why": "In the evening, pacing is nearly always toilet, over-arousal, or overtiredness. All three are answered by confinement plus a chew, not by more activity.",
+   "cat": "Crate & sleep"
+  },
+  {
+   "id": "g-biting",
+   "kind": "do",
+   "title": "She is biting my hands, sleeves and ankles",
+   "tags": [
+    "biting",
+    "nipping",
+    "mouthing",
+    "hands",
+    "teeth",
+    "ankles",
+    "sharp",
+    "puppy teeth"
+   ],
+   "now": [
+    "Freeze. Go still and let your hand go limp. Jerking away triggers the grab reflex and makes it a better game.",
+    "Put something legal in her mouth, a toy or a chew, and praise her for taking it. She is a retriever; she is supposed to want something in her mouth. Give her the right something.",
+    "If she escalates, get up and leave for ten to sixty seconds. Behind a baby gate or out of the room. Then come back and try again.",
+    "Third time in ten minutes means she needs a nap, not a training session. See the overtired entry."
+   ],
+   "not": [
+    "No muzzle-holding, no scruff-shaking, no fingers down the throat, no smacking her nose. Hitting can make a puppy bite harder and can produce fear and aggression.",
+    "Do not jerk hands or feet away. It looks like prey.",
+    "Do not let her use hands as toys, not even once."
+   ],
+   "why": "The classic yelp-like-a-hurt-puppy is the most published technique and it excites some puppies into biting harder, especially high-arousal retrievers. Try one calm flat ouch, once. If she escalates, drop it and use freeze then redirect then leave.",
+   "cat": "Behaviour"
+  },
+  {
+   "id": "g-chewing",
+   "kind": "do",
+   "title": "She is chewing the furniture, the rug or a cable",
+   "tags": [
+    "chewing",
+    "cable",
+    "wire",
+    "furniture",
+    "rug",
+    "destructive",
+    "teething",
+    "cord"
+   ],
+   "now": [
+    "Cables are the emergency: unplug first, then deal with the puppy. Do not lunge at her while she has a live cord.",
+    "Neutral uh-oh, take the item, and immediately hand her an approved chew and praise her for taking it.",
+    "Then fix the room, which is the actual solution. Cables behind furniture or in cord covers, power strips off the floor, shoes in a closed cupboard, laundry in a hamper.",
+    "If you cannot supervise, she goes in the pen. A puppy loose in a room she can chew is a management failure."
+   ],
+   "not": [
+    "Do not tell her off for chewing you find later. She cannot connect it.",
+    "Do not rely on bitter spray as the plan. Individual variation is enormous and some dogs acquire a taste for it. It supplements puppy-proofing, it does not replace it.",
+    "Do not crate her for long stretches as the answer to chewing."
+   ],
+   "vet": "If she has bitten into a live cable, or swallowed fabric or plastic, that is a vet call now.",
+   "cat": "Behaviour"
+  },
+  {
+   "id": "g-counter",
+   "kind": "do",
+   "title": "She has her paws on the counter or stole food from the table",
+   "tags": [
+    "counter",
+    "surfing",
+    "table",
+    "kitchen",
+    "stealing food",
+    "worktop"
+   ],
+   "now": [
+    "Clear the surface. Right now. That is the intervention.",
+    "Redirect her away and reward her on the floor, away from the counter.",
+    "Baby-gate the kitchen while you cook and eat, or pen her.",
+    "Food into containers or cupboards, nothing on the edge, bin secured."
+   ],
+   "not": [
+    "Do not rely on catching and correcting. This is a slot machine: one sandwich, once, keeps her checking for months. You cannot out-correct an intermittent jackpot, only remove it.",
+    "Do not feed her from the table or the counter, ever, including a crumb."
+   ],
+   "cat": "Behaviour"
+  },
+  {
+   "id": "g-guarding",
+   "kind": "do",
+   "title": "She growled at me over food or a toy",
+   "tags": [
+    "growl",
+    "growling",
+    "guarding",
+    "food",
+    "bowl",
+    "aggressive",
+    "snapped",
+    "resource"
+   ],
+   "now": [
+    "Stop moving. Stand up. Back away. Give her space. The growl is doing its job. It is information, not an attack.",
+    "If it is her food or a legal chew, leave the room. Let her finish. Collect the bowl later.",
+    "If it is genuinely dangerous, a chicken bone or medication, do not grab and do not corner her. Scatter food away from her, or lure her into another room and shut the door.",
+    "Prevent the next one: feed her behind a closed door or in her crate, pick up high-value chews before people are around."
+   ],
+   "not": [
+    "Never punish the growl. It does not change how she feels, it deletes the warning, and you get a dog who goes from stiff to bite with nothing in between. This is the single most dangerous thing anyone can do here.",
+    "Do not reach into the bowl, take food away, hover over her, or show her who is boss. There is no evidence hand-feeding prevents or treats food aggression, and confiscation makes it worse.",
+    "Do not run a desensitisation protocol you half remember. That is owner and professional work."
+   ],
+   "why": "Guarding is fear of losing something, not dominance. That is why adding value works and removing value escalates it.",
+   "vet": "Tell Ariel every time, and it is worth raising with the vet.",
+   "cat": "Behaviour"
+  },
+  {
+   "id": "g-humping",
+   "kind": "do",
+   "title": "She is humping my leg or a cushion",
+   "tags": [
+    "humping",
+    "mounting",
+    "leg",
+    "cushion",
+    "embarrassing"
+   ],
+   "now": [
+    "Calmly disengage. Stand up, step away, remove the cushion.",
+    "Redirect: ask for a sit, give a chew, or move her to the pen for a short reset.",
+    "Treat it as an arousal reading. If she is humping she is over threshold, and the next thing is usually the overtired entry."
+   ],
+   "not": [
+    "Do not laugh, film it, or wrestle her off. Attention of any flavour reinforces it.",
+    "Do not scold or punish her. It is normal and she has no idea what the telling-off is about."
+   ],
+   "why": "At ten weeks this is not sexual. Mounting appears in play from as early as three to six weeks and usually signals over-excitement or uncertainty. Because it is an arousal symptom, the fix is lowering arousal, not correcting the behaviour.",
+   "cat": "Behaviour"
+  },
+  {
+   "id": "g-jumping",
+   "kind": "do",
+   "title": "She is jumping all over people",
+   "tags": [
+    "jumping",
+    "jumps up",
+    "greeting",
+    "visitors",
+    "excited"
+   ],
+   "now": [
+    "Turn your back, fold your arms, no words, no eye contact. Wait for four paws on the floor.",
+    "The instant all four feet are down, turn and greet her, and put the treat on the floor between her front feet, so the reward happens where you want her body.",
+    "Better, get ahead of it: as someone approaches, start scattering treats on the floor before she thinks about launching.",
+    "Ask visitors to do exactly the same. Consistency across people is the whole game."
+   ],
+   "not": [
+    "No knee in the chest, no standing on toes, no shouting. She is ten weeks old and this is a friendly greeting.",
+    "Do not just ignore it and stop there. Ignoring alone leaves a frustrated puppy with no idea what else to do. You have to pay the alternative."
+   ],
+   "why": "She jumps because it works. Faces are up there and jumping has produced attention before. Any attention, including a no, pays it.",
+   "cat": "Behaviour"
+  },
+  {
+   "id": "g-stolen-item",
+   "kind": "do",
+   "title": "She has stolen something and will not give it back",
+   "tags": [
+    "stolen",
+    "sock",
+    "shoe",
+    "grabbed",
+    "wont give",
+    "keep away",
+    "trade",
+    "drop it"
+   ],
+   "now": [
+    "Do not chase her. Chasing turns it into the best game she has ever played and multiplies what the item is worth.",
+    "Trade. Go to the fridge, make the food noise, and scatter something high value several feet away from her. When she leaves the item, pick it up calmly.",
+    "If she will not trade, open a door into another room, toss food through, close the door behind her, retrieve the item.",
+    "Then put that whole category of thing away. Socks, shoes, remotes, laundry."
+   ],
+   "not": [
+    "Do not prise her mouth open or grab her collar. It teaches her to swallow fast to keep it, and it is a direct route to guarding.",
+    "Do not scold her when she finally gives it up. You would be punishing the surrender."
+   ],
+   "vet": "If she has actually swallowed something, that is a vet call now, not a behaviour question. Do not try to make her vomit.",
+   "cat": "Behaviour"
+  },
+  {
+   "id": "g-zoomies",
+   "kind": "do",
+   "title": "She is tearing round the flat like she is possessed",
+   "tags": [
+    "zoomies",
+    "running",
+    "crazy",
+    "frantic",
+    "racing",
+    "wild"
+   ],
+   "now": [
+    "Let it happen. It is normal, self-limiting, usually seconds to a couple of minutes, and not a behaviour problem.",
+    "Make the space safe rather than stopping her: clear the table corner, block the stairs, shut the bathroom, throw down a runner. Slick floors at speed are the real injury risk.",
+    "Move away and sit down.",
+    "When it ends, that is your window: toilet, then crate or pen with a chew. Zoomies often run straight into a crash."
+   ],
+   "not": [
+    "Do not chase her. Chasing turns a thirty-second burst into a ten-minute game.",
+    "Do not grab a puppy at full speed. That is how you get a bite and a frightened dog."
+   ],
+   "cat": "Behaviour"
+  },
+  {
+   "id": "g-eating-ground",
+   "kind": "do",
+   "title": "She is eating grass, leaves, mulch or another dog's poop",
+   "tags": [
+    "grass",
+    "leaves",
+    "mulch",
+    "poop",
+    "faeces",
+    "eating",
+    "street",
+    "scavenging",
+    "stool"
+   ],
+   "now": [
+    "Look ahead, not down. Scan ten feet in front and steer around it before she commits. That is most of the job.",
+    "Cheerful lets-go before she reaches it, and pay her for turning her head toward you. Reward the turn away, never the approach.",
+    "Already in her mouth: do not pry her jaws or grab her collar. Produce food, step away from her, and let her come to you to trade.",
+    "Short leash around tree pits and mulch. Carry treats good enough to outbid a New York pavement."
+   ],
+   "not": [
+    "Do not yell or lunge. Use-it-or-lose-it is exactly the lesson she takes.",
+    "Do not buy a stool-eating deterrent. Hart 2018 surveyed about 3,000 owners across all eleven products then on sale: 0 to 2 percent success. Chasing her off, 1 to 2 percent. The best of a bad field was trained leave-it at 4 percent."
+   ],
+   "why": "Coprophagy looks to be inherited scavenging, with no association with diet and none with how easily a dog housetrains. So she is not missing a nutrient and she does not need stricter training. It is a leash-handling problem. Grass eating separately is normal: Sueda and Hart, 1,571 dogs, about 79 percent ate grass, only about 9 percent seemed unwell first.",
+   "vet": "Eating other dogs' faeces is a real parasite route and she is not fully vaccinated. Tell the vet.",
+   "cat": "Out & about"
+  },
+  {
+   "id": "g-pulling",
+   "kind": "do",
+   "title": "She is pulling on the leash",
+   "tags": [
+    "pulling",
+    "leash",
+    "lead",
+    "walking",
+    "harness",
+    "collar",
+    "drags"
+   ],
+   "now": [
+    "Front-clip harness, fixed six-foot leash. No retractable leash, and nothing attached to her collar under tension.",
+    "The moment the leash goes tight, stop walking, or turn and go the other way. Pulling never gets her closer to the thing. Loose leash restarts the walk.",
+    "Feed her continuously while she is at your side.",
+    "Keep it short. For a ten-week-old, half a block is a success, and sniffing counts as the walk."
+   ],
+   "not": [
+    "Do not jerk or pop the leash. It loads her neck, she still gets to pull most of the time so it does not even work, and it pairs discomfort with whatever she was looking at. That is how leash reactivity is built.",
+    "No prong, choke or shock collar.",
+    "Do not start a head halter. It needs careful conditioning and is not for a puppy this age."
+   ],
+   "why": "The welfare case for a harness over a collar is strong. The claim that a front-clip harness mechanically reduces pulling better than everything else is not settled. Treat the harness as the safe default plus training, not as a fix for pulling.",
+   "cat": "Out & about"
+  },
+  {
+   "id": "g-recall",
+   "kind": "do",
+   "title": "She will not come when called",
+   "tags": [
+    "recall",
+    "come",
+    "wont come",
+    "ignoring",
+    "calling",
+    "runs away"
+   ],
+   "now": [
+    "Say her name and come once, in a high delighted voice, then run backwards away from her. Chasing makes her flee; moving away makes her chase you.",
+    "Pay every single recall, including a slow late sloppy one. Food, then a few seconds of fuss.",
+    "Keep a light line on her indoors so you never have to grab or lunge.",
+    "Practise gotcha: call, treat, take her collar, treat again. Otherwise the collar grab itself becomes the punishment."
+   ],
+   "not": [
+    "Never tell her off for coming, however late. You would be punishing the arrival.",
+    "Do not call her for things she dislikes: crate, bath, nail trim, end of a walk. That poisons the word permanently. If you need her for something unpleasant, go and get her.",
+    "Do not call repeatedly in a rising voice. You teach her the word means nothing until it is shouted."
+   ],
+   "cat": "Out & about"
+  },
+  {
+   "id": "g-scared",
+   "kind": "do",
+   "title": "She is terrified of something",
+   "tags": [
+    "scared",
+    "frightened",
+    "fear",
+    "afraid",
+    "truck",
+    "noise",
+    "elevator",
+    "stairs",
+    "hiding",
+    "shaking"
+   ],
+   "now": [
+    "Increase distance. Cross the street, step into a doorway, turn a corner. Distance is the fastest intervention there is.",
+    "Feed. While the thing is there and she is coping, deliver a stream of high-value food, and stop the second it is gone. Thing appears, chicken rains. Thing leaves, chicken stops.",
+    "Comfort her if she seeks it. You are her safe base.",
+    "Elevator: carry her, or wait for the next one. Stairs: carry her up and set her down one step from the top so she succeeds on one step, then work backwards."
+   ],
+   "not": [
+    "Do not force her toward it to get her over it. That sensitises rather than desensitises and can produce panic or a bite.",
+    "Do not lure her closer with food. If she steps toward it chasing a treat and then startles, the fear gets worse. Let her pick the distance.",
+    "Do not scold her for being frightened.",
+    "Do not believe that comforting her reinforces the fear. That is a myth. Fear is an emotion and reinforcement acts on behaviour."
+   ],
+   "why": "Her socialisation window closes around sixteen weeks. Every scary encounter right now is being written down, which is the argument for retreating today rather than pushing through.",
+   "cat": "Out & about"
+  },
+  {
+   "id": "g-wont-walk",
+   "kind": "do",
+   "title": "She will not move outside. She has planted herself",
+   "tags": [
+    "walk",
+    "outside",
+    "refuses",
+    "frozen",
+    "stuck",
+    "pulling",
+    "leash",
+    "scared",
+    "wont move"
+   ],
+   "now": [
+    "Stop pulling. Put slack in the leash. Wait, and count to thirty.",
+    "Crouch or move away from her, sideways, and sound cheerful. Puppies follow movement away and brace against pressure toward them.",
+    "Toss a treat a foot in front of her and let her walk to it herself. Pay any movement at all, including one step.",
+    "Still stuck: carry her. Better, carry her a short way from home and set her down facing home, so walking is now what she wants."
+   ],
+   "not": [
+    "Do not drag her, not even a little. It loads her neck, she cannot be reasoned with, and it pairs the street with being overpowered.",
+    "Do not make carrying the first move every time or you teach a very effective way to end a walk.",
+    "Do not push through it so she gets used to it. Forced exposure makes fear worse, not better."
+   ],
+   "why": "Two different causes, same look. Overwhelmed or frightened, or simply finished, because she is ten weeks old. Either way the answer is the same: release pressure, reduce the demand, go home.",
+   "cat": "Out & about"
+  },
+  {
+   "id": "g-alone",
+   "kind": "do",
+   "title": "She panics when I leave the room",
+   "tags": [
+    "alone",
+    "separation",
+    "panic",
+    "leaving",
+    "left alone",
+    "anxiety",
+    "crying"
+   ],
+   "now": [
+    "Practise absences while you are home. Pen her in the kitchen while you are next door, so confinement does not only ever predict your departure.",
+    "Build duration from tiny. One or two minutes, then longer over days.",
+    "Leave with a stuffed frozen Kong. Leave and come back low-key: no emotional goodbye, no big greeting.",
+    "Never punish her for anything you find when you get back."
+   ],
+   "not": [
+    "Do not make a fuss on departure and a bigger fuss on arrival.",
+    "Do not force a genuinely panicking puppy into a shut crate. For some dogs the crate adds stress. Use a baby-gated room instead."
+   ],
+   "why": "Normal puppy distress settles over minutes and improves over days. True separation anxiety happens specifically and only when she is alone: anxiety as you get ready to leave, destruction aimed at doors and windows, soiling only when alone, refusing food when alone. That is a clinical condition diagnosed by a vet and a veterinary behaviourist. Report what you saw, do not run a programme.",
+   "vet": "If it looks like the second description, that is a vet conversation.",
+   "cat": "Home & care"
+  },
+  {
+   "id": "g-sitter",
+   "kind": "do",
+   "title": "She will not settle for me and I am not her owner",
+   "tags": [
+    "sitter",
+    "babysitting",
+    "wont settle",
+    "stranger",
+    "new person",
+    "helper",
+    "neighbour"
+   ],
+   "now": [
+    "Keep Ariel's routine exactly. Same feeding times, same last toilet, same bedtime, same crate in the same spot. Predictability is most of the job.",
+    "Put an unwashed t-shirt of his in the crate. Add one of yours if you will be there several days.",
+    "Be boring. Do not lean over her, reach for her, stare, or scoop her up. Sit on the floor sideways and let her come to you.",
+    "Hand-feed her and deliver every meal and chew yourself. That is the fastest legitimate route to being safe to be around."
+   ],
+   "not": [
+    "Do not try to win her over with intensity: picking her up, following her, high-pitched cooing. Social pressure from a stranger raises arousal in a puppy who is already unsettled.",
+    "Do not loosen the rules out of sympathy. She's stressed so she can sleep on the sofa tonight breaks the routine that is holding her together and hands Ariel a new problem."
+   ],
+   "cat": "Home & care"
+  },
+  {
+   "id": "g-temperature",
+   "kind": "do",
+   "title": "Is the flat too hot or too cold for her?",
+   "tags": [
+    "temperature",
+    "hot",
+    "cold",
+    "thermostat",
+    "heat",
+    "panting",
+    "shivering",
+    "radiator",
+    "aircon",
+    "degrees"
+   ],
+   "now": [
+    "69F is right and needs no adjusting. It is the exact figure the Merck Veterinary Manual gives for a puppy from week five, and it sits inside the range where she is not spending energy heating or cooling herself.",
+    "One setting all day. There is no evidence for different temperatures for sleeping, resting and play, and anyone giving you three numbers is inventing them.",
+    "Keep her crate away from the radiator. Old steam radiators run far hotter than the thermostat and create a pocket the wall reading cannot see. Put a thermometer inside the crate for a night rather than trusting the wall.",
+    "Manage play, not the room. Around three quarters of heat illness in dogs is caused by exercise, not hot weather. She will not self-limit, so you enforce breaks."
+   ],
+   "not": [
+    "Do not lower the thermostat because she pants during play. Fix the play.",
+    "Do not assume a covered crate is neutral. It cuts airflow while she is producing heat and moisture, and nobody has measured what that does. Cover partially, use something woven, measure it once.",
+    "Do not rely on shivering as your cold signal. It stops as hypothermia deepens, so she is not shivering so she is fine is bad logic."
+   ],
+   "why": "Goldens are double-coated and had 2.65 times the odds of heat illness compared with Labradors across 905,000 UK dogs. Worth knowing the caveat: coat type was not actually measured in that study, so the undercoat is the proposed explanation rather than a tested one. Either way, erring cool suits her.",
+   "vet": "Panting at rest in a 69F room with no exercise beforehand is not normal. Nor is stopping mid-play, which is the sign people miss.",
+   "cat": "Home & care"
+  },
+  {
+   "id": "f-bowls",
+   "kind": "do",
+   "cat": "Food & treats",
+   "title": "Where the bowls go, and how to stop her tipping them",
+   "tags": [
+    "bowl",
+    "bowls",
+    "where",
+    "kitchen",
+    "living room",
+    "crate",
+    "spill",
+    "tipping",
+    "knocked over",
+    "mat",
+    "clip"
+   ],
+   "now": [
+    "FOOD: one place only. The kitchen. One spot, one container, so three people cannot lose track of how much she has had.",
+    "WATER: as many places as she spends time. One in the kitchen, one wherever she actually lies down. Two bowls is completely normal and there is no downside.",
+    "A bowl she has to walk to another room for is a bowl she drinks less from. Puppies do not get up to travel for a drink, especially if they are comfortable near you.",
+    "Heavy stainless steel or ceramic with a wide flat base. Weight beats a puppy.",
+    "A rubber mat or a boot tray underneath. It will not stop a spill but it stops the mess.",
+    "At 8pm pick up ALL the water bowls, not just one, or she will simply go and drink from the other."
+   ],
+   "not": [
+    "No water bowl in the crate for normal naps or overnight. She does not need it for a short stretch, and it is what causes the spills.",
+    "No light plastic bowls. She will flip them, and scratched plastic harbours bacteria and is linked to puppy chin acne."
+   ],
+   "why": "The two are different problems. Food needs structure because it is measured and because three people are feeding her. Water needs no structure at all, because nobody is counting it.",
+   "vet": ""
+  },
+  {
+   "id": "f-budget",
+   "kind": "do",
+   "cat": "Food & treats",
+   "title": "How much can she have? The 10 percent rule",
+   "tags": [
+    "treats",
+    "calories",
+    "budget",
+    "how much",
+    "portion",
+    "10 percent",
+    "overfeeding",
+    "handlers",
+    "weight",
+    "free feed"
+   ],
+   "now": [
+    "No more than about 70 to 100 kcal a day from anything that is not her complete-and-balanced food. That is roughly 10 percent of her intake.",
+    "That budget is SHARED between the three of you. Not 10 percent each. This is the most common way a puppy ends up overfed.",
+    "The whole day of treats is ONE of these: about 60 to 80 pieces of her own kibble, OR 3 baby carrots plus 5 blueberries plus a quarter cup of apple, OR one inch-cube of chicken plus half a cup of green beans, OR 2 teaspoons of peanut butter and nothing else all day.",
+    "Judge her by body condition, not by the chart. Aim for 4 out of 9: ribs easily felt, visible waist from above, tuck from the side."
+   ],
+   "not": [
+    "Do not free-feed. Measure every meal.",
+    "Do not treat \"she is still hungry\" as evidence that she needs more. Golden retrievers carry a documented appetite-drive gene variant. Hunger in this breed is a poor guide to requirement. Use the scale and the ribs.",
+    "Do not read a visible waist on a golden puppy as neglect. It is correct."
+   ],
+   "why": "Kealy 1992 is the strongest single piece of evidence in this whole guide. Forty-eight Labradors from 8 weeks old, randomised: one group fed freely, one fed 25 percent less of the same food, followed for life with serial hip X-rays. Hip dysplasia appeared in 7 of 24 limit-fed dogs versus 16 of 24 fed freely. Same food, same breed, only the amount differed. The restricted group also developed arthritis later and lived longer.",
+   "vet": "Ask your vet to show you how to body condition score her, and to weigh her at every visit."
+  },
+  {
+   "id": "f-buying",
+   "kind": "do",
+   "cat": "Food & treats",
+   "title": "What to actually buy: the four tests",
+   "tags": [
+    "buy",
+    "shopping",
+    "treats",
+    "chews",
+    "training treats",
+    "what to get",
+    "pet store",
+    "choosing",
+    "thumbnail"
+   ],
+   "now": [
+    "SOFT. Press your thumbnail into it. If you cannot leave a dent, it is too hard for her teeth. At this age it should squash between finger and thumb.",
+    "TINY. Pea-sized, or breakable into pea-sized pieces. A training session is 20 to 40 repetitions, and each reward has to be nearly free.",
+    "SHORT INGREDIENT LIST. Not for purity reasons, but because if she reacts you need to know what she reacted to. A treat with 14 ingredients is uninterpretable.",
+    "LOW CALORIE. Aim for 2 kcal a piece or less, so a full session costs under 40 kcal.",
+    "Plus, for her specifically: no added calcium, no bone meal, no bone-and-joint blends, no fortified multivitamin treats.",
+    "Good buys now: soft training treats broken into quarters, her own kibble, a Kong Puppy, frozen blueberries and watermelon, a snuffle mat or lick mat filled from her ration."
+   ],
+   "not": [
+    "Do not buy dental chews. She has no adult teeth to clean, and most fail the thumbnail test.",
+    "Do not buy jerky treats. There is an open FDA investigation into illnesses linked to them.",
+    "Be careful with freeze-dried RAW treats. Freeze-drying does not sterilise, and FDA sampling found roughly a one in three hit rate for foodborne pathogens in raw pet products bought online. For an unvaccinated puppy in a three-adult household, prefer cooked or dehydrated. Wash hands either way.",
+    "Liver is very rich in vitamin A and copper. A few crumbs a day, not a handful."
+   ],
+   "why": "Her 28 baby teeth are needle-sharp but thin-walled, with a large pulp chamber and very little enamel. They are built for nursing and mouthing, not load-bearing chewing, and under pressure they crack. A fractured baby tooth can damage the adult tooth bud growing underneath it. She also cannot shear yet, she gulps, which is the core obstruction risk behind every no in this section.",
+   "vet": ""
+  },
+  {
+   "id": "f-calcium",
+   "kind": "do",
+   "cat": "Food & treats",
+   "title": "Why she must never have a calcium supplement",
+   "tags": [
+    "calcium",
+    "supplement",
+    "bones",
+    "joints",
+    "hips",
+    "elbows",
+    "dysplasia",
+    "large breed",
+    "growth",
+    "vitamins",
+    "phosphorus",
+    "aafco"
+   ],
+   "now": [
+    "Zero calcium supplements. No bone meal, no eggshell powder, no puppy bone-builder, no multivitamin, no joint blend, unless her vet specifically prescribes one.",
+    "No treats fortified with calcium or marketed for bone and joint support.",
+    "Keep dairy small and occasional. Cottage cheese and yoghurt are calcium.",
+    "Her food should carry the AAFCO statement for growth INCLUDING large-size dogs, 70 lb or more as an adult. That exact phrase. A food can say it is for growth and still not be right for her."
+   ],
+   "not": [
+    "Do not add plain meat on top of her food thinking it is healthier. Meat is phosphorus-rich and calcium-poor, so it skews the ratio the other way. Both directions of the ratio cause harm.",
+    "Do not assume more calcium builds stronger bones. In a large-breed puppy it damages the growth plate."
+   ],
+   "why": "Adult dogs turn down calcium absorption when there is too much in the diet. Puppies under 6 months cannot: the gut passively absorbs about 70 percent of whatever calcium is present, with no off-switch. Excess calcium suppresses bone remodelling and disrupts the orderly conversion of cartilage to bone at the growth plate, which is the exact lesion behind osteochondrosis. This was demonstrated experimentally in Great Danes fed diets differing only in calcium. Goldens are already one of the highest-prevalence breeds for hip and elbow dysplasia. Diet will not override her genes, but it can change whether a susceptible dog expresses the disease. Over-supplementing is the far more common and far more dangerous error; true deficiency is nearly impossible on a complete commercial food.",
+   "vet": "Ask whether her current food is appropriate for large-breed growth, and ask for the calcium and phosphorus figures on a dry-matter basis. The guaranteed analysis on the bag gives only a calcium MINIMUM, which tells you nothing about excess."
+  },
+  {
+   "id": "f-container",
+   "kind": "do",
+   "cat": "Food & treats",
+   "title": "The one-container rule, for three people",
+   "tags": [
+    "handlers",
+    "shira",
+    "chayim",
+    "sharing",
+    "sitter",
+    "neighbours",
+    "double feeding",
+    "log",
+    "container",
+    "system",
+    "who fed her"
+   ],
+   "now": [
+    "Measure the whole day of food into ONE container each morning.",
+    "Meals come out of it. Training rewards come out of it. The Kong is filled from it.",
+    "When the container is empty, she has had her food for the day.",
+    "Anything that is NOT from the container gets written down: date, item, amount, who gave it, and her stool the next day."
+   ],
+   "not": [
+    "Do not let three people each decide independently what \"a little bit\" means."
+   ],
+   "why": "Three people each giving just a little bit is exactly how a large-breed puppy ends up 25 percent over target with a diluted mineral profile, and how a food reaction becomes impossible to trace. One container removes the arithmetic entirely. It also means nobody has to remember whether someone else already fed her.",
+   "vet": ""
+  },
+  {
+   "id": "f-crate-water",
+   "kind": "do",
+   "cat": "Food & treats",
+   "title": "Water in the crate, if she is in there a long stretch",
+   "tags": [
+    "crate",
+    "water",
+    "bowl",
+    "spill",
+    "clip",
+    "bottle",
+    "long",
+    "hot",
+    "tipping"
+   ],
+   "now": [
+    "For normal naps and overnight, no water in the crate. She does not need it.",
+    "If she is crated a couple of hours or more, or it is a hot day, she does need water in there.",
+    "Use a CLIP-ON bowl. Stainless steel, hooks onto the crate bars, off the floor. She cannot tip it because it is fixed to the side of the crate. A few dollars, and it is what most people use.",
+    "Or a spouted water bottle that clips to the bars, like a rabbit bottle but dog-sized. Zero spill. Some dogs take a day to work out the spout.",
+    "The clip-on bowl is the easier of the two. Start there."
+   ],
+   "not": [
+    "Do not put a loose bowl on the crate floor. She will knock it over, soak the bedding, and then you have a wet puppy and a wash load."
+   ],
+   "why": "A soaked crate is not just a mess. Damp bedding overnight is uncomfortable, and a crate that is regularly wet stops being a place she wants to be, which undermines the crate training.",
+   "vet": ""
+  },
+  {
+   "id": "f-newfood",
+   "kind": "do",
+   "cat": "Food & treats",
+   "title": "Introducing anything new: one thing, three days",
+   "tags": [
+    "new food",
+    "introduce",
+    "transition",
+    "switch",
+    "stool",
+    "diarrhoea",
+    "diarrhea",
+    "allergy",
+    "reaction",
+    "trial",
+    "change food"
+   ],
+   "now": [
+    "One new item at a time. Three clear days before the next one. Written down.",
+    "Start with a token amount. One blueberry. One pea-sized piece of chicken. Not a portion.",
+    "The three-day clock is shared across all three of you, which is why it only works if it is written somewhere all of you can see.",
+    "Watch: stool consistency and colour (12 to 48 hours), mucus or blood (12 to 48 hours), vomiting (2 to 12 hours), gas and gurgling (4 to 24 hours), itching and paw licking (hours to days), appetite and energy (24 hours).",
+    "If anything is off, stop everything new and wait for two clear days before restarting.",
+    "Changing her actual food: 75/25 for two days, 50/50 for two days, 25/75 for three days, then 100 percent. Puppies often need 14 days. If stool loosens, hold at the current ratio for two or three extra days rather than going backwards."
+   ],
+   "not": [
+    "Do not advance a food transition and add a new treat on the same day.",
+    "Do not give pumpkin to firm up her stool while you are still trying to work out what caused it."
+   ],
+   "why": "The reason for this rule is not that carrots are dangerous. It is that right now, if she produces a loose stool, there are at least six live explanations and you cannot tell them apart: the ongoing food transition, something new someone gave her, residual parasites after the Panacur course, something she scavenged on a walk, stress from the move, or parvovirus. Every new food you add makes that list longer and your diagnosis worse. She is not fully vaccinated, and parvo is the one you cannot afford to miss.",
+   "vet": "Book her post-deworming fecal recheck. Standard practice is 2 to 4 weeks after the course."
+  },
+  {
+   "id": "f-reuse",
+   "kind": "do",
+   "cat": "Food & treats",
+   "title": "Can leftovers be used as treats later?",
+   "tags": [
+    "leftovers",
+    "reuse",
+    "treats",
+    "training",
+    "fridge",
+    "portion",
+    "save",
+    "kong",
+    "waste"
+   ],
+   "now": [
+    "Yes, under three conditions.",
+    "One: portion it off BEFORE the bowl goes down to her. Once she has eaten from it, it is finished.",
+    "Two: refrigerate at 40F or below in a sealed, labelled container. Rehydrated kibble 24 hours. Opened gently-cooked 3 days.",
+    "Three: once it leaves the fridge, the 2 hour clock applies, or 1 hour above 90F. Take out only what you will use in one session.",
+    "Best routine: each morning, portion the day into a meal container and a small training container. Freeze the rest of an opened pouch in ice cube trays for Kongs. Date-label everything."
+   ],
+   "not": [
+    "Do not scrape her bowl back into the container.",
+    "Do not carry gently-cooked food around in a treat pouch all day."
+   ],
+   "why": "This is the right instinct and it solves two problems at once. It stops you wasting a 9 oz pouch, and food she ignores in a bowl she will often work hard for by hand. Food out of a bowl and food out of your hand are different currencies to a puppy.",
+   "vet": ""
+  },
+  {
+   "id": "f-spoilage",
+   "kind": "do",
+   "cat": "Food & treats",
+   "title": "How long does her food last? Bowl, fridge, freezer",
+   "tags": [
+    "spoil",
+    "spoilage",
+    "food safety",
+    "leftovers",
+    "how long",
+    "bowl",
+    "fridge",
+    "freezer",
+    "rehydrated",
+    "soaked",
+    "warm water",
+    "room temperature",
+    "sitting out",
+    "bacteria"
+   ],
+   "now": [
+    "Rehydrated bowl at room temperature: 2 hours is the absolute maximum. In practice, pick it up after 20 to 30 minutes.",
+    "NYC in summer with no AC: 1 hour maximum. Above 90F the safe window halves.",
+    "A bowl she has already eaten from: do not refrigerate and re-serve. Bin the remainder. Her saliva reseeds it.",
+    "Opened gently-cooked pouch, refrigerated in a sealed labelled container: 3 days. That is the manufacturer number and it is stricter than general guidance, so use it.",
+    "Rehydrated kibble made ahead and never served, refrigerated: 24 hours.",
+    "Gently-cooked food in a treat pouch on your hip: 2 hours, or 1 hour above 90F. Be strict about this one.",
+    "Frozen in portions or stuffed Kongs: 3 to 4 months. Thaw in the fridge, never on the counter.",
+    "Opened dry kibble bag: about 6 weeks. Keep it in its original bag, rolled and clipped, INSIDE an airtight container.",
+    "Wash bowls and scoops daily in hot soapy water."
+   ],
+   "not": [
+    "Do not leave the bowl down all morning. Warm water starts the food inside the bacterial danger zone rather than having to fall into it, so the clock is already running the moment you put it down.",
+    "Do not pour kibble loose into a storage bin. The bag is a barrier layer and it carries the lot code you would need in a recall, and residual fats go rancid on the bin walls.",
+    "Do not keep a scratched plastic bowl. Scratches harbour bacteria and are linked to puppy chin acne."
+   ],
+   "why": "The moment you add warm water to kibble and mix in cooked meat, you have made a moist, protein-rich, neutral-pH medium sitting in the bacterial danger zone between 40F and 140F, where bacteria can double in number every 20 minutes. USDA guidance is 2 hours out of refrigeration, or 1 hour above 90F. Dry kibble is a completely different object: low water activity, stable. The rehydrated bowl is not.",
+   "vet": "If she has repeated loose stool and the bowl has been sitting down for hours, mention the timings."
+  },
+  {
+   "id": "f-water",
+   "kind": "do",
+   "cat": "Food & treats",
+   "title": "Water: always down, except after 8pm",
+   "tags": [
+    "water",
+    "drink",
+    "drinking",
+    "bowl",
+    "thirsty",
+    "dehydrated",
+    "8pm",
+    "night",
+    "overnight",
+    "restrict",
+    "limit"
+   ],
+   "now": [
+    "Water bowl full and available all day. Top it up when it gets low.",
+    "Never limit water to control her peeing. A puddle on the floor is not a problem. A dried-out puppy is.",
+    "The one limit: pick the bowl up at 8pm, two hours before her 10pm bedtime. That is so she does not fill up right before sleeping.",
+    "If she is clearly thirsty after 8pm, give her a small drink anyway, then take her straight out. Never leave her thirsty to keep the crate clean.",
+    "Wash the bowls daily in hot soapy water. Bowls build a film."
+   ],
+   "not": [
+    "Do NOT pick the water up early if it is hot, if she has been running around, if she has been sick or had runny stools, if she is on any medicine, or if she just seems off. On those days leave water down all night.",
+    "Do not measure water. Food gets measured; water does not.",
+    "Do not put a normal bowl in the crate. She will tip it. See the bowls entry."
+   ],
+   "why": "Free water actually makes her toilet schedule MORE predictable, not less. With water always there she takes small sips through the day, so it is small sips in and small pees out on a steady rhythm. If water is only there sometimes she gets thirsty, and when the bowl appears she gulps a large amount at once, then urgently needs to go twenty minutes later. Thirsty puppy, big drink, surprise puddle. That is what wrecks a schedule. And at ten weeks she needs to go out every hour or two regardless; her bladder size is what drives that, not the water bowl.",
+   "vet": "Drinking a lot more than usual, day after day and not just after a walk, is a vet call. So is refusing to drink at all, same day. Check her gums: press a finger on them, they should feel wet and slippery. Sticky or dry means she needs water and she needs a vet."
+  },
+  {
+   "id": "f-alcohol",
+   "kind": "food",
+   "cat": "Food & treats",
+   "title": "Alcohol",
+   "verdict": "never",
+   "tags": [
+    "alcohol",
+    "beer",
+    "wine",
+    "spirits",
+    "sanitiser",
+    "sanitizer",
+    "mouthwash",
+    "ethanol"
+   ],
+   "line": "A 6 kg puppy has essentially no reserve.",
+   "prep": "Non-obvious sources: raw dough, rum cake, sangria fruit, hand sanitiser, mouthwash, fermenting rubbish, some liquid medicines.",
+   "why": "Low blood sugar and low body temperature are what kill, not the intoxication itself."
+  },
+  {
+   "id": "f-antlers",
+   "kind": "food",
+   "cat": "Food & treats",
+   "title": "Antlers, elk and deer",
+   "verdict": "never",
+   "tags": [
+    "antler",
+    "antlers",
+    "elk",
+    "deer",
+    "chew",
+    "tooth",
+    "fracture"
+   ],
+   "line": "Never, at any age.",
+   "prep": "Thumbnail test: press your thumbnail into it. If you cannot leave a dent, it is too hard for her teeth. No antler passes.",
+   "why": "Antler evolved to survive being hit by another antler. It is among the most common causes of slab fracture of the carnassial tooth, and no board-certified veterinary dentist endorses them. They also splinter."
+  },
+  {
+   "id": "f-apple",
+   "kind": "food",
+   "cat": "Food & treats",
+   "title": "Apple",
+   "verdict": "yes",
+   "tags": [
+    "apple",
+    "fruit",
+    "seeds",
+    "core",
+    "pips",
+    "treat"
+   ],
+   "line": "Yes, with the core and seeds out.",
+   "amount": "A quarter cup chopped, about 15 kcal.",
+   "prep": "Core and seeds removed. Cut into pea-sized pieces, not slices.",
+   "why": "The seed question, honestly: apple seeds do contain a cyanide precursor, but you would need hundreds of crushed seeds, and a few swallowed whole pass straight through. The real reason to take the core out is that the core is a choking and obstruction object for a 6 kg puppy. Mechanical, not chemical."
+  },
+  {
+   "id": "f-avocado",
+   "kind": "food",
+   "cat": "Food & treats",
+   "title": "Avocado",
+   "verdict": "never",
+   "tags": [
+    "avocado",
+    "guacamole",
+    "pit",
+    "stone",
+    "fat",
+    "persin"
+   ],
+   "line": "Not at her age. The reason is mechanical, not chemical.",
+   "prep": "Guacamole is a hard no at any age, because of the onion and garlic.",
+   "why": "Sources genuinely disagree here. The ASPCA lists avocado to avoid; Merck and Pet Poison Helpline say dogs are relatively resistant to persin. What everyone agrees on is that the pit is a perfect obstruction size for a puppy and the fat load is wrong for a gut still on a food transition.",
+   "age": "Plain ripe flesh in small amounts is low risk from around 6 months, but nutritionally pointless."
+  },
+  {
+   "id": "f-banana",
+   "kind": "food",
+   "cat": "Food & treats",
+   "title": "Banana",
+   "verdict": "yes",
+   "tags": [
+    "banana",
+    "fruit",
+    "kong",
+    "mash"
+   ],
+   "line": "Yes, small amounts.",
+   "amount": "An eighth of a cup mashed, about 25 kcal. A coin-thick slice or two.",
+   "prep": "Peel off. The peel is indigestible and an obstruction risk.",
+   "why": "High sugar for the calories. Excellent Kong filler because it is sticky."
+  },
+  {
+   "id": "f-blueberries",
+   "kind": "food",
+   "cat": "Food & treats",
+   "title": "Blueberries",
+   "verdict": "yes",
+   "tags": [
+    "blueberry",
+    "blueberries",
+    "berry",
+    "fruit",
+    "treat",
+    "training"
+   ],
+   "line": "Yes. The best fresh training treat on this list.",
+   "amount": "Three to five berries, about 2 to 3 kcal.",
+   "prep": "Fresh or thawed. Whole is fine, they are soft and compressible.",
+   "why": "Frozen ones are a good teething soother."
+  },
+  {
+   "id": "f-bully",
+   "kind": "food",
+   "cat": "Food & treats",
+   "title": "Bully sticks",
+   "verdict": "later",
+   "tags": [
+    "bully",
+    "bully stick",
+    "pizzle",
+    "chew",
+    "calories",
+    "bacteria",
+    "holder"
+   ],
+   "line": "Not yet. Commonly given from around 6 months, with three caveats.",
+   "amount": "Measured at 9 to 22 kcal per inch. An average 6 inch stick is 88 kcal, which is her entire daily treat budget in one chew.",
+   "prep": "If you ever use one, use a bully stick holder and confiscate it at about 3 inches. No exceptions.",
+   "why": "Three separate problems. The end becomes a swallowable obstruction object. The calories are enormous. And in a Tufts study of 26 sticks, one carried C. difficile, one carried MRSA, and seven carried E. coli, so wash your hands. Honest note: the 6 month figure is convention, not data. There is no age that makes a swallowable object safe.",
+   "age": "Around 6 months at the earliest, with a holder."
+  },
+  {
+   "id": "f-caffeine",
+   "kind": "food",
+   "cat": "Food & treats",
+   "title": "Coffee, tea, energy drinks",
+   "verdict": "never",
+   "tags": [
+    "caffeine",
+    "coffee",
+    "tea",
+    "energy drink",
+    "preworkout",
+    "grounds",
+    "espresso",
+    "diet pill"
+   ],
+   "line": "Same thresholds as chocolate. About one small cup of coffee is enough to cause signs.",
+   "prep": "Used coffee grounds and tea bags in an open kitchen bin are the real-world exposure. Keep the lid shut.",
+   "why": "Also in pre-workout scoops, caffeine tablets and diet pills.",
+   "signs": "Restlessness, racing heart, tremors, seizures."
+  },
+  {
+   "id": "f-cannabis",
+   "kind": "food",
+   "cat": "Food & treats",
+   "title": "Cannabis and THC edibles",
+   "verdict": "never",
+   "tags": [
+    "cannabis",
+    "weed",
+    "thc",
+    "edible",
+    "marijuana",
+    "joint",
+    "street",
+    "sidewalk",
+    "pavement"
+   ],
+   "line": "A genuine NYC pavement hazard. Emergency.",
+   "prep": "Edibles usually pair THC with chocolate and sometimes xylitol, so it is often a triple exposure.",
+   "why": "Puppies are severely affected at small doses.",
+   "signs": "Wobbliness, dribbling urine, low body temperature, slow heart rate, glazed staring."
+  },
+  {
+   "id": "f-carrot",
+   "kind": "food",
+   "cat": "Food & treats",
+   "title": "Carrot",
+   "verdict": "yes",
+   "tags": [
+    "carrot",
+    "carrots",
+    "vegetable",
+    "chew",
+    "teething"
+   ],
+   "line": "Yes, but not as a whole raw chew yet.",
+   "amount": "One baby carrot is 3 to 4 kcal.",
+   "prep": "Cut into coins, or steam until it yields. Do not hand her a whole raw carrot.",
+   "why": "A whole raw carrot is a swallowable cylinder for a puppy who gulps rather than shears. Fine as a chew from around 4 to 5 months, once the adult premolars are in."
+  },
+  {
+   "id": "f-cheese",
+   "kind": "food",
+   "cat": "Food & treats",
+   "title": "Cheese",
+   "verdict": "caution",
+   "tags": [
+    "cheese",
+    "dairy",
+    "cheddar",
+    "training",
+    "high value",
+    "fat"
+   ],
+   "line": "Yes but tightly capped. Calorie density is the problem, not toxicity.",
+   "amount": "One 1 cm cube is about 12 kcal. Maximum one to two cubes a day.",
+   "prep": "Plain hard cheese only. Never blue cheese, which contains a tremorgenic toxin. Never garlic or herb. Never processed slices.",
+   "why": "Very high value for training and very calorie-dense, plus high fat and sodium. Fine as an occasional jackpot, not as a routine treat. Hard cheeses like cheddar and parmesan are lower in lactose and better tolerated than soft."
+  },
+  {
+   "id": "f-chicken",
+   "kind": "food",
+   "cat": "Food & treats",
+   "title": "Plain cooked chicken or turkey",
+   "verdict": "yes",
+   "tags": [
+    "chicken",
+    "turkey",
+    "meat",
+    "protein",
+    "training",
+    "high value",
+    "treat"
+   ],
+   "line": "Yes. Your best high-value training treat.",
+   "amount": "One 1 cm cube is about 15 kcal. Three to five cubes a day at most.",
+   "prep": "Boiled or baked. Skinless, boneless, no seasoning of any kind. Never deli meat, never rotisserie, never the skin.",
+   "why": "Shred it to pea size for training, so a session of 20 repetitions costs about 10 kcal. Rotisserie chicken rub contains onion and garlic powder; deli meat is loaded with sodium and nitrates."
+  },
+  {
+   "id": "f-chocolate",
+   "kind": "food",
+   "cat": "Food & treats",
+   "title": "Chocolate and cocoa",
+   "verdict": "never",
+   "tags": [
+    "chocolate",
+    "cocoa",
+    "candy",
+    "sweet",
+    "baking",
+    "dark",
+    "milk",
+    "toxic",
+    "poison"
+   ],
+   "line": "Dose matters, and darker is far worse.",
+   "amount": "For her size: roughly 2 g of baking chocolate, 10 g of dark, or 24 g of milk chocolate is enough to start causing signs.",
+   "prep": "Cocoa mulch on planters counts. So does hot chocolate powder.",
+   "why": "Theobromine and caffeine, which dogs clear very slowly. White chocolate is not meaningfully toxic but is a fat and sugar load.",
+   "signs": "Vomiting, restlessness, racing heart, tremors, seizures. Onset 6 to 12 hours."
+  },
+  {
+   "id": "f-cooked-bones",
+   "kind": "food",
+   "cat": "Food & treats",
+   "title": "Cooked bones of any kind",
+   "verdict": "never",
+   "tags": [
+    "bone",
+    "bones",
+    "cooked",
+    "chicken bone",
+    "rib",
+    "street",
+    "sidewalk",
+    "obstruction",
+    "choking",
+    "emergency"
+   ],
+   "line": "Never, at any age. No credible source disagrees.",
+   "prep": "NYC-specific: discarded cooked chicken and rib bones on the pavement are the single most common street scavenge hazard. Leave it and drop it are the two highest-value things you can teach her this month.",
+   "why": "They splinter into sharp shards. The FDA logged around 90 illnesses and 15 deaths from commercial bone treats between 2010 and 2017: perforation, obstruction, tooth fracture, rectal bleeding.",
+   "signs": "Retching, vomiting after drinking, painful belly, straining with no stool. Surgical emergency."
+  },
+  {
+   "id": "f-corncob",
+   "kind": "food",
+   "cat": "Food & treats",
+   "title": "Corn cobs",
+   "verdict": "never",
+   "tags": [
+    "corn",
+    "cob",
+    "corncob",
+    "bbq",
+    "barbecue",
+    "obstruction",
+    "surgery",
+    "bin"
+   ],
+   "line": "Never. This is the one vets pull out of dogs most often.",
+   "prep": "Bin lid shut, always. Summer barbecues, park bins and street food are the exposure.",
+   "why": "ASPCA Animal Hospital vets name the corn cob as the single most common foreign body they surgically remove from dogs. It is exactly the wrong size and diameter to pass, it does not break down, and it does not always show clearly on X-ray.",
+   "signs": "Repeated retching, vomiting after drinking, refusing food, painful belly, no stool. Surgical emergency."
+  },
+  {
+   "id": "f-cucumber",
+   "kind": "food",
+   "cat": "Food & treats",
+   "title": "Cucumber",
+   "verdict": "yes",
+   "tags": [
+    "cucumber",
+    "vegetable",
+    "low calorie",
+    "hot",
+    "summer"
+   ],
+   "line": "Yes. Near-zero calories.",
+   "amount": "A few thin half-moons.",
+   "prep": "Cut rounds in half so they cannot sit flat over the airway.",
+   "why": "A good hot-weather treat that costs almost nothing against her budget."
+  },
+  {
+   "id": "f-dough",
+   "kind": "food",
+   "cat": "Food & treats",
+   "title": "Raw bread dough",
+   "verdict": "never",
+   "tags": [
+    "dough",
+    "bread",
+    "yeast",
+    "baking",
+    "bloat",
+    "alcohol",
+    "pizza dough"
+   ],
+   "line": "Dangerous in small amounts, by two mechanisms at once.",
+   "amount": "A small ball of dough is disproportionately dangerous in a small stomach.",
+   "prep": "Baked bread is not this hazard. It is just calories.",
+   "why": "The dough rises in the warm stomach and distends it like bloat, cutting off blood supply to the stomach wall. At the same time the yeast ferments into alcohol, which is absorbed into her bloodstream.",
+   "signs": "Retching with nothing coming up, swollen belly, then wobbliness and disorientation."
+  },
+  {
+   "id": "f-egg",
+   "kind": "food",
+   "cat": "Food & treats",
+   "title": "Egg",
+   "verdict": "yes",
+   "tags": [
+    "egg",
+    "eggs",
+    "scrambled",
+    "boiled",
+    "protein",
+    "picky",
+    "not eating"
+   ],
+   "line": "Yes, fully cooked.",
+   "amount": "A quarter of a large cooked egg, about 18 kcal. Cap at a quarter egg a day.",
+   "prep": "Scrambled with no butter, oil or salt, or hard-boiled. Never raw. No shell.",
+   "why": "Very useful for a picky eater."
+  },
+  {
+   "id": "f-grapes",
+   "kind": "food",
+   "cat": "Food & treats",
+   "title": "Grapes, raisins, currants, sultanas",
+   "verdict": "never",
+   "tags": [
+    "grape",
+    "grapes",
+    "raisin",
+    "raisins",
+    "currant",
+    "sultana",
+    "kidney",
+    "toxic",
+    "poison",
+    "emergency"
+   ],
+   "line": "Treat any amount as an emergency. There is no known safe dose.",
+   "amount": "The rule of thumb is one grape or raisin per 10 lb of body weight may be enough. For her, that is one or two.",
+   "prep": "Also hiding in: raisin bread, trail mix, granola bars, oatmeal cookies, fruitcake, Raisin Bran, cream of tartar, grape juice.",
+   "why": "Tartaric acid, which dogs excrete poorly, damages the kidneys. Content varies hugely between grapes, which is why some dogs eat a bunch and are fine and others go into kidney failure on a handful. That variability is exactly why there is no safe dose.",
+   "signs": "Vomiting within hours, then kidney failure over about 72 hours."
+  },
+  {
+   "id": "f-greenbeans",
+   "kind": "food",
+   "cat": "Food & treats",
+   "title": "Green beans",
+   "verdict": "yes",
+   "tags": [
+    "green bean",
+    "beans",
+    "vegetable",
+    "low calorie"
+   ],
+   "line": "Yes.",
+   "amount": "Half a cup boiled is about 22 kcal.",
+   "prep": "Plain, no salt. Cut each bean in half at this age; a whole one is a swallowable string.",
+   "why": "Fresh or frozen plain. Never canned with salt, never green bean casserole, which contains onion."
+  },
+  {
+   "id": "f-hooves",
+   "kind": "food",
+   "cat": "Food & treats",
+   "title": "Hooves",
+   "verdict": "never",
+   "tags": [
+    "hoof",
+    "hooves",
+    "cow",
+    "pig",
+    "chew",
+    "fracture",
+    "splinter"
+   ],
+   "line": "Never.",
+   "why": "Same fracture risk as antler, plus they split into sharp curved shards that lodge across the palate or perforate the gut."
+  },
+  {
+   "id": "f-icecubes",
+   "kind": "food",
+   "cat": "Food & treats",
+   "title": "Ice cubes",
+   "verdict": "caution",
+   "tags": [
+    "ice",
+    "ice cube",
+    "cold",
+    "teething",
+    "water"
+   ],
+   "line": "Fine, with a caveat, and not worth arguing about.",
+   "prep": "Crushed ice or shavings are the safer version.",
+   "why": "The claim that ice cracks teeth is repeated everywhere with almost no evidence behind it. Ice does fail the thumbnail test, but it shatters rather than resisting."
+  },
+  {
+   "id": "f-kong",
+   "kind": "food",
+   "cat": "Food & treats",
+   "title": "Kong Puppy (stuffable rubber)",
+   "verdict": "yes",
+   "tags": [
+    "kong",
+    "chew",
+    "toy",
+    "teething",
+    "enrichment",
+    "crate",
+    "stuffed",
+    "frozen",
+    "puzzle"
+   ],
+   "line": "The single best thing you can buy her right now.",
+   "amount": "Size Small or Extra Small.",
+   "prep": "Get the PUPPY Kong, the blue or pink one, not the red Classic. The puppy rubber is softer and made for 2 to 9 month old mouths.",
+   "why": "Passes the thumbnail test, no fracture risk, nothing to swallow. Stuff it with her own soaked kibble mash and freeze it: that is a 20 minute enrichment activity, a teething soother and a crate-training tool, all funded from her measured ration rather than from her treat budget. Check it regularly and bin it if pieces come off."
+  },
+  {
+   "id": "f-leftovers",
+   "kind": "food",
+   "cat": "Food & treats",
+   "title": "Seasoned human food and leftovers",
+   "verdict": "never",
+   "tags": [
+    "leftovers",
+    "takeaway",
+    "pizza",
+    "gravy",
+    "stock",
+    "broth",
+    "soup",
+    "rotisserie",
+    "hummus",
+    "seasoning",
+    "table scraps",
+    "human food"
+   ],
+   "line": "The realistic poisoning risk in this flat is not a raw onion. It is your dinner.",
+   "prep": "Onion and garlic powder are in almost all savoury leftovers: gravy, stock, soup, pizza, Chinese takeaway, rotisserie chicken skin and rub, hummus, most commercial broths, baby food.",
+   "why": "People check for chocolate and never check for garlic powder, and it is in nearly everything savoury."
+  },
+  {
+   "id": "f-macadamia",
+   "kind": "food",
+   "cat": "Food & treats",
+   "title": "Macadamia nuts",
+   "verdict": "never",
+   "tags": [
+    "macadamia",
+    "nut",
+    "nuts",
+    "toxic",
+    "weakness",
+    "legs",
+    "hind"
+   ],
+   "line": "A very low threshold. Roughly two to six nuts is enough for her.",
+   "amount": "Signs documented from 0.7 g per kg. A single nut weighs 2 to 3 g.",
+   "prep": "They usually arrive inside chocolate or cookies, so it tends to be a double exposure.",
+   "why": "Mechanism unknown. Usually resolves in 24 to 48 hours, but the presentation is frightening.",
+   "signs": "Hind legs give way, unable to stand, tremors, vomiting, fever. Within 12 hours."
+  },
+  {
+   "id": "f-mould",
+   "kind": "food",
+   "cat": "Food & treats",
+   "title": "Mouldy food and compost",
+   "verdict": "never",
+   "tags": [
+    "mould",
+    "mold",
+    "mouldy",
+    "moldy",
+    "compost",
+    "bin",
+    "rubbish",
+    "trash",
+    "tremor"
+   ],
+   "line": "Small amounts are enough.",
+   "prep": "Bin lid shut. This includes mouldy bread, cheese and nuts.",
+   "why": "Tremorgenic mycotoxins.",
+   "signs": "Tremors and seizures."
+  },
+  {
+   "id": "f-mushrooms",
+   "kind": "food",
+   "cat": "Food & treats",
+   "title": "Wild mushrooms",
+   "verdict": "never",
+   "tags": [
+    "mushroom",
+    "mushrooms",
+    "fungus",
+    "park",
+    "tree pit",
+    "toxic",
+    "liver"
+   ],
+   "line": "Never let her mouth a mushroom, at any amount.",
+   "prep": "They come up in tree pits and park grass after rain, which is exactly where she sniffs.",
+   "why": "Some Amanita species cause fatal liver failure, and you cannot identify them on sight."
+  },
+  {
+   "id": "f-nutmeg",
+   "kind": "food",
+   "cat": "Food & treats",
+   "title": "Nutmeg",
+   "verdict": "never",
+   "tags": [
+    "nutmeg",
+    "spice",
+    "cinnamon",
+    "pie",
+    "pumpkin pie"
+   ],
+   "line": "Large amounts only. A dusting on pie is not a poisoning; eating the jar is.",
+   "why": "Honest note: the doses quoted online are extrapolated from human toxicology, not dog studies. Cinnamon in cooking amounts is not toxic either. Both are still off-limits now as unnecessary novelty, and the pie itself is a bigger problem for sugar and fat.",
+   "signs": "Disorientation, racing heart, abdominal pain, possible seizures. Onset 3 to 6 hours, can last 48."
+  },
+  {
+   "id": "f-nuts",
+   "kind": "food",
+   "cat": "Food & treats",
+   "title": "Whole nuts of any kind",
+   "verdict": "never",
+   "tags": [
+    "nut",
+    "nuts",
+    "walnut",
+    "almond",
+    "pecan",
+    "cashew",
+    "pistachio",
+    "choking",
+    "fat"
+   ],
+   "line": "Not recommended at any age.",
+   "prep": "Nut butters, xylitol-checked, are the safe form.",
+   "why": "Choking size, very high fat, usually salted. Macadamia is outright toxic. Mouldy walnuts carry tremorgenic mycotoxins."
+  },
+  {
+   "id": "f-nylon",
+   "kind": "food",
+   "cat": "Food & treats",
+   "title": "Nylon and hard plastic chews",
+   "verdict": "never",
+   "tags": [
+    "nylabone",
+    "nylon",
+    "plastic",
+    "chew",
+    "shard",
+    "xray",
+    "x-ray"
+   ],
+   "line": "No at this age, and hard grades never.",
+   "prep": "Only the softest puppy grades, supervised, binned at the first sign of chunking.",
+   "why": "Two hazards. Hard grades fracture teeth. And swallowed shards do not show up on a plain X-ray, which makes an obstruction much harder to diagnose."
+  },
+  {
+   "id": "f-onion",
+   "kind": "food",
+   "cat": "Food & treats",
+   "title": "Onion, garlic, leek, chive, shallot",
+   "verdict": "never",
+   "tags": [
+    "onion",
+    "garlic",
+    "leek",
+    "chive",
+    "shallot",
+    "allium",
+    "powder",
+    "seasoning",
+    "anaemia",
+    "toxic"
+   ],
+   "line": "Never, and it builds up. Powders are worse than fresh.",
+   "amount": "Garlic is three to five times more toxic than onion by weight.",
+   "prep": "Cooking, drying and powdering do not destroy it. This is why every cooked-food entry here insists on plain and unseasoned.",
+   "why": "Destroys red blood cells. The catch is the timing: she can look completely fine for several days and then become anaemic.",
+   "signs": "Days later: weakness, pale gums, dark urine, jaundice, collapse. Do not assume she got away with it because day one was fine."
+  },
+  {
+   "id": "f-other-veg",
+   "kind": "food",
+   "cat": "Food & treats",
+   "title": "Other safe vegetables and fruit",
+   "verdict": "yes",
+   "tags": [
+    "zucchini",
+    "courgette",
+    "squash",
+    "butternut",
+    "spinach",
+    "strawberry",
+    "pear",
+    "honeydew",
+    "popcorn",
+    "vegetable"
+   ],
+   "line": "Also fine now, same rules: plain, pea-sized, one new thing at a time.",
+   "amount": "Boiled courgette three quarters of a cup 28 kcal. Baked butternut squash quarter cup 21 kcal. Boiled spinach half a cup 21 kcal. One strawberry 4 kcal. Raw pear, seeds out. Honeydew.",
+   "prep": "Plain air-popped popcorn is fine by calories but skip it at this age, because unpopped kernels are a choking risk.",
+   "why": "Skip spinach if she ever has urinary problems, because of the oxalates. Applesauce, honey and marshmallows are just sugar for a growing puppy and are not worth it."
+  },
+  {
+   "id": "f-peanutbutter",
+   "kind": "food",
+   "cat": "Food & treats",
+   "title": "Peanut butter",
+   "verdict": "caution",
+   "tags": [
+    "peanut butter",
+    "peanut",
+    "kong",
+    "xylitol",
+    "label",
+    "pills"
+   ],
+   "line": "Yes, AFTER you read the label. Every jar, every time.",
+   "amount": "A teaspoon is about 30 kcal, which is a third of her entire daily treat budget.",
+   "prep": "Check for xylitol or birch sugar on every single jar. Unsalted, unsweetened, ideally 100 percent peanuts.",
+   "why": "Best used as a thin smear inside a Kong, not spooned. A pea-sized amount is plenty. Peanut butter is also the standard way people hide pills, which is exactly why a xylitol jar in the cupboard is unusually dangerous."
+  },
+  {
+   "id": "f-pumpkin",
+   "kind": "food",
+   "cat": "Food & treats",
+   "title": "Plain pumpkin puree",
+   "verdict": "yes",
+   "tags": [
+    "pumpkin",
+    "fibre",
+    "fiber",
+    "stool",
+    "diarrhoea",
+    "diarrhea",
+    "kong"
+   ],
+   "line": "Yes, capped at a tablespoon a day.",
+   "amount": "A teaspoon is about 2 kcal, a tablespoon about 5.",
+   "prep": "Must be 100 percent pumpkin puree, NOT pumpkin pie filling. Pie filling has sugar, nutmeg, cinnamon and sometimes xylitol.",
+   "why": "The claim that it fixes loose stool is plausible but barely studied. More importantly: do not use it to mask diarrhoea during a food transition. You need to see her real stool."
+  },
+  {
+   "id": "f-ratbait",
+   "kind": "food",
+   "cat": "Food & treats",
+   "title": "Rat bait and rodenticide",
+   "verdict": "never",
+   "tags": [
+    "rat",
+    "bait",
+    "rodenticide",
+    "poison",
+    "tree pit",
+    "basement",
+    "bin",
+    "emergency",
+    "bleeding"
+   ],
+   "line": "Emergency, and the timing is deceptive.",
+   "prep": "NYC-specific: bait stations sit in tree pits, basements and behind bins all over the city. Look before she sniffs.",
+   "why": "The anticoagulant types cause internal bleeding three to five days later. She can seem completely normal in between.",
+   "signs": "Delayed: pale gums, weakness, bruising, breathlessness. Do not wait for signs. Call immediately after any suspected contact."
+  },
+  {
+   "id": "f-raw",
+   "kind": "food",
+   "cat": "Food & treats",
+   "title": "Raw meat, raw egg, raw fish",
+   "verdict": "never",
+   "tags": [
+    "raw",
+    "raw meat",
+    "raw egg",
+    "raw fish",
+    "salmonella",
+    "bacteria",
+    "barf",
+    "raw diet"
+   ],
+   "line": "Not while she is 10 weeks old with an incomplete vaccine series.",
+   "prep": "Her gently cooked food IS cooked. This entry is about extras.",
+   "why": "Salmonella, Listeria and Campylobacter, which are a risk to her and to the three people handling her. Raw egg white also binds biotin."
+  },
+  {
+   "id": "f-raw-bones",
+   "kind": "food",
+   "cat": "Food & treats",
+   "title": "Raw and marrow bones",
+   "verdict": "never",
+   "tags": [
+    "bone",
+    "bones",
+    "raw",
+    "marrow",
+    "recreational",
+    "tooth",
+    "fracture",
+    "carnassial"
+   ],
+   "line": "The honest recommendation is no, at any age.",
+   "why": "Sources disagree. Veterinary dentists and the FDA advise against all bones: slab fracture of the upper carnassial is the classic injury, plus marrow bones getting stuck around the lower jaw, plus Salmonella. Raw-feeding advocates argue soft raw bones are fine under supervision. There is no controlled trial either way. The fracture risk is documented; the claimed dental benefit is not. With an incompletely vaccinated puppy and three handlers of different experience, no is the right call."
+  },
+  {
+   "id": "f-rawhide",
+   "kind": "food",
+   "cat": "Food & treats",
+   "title": "Rawhide",
+   "verdict": "never",
+   "tags": [
+    "rawhide",
+    "chew",
+    "swell",
+    "obstruction",
+    "choking"
+   ],
+   "line": "No now, and marginal at any age.",
+   "why": "Swallowed chunks swell up to about four times their size in the stomach. Plus choking on the softened end, bacterial contamination, and chemical processing residues. Some vets accept it for dogs that shred rather than gulp, correctly sized and supervised. A 10 week old puppy is a gulper by definition. The AKC openly acknowledges that vets are split on this one."
+  },
+  {
+   "id": "f-salt",
+   "kind": "food",
+   "cat": "Food & treats",
+   "title": "Salt, salt dough, play dough",
+   "verdict": "never",
+   "tags": [
+    "salt",
+    "salty",
+    "play dough",
+    "playdough",
+    "ornament",
+    "sodium",
+    "seizure"
+   ],
+   "line": "Including craft salt dough and children play dough.",
+   "why": "Too much sodium causes vomiting, tremors and seizures."
+  },
+  {
+   "id": "f-sticks",
+   "kind": "food",
+   "cat": "Food & treats",
+   "title": "Sticks from the park",
+   "verdict": "never",
+   "tags": [
+    "stick",
+    "sticks",
+    "park",
+    "wood",
+    "splinter",
+    "tree pit",
+    "fetch"
+   ],
+   "line": "No.",
+   "why": "Penetrating injuries to the mouth and throat, plus splinters. And NYC tree pits are treated with rodenticide."
+  },
+  {
+   "id": "f-stones",
+   "kind": "food",
+   "cat": "Food & treats",
+   "title": "Peach, plum, cherry and avocado stones",
+   "verdict": "never",
+   "tags": [
+    "stone",
+    "pit",
+    "peach",
+    "plum",
+    "cherry",
+    "apricot",
+    "nectarine",
+    "mango",
+    "obstruction",
+    "cyanide"
+   ],
+   "line": "Never. Obstruction is the real risk, not cyanide.",
+   "prep": "Never leave stone fruit waste accessible. The flesh with the stone removed is fine in small amounts from a few months.",
+   "why": "Exactly the right size and hardness to lodge in a puppy intestine, and hard enough to fracture teeth. The cyanogenic compounds in the kernel are a secondary and far less likely concern."
+  },
+  {
+   "id": "f-tennisball",
+   "kind": "food",
+   "cat": "Food & treats",
+   "title": "Tennis balls",
+   "verdict": "caution",
+   "tags": [
+    "tennis",
+    "ball",
+    "fetch",
+    "toy",
+    "fuzz",
+    "teeth"
+   ],
+   "line": "Supervised only, and correctly sized.",
+   "prep": "Use a rubber ball too large to fit fully in her mouth.",
+   "why": "The fuzz is abrasive and wears teeth down over years, and a compressed ball can spring open in the throat."
+  },
+  {
+   "id": "f-watermelon",
+   "kind": "food",
+   "cat": "Food & treats",
+   "title": "Watermelon",
+   "verdict": "yes",
+   "tags": [
+    "watermelon",
+    "melon",
+    "fruit",
+    "summer",
+    "teething"
+   ],
+   "line": "Yes, deseeded and without rind.",
+   "amount": "Half a cup diced is about 23 kcal.",
+   "prep": "Seeds and rind removed. The rind is an obstruction risk.",
+   "why": "Frozen chunks are good for teething."
+  },
+  {
+   "id": "f-xylitol",
+   "kind": "food",
+   "cat": "Food & treats",
+   "title": "Xylitol / birch sugar",
+   "verdict": "never",
+   "tags": [
+    "xylitol",
+    "birch",
+    "sugar free",
+    "sugarfree",
+    "gum",
+    "peanut butter",
+    "sweetener",
+    "toxic",
+    "poison",
+    "emergency"
+   ],
+   "line": "The most dangerous thing on this list. An emergency at a tiny dose.",
+   "amount": "About 640 mg is enough to crash her blood sugar. One piece of sugar-free gum can hold 300 mg to 1 g. One or two pieces is an emergency.",
+   "prep": "Read the ingredient panel of every peanut butter jar, every time, before it goes near a Kong.",
+   "why": "Causes a huge insulin release and profound low blood sugar that can last more than 24 hours. Higher doses destroy the liver 24 to 48 hours later. Also hides in: sugar-free mints and baked goods, chewable vitamins, melatonin gummies, toothpaste, mouthwash, nasal spray, protein bars, some liquid medicines.",
+   "signs": "Vomiting, lethargy, wobbliness, collapse, seizures. Can start within 30 minutes."
+  },
+  {
+   "id": "f-yak",
+   "kind": "food",
+   "cat": "Food & treats",
+   "title": "Yak and Himalayan cheese chews",
+   "verdict": "later",
+   "tags": [
+    "yak",
+    "himalayan",
+    "cheese chew",
+    "chew",
+    "hard",
+    "tooth",
+    "nub"
+   ],
+   "line": "Not now, and honestly still marginal later.",
+   "prep": "If you use one at all, puff the end in the microwave and let it cool completely first.",
+   "why": "Very hard when dry and usually fails the thumbnail test, so tooth fracture is the risk. Also concentrated dairy and calorie-dense. The nub left at the end is a classic obstruction object.",
+   "age": "Not before 6 months."
+  },
+  {
+   "id": "f-yoghurt",
+   "kind": "food",
+   "cat": "Food & treats",
+   "title": "Plain yoghurt",
+   "verdict": "caution",
+   "tags": [
+    "yoghurt",
+    "yogurt",
+    "dairy",
+    "probiotic",
+    "lactose",
+    "stool"
+   ],
+   "line": "Technically fine, but wait. Not a good idea this month.",
+   "amount": "A teaspoon is about 3 kcal. Cap at a teaspoon a day if you use it at all.",
+   "prep": "Plain, whole-milk, unsweetened. Check for xylitol in anything labelled light or sugar-free.",
+   "why": "Dogs have limited lactase and dairy is a common cause of loose stool. Right now, with a food transition and a recent Panacur course, added dairy mostly muddies your stool signal. Realistically wait until 4 to 5 months. The probiotic claim for supermarket yoghurt is weakly evidenced; a veterinary probiotic is the better tool if one is actually needed."
+  },
+  {
+   "id": "v-belly",
+   "kind": "vet",
+   "title": "Her belly is swollen, hard or painful",
+   "tags": [
+    "belly",
+    "bloat",
+    "stomach",
+    "swollen",
+    "distended",
+    "hard",
+    "painful",
+    "abdomen",
+    "tummy"
+   ],
+   "lead": "Almost everything in this entry is an emergency. Normal is soft and painless. Hard or painful is never normal.",
+   "now": [
+    "Swollen belly plus repeated retching that produces nothing. Do not wait.",
+    "A belly that is hard, tight or drum-like",
+    "Any swelling that has appeared or grown over hours",
+    "She cries, growls, snaps or tenses when her belly is touched or she is lifted",
+    "Restless, pacing, cannot lie down, drooling heavily, or front end down and rear end up",
+    "Belly swelling with pale gums, weakness or collapse",
+    "Any belly swelling when she may have swallowed something"
+   ],
+   "today": [
+    "A belly rounder than usual but soft, she is bright, eating, playing and not painful. Call today and take a photo from above and from the side. Puppies with worms get pot-bellied and she is only a week past Panacur.",
+    "Any belly change plus a change in stool"
+   ],
+   "mention": [
+    "Round only in the half hour after a full meal, flattening afterwards, in a thriving puppy"
+   ],
+   "normal": [
+    "A soft full rounded belly right after a big meal, comfortable to touch, settling within an hour."
+   ],
+   "note": "Classic bloat is a disease of large deep-chested middle-aged dogs, so a ten-week-old golden is not the typical case. That does not lower the urgency at all. In a puppy a distended painful belly more often means an obstruction, a heavy worm burden, or organ disease, and you cannot tell which at home.",
+   "cat": "When to call the vet"
+  },
+  {
+   "id": "v-breathing",
+   "kind": "vet",
+   "title": "Coughing, or noisy or heavy breathing",
+   "tags": [
+    "cough",
+    "coughing",
+    "breathing",
+    "honking",
+    "gagging",
+    "wheeze",
+    "choking",
+    "collar",
+    "throat",
+    "snoring"
+   ],
+   "lead": "Count her breaths first. Watch her chest for 15 seconds and multiply by four. Normal at rest is 12 to 30 a minute.",
+   "now": [
+    "Gums, tongue or muzzle look blue, grey or purple",
+    "Breathing with her neck stretched out, elbows pushed away from her body, or her belly heaving",
+    "Rate well above 30 at rest, or you can hear real effort",
+    "Coughing up blood, or pink froth",
+    "She collapses or goes weak during or after coughing",
+    "She coughed suddenly while eating or after grabbing something and cannot settle. Assume it is in her airway."
+   ],
+   "today": [
+    "Any new cough at all in an under-vaccinated puppy, even if she seems happy otherwise",
+    "Cough plus runny nose or eyes, sneezing, less appetite, low energy",
+    "Any cough lasting more than 24 hours",
+    "Coughing or noisy breathing that started after leash pressure on her neck and has continued since"
+   ],
+   "mention": [
+    "One or two isolated coughs after drinking fast or a burst of play, with nothing since"
+   ],
+   "normal": [
+    "Reverse sneezing is not coughing. She stands still, neck out, head back, and makes loud rapid snorting inhalations. It sounds alarming, lasts seconds to a couple of minutes, and she is completely normal afterwards."
+   ],
+   "say": "If it followed leash pressure, lead with that: I pulled hard on her collar and she sounded like she could not breathe, and since then I am hearing this. The vet needs the mechanism, not just the symptom.",
+   "note": "The classic honking cough is usually a small-breed problem and would be unusual in a golden. In her it is more likely infection or collar irritation. Those need a vet to tell apart and you should not try.",
+   "cat": "When to call the vet"
+  },
+  {
+   "id": "v-diarrhoea",
+   "kind": "vet",
+   "title": "Diarrhoea, or blood in her stool",
+   "tags": [
+    "diarrhoea",
+    "diarrhea",
+    "loose",
+    "runny",
+    "blood",
+    "stool",
+    "poop",
+    "mucus",
+    "black"
+   ],
+   "lead": "Two kinds of blood and they mean different things, but both mean call. Fresh red is bleeding low down. Black tarry sticky stool is partially digested blood from higher up, and people take it less seriously because it does not look like blood. Take it more seriously.",
+   "now": [
+    "Bloody diarrhoea of any kind, at any volume, at any hour",
+    "Black tarry stool",
+    "Diarrhoea with a distinctly foul rotten smell",
+    "Three or more loose stools within 12 hours, or watery diarrhoea",
+    "Diarrhoea plus vomiting",
+    "Diarrhoea plus lethargy, or refusing food, or pale gums",
+    "Diarrhoea plus a painful or swollen belly"
+   ],
+   "today": [
+    "Any diarrhoea at all, even one soft stool, in a bright puppy. She eats faeces off pavements, which is a direct route to giardia and coccidia, and she has just finished Panacur.",
+    "Diarrhoea lasting more than 12 hours",
+    "Mucus or jelly on otherwise formed stool",
+    "Visible worms"
+   ],
+   "mention": [
+    "One single soft stool followed by normal ones, no other signs"
+   ],
+   "normal": [
+    "A single softer-than-usual stool after a food change or a stressful day, with the next one normal and the puppy completely well. Photograph it. Anything beyond one stool is not this."
+   ],
+   "note": "The 48 to 72 hour watch-and-wait advice on most websites is written for adult dogs. Use hours for her.",
+   "cat": "When to call the vet"
+  },
+  {
+   "id": "v-gums",
+   "kind": "vet",
+   "title": "How to check her gums, and what the colours mean",
+   "tags": [
+    "gums",
+    "pale",
+    "white",
+    "blue",
+    "yellow",
+    "capillary",
+    "refill",
+    "circulation",
+    "shock",
+    "check"
+   ],
+   "lead": "Twenty seconds, and it is the single most useful check you can do when something feels wrong.",
+   "checks": [
+    "Lift her upper lip and look at the gum above a canine tooth. Normal is pink and moist.",
+    "Press a fingertip firmly on the gum for one second, then lift. The spot goes white.",
+    "Count: one thousand and one, one thousand and two. Pink should return before you finish. Normal refill is under 2 seconds.",
+    "Note whether the gum feels wet or dry and tacky. Tacky is a dehydration sign.",
+    "If her gums are naturally black in patches, use a pink area, or check inside the lower eyelid."
+   ],
+   "now": [
+    "White or very pale gums",
+    "Refill longer than 2 seconds, or the white spot barely refilling",
+    "Blue, purple or grey gums or tongue. That is oxygen failure.",
+    "Yellow gums, or yellow in the whites of her eyes",
+    "Brick red or muddy gums",
+    "Pale gums with weakness, fast breathing, cold paws or ears, shivering or collapse",
+    "Pale gums with bleeding anywhere, or pinpoint red spots or bruising"
+   ],
+   "today": [],
+   "mention": [],
+   "normal": [],
+   "note": "There is no wait-and-see version of abnormal gum colour. Pale means blood loss or shock, blue means oxygen, yellow means liver or red cell destruction. If you check and are genuinely unsure whether they look right, that uncertainty is itself the reason to call. On the way in, keep her warm, quiet and still.",
+   "cat": "When to call the vet"
+  },
+  {
+   "id": "v-hard-stool",
+   "kind": "vet",
+   "title": "Very hard stool, dry pellets",
+   "tags": [
+    "hard stool",
+    "pellets",
+    "constipation",
+    "dry",
+    "stool 1",
+    "score 1"
+   ],
+   "lead": "Separate hard dry pellets that need visible effort and leave nothing behind when you pick them up are a score 1. That is a recognised dehydration sign, and it is also what a partial obstruction can look like.",
+   "now": [
+    "Hard stool or no stool plus vomiting",
+    "Plus a swollen, hard or painful belly",
+    "Straining hard and producing nothing",
+    "Plus refusing food or lethargy",
+    "Blood on or around the stool"
+   ],
+   "today": [
+    "Two or more score 1 stools in a day. Call today.",
+    "No bowel movement at all in 24 hours. Most websites say 48 to 72 hours; that is an adult figure. A ten-week-old on several meals a day normally goes several times daily.",
+    "Repeated visible effort",
+    "Hard stool alongside drinking less than usual"
+   ],
+   "mention": [
+    "One firmer-than-usual stool followed by normal ones",
+    "Any stool change that lined up with the end of her Panacur course"
+   ],
+   "normal": [
+    "Firm, well formed, holds its shape, leaves a slight mark when picked up. That is a score 2 and it is what you want. Score 1 is not."
+   ],
+   "note": "Do not add oil, pumpkin, milk or a stool softener to get things moving. If an object is involved, softening the stool does not solve it and can delay the diagnosis.",
+   "cat": "When to call the vet"
+  },
+  {
+   "id": "v-lethargy",
+   "kind": "vet",
+   "title": "She seems flat, or is she just sleeping?",
+   "tags": [
+    "lethargy",
+    "flat",
+    "tired",
+    "sleeping",
+    "listless",
+    "wont play",
+    "dull",
+    "sleepy"
+   ],
+   "lead": "Total hours asleep is a bad test. Puppies sleep a great deal in short blocks. Use quality instead: four questions, when she is awake or when you wake her.",
+   "checks": [
+    "Does she wake up normally? Say her name at normal volume. Normal: stirs, lifts her head, opens her eyes, orients to you. Abnormal: you have to touch or shake her, or her head lifts and drops.",
+    "Does she stand normally? Normal: stands, stretches, shakes off. Abnormal: will not stand, sways, staggers, knuckles a paw, or lies straight back down.",
+    "Does she still care about good things? Offer food, her favourite toy, the door. Abnormal: no reaction to food, or looks at it and turns away.",
+    "Is she bright between naps? Lethargy is dull while awake. Sleep is asleep a lot but sparkling when up."
+   ],
+   "now": [
+    "You cannot rouse her, or rousing takes real effort, or she sinks straight back",
+    "Awake but will not or cannot stand, or is wobbly or falling over",
+    "Flat plus pale gums, refill over 2 seconds, or cold ears and paws",
+    "Flat plus any vomiting or diarrhoea",
+    "Flat plus refusing food or water",
+    "Hiding, unusually still, reluctant to be touched, yelps or snaps when handled. That is pain, not tiredness.",
+    "Flat plus trembling plus cold"
+   ],
+   "today": [
+    "Noticeably duller than herself for more than 12 hours, even if she still gets up and eats",
+    "Sleeping through meals she would normally wake for",
+    "Play sessions much shorter than two days ago and not bouncing back"
+   ],
+   "mention": [
+    "A single unusually sleepy day after a big new experience, with normal energy next morning"
+   ],
+   "normal": [
+    "A lot of sleep in short blocks with bright alert windows in between, normal appetite, normal stools, normal play. Also crashing hard right after a walk or a training session. Overtired puppies get manic and bitey before they crash; that is normal too."
+   ],
+   "cat": "When to call the vet"
+  },
+  {
+   "id": "v-limping",
+   "kind": "vet",
+   "title": "She is limping",
+   "tags": [
+    "limping",
+    "limp",
+    "leg",
+    "lame",
+    "paw",
+    "hopping",
+    "sore",
+    "hurt"
+   ],
+   "now": [
+    "She will not put any weight on it at all, or will not stand",
+    "The limb hangs oddly, looks bent or rotated, or the paw drags",
+    "It started right after a fall, a jump off furniture, being stepped on, or a scuffle",
+    "She is crying, panting hard, trembling, or will not let you near it",
+    "Visible swelling, an open wound, or bleeding",
+    "More than one leg, or wobbly on all of them",
+    "A broken nail or a pad cut that keeps bleeding",
+    "Limping plus flat, off food, hot ears"
+   ],
+   "today": [
+    "Any limp still there after 12 hours, or that returns after rest",
+    "A limp with no obvious cause. Growing joints are a real concern in a large-breed puppy.",
+    "A limp that shifts between legs",
+    "She flinches when a particular leg or joint is handled",
+    "Licking obsessively at one paw",
+    "Something stuck in a paw. Pavements carry glass, salt and metal. Do not dig it out yourself."
+   ],
+   "mention": [
+    "A brief limp lasting seconds after an awkward landing, gone within minutes, normal running since"
+   ],
+   "normal": [
+    "Puppies are clumsy, skid on smooth floors and hop briefly after a bad landing. Normal is seconds, then completely gone."
+   ],
+   "note": "Never give her a human painkiller. Ibuprofen, paracetamol, naproxen and aspirin are poisonous to dogs and can kill a puppy. Do not massage, stretch, bandage or splint it. Keep her quiet, carry her out to toilet, and call.",
+   "cat": "When to call the vet"
+  },
+  {
+   "id": "v-not-drinking",
+   "kind": "vet",
+   "title": "She will not drink",
+   "tags": [
+    "not drinking",
+    "water",
+    "thirsty",
+    "dehydrated",
+    "dehydration",
+    "wont drink"
+   ],
+   "lead": "Not drinking is more urgent than not eating, and much more urgent when anything is coming out the other end. A puppy has very little reserve.",
+   "now": [
+    "Not drinking and vomiting or having diarrhoea. This combination never gets a wait and see.",
+    "Not drinking for 6 hours or more with any other symptom",
+    "Gums dry, tacky or pale, or refill over 2 seconds",
+    "She drinks and immediately vomits it back",
+    "Weak, wobbly or hard to rouse",
+    "Skin over her shoulders, gently lifted, stays tented instead of snapping back"
+   ],
+   "today": [
+    "12 hours with no water intake you have seen, in an otherwise bright puppy",
+    "Drinking much less than normal for a full day",
+    "Drinking much more than normal, or emptying the bowl repeatedly"
+   ],
+   "mention": [
+    "A day where she drank a bit less after a quiet cool day, then went back to normal"
+   ],
+   "normal": [
+    "Drinking less on a day she had wet food, more after play. Puppies drink in short scattered bursts; the daily total matters more than any one visit to the bowl."
+   ],
+   "note": "Do not syringe or force water into her.",
+   "cat": "When to call the vet"
+  },
+  {
+   "id": "v-not-eating",
+   "kind": "vet",
+   "title": "She will not eat",
+   "tags": [
+    "not eating",
+    "appetite",
+    "refusing food",
+    "off food",
+    "hungry",
+    "meal",
+    "wont eat"
+   ],
+   "lead": "The advice that a dog can skip a day of food is written for adults and is wrong for her. Losing her appetite is the first sign of parvo, before any vomiting. In an incompletely vaccinated puppy, refusing food is a parvo screen, not a fussiness question.",
+   "now": [
+    "Refusing food and wobbly, weak, trembling, cold, glassy, collapsed, or hard to wake",
+    "Refusing food and vomiting, or diarrhoea, or a foul smell to her stool",
+    "Refusing food and pale gums, or refill over 2 seconds",
+    "Refusing food and refusing water",
+    "12 hours with nothing swallowed at all, whatever else she looks like",
+    "Refusing food when she may have swallowed something"
+   ],
+   "today": [
+    "Two meals in a row refused, even if she is bright and playing",
+    "Eating far less than usual for a whole day",
+    "Picking at food alongside hard pellet stools"
+   ],
+   "mention": [
+    "One skipped meal, next one eaten normally, bright and normal-stooled since",
+    "She has gone off one particular food but eats everything else keenly"
+   ],
+   "normal": [
+    "Eating less on a hot day or after a very big meal, provided she takes the next meal at full appetite and is otherwise entirely normal."
+   ],
+   "note": "Do not tempt her with human food, add things to the bowl, or hand-feed as a fix before speaking to a vet. If she will not eat, the vet needs to know exactly that, unaltered.",
+   "cat": "When to call the vet"
+  },
+  {
+   "id": "v-parvo",
+   "kind": "vet",
+   "title": "Parvovirus: the one that matters most",
+   "tags": [
+    "parvo",
+    "parvovirus",
+    "vomiting",
+    "diarrhoea",
+    "bloody",
+    "lethargy",
+    "emergency",
+    "vaccine"
+   ],
+   "lead": "Her DAPP series is incomplete. Protection comes at the final dose, sixteen to twenty weeks. She walks city pavements and eats things off them. Treat her as unprotected. This is why every threshold in this guide is shorter than what you will read online.",
+   "now": [
+    "Any two of these together: flat when awake, refusing food, vomiting, diarrhoea, refusing water",
+    "Bloody diarrhoea, at any volume, at any hour",
+    "Diarrhoea with a foul rotten smell",
+    "Diarrhoea and vomiting together",
+    "Vomiting straight after drinking",
+    "Pale gums, refill over 2 seconds, cold ears and paws, collapse"
+   ],
+   "today": [
+    "One episode of anything above in a puppy who otherwise seems bright. One vomit. One soft stool. One skipped meal.",
+    "She has been somewhere with unknown or unvaccinated dogs and is even slightly off"
+   ],
+   "mention": [
+    "Where she has been walking and what she has picked up off the ground"
+   ],
+   "normal": [],
+   "say": "Say this word for word on the phone: she is ten weeks old and her DAPP series is incomplete, her last dose was 15 August. Then ask: could this be parvo, and where should I bring her in. They will often want her kept out of the waiting room. Carry her, do not let her walk or sniff on the way in.",
+   "note": "The sequence is lethargy first, then loss of appetite, then vomiting, then diarrhoea. The early hours look like she is a bit quiet and did not finish breakfast. That is the moment to call, and the moment treatment works best.",
+   "cat": "When to call the vet"
+  },
+  {
+   "id": "v-poison",
+   "kind": "vet",
+   "title": "She ate something off the street, or something toxic",
+   "tags": [
+    "poison",
+    "toxic",
+    "ate",
+    "street",
+    "bait",
+    "chocolate",
+    "xylitol",
+    "medication",
+    "plant",
+    "rodent",
+    "aspca",
+    "poison control",
+    "phone",
+    "number",
+    "helpline",
+    "emergency number"
+   ],
+   "lead": "Call both the emergency vet and ASPCA Animal Poison Control. She eats things off pavements in a city with rodent bait, discarded medication and food waste.",
+   "now": [
+    "Any suspected medication, human or animal, prescription or over the counter, including painkillers, antidepressants, ADHD medication, vitamins, cannabis",
+    "Rodent bait, slug bait, antifreeze, cleaning products, anything with a hazard label",
+    "Anything with xylitol: sugar-free gum, sweets, some peanut butters",
+    "Chocolate, grapes, raisins, onions, garlic, macadamia nuts, alcohol",
+    "Drooling heavily, foaming, retching, staggering, trembling, twitching, seizing, unusually agitated or unusually flat after being outside",
+    "Sudden vomiting, diarrhoea or bleeding with no other explanation",
+    "She chewed an electrical cord, even if she seems fine",
+    "A plant or mushroom you cannot identify. Photograph it, bring a piece in a sealed bag."
+   ],
+   "today": [
+    "A small amount of something you believe is non-toxic and she is completely well. Call and describe it anyway.",
+    "She ate another dog's faeces and is well. That is an infection exposure and the vet should know."
+   ],
+   "mention": [
+    "The scavenging habit itself. What to do about a puppy who hoovers pavements is a real conversation, including leptospirosis, which is spread through rodent urine in puddles and is not part of her DAPP."
+   ],
+   "normal": [
+    "Grass eating alone, in a puppy who is otherwise entirely well and passing normal stools, is common and usually not sinister. Unless it comes with vomiting."
+   ],
+   "note": "Have ready: what it was, how much, how long ago, her weight and age, and what she is doing right now. Never make her vomit, never give milk or salt, never give anything by mouth to soak it up.",
+   "cat": "When to call the vet",
+   "say": "ASPCA Animal Poison Control (888) 426-4435, twenty-four hours, consultation fee around 95 dollars. Pet Poison Helpline (855) 764-7661. Call the poison line BEFORE you drive: they give you a case number and a treatment plan, so the ER can start work the moment you arrive instead of starting from zero."
+  },
+  {
+   "id": "v-seizure",
+   "kind": "vet",
+   "title": "Seizure or collapse",
+   "tags": [
+    "seizure",
+    "fit",
+    "collapse",
+    "convulsion",
+    "unconscious",
+    "twitching",
+    "paddling",
+    "fainted"
+   ],
+   "lead": "Every seizure or collapse in a puppy this age is an emergency call. Some are a drive-immediately.",
+   "now": [
+    "Any seizure at all. Phone the emergency vet the moment it stops. There is no wait and see for a first seizure.",
+    "A seizure lasting more than 5 minutes. Time it on your phone; in the moment they feel far longer than they are.",
+    "Two or more seizures in 24 hours, or back to back without full recovery between",
+    "Any collapse, even brief, even if she got up and seemed fine",
+    "Fainting during or after coughing, excitement or exercise",
+    "Collapse or seizure with pale or blue gums",
+    "She is unresponsive or you cannot wake her",
+    "Twitching, tremors, circling, pressing her head against a wall, sudden blindness",
+    "Off food and now weak, wobbly, trembling or collapsed"
+   ],
+   "today": [],
+   "mention": [],
+   "normal": [
+    "Puppies twitch, paddle and squeak in their sleep and wake normally when you say their name. If she wakes normally and is instantly herself, that was dreaming."
+   ],
+   "checks": [
+    "Do not put your hands or anything else in her mouth. Dogs do not swallow their tongues and you will be bitten.",
+    "Clear hard furniture and edges away. If she is on a sofa, get her safely to the floor.",
+    "Dim the lights, keep it quiet, do not crowd her.",
+    "Start a timer and note the time it began.",
+    "Film it if you can do so without getting in the way. A video is extremely useful to the vet.",
+    "Call while it is happening or the second it ends. Afterwards keep her warm and quiet and offer nothing to eat or drink until the vet says."
+   ],
+   "cat": "When to call the vet"
+  },
+  {
+   "id": "v-straining",
+   "kind": "vet",
+   "title": "She is straining and nothing is coming out",
+   "tags": [
+    "straining",
+    "cant poop",
+    "constipated",
+    "squatting",
+    "nothing",
+    "pushing",
+    "blocked"
+   ],
+   "lead": "This is the one where the honest answer is that you cannot tell what it is and neither can a phone. Straining with nothing produced can be constipation, a blockage, or colon inflammation after diarrhoea has emptied her out. They look identical from outside and have completely different urgency.",
+   "now": [
+    "Straining and nothing produced, plus any vomiting",
+    "Straining plus a swollen, hard or painful belly, or she snaps or yelps when her belly is touched or she is picked up",
+    "Straining and crying out",
+    "Straining repeatedly for more than 4 hours with nothing produced",
+    "Straining plus refusing food, or lethargy",
+    "Producing only blood or bloody mucus",
+    "Any straining at all after a suspected swallowed object",
+    "If you cannot tell whether it is stool or urine she is trying to pass, treat it as urinary and go now"
+   ],
+   "today": [
+    "She strains, produces a hard pellet or two with obvious effort, and repeats it",
+    "Straining episodes across a day in a puppy who is otherwise bright",
+    "Scooting or licking at her rear repeatedly"
+   ],
+   "mention": [
+    "One brief harder-than-usual effort that produced a normal stool and has not repeated"
+   ],
+   "normal": [
+    "Puppies circle, sniff and adjust for up to a minute before going, and may make two or three attempts on a walk. That is positioning. The difference is effort and result: normal is fuss then produce, abnormal is push hard and nothing."
+   ],
+   "note": "No enema, no laxative, no oil, nothing by mouth. An enema is a veterinary procedure and giving one to a puppy with an undiagnosed blockage can do serious harm.",
+   "cat": "When to call the vet"
+  },
+  {
+   "id": "v-swallowed",
+   "kind": "vet",
+   "title": "She swallowed something",
+   "tags": [
+    "swallowed",
+    "ate something",
+    "rock",
+    "sock",
+    "toy",
+    "obstruction",
+    "blockage",
+    "foreign body",
+    "stone",
+    "corn cob",
+    "bone",
+    "pit",
+    "choking",
+    "praying",
+    "aspca",
+    "poison control"
+   ],
+   "lead": "A blockage can compromise blood supply to the gut within hours, and a puppy with one can look completely normal for a day or two and then crash. A normal-looking puppy is not evidence that it passed. Only a vet and an x-ray can tell you that.",
+   "now": [
+    "Vomiting, diarrhoea, belly pain or tenderness, decreased appetite, straining or small amounts of stool, lethargy, or growling and biting when picked up or handled around the belly",
+    "Repeated vomiting, or vomiting that will not stop",
+    "Retching and bringing nothing up",
+    "The praying position: chest down on the floor, rump in the air. That is abdominal pain, not play.",
+    "Vomiting straight after drinking water",
+    "Swollen, hard or tense belly, or yelping when lifted",
+    "Something sharp, long and stringy, a battery, a magnet, or anything chemical",
+    "Choking, gagging, pawing at her mouth, heavy drooling, any trouble breathing",
+    "Something off the street when you do not know what it was. Call poison control as well."
+   ],
+   "today": [
+    "A small smooth non-sharp object and she is currently completely well. Still call. The vet decides whether to x-ray and what to watch for.",
+    "Well but no stool passed since",
+    "You are not sure whether she swallowed it or dropped it somewhere",
+    "She keeps picking up and eating non-food things on walks"
+   ],
+   "mention": [
+    "She mouths non-food things but you have never seen her swallow one"
+   ],
+   "normal": [],
+   "note": "Never make her vomit, never feed her bread to cushion it, never give oil or a laxative, never pull on anything protruding from either end. Some things do more damage coming back up, and pulling on string can cut the intestine.",
+   "cat": "When to call the vet",
+   "say": "ASPCA Animal Poison Control (888) 426-4435, twenty-four hours, consultation fee around 95 dollars. Pet Poison Helpline (855) 764-7661. Call the poison line BEFORE you drive: they give you a case number and a treatment plan, so the ER can start work the moment you arrive instead of starting from zero."
+  },
+  {
+   "id": "v-urination",
+   "kind": "vet",
+   "title": "She keeps squatting, or went again right after going outside",
+   "tags": [
+    "urination",
+    "peeing",
+    "squatting",
+    "straining",
+    "uti",
+    "bladder",
+    "blood in urine",
+    "frequent",
+    "again"
+   ],
+   "lead": "Frequent urination is expected at ten weeks. Frequent straining, and small volumes, are not.",
+   "now": [
+    "She strains to urinate and produces nothing, or only drops",
+    "No urine passed at all in 8 hours",
+    "Blood in the urine, or urine that is pink, red or brown",
+    "She cries or yelps while urinating",
+    "Straining plus vomiting, plus a painful belly, plus lethargy",
+    "You cannot tell whether it is urine or stool she is straining for. Treat it as urinary and go."
+   ],
+   "today": [
+    "She urinates outside and then squats again indoors within minutes, repeatedly. You cannot tell at home whether this is an infection, incomplete emptying, excitement, or incomplete housetraining, and those need a urine test to separate. Do not debug it yourself.",
+    "Many small squats producing a few drops each",
+    "A sudden break in housetraining in a puppy who had been getting reliable",
+    "Urine that smells strong or looks cloudy",
+    "Drinking and urinating much more than a few days ago",
+    "Licking at her rear far more than usual"
+   ],
+   "mention": [
+    "Normal-volume urination every one to two hours while awake with occasional accidents and no straining",
+    "Rolling over and dribbling when greeted or told off"
+   ],
+   "normal": [
+    "Frequent urination with good volume each time, no straining, no crying, clear pale yellow urine. That is a ten-week-old bladder, not a disease. Also excitement wees, and needing out within minutes of drinking or waking."
+   ],
+   "note": "If you can catch a urine sample naturally in a clean container, bring it. Never chase her with a dish.",
+   "cat": "When to call the vet"
+  },
+  {
+   "id": "v-vomiting",
+   "kind": "vet",
+   "title": "She is vomiting",
+   "tags": [
+    "vomit",
+    "vomiting",
+    "sick",
+    "threw up",
+    "throwing up",
+    "puking",
+    "retching",
+    "heaving"
+   ],
+   "lead": "Vomiting involves effort and belly contractions. Regurgitation is food simply falling out with no warning, usually right after eating. They are different and the vet needs to know which.",
+   "now": [
+    "Two or more vomits within 12 hours, or three in 24 hours",
+    "She vomits, drinks, then vomits again. That cycle is a hallmark of both parvo and a blockage, and she has risk factors for both. Do not wait for a third round.",
+    "Blood in the vomit, or material like coffee grounds",
+    "Retching or heaving repeatedly and producing nothing",
+    "Vomiting plus a swollen, hard or painful belly",
+    "Vomiting plus pale gums",
+    "Anything in the vomit that is not food: fabric, plastic, stone, leaves"
+   ],
+   "today": [
+    "One vomit. Yes, one. She is bright, it happened once, nothing else is wrong, and you still call today. This is the threshold that is different for her than for an adult dog.",
+    "Repeated regurgitation after meals",
+    "Bile, yellow foam, more than once"
+   ],
+   "mention": [
+    "A single episode days ago with entirely normal appetite, stools, energy and gums since"
+   ],
+   "normal": [],
+   "note": "Do not withhold food or water, do not give a bland diet, do not give anything for nausea. Whether she eats next is a vet's call. The withhold-food-and-feed-chicken-and-rice advice is written for adult dogs.",
+   "cat": "When to call the vet"
+  }
+ ],
+ "categories": [
+  "House training",
+  "Crate & sleep",
+  "Behaviour",
+  "Out & about",
+  "Home & care",
+  "Food & treats",
+  "When to call the vet"
+ ]
+}

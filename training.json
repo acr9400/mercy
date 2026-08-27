@@ -1,0 +1,2802 @@
+{
+ "version": 1,
+ "principles": [
+  {
+   "t": "Short and often beats long and once.",
+   "b": "Two minutes, three times a day. A 10 week old puppy has a working attention span measured in seconds, and a session that runs past it teaches her that training is where she gets bored and frustrated. Stop while she still wants more. That is the single most common mistake and it costs you nothing to avoid."
+  },
+  {
+   "t": "Pay from her ration, not on top of it.",
+   "b": "Measure the day's food into one container. Train out of it. Sixty rewards a day costs her nothing against her calorie budget, cannot unbalance the minerals a large-breed puppy needs, and cannot cause a food reaction. Save chicken and cheese for the two things that actually need them: recall, and leave it on a pavement."
+  },
+  {
+   "t": "Mark the instant it happens.",
+   "b": "The reward tells her the behaviour was worth doing. The marker tells her WHICH behaviour. A puppy can only connect a consequence to something within about a second, so without a marker you are usually paying her for whatever she did next. Teach the marker first. Everything else is faster afterwards."
+  },
+  {
+   "t": "Name it last.",
+   "b": "Do not say the word until she is already offering the behaviour reliably. Saying sit twenty times at a puppy who does not yet know what sit means teaches her that the word is background noise. Get the behaviour, then attach the word to it."
+  },
+  {
+   "t": "Nobody punishes her. Ever.",
+   "b": "No shouting, no scruffing, no muzzle-holding, no alpha rolls, no leash jerk, no shutting her in a room. This is the American Veterinary Society of Animal Behavior's position: there is no evidence aversive methods work better, and there is evidence they cause harm. Herron 2009 measured it: growling at the dog provoked aggression in 41 percent of cases, forcing something from her mouth 39 percent, an alpha roll 31 percent."
+  },
+  {
+   "t": "If she gets it wrong twice, you went too fast.",
+   "b": "Errors are information about your plan, not about her. Drop back one step, get three easy wins, and stop. Never repeat a cue she is failing; every unanswered cue teaches her the cue is optional."
+  },
+  {
+   "t": "All three of you use the same word.",
+   "b": "Pick one word per behaviour and write it down. Come, not come here and here girl and c'mon. A puppy learning three sounds for one behaviour learns none of them well."
+  }
+ ],
+ "ladder": [
+  {
+   "n": 1,
+   "name": "Lured",
+   "short": "She follows the food into position.",
+   "test": "With food visibly in your hand, she gets into position.",
+   "pass": "5 out of 6 tries in one session."
+  },
+  {
+   "n": 2,
+   "name": "Learned",
+   "short": "Same hand movement, no food in it.",
+   "test": "Empty hand, same motion. She still does it. Reward comes from the other hand afterwards.",
+   "pass": "5 out of 6 tries in one session. THIS is where most people get stuck, because they never fade the lure."
+  },
+  {
+   "n": 3,
+   "name": "Named",
+   "short": "The word alone does it.",
+   "test": "Say the word once, hands still, no hand signal. She does it.",
+   "pass": "5 out of 6 tries in one session, in the room you taught it in."
+  },
+  {
+   "n": 4,
+   "name": "Proofed",
+   "short": "It works somewhere else, with something happening.",
+   "test": "The verbal cue works in three different rooms, and once with a mild distraction: someone walking past, a toy on the floor, the TV on.",
+   "pass": "4 out of 5 in each of three locations."
+  },
+  {
+   "n": 5,
+   "name": "Reliable",
+   "short": "First time, new place, food out of sight.",
+   "test": "Somewhere she has never done it before. Treats in a pocket or a closed pouch, not in your hand. One cue, no repeats.",
+   "pass": "8 out of 10 first-time responses. THIS is the answer to did she learn it. Not once. Not sometimes. Eight out of ten, cold, in a new place."
+  }
+ ],
+ "categories": [
+  "Foundation",
+  "Next",
+  "Later",
+  "Advanced"
+ ],
+ "cat_notes": {
+  "Foundation": "Start these now. Several have real deadlines: bite inhibition and handling are tied to a socialisation window that closes around 12 to 16 weeks and does not reopen.",
+  "Next": "From about 12 weeks, once the foundations are at the Named rung.",
+  "Later": "From 4 to 6 months. Each one depends on a foundation skill being reliable first.",
+  "Advanced": "From 6 months and beyond. This is where a golden retriever gets interesting, and where most people stop too early."
+ },
+ "schedule": {
+  "note": "Training is not an extra block in the day. It is 90 seconds attached to things that already happen, which is why it survives contact with a real week.",
+  "slots": [
+   {
+    "when": "Before breakfast",
+    "what": "Name and marker",
+    "mins": 2,
+    "skills": [
+     "t-name",
+     "t-marker"
+    ],
+    "why": "She is hungriest, so kibble is worth most. Two minutes at the highest value moment of the day."
+   },
+   {
+    "when": "Breakfast itself",
+    "what": "Crate and settle",
+    "mins": 0,
+    "skills": [
+     "t-crate",
+     "t-settle"
+    ],
+    "why": "Feed the meal in the crate. Costs no extra time."
+   },
+   {
+    "when": "Coming back in from a toilet trip",
+    "what": "Clean paws",
+    "mins": 1,
+    "skills": [
+     "t-paws"
+    ],
+    "why": "It only exists at the door, so it has to be trained there."
+   },
+   {
+    "when": "Mid-morning, after a nap",
+    "what": "Sit or down",
+    "mins": 2,
+    "skills": [
+     "t-sit",
+     "t-down"
+    ],
+    "why": "After sleep she can think. Before a nap she cannot."
+   },
+   {
+    "when": "Before lunch",
+    "what": "Leave it and drop it",
+    "mins": 2,
+    "skills": [
+     "t-leaveit",
+     "t-dropit"
+    ],
+    "why": "Hungry again, and these two need high value food to work."
+   },
+   {
+    "when": "On every walk",
+    "what": "Recall and loose lead",
+    "mins": 5,
+    "skills": [
+     "t-recall",
+     "t-leash",
+     "t-door"
+    ],
+    "why": "Five paid recalls per outing. Kerb stops at every kerb. Never a formal session, just paid moments."
+   },
+   {
+    "when": "Afternoon lull",
+    "what": "Handling",
+    "mins": 1,
+    "skills": [
+     "t-handling"
+    ],
+    "why": "When she is sleepy and already still. Do not do this when she is wound up."
+   },
+   {
+    "when": "While you cook",
+    "what": "Settle and place",
+    "mins": 0,
+    "skills": [
+     "t-settle",
+     "t-place"
+    ],
+    "why": "Free training. You were cooking anyway."
+   },
+   {
+    "when": "Scattered through the day",
+    "what": "Alone time",
+    "mins": 0,
+    "skills": [
+     "t-alone"
+    ],
+    "why": "Ten two-second absences a day. Costs nothing and it is the most commonly skipped thing on this list."
+   },
+   {
+    "when": "Evening",
+    "what": "Scent game",
+    "mins": 10,
+    "skills": [
+     "t-scentwork"
+    ],
+    "why": "Tires her out far more than another walk, and it is the best thing you have for a wet night."
+   },
+   {
+    "when": "All day, constantly",
+    "what": "Bite inhibition",
+    "mins": 0,
+    "skills": [
+     "t-bite"
+    ],
+    "why": "Not a session. A rule that all three of you follow every single time."
+   }
+  ],
+  "rules": [
+   "Total formal training: about 15 minutes a day, in pieces of two.",
+   "If she gets something wrong twice in a row, make it easier and stop after three easy wins.",
+   "Stop while she still wants more. Always.",
+   "An overtired puppy cannot learn. If she is frantic, that is a nap, not a session."
+  ]
+ },
+ "skills": [
+  {
+   "id": "t-marker",
+   "cat": "Foundation",
+   "title": "The marker word",
+   "priority": 1,
+   "age": "Start today. Everything else is built on it.",
+   "sessions": "2 minutes, twice a day, for two days. Then it just lives inside every other skill.",
+   "why": "This is the piece almost everyone skips, and it is the reason their training is slow. The marker is a sound that means: that, right there, is what earned you food. It buys you the one second you need to get a treat out of your pocket, without the delay blurring what she was paid for.",
+   "need": [
+    "20 pieces of her kibble",
+    "A quiet room",
+    "No distractions"
+   ],
+   "steps": [
+    {
+     "n": 1,
+     "do": "Pick your word and write it down for all three of you. YES is good: short, sharp, and you do not use it in normal conversation the way you use good girl.",
+     "look": "Nothing yet. You are just choosing.",
+     "reps": "Once, and never change it."
+    },
+    {
+     "n": 2,
+     "do": "Stand with her. Say YES in a bright, clipped tone, then immediately hand her a piece of kibble. Not at the same time. Word first, food a beat later.",
+     "look": "She eats it. That is all you need.",
+     "reps": "10 times. Then stop."
+    },
+    {
+     "n": 3,
+     "do": "Wait until she is looking away or slightly distracted. Say YES. Then feed.",
+     "look": "Her head snaps round to you when she hears the word. THAT is the marker working. She has learned the sound predicts food.",
+     "reps": "10 times, spread across the day."
+    },
+    {
+     "n": 4,
+     "do": "From now on, in every other skill on this list: the instant her body does the right thing, say YES, and then reach for the food.",
+     "look": "The order matters and people get it backwards. Marker first, then your hand moves. If your hand moves first, the hand becomes the cue and you are back to luring forever.",
+     "reps": "Forever."
+    }
+   ],
+   "wrong": [
+    "Saying YES and moving your hand to the treat pouch at the same time. Now the hand movement is the real marker and the word is decoration.",
+    "Using YES to try to interrupt her doing something wrong. The marker only ever means food is coming. If you use it as an interrupter you break it.",
+    "Saying it flatly. Make it sound like a starting pistol, not a shrug."
+   ],
+   "next": [
+    "t-name",
+    "t-sit"
+   ],
+   "tags": [
+    "marker",
+    "yes",
+    "clicker",
+    "click",
+    "reward",
+    "timing",
+    "charge"
+   ],
+   "note": "A clicker works identically and is slightly sharper. A word is one less thing to hold and one less thing to leave in another room. Either is fine. Pick one.",
+   "criteria": [
+    {
+     "level": "Charged",
+     "test": "Say YES when she is not looking at you, with your hands still.",
+     "pass": "She turns to you, 5 out of 6 times.",
+     "id": "t-marker-c1"
+    },
+    {
+     "level": "In use",
+     "test": "You can mark a behaviour mid-motion and she keeps doing it, waiting for the food.",
+     "pass": "Used correctly in a full session of another skill without you fumbling the order.",
+     "id": "t-marker-c2"
+    }
+   ]
+  },
+  {
+   "id": "t-name",
+   "cat": "Foundation",
+   "title": "Her name",
+   "priority": 1,
+   "age": "Start today.",
+   "sessions": "3 sessions of 2 minutes a day.",
+   "why": "Her name is not a command. It is a request for her attention, and it is the thing every other cue depends on. If her name reliably turns her head toward you, you can redirect her out of almost any developing problem before it becomes one. Most people burn their puppy's name in the first month by using it as a scold.",
+   "need": [
+    "20 pieces of her kibble",
+    "A quiet room to start",
+    "Her marker word, already charged"
+   ],
+   "steps": [
+    {
+     "n": 1,
+     "do": "Sit on the floor a metre from her, when she is not already looking at you. Say MERCY once. Clearly, warmly, once.",
+     "look": "The moment her head turns toward you, even slightly, say YES and feed her.",
+     "reps": "10, then stop. If she does not turn, do not repeat her name. Make a kissy noise instead, mark the turn, and make the next one easier."
+    },
+    {
+     "n": 2,
+     "do": "Same thing, but wait for eye contact rather than just a head turn before you mark.",
+     "look": "She looks at your face, not at your hand. If she is staring at the hand, put the food behind your back and wait.",
+     "reps": "10."
+    },
+    {
+     "n": 3,
+     "do": "Say her name when she is mildly occupied: sniffing the rug, chewing a toy, halfway across the room.",
+     "look": "She disengages from what she was doing and turns. This is much harder than step 2 and is where the real skill lives.",
+     "reps": "5 to 8. Pay these well, they are worth more."
+    },
+    {
+     "n": 4,
+     "do": "Move it around the flat. Kitchen. Hallway. Bedroom. Then near the front door, then with the TV on.",
+     "look": "Same response in a room she has never done it in.",
+     "reps": "5 per location."
+    },
+    {
+     "n": 5,
+     "do": "Outside, on a lead, in a quiet spot. Then somewhere busier. Pay these with chicken, not kibble.",
+     "look": "She turns to you with a street in front of her. That is a genuinely difficult thing you are asking.",
+     "reps": "5 per outing, no more."
+    }
+   ],
+   "wrong": [
+    "Using her name to tell her off. Every time you say MERCY in an angry voice, you make the sound slightly less worth turning toward. Use a different word for interrupting, or just her name for good things only.",
+    "Repeating it. Mercy. Mercy. MERCY. Each unanswered repetition teaches her the first one does not matter.",
+    "Using her name for things she does not like, then wondering why she stops coming. Do not call her by name to put her in the crate, to clip her nails, or to end a walk. Go and get her for those."
+   ],
+   "next": [
+    "t-recall",
+    "t-touch"
+   ],
+   "tags": [
+    "name",
+    "attention",
+    "look",
+    "focus",
+    "mercy",
+    "check in"
+   ],
+   "note": "Aim for a hundred paid name-responses in her first fortnight. That is not a lot of food if it comes out of her ration, and it buys you a dog who checks in with you by default for the rest of her life.",
+   "criteria": [
+    {
+     "level": "Lured",
+     "test": "With food visibly in your hand, she gets into position.",
+     "pass": "5 out of 6 tries in one session.",
+     "id": "t-name-c1"
+    },
+    {
+     "level": "Learned",
+     "test": "Empty hand, same motion. She still does it. Reward comes from the other hand afterwards.",
+     "pass": "5 out of 6 tries in one session. THIS is where most people get stuck, because they never fade the lure.",
+     "id": "t-name-c2"
+    },
+    {
+     "level": "Named",
+     "test": "Say the word once, hands still, no hand signal. She does it.",
+     "pass": "5 out of 6 tries in one session, in the room you taught it in.",
+     "id": "t-name-c3"
+    },
+    {
+     "level": "Proofed",
+     "test": "The verbal cue works in three different rooms, and once with a mild distraction: someone walking past, a toy on the floor, the TV on.",
+     "pass": "4 out of 5 in each of three locations.",
+     "id": "t-name-c4"
+    },
+    {
+     "level": "Reliable",
+     "test": "On a walk, somewhere she has not trained before, while she is sniffing something. Say her name once, treats out of sight.",
+     "pass": "She turns to you 8 out of 10 times. That is a trained name.",
+     "id": "t-name-c5"
+    }
+   ]
+  },
+  {
+   "id": "t-sit",
+   "cat": "Foundation",
+   "title": "Sit",
+   "priority": 1,
+   "age": "Now.",
+   "sessions": "2 minutes, 3 times a day.",
+   "why": "Sit is not important in itself. It matters because it is the easiest thing to teach, so it is where she learns HOW to learn: that offering behaviour earns food, that a word means something, that working with you is a good game. It is also the most useful default in the world. A sitting puppy is not jumping, not bolting through a door, and not mugging a guest.",
+   "need": [
+    "10 pieces of kibble",
+    "A non-slip floor. Not a wooden hallway."
+   ],
+   "steps": [
+    {
+     "n": 1,
+     "do": "Hold a piece of food between finger and thumb, right at the end of her nose. Let her sniff it. Slowly move your hand back and slightly up, over the top of her head, toward her tail.",
+     "look": "Her nose follows the food up, and her back end drops as a consequence. The instant her bottom touches the floor, say YES and feed.",
+     "reps": "5 to 6. If she jumps up instead, your hand is too high. Keep it grazing the top of her skull."
+    },
+    {
+     "n": 2,
+     "do": "Same motion, same speed, but with NOTHING in the luring hand. Food is in your other hand, behind your back.",
+     "look": "She still follows the empty hand into a sit. Mark, then feed from the other hand.",
+     "reps": "5 to 6. This step is the one people skip, and it is why so many dogs will only sit when they can see food."
+    },
+    {
+     "n": 3,
+     "do": "Shrink the hand movement. A full sweep becomes a half sweep, becomes a small upward flick of two fingers.",
+     "look": "She sits off a small gesture.",
+     "reps": "5 to 6 per session, over two or three days."
+    },
+    {
+     "n": 4,
+     "do": "NOW add the word. Say SIT once, pause half a second, then give the hand signal. Mark and feed.",
+     "look": "Over a few sessions she starts to sit on the word, before your hand moves. When that happens, drop the hand signal.",
+     "reps": "6 per session."
+    },
+    {
+     "n": 5,
+     "do": "Move rooms. Then try it while you are standing rather than crouching, which looks completely different to a dog. Then with your back half-turned. Then outside.",
+     "look": "Each new picture is genuinely a new problem for her. Expect to drop back a rung and rebuild quickly.",
+     "reps": "5 per new picture."
+    }
+   ],
+   "wrong": [
+    "Pushing her bottom down. She learns to brace against your hand, and she learns that hands coming toward her rear are unpleasant.",
+    "Saying SIT SIT SIT while she is thinking. Say it once and wait. Silence gives her room to work it out.",
+    "Holding the lure too high, which makes her jump.",
+    "Only ever doing it in the kitchen with a treat in view, then concluding she knows sit. She knows kitchen-plus-visible-food."
+   ],
+   "next": [
+    "t-down",
+    "t-stay",
+    "t-door"
+   ],
+   "tags": [
+    "sit",
+    "basic",
+    "obedience",
+    "first"
+   ],
+   "criteria": [
+    {
+     "level": "Lured",
+     "test": "With food visibly in your hand, she gets into position.",
+     "pass": "5 out of 6 tries in one session.",
+     "id": "t-sit-c1"
+    },
+    {
+     "level": "Learned",
+     "test": "Empty hand, same motion. She still does it. Reward comes from the other hand afterwards.",
+     "pass": "5 out of 6 tries in one session. THIS is where most people get stuck, because they never fade the lure.",
+     "id": "t-sit-c2"
+    },
+    {
+     "level": "Named",
+     "test": "Say the word once, hands still, no hand signal. She does it.",
+     "pass": "5 out of 6 tries in one session, in the room you taught it in.",
+     "id": "t-sit-c3"
+    },
+    {
+     "level": "Proofed",
+     "test": "The verbal cue works in three different rooms, and once with a mild distraction: someone walking past, a toy on the floor, the TV on.",
+     "pass": "4 out of 5 in each of three locations.",
+     "id": "t-sit-c4"
+    },
+    {
+     "level": "Reliable",
+     "test": "Somewhere she has never done it before. Treats in a pocket or a closed pouch, not in your hand. One cue, no repeats.",
+     "pass": "8 out of 10 first-time responses. THIS is the answer to did she learn it. Not once. Not sometimes. Eight out of ten, cold, in a new place.",
+     "id": "t-sit-c5"
+    }
+   ]
+  },
+  {
+   "id": "t-recall",
+   "cat": "Foundation",
+   "title": "Come when called",
+   "priority": 1,
+   "age": "Now, and never stop.",
+   "sessions": "5 to 10 paid recalls a day, scattered. Never a formal session.",
+   "why": "This is the most important thing she will ever learn and the easiest to destroy. Recall is not obedience, it is a bet: she has to believe that coming to you is always better than whatever she was doing. Every time you call her and something she dislikes happens, you take money out of that account. Most adult dogs with bad recall were taught, carefully and unintentionally, that come means the fun stops.",
+   "need": [
+    "The highest value food you have. Chicken, cheese, not kibble.",
+    "A long line, 5 metres, for outdoor work. Never a retractable lead.",
+    "Two people for the best version."
+   ],
+   "steps": [
+    {
+     "n": 1,
+     "do": "Indoors. When she is already trotting toward you for her own reasons, say COME in a bright voice, then throw a party when she arrives: food, praise, a scratch. You are attaching the word to something she was doing anyway.",
+     "look": "She arrives and gets more than she expected.",
+     "reps": "As often as it happens naturally."
+    },
+    {
+     "n": 2,
+     "do": "The two-person runaway game. One of you holds her gently. The other goes a few metres away, crouches, and calls COME once, sounding delighted. The holder lets go.",
+     "look": "She barrels over. Pay her for three to five seconds, not one bite. Then the other person calls her back.",
+     "reps": "6 to 8 runs, then stop before she tires."
+    },
+    {
+     "n": 3,
+     "do": "Add the collar touch. When she arrives, take hold of her collar gently with one hand, THEN feed with the other.",
+     "look": "She should not flinch or duck away from the hand. If she does, you have found a real problem worth fixing now: pair collar touches with food a hundred times before you need one in an emergency.",
+     "reps": "Every single recall, from now on."
+    },
+    {
+     "n": 4,
+     "do": "Hide and seek. Step out of sight behind a door, call once, let her find you.",
+     "look": "She searches. This builds a dog who keeps track of where you are, which is worth more than the recall itself.",
+     "reps": "3 to 4."
+    },
+    {
+     "n": 5,
+     "do": "Outdoors on the long line, in the quietest place you can find. Let her wander to the end of the line, then call once.",
+     "look": "She turns and comes. If she does not, do not repeat, do not pull. Make a noise, run backwards a few steps, and make yourself worth chasing.",
+     "reps": "5 per outing."
+    },
+    {
+     "n": 6,
+     "do": "Recall her, pay her, and then RELEASE her back to what she was doing. Say OFF YOU GO and let her return to the sniff.",
+     "look": "This is the step that protects the whole skill. If coming back always ends the fun, she learns to weigh it up. If it usually means a treat and then permission to carry on, there is nothing to weigh up.",
+     "reps": "Most recalls should end this way."
+    }
+   ],
+   "wrong": [
+    "Calling her to do something she dislikes: bath, nail clip, crate, end of walk. Go and collect her for those instead, or call her, pay her, and then do the thing after a pause.",
+    "Calling her when you are fairly sure she will not come. Every unanswered COME devalues the word. If you are not confident, go and get her.",
+    "Calling her in an annoyed voice. She hears the tone, not the word.",
+    "Repeating it. Once. Then make yourself interesting.",
+    "Chasing her when she does not come. She thinks it is a game, and it is a game she wins."
+   ],
+   "next": [
+    "t-emergency-recall",
+    "t-leaveit"
+   ],
+   "tags": [
+    "recall",
+    "come",
+    "come here",
+    "off lead",
+    "offlead",
+    "long line"
+   ],
+   "note": "Keep one word sacred. Do not use COME for anything except this, and never let it be followed by something unpleasant. If it gets contaminated, you can start a fresh word from scratch, but you only get so many.",
+   "criteria": [
+    {
+     "level": "Lured",
+     "test": "With food visibly in your hand, she gets into position.",
+     "pass": "5 out of 6 tries in one session.",
+     "id": "t-recall-c1"
+    },
+    {
+     "level": "Learned",
+     "test": "Empty hand, same motion. She still does it. Reward comes from the other hand afterwards.",
+     "pass": "5 out of 6 tries in one session. THIS is where most people get stuck, because they never fade the lure.",
+     "id": "t-recall-c2"
+    },
+    {
+     "level": "Named",
+     "test": "Say the word once, hands still, no hand signal. She does it.",
+     "pass": "5 out of 6 tries in one session, in the room you taught it in.",
+     "id": "t-recall-c3"
+    },
+    {
+     "level": "Proofed",
+     "test": "The verbal cue works in three different rooms, and once with a mild distraction: someone walking past, a toy on the floor, the TV on.",
+     "pass": "4 out of 5 in each of three locations.",
+     "id": "t-recall-c4"
+    },
+    {
+     "level": "Reliable",
+     "test": "Outdoors on a long line, in a place with mild distractions, while she is actively sniffing something interesting. One call, treats out of sight.",
+     "pass": "She comes 8 out of 10 times, without a second call. Below that she is not ready to be off a line, whatever it feels like.",
+     "id": "t-recall-c5"
+    }
+   ]
+  },
+  {
+   "id": "t-leaveit",
+   "cat": "Foundation",
+   "title": "Leave it",
+   "priority": 1,
+   "age": "Now. Given where she walks, this is not optional.",
+   "sessions": "2 minutes, twice a day.",
+   "why": "In an NYC apartment with pavements outside, this is a safety skill, not a manners skill. Discarded cooked chicken bones, rat bait in tree pits, cannabis edibles, corn cobs, mushrooms in tree pits after rain. She scavenges. Leave it is the thing that keeps her out of surgery.",
+   "need": [
+    "Boring food in one hand: kibble.",
+    "Good food in the other: chicken.",
+    "Her marker word."
+   ],
+   "steps": [
+    {
+     "n": 1,
+     "do": "Put a piece of kibble in your closed fist. Offer the fist to her. Say nothing at all.",
+     "look": "She licks, paws, nibbles, snuffles at your hand. Wait. The instant she stops and pulls her nose back even a centimetre, say YES and feed her from the OTHER hand, with the chicken.",
+     "reps": "6 to 8. The lesson is: backing off the thing gets you something better."
+    },
+    {
+     "n": 2,
+     "do": "Same, but now she should back off faster. Wait for her to look at your face rather than the fist.",
+     "look": "Eye contact instead of the hand. Mark that, pay big.",
+     "reps": "6 to 8."
+    },
+    {
+     "n": 3,
+     "do": "Open hand, palm flat, kibble sitting on it. Be ready to close your fist if she dives.",
+     "look": "She hesitates. Mark the hesitation, pay from the other hand.",
+     "reps": "6 to 8."
+    },
+    {
+     "n": 4,
+     "do": "Put the kibble on the floor, covered by your foot or hand.",
+     "look": "She leaves it. Mark, pay from your hand. Never let her have the thing she left. What she left is not hers; what you pay her with is better anyway.",
+     "reps": "6 to 8."
+    },
+    {
+     "n": 5,
+     "do": "NOW add the words LEAVE IT, said once, calmly, just before you present the item.",
+     "look": "She disengages on the word.",
+     "reps": "6 per session."
+    },
+    {
+     "n": 6,
+     "do": "Walk past an item on the floor on a lead. Say LEAVE IT as you approach, pay heavily as you pass it.",
+     "look": "She walks past. Build to more tempting items, then to items outdoors.",
+     "reps": "5 per session."
+    },
+    {
+     "n": 7,
+     "do": "Outdoors, on a lead, with something genuinely interesting on the pavement. Say it once. Pay with chicken every single time, forever.",
+     "look": "Her head comes up and toward you.",
+     "reps": "Every opportunity. This one never goes on a variable schedule. It gets paid for life."
+    }
+   ],
+   "wrong": [
+    "Letting her have the item she left. That teaches her that leave it means wait a moment and then it is mine.",
+    "Saying it and then yanking the lead. She learns to associate the words with a jerk, and to grab faster next time.",
+    "Only paying with kibble. This skill has to outbid a chicken bone on a pavement. Pay it accordingly.",
+    "Waiting until she is already eating it. At that point you need DROP IT, which is a different skill."
+   ],
+   "next": [
+    "t-dropit",
+    "t-recall"
+   ],
+   "tags": [
+    "leave it",
+    "leave",
+    "street",
+    "pavement",
+    "scavenge",
+    "eating",
+    "bones",
+    "safety"
+   ],
+   "note": "Leave it means do not pick that up. Drop it means give me the thing in your mouth. She needs both, and they are trained differently. Teach both.",
+   "criteria": [
+    {
+     "level": "Lured",
+     "test": "With food visibly in your hand, she gets into position.",
+     "pass": "5 out of 6 tries in one session.",
+     "id": "t-leaveit-c1"
+    },
+    {
+     "level": "Learned",
+     "test": "Empty hand, same motion. She still does it. Reward comes from the other hand afterwards.",
+     "pass": "5 out of 6 tries in one session. THIS is where most people get stuck, because they never fade the lure.",
+     "id": "t-leaveit-c2"
+    },
+    {
+     "level": "Named",
+     "test": "Say the word once, hands still, no hand signal. She does it.",
+     "pass": "5 out of 6 tries in one session, in the room you taught it in.",
+     "id": "t-leaveit-c3"
+    },
+    {
+     "level": "Proofed",
+     "test": "The verbal cue works in three different rooms, and once with a mild distraction: someone walking past, a toy on the floor, the TV on.",
+     "pass": "4 out of 5 in each of three locations.",
+     "id": "t-leaveit-c4"
+    },
+    {
+     "level": "Reliable",
+     "test": "On a pavement, walking past real food waste she has spotted first. One cue.",
+     "pass": "She disengages 9 out of 10 times. This is the one skill where 8 out of 10 is not good enough, because the failure mode is surgery.",
+     "id": "t-leaveit-c5"
+    }
+   ]
+  },
+  {
+   "id": "t-dropit",
+   "cat": "Foundation",
+   "title": "Drop it",
+   "priority": 1,
+   "age": "Now, before she starts guarding things.",
+   "sessions": "2 minutes, twice a day. Plus every real occurrence.",
+   "why": "This is the counterpart to leave it, for when the thing is already in her mouth. It also prevents resource guarding, which is one of the few puppy problems that gets seriously worse with age and much worse with bad handling. A puppy who learns that a human approaching her mouth means a trade is a dog who never needs to be wrestled.",
+   "need": [
+    "A toy she likes but is not obsessed with",
+    "Chicken or cheese. This one is worth spending on."
+   ],
+   "steps": [
+    {
+     "n": 1,
+     "do": "Let her take the toy. Do not reach for it. Hold a piece of chicken to her nose instead.",
+     "look": "She opens her mouth to take the chicken, and the toy falls. Say YES as it drops, then feed.",
+     "reps": "5 to 6."
+    },
+    {
+     "n": 2,
+     "do": "Immediately give the toy BACK. Every time.",
+     "look": "This is the whole trick. If dropping means losing the item, she learns to run away and swallow fast. If dropping means chicken AND the item back, she learns dropping costs her nothing.",
+     "reps": "Every single repetition."
+    },
+    {
+     "n": 3,
+     "do": "Add the word DROP just as she opens her mouth, once she is doing it fluently.",
+     "look": "Within a few sessions she opens her mouth on the word before the chicken appears.",
+     "reps": "6 per session."
+    },
+    {
+     "n": 4,
+     "do": "Practise with progressively better items. A chew. Then something she has stolen, like a sock.",
+     "look": "Same response with a higher-value item.",
+     "reps": "Whenever it happens naturally."
+    },
+    {
+     "n": 5,
+     "do": "Occasionally, trade for something she cannot have back, but make that trade enormous: a jackpot of five pieces and a game afterwards.",
+     "look": "She does not learn to distrust the cue, because losing the item is rare and richly paid.",
+     "reps": "Rarely."
+    }
+   ],
+   "wrong": [
+    "Prising her mouth open, or chasing her to get the item. Herron 2009 found forcing something from a dog's mouth provoked aggression in 39 percent of cases. It is also the fastest way to teach a golden to swallow things whole rather than surrender them.",
+    "Chasing her when she grabs something. To a puppy that is the best game ever invented, and she will steal things specifically to start it.",
+    "Only ever cueing DROP when you want to take something away permanently. She will notice."
+   ],
+   "next": [
+    "t-leaveit"
+   ],
+   "tags": [
+    "drop",
+    "drop it",
+    "give",
+    "trade",
+    "stealing",
+    "guarding",
+    "sock",
+    "swap"
+   ],
+   "note": "If she ever stiffens, freezes, hovers over an item, or growls when you approach, stop, back off, and speak to a qualified behaviourist. Do not push through it and do not tell her off for growling. A growl is information, and punishing it teaches her to skip the warning.",
+   "criteria": [
+    {
+     "level": "Lured",
+     "test": "With food visibly in your hand, she gets into position.",
+     "pass": "5 out of 6 tries in one session.",
+     "id": "t-dropit-c1"
+    },
+    {
+     "level": "Learned",
+     "test": "Empty hand, same motion. She still does it. Reward comes from the other hand afterwards.",
+     "pass": "5 out of 6 tries in one session. THIS is where most people get stuck, because they never fade the lure.",
+     "id": "t-dropit-c2"
+    },
+    {
+     "level": "Named",
+     "test": "Say the word once, hands still, no hand signal. She does it.",
+     "pass": "5 out of 6 tries in one session, in the room you taught it in.",
+     "id": "t-dropit-c3"
+    },
+    {
+     "level": "Proofed",
+     "test": "The verbal cue works in three different rooms, and once with a mild distraction: someone walking past, a toy on the floor, the TV on.",
+     "pass": "4 out of 5 in each of three locations.",
+     "id": "t-dropit-c4"
+    },
+    {
+     "level": "Reliable",
+     "test": "She has picked up something genuinely valuable to her, and you say DROP once from a metre away.",
+     "pass": "She drops it 8 out of 10 times without you moving toward her.",
+     "id": "t-dropit-c5"
+    }
+   ]
+  },
+  {
+   "id": "t-paws",
+   "cat": "Foundation",
+   "title": "Clean paws at the door",
+   "priority": 1,
+   "age": "Now, while she is small and everything is a game.",
+   "sessions": "1 to 2 minutes, at every return home.",
+   "why": "You asked for this one specifically. It is worth doing properly, because paw handling is one of the most common things adult dogs hate, and every future nail trim depends on it. Done right at 10 weeks, it takes a fortnight. Done at a year old, after she has learned to pull her feet away, it takes months.",
+   "need": [
+    "A damp cloth or a paw mat by the door",
+    "Kibble in a pot by the door, refilled daily",
+    "One consistent word: CLEAN"
+   ],
+   "steps": [
+    {
+     "n": 1,
+     "do": "Away from the door, with no cloth in sight. Touch one paw for one second. Say YES, feed. That is it.",
+     "look": "She lets you touch it without pulling away. If she pulls back, touch her leg above the paw instead and work down over a few days.",
+     "reps": "8 touches, spread over the day. All four paws."
+    },
+    {
+     "n": 2,
+     "do": "Hold the paw for two seconds, then three, then five. Mark and pay while you are still holding it, not after you let go.",
+     "look": "Marking after you release teaches her that pulling away ends it. Mark DURING the hold.",
+     "reps": "8 a day."
+    },
+    {
+     "n": 3,
+     "do": "Introduce the cloth as an object. Let her sniff it, pay her for sniffing it. Do not touch her with it yet.",
+     "look": "The cloth predicts food before it ever predicts handling.",
+     "reps": "5, one session."
+    },
+    {
+     "n": 4,
+     "do": "Touch the cloth to one paw for one second. YES, feed. Build up: one wipe, then two, then all four paws.",
+     "look": "She stands still. If she pulls a foot away, that wipe was a second too long. Shorten it.",
+     "reps": "Once per return home."
+    },
+    {
+     "n": 5,
+     "do": "Add the word CLEAN as you start, once she is comfortable. Same word from all three of you.",
+     "look": "She offers the paw or stands still when she hears it.",
+     "reps": "Every time you come in."
+    },
+    {
+     "n": 6,
+     "do": "Do it at the door, in the real routine, with her lead still on.",
+     "look": "She comes in, stops on the mat, and waits.",
+     "reps": "Every return."
+    }
+   ],
+   "wrong": [
+    "Doing all four paws on day one because you need to. If she is muddy and untrained, just wipe her and accept it is not a training rep. Do the training reps separately, when nothing needs cleaning.",
+    "Holding on when she pulls. She has to learn that stillness ends it, not struggle. Let go at a calm moment, not a struggling one.",
+    "Only touching her paws when they need cleaning. Then paw touching predicts something she does not want."
+   ],
+   "next": [
+    "t-handling",
+    "t-door"
+   ],
+   "tags": [
+    "paws",
+    "clean",
+    "feet",
+    "wipe",
+    "door",
+    "nails",
+    "handling",
+    "muddy"
+   ],
+   "note": "The same protocol builds toward nail trims. Once she is happy with paw holding, start touching her nails with the clippers without cutting, paying every time, for a couple of weeks before you ever cut one.",
+   "criteria": [
+    {
+     "level": "Tolerates",
+     "test": "You can hold each of her four paws for five seconds, away from the door, with no cloth.",
+     "pass": "All four paws, no pulling away, 5 out of 6 attempts.",
+     "id": "t-paws-c1"
+    },
+    {
+     "level": "Wipes",
+     "test": "You can wipe all four paws with a damp cloth.",
+     "pass": "All four, no wriggling, twice in a row on different days.",
+     "id": "t-paws-c2"
+    },
+    {
+     "level": "Named",
+     "test": "You say CLEAN at the door and she stops and stands.",
+     "pass": "5 out of 6 returns home.",
+     "id": "t-paws-c3"
+    },
+    {
+     "level": "Routine",
+     "test": "She goes to the mat and waits when you come in, without a cue.",
+     "pass": "Happens by itself on 8 out of 10 returns.",
+     "id": "t-paws-c4"
+    },
+    {
+     "level": "Generalised",
+     "test": "All three of you can do it, and she is equally relaxed for a vet or groomer holding her paw.",
+     "pass": "Each handler can do all four paws.",
+     "id": "t-paws-c5"
+    }
+   ]
+  },
+  {
+   "id": "t-handling",
+   "cat": "Foundation",
+   "title": "Being handled all over",
+   "priority": 1,
+   "age": "Now. This has a deadline.",
+   "sessions": "1 minute, twice a day.",
+   "why": "Her socialisation window closes around 12 to 16 weeks. What she learns to accept now, she accepts for life; what she first meets at eight months, she can find genuinely frightening. Every vet visit, every ear clean, every tick check, every emergency for the next twelve years runs on this. It is the least glamorous skill on the list and probably the highest value.",
+   "need": [
+    "Kibble",
+    "Two minutes",
+    "A calm moment, not after play"
+   ],
+   "steps": [
+    {
+     "n": 1,
+     "do": "Sit next to her when she is settled. Touch one ear for one second. YES, feed.",
+     "look": "She does not move away.",
+     "reps": "5 touches."
+    },
+    {
+     "n": 2,
+     "do": "Work through the map, one area per session: ears, then around the eyes, then muzzle, then lift a lip to see the teeth, then paws, then between the toes, then tail, then belly, then the collar.",
+     "look": "Each one gets its own days. Do not rush through the map in one sitting.",
+     "reps": "5 touches per area."
+    },
+    {
+     "n": 3,
+     "do": "Build duration. One second becomes three, becomes five. Mark and feed DURING, not after.",
+     "look": "She stays relaxed. Loose body, no lip licking, no whale eye, not turning her head away.",
+     "reps": "5 per session."
+    },
+    {
+     "n": 4,
+     "do": "Add the things a vet does: hold her still with a hand on her chest and her rear. Look in her ears. Run your hands down each leg. Lift her.",
+     "look": "None of it is novel by the time a vet does it.",
+     "reps": "5 per session."
+    },
+    {
+     "n": 5,
+     "do": "Have Shira and Chayim do it too, on separate days. Then do it in a different room, on a table, on a towel.",
+     "look": "She accepts handling from people who are not you, which is the actual test.",
+     "reps": "Twice a week each."
+    }
+   ],
+   "wrong": [
+    "Waiting until something needs doing. The first ear clean should not be the first time anyone has touched her ears.",
+    "Pushing past her discomfort to finish. If she pulls away, you went one second too long. Shorten it, do not force it.",
+    "Restraining her tightly. The goal is a puppy who chooses to stay still, not one who has learned struggling is pointless."
+   ],
+   "next": [
+    "t-paws"
+   ],
+   "tags": [
+    "handling",
+    "touch",
+    "vet",
+    "ears",
+    "teeth",
+    "grooming",
+    "socialisation",
+    "restraint",
+    "nails"
+   ],
+   "note": "Take kibble to the vet tomorrow and pay her on the table, in the waiting room, and on the scales, whether or not anything happens. A vet visit that involves food is a different memory from one that does not.",
+   "criteria": [
+    {
+     "level": "Tolerates",
+     "test": "You can touch every area on the map for one second each.",
+     "pass": "All areas, no avoidance, in one session.",
+     "id": "t-handling-c1"
+    },
+    {
+     "level": "Relaxed",
+     "test": "Five-second holds on ears, muzzle, paws, belly, tail.",
+     "pass": "All five, loose body, twice on different days.",
+     "id": "t-handling-c2"
+    },
+    {
+     "level": "Vet-ready",
+     "test": "A full mock exam: restrain, ears, eyes, teeth, all four legs, belly, lift.",
+     "pass": "Whole sequence, no struggling, twice.",
+     "id": "t-handling-c3"
+    },
+    {
+     "level": "Generalised",
+     "test": "All three handlers can do the mock exam.",
+     "pass": "Each handler, once.",
+     "id": "t-handling-c4"
+    },
+    {
+     "level": "Proofed",
+     "test": "A mock exam somewhere unfamiliar, on a table or a towel.",
+     "pass": "Whole sequence, calm, once.",
+     "id": "t-handling-c5"
+    }
+   ]
+  },
+  {
+   "id": "t-crate",
+   "cat": "Foundation",
+   "title": "Loving the crate",
+   "priority": 1,
+   "age": "Now, and it should never have been rushed.",
+   "sessions": "Several tiny sessions a day.",
+   "why": "The crate has to be the best place in the flat, not the place she goes when everyone is done with her. A puppy who chooses to go in on her own is safe to leave; a puppy who is put in is a puppy who is learning to dread it. This is also the foundation of being left alone, which is a separate skill she genuinely has to be taught.",
+   "need": [
+    "Her crate, divider set so she can stand, turn and lie down and no more",
+    "A stuffed frozen Kong from her ration",
+    "Her bed"
+   ],
+   "steps": [
+    {
+     "n": 1,
+     "do": "Door propped fully open, all day. Drop a piece of kibble in it every time you walk past and she is not looking.",
+     "look": "She starts checking it herself. Say nothing. Do not lure her in, do not praise her for going in. Let it be her discovery.",
+     "reps": "20 or 30 pieces a day, scattered."
+    },
+    {
+     "n": 2,
+     "do": "Feed her meals in it, door still open. Start with the bowl just inside, then further back over a few days.",
+     "look": "She goes in willingly to eat.",
+     "reps": "Every meal."
+    },
+    {
+     "n": 3,
+     "do": "Give her the frozen Kong in there, door open. Let her come out whenever she likes.",
+     "look": "She settles in there by choice.",
+     "reps": "Once or twice a day."
+    },
+    {
+     "n": 4,
+     "do": "Close the door for five seconds while she has the Kong. Open it before she finishes. Build to thirty seconds, a minute, five minutes.",
+     "look": "Open the door BEFORE she wants out, every time. If you wait until she asks, you have taught her that asking works.",
+     "reps": "5 to 8 short closures a day."
+    },
+    {
+     "n": 5,
+     "do": "Close the door and move around the room. Then step out of sight for a moment. Then longer.",
+     "look": "She stays settled. Any whining means your last step was too big. Go back two steps.",
+     "reps": "Several a day."
+    },
+    {
+     "n": 6,
+     "do": "Add a word: BED or CRATE, said as she goes in, once she is going in reliably by herself.",
+     "look": "She goes in on the word, for a Kong.",
+     "reps": "Daily."
+    }
+   ],
+   "wrong": [
+    "Putting her in and shutting the door on day one. That is the single fastest way to build a dog who panics in a crate.",
+    "Letting her out while she is crying. That pays the crying. Wait for two seconds of quiet, then open. If she is crying a lot, the steps were too big, not her fault.",
+    "Using the crate as punishment. Ever.",
+    "A crate that is too big. A puppy will use one end as a toilet if she has room to move away from it."
+   ],
+   "next": [
+    "t-alone",
+    "t-settle"
+   ],
+   "tags": [
+    "crate",
+    "kennel",
+    "cage",
+    "bed",
+    "night",
+    "sleep",
+    "den"
+   ],
+   "criteria": [
+    {
+     "level": "Curious",
+     "test": "She goes in on her own during the day, unprompted.",
+     "pass": "You see it happen several times a day without you doing anything.",
+     "id": "t-crate-c1"
+    },
+    {
+     "level": "Eats in",
+     "test": "She eats a full meal inside with the door open.",
+     "pass": "Every meal for three days.",
+     "id": "t-crate-c2"
+    },
+    {
+     "level": "Door closed",
+     "test": "Door shut for five minutes with a Kong while you are in the room.",
+     "pass": "Settled, no whining, three times.",
+     "id": "t-crate-c3"
+    },
+    {
+     "level": "You leave the room",
+     "test": "Door shut, you out of sight for ten minutes.",
+     "pass": "Settled, twice on different days.",
+     "id": "t-crate-c4"
+    },
+    {
+     "level": "Named and relaxed",
+     "test": "You say the word, she goes in, and she settles without a Kong.",
+     "pass": "5 out of 6, and she sleeps in there overnight without distress.",
+     "id": "t-crate-c5"
+    }
+   ]
+  },
+  {
+   "id": "t-settle",
+   "cat": "Foundation",
+   "title": "Switching off",
+   "priority": 1,
+   "age": "Now. She probably needs this more than she needs sit.",
+   "sessions": "Whenever she is already calm.",
+   "why": "A 10 week old puppy needs somewhere between 18 and 20 hours of sleep a day, and most puppy problems people describe as naughtiness are actually overtiredness. Biting, zoomies, ignoring cues, frantic chewing. A puppy who cannot switch off does not learn to; it is a skill, and you can teach it, mostly by paying it when it happens by accident.",
+   "need": [
+    "A mat or bed in the room you use most",
+    "Kibble",
+    "Patience, and the willingness to do nothing"
+   ],
+   "steps": [
+    {
+     "n": 1,
+     "do": "Put the mat down. Sit near it and read something. Say nothing. Ignore her.",
+     "look": "Eventually she gets bored and lies down. The instant she does, calmly drop a piece of kibble between her paws. Do not say YES, do not make a fuss. Quiet reward for quiet behaviour.",
+     "reps": "One 10 minute session a day."
+    },
+    {
+     "n": 2,
+     "do": "Keep dropping food, slowly, while she stays down. One piece every few seconds, then every ten, then every thirty.",
+     "look": "She stays. You are paying duration, not the act of lying down.",
+     "reps": "Same session."
+    },
+    {
+     "n": 3,
+     "do": "Any time during the day that you notice her settled on her own, walk over and quietly drop a piece of food. Then walk away.",
+     "look": "Settling starts happening more often, because it has been paid.",
+     "reps": "Whenever you notice. This is the whole skill."
+    },
+    {
+     "n": 4,
+     "do": "Add the word SETTLE, said quietly as she is already lying down, once it is happening reliably.",
+     "look": "Later, the word starts to prompt it.",
+     "reps": "Daily."
+    },
+    {
+     "n": 5,
+     "do": "Practise in more stimulating places: near the door, with the TV on, in the kitchen while you cook.",
+     "look": "She can switch off with things happening.",
+     "reps": "A few minutes a day."
+    }
+   ],
+   "wrong": [
+    "Excited praise when she settles. That wakes her up and undoes it. Quiet, boring reward only.",
+    "Assuming she will settle when she is overtired. An overtired puppy cannot. She needs the crate and a nap, not a training session.",
+    "Only trying it when she is wild. Start when she is already sleepy and you are paying something that was going to happen anyway."
+   ],
+   "next": [
+    "t-crate",
+    "t-alone"
+   ],
+   "tags": [
+    "settle",
+    "calm",
+    "relax",
+    "switch off",
+    "mat",
+    "place",
+    "overtired",
+    "zoomies",
+    "biting"
+   ],
+   "note": "If she is biting hard, racing around, and cannot take food, she is almost certainly overtired rather than badly behaved. Crate, dark, quiet, and try again in an hour.",
+   "criteria": [
+    {
+     "level": "Happens",
+     "test": "She lies down on the mat within five minutes of you sitting quietly with it.",
+     "pass": "3 out of 4 attempts.",
+     "id": "t-settle-c1"
+    },
+    {
+     "level": "Holds",
+     "test": "She stays settled for five minutes with occasional quiet food.",
+     "pass": "Twice on different days.",
+     "id": "t-settle-c2"
+    },
+    {
+     "level": "Unpaid",
+     "test": "She holds a settle for ten minutes with only two or three pieces of food.",
+     "pass": "Twice.",
+     "id": "t-settle-c3"
+    },
+    {
+     "level": "Named",
+     "test": "You say SETTLE and she goes to the mat and lies down.",
+     "pass": "4 out of 5.",
+     "id": "t-settle-c4"
+    },
+    {
+     "level": "With life happening",
+     "test": "She settles while you cook, or while someone is at the door.",
+     "pass": "Ten minutes, twice, in two different situations.",
+     "id": "t-settle-c5"
+    }
+   ]
+  },
+  {
+   "id": "t-bite",
+   "cat": "Foundation",
+   "title": "Bite inhibition",
+   "priority": 1,
+   "age": "Now. This has a hard deadline of about 18 weeks.",
+   "sessions": "Every interaction.",
+   "why": "This is not about stopping her biting. It is about teaching her HOW HARD is too hard, while her jaw is still too weak to do damage. A dog who has learned that teeth on skin means the game stops has a soft mouth for life, and if she is ever frightened or in pain at eight years old, that learning is what stands between a snap and a serious bite. You cannot teach this later; the window is now.",
+   "need": [
+    "Nothing. Just consistency between all three of you.",
+    "Two or three chew toys within reach in every room."
+   ],
+   "steps": [
+    {
+     "n": 1,
+     "do": "Play with her using your hands. When teeth make contact hard enough to be uncomfortable, stop immediately. Stand up, fold your arms, turn away, and be completely boring for 10 to 20 seconds.",
+     "look": "The game stops the instant it hurts. That is the entire lesson: teeth end fun.",
+     "reps": "Every time."
+    },
+    {
+     "n": 2,
+     "do": "After 10 to 20 seconds, calmly resume. Do not scold, do not make a scene, do not leave the room for minutes.",
+     "look": "Short and immediate beats long and delayed. She needs the consequence connected to the bite, not to whatever she did next.",
+     "reps": "Every time."
+    },
+    {
+     "n": 3,
+     "do": "Lower the bar over the weeks. First stop only for hard bites. Then for medium ones. Then for any tooth contact at all.",
+     "look": "She graduates from no hard bites to no teeth on skin. By about 18 weeks you want zero tooth contact.",
+     "reps": "Ongoing."
+    },
+    {
+     "n": 4,
+     "do": "Redirect. Before the bite, not after: have a toy in your other hand and put it where your fingers were.",
+     "look": "She learns what teeth ARE for. A puppy with nothing to bite will bite you.",
+     "reps": "Constantly."
+    },
+    {
+     "n": 5,
+     "do": "Check the clock. If it has been more than an hour since she slept and the biting is frantic, that is not a training moment.",
+     "look": "Overtired biting does not respond to training because she cannot think. Crate, quiet, nap.",
+     "reps": "As needed."
+    }
+   ],
+   "wrong": [
+    "Yelping loudly. This one is genuinely contested. Dunbar's protocol uses it, but the AKC, the ASPCA and Whole Dog Journal all independently report that a high-pitched yelp winds many puppies UP rather than calming them, because it sounds like prey. If yelping makes her bite harder, stop yelping and just go quiet and still.",
+    "Muzzle-holding, scruffing, alpha rolls, or pinning her. Herron 2009 measured the outcomes: growling at the dog provoked aggression in 41 percent, an alpha roll in 31 percent, muzzle grabs in 26 percent. These make it worse and they make her afraid of hands.",
+    "Pulling your hand away fast. That triggers the chase and grab reflex. Go still instead.",
+    "Punishing her for biting without giving her anything legal to bite. She is teething and she has to chew something."
+   ],
+   "next": [
+    "t-settle",
+    "t-dropit"
+   ],
+   "tags": [
+    "biting",
+    "bite",
+    "nipping",
+    "mouthing",
+    "teeth",
+    "chewing",
+    "hands",
+    "sharp",
+    "puppy teeth"
+   ],
+   "note": "She will bite for weeks. That is developmentally normal and it is not aggression. What matters is the trend: is it getting softer and less frequent over a fortnight. If it is not, or if it comes with growling, stiffening or guarding, get a qualified behaviourist involved rather than escalating.",
+   "criteria": [
+    {
+     "level": "No hard bites",
+     "test": "A ten minute play session with your hands.",
+     "pass": "No bite hard enough to make you flinch. Three sessions running.",
+     "id": "t-bite-c1"
+    },
+    {
+     "level": "Softening",
+     "test": "Same, judging medium pressure.",
+     "pass": "No medium bites in three sessions.",
+     "id": "t-bite-c2"
+    },
+    {
+     "level": "Redirects",
+     "test": "She takes the toy when you offer it instead of your hand.",
+     "pass": "8 out of 10 offers.",
+     "id": "t-bite-c3"
+    },
+    {
+     "level": "No teeth",
+     "test": "Play, stroking, and handling with no tooth contact on skin at all.",
+     "pass": "Three consecutive days, across all three handlers.",
+     "id": "t-bite-c4"
+    },
+    {
+     "level": "Holds under excitement",
+     "test": "No tooth contact even during exciting play or when guests arrive.",
+     "pass": "Consistently, by around 18 weeks.",
+     "id": "t-bite-c5"
+    }
+   ]
+  },
+  {
+   "id": "t-down",
+   "cat": "Next",
+   "title": "Down",
+   "priority": 2,
+   "age": "From about 12 weeks, once sit is at Named.",
+   "sessions": "2 minutes, twice a day.",
+   "why": "Down is harder than sit, because lying down is a vulnerable position and a puppy has to feel safe to offer it. It is also the foundation of settle, of stay, and of a dog who can be taken to a cafe.",
+   "need": [
+    "Kibble",
+    "A soft, non-slip surface. A rug, not a wooden floor."
+   ],
+   "steps": [
+    {
+     "n": 1,
+     "do": "Start with her in a sit. Hold food at her nose and lower it straight down to the floor between her front paws, then slide it slowly toward you along the ground.",
+     "look": "Her elbows drop as she follows it. Mark the instant her elbows touch. If her bottom comes up, you moved too fast or too far forward.",
+     "reps": "5 to 6."
+    },
+    {
+     "n": 2,
+     "do": "If she will not follow it down, sit on the floor with one knee up and lure her under your knee.",
+     "look": "She has to duck to get the food, which puts her down.",
+     "reps": "5 to 6."
+    },
+    {
+     "n": 3,
+     "do": "Same motion, empty hand. Reward from the other hand.",
+     "look": "She follows the empty gesture.",
+     "reps": "5 to 6."
+    },
+    {
+     "n": 4,
+     "do": "Shrink the gesture to a small downward point.",
+     "look": "She goes down off a small signal.",
+     "reps": "5 to 6."
+    },
+    {
+     "n": 5,
+     "do": "Add the word DOWN once, then the gesture.",
+     "look": "She beats the gesture within a few sessions.",
+     "reps": "6 per session."
+    }
+   ],
+   "wrong": [
+    "Using DOWN to also mean get off the sofa and stop jumping. Three meanings, one word, no learning. Pick OFF for those.",
+    "Pushing her shoulders down.",
+    "Trying it on a slippery floor where she cannot get purchase."
+   ],
+   "next": [
+    "t-stay",
+    "t-settle"
+   ],
+   "tags": [
+    "down",
+    "lie down",
+    "lay",
+    "basic"
+   ],
+   "criteria": [
+    {
+     "level": "Lured",
+     "test": "With food visibly in your hand, she gets into position.",
+     "pass": "5 out of 6 tries in one session.",
+     "id": "t-down-c1"
+    },
+    {
+     "level": "Learned",
+     "test": "Empty hand, same motion. She still does it. Reward comes from the other hand afterwards.",
+     "pass": "5 out of 6 tries in one session. THIS is where most people get stuck, because they never fade the lure.",
+     "id": "t-down-c2"
+    },
+    {
+     "level": "Named",
+     "test": "Say the word once, hands still, no hand signal. She does it.",
+     "pass": "5 out of 6 tries in one session, in the room you taught it in.",
+     "id": "t-down-c3"
+    },
+    {
+     "level": "Proofed",
+     "test": "The verbal cue works in three different rooms, and once with a mild distraction: someone walking past, a toy on the floor, the TV on.",
+     "pass": "4 out of 5 in each of three locations.",
+     "id": "t-down-c4"
+    },
+    {
+     "level": "Reliable",
+     "test": "Somewhere she has never done it before. Treats in a pocket or a closed pouch, not in your hand. One cue, no repeats.",
+     "pass": "8 out of 10 first-time responses. THIS is the answer to did she learn it. Not once. Not sometimes. Eight out of ten, cold, in a new place.",
+     "id": "t-down-c5"
+    }
+   ]
+  },
+  {
+   "id": "t-stay",
+   "cat": "Next",
+   "title": "Wait and stay",
+   "priority": 2,
+   "age": "From 12 weeks.",
+   "sessions": "2 minutes, twice a day.",
+   "why": "Stay is really three separate skills that people try to train as one, which is why it usually falls apart: duration, distance, and distraction. Train them one at a time and never two at once. Every time you raise one, drop the other two.",
+   "need": [
+    "Kibble",
+    "A release word, decided now and written down. OK or FREE or BREAK."
+   ],
+   "steps": [
+    {
+     "n": 1,
+     "do": "Teach the release word first. Put her in a sit, immediately say OK and encourage her to move, then reward the movement.",
+     "look": "She understands there is a word that means you are finished. Without it, stay has no end and she decides when it ends.",
+     "reps": "6."
+    },
+    {
+     "n": 2,
+     "do": "DURATION only. Sit, count one second, mark, feed, then release. Then two seconds. Then three. Stay right next to her.",
+     "look": "Build in ones and twos. If she breaks, your last increment was too big.",
+     "reps": "6 per session, varying the count so it is not always increasing."
+    },
+    {
+     "n": 3,
+     "do": "DISTANCE only. Go back to one second, but take half a step back. Then a full step. Then two.",
+     "look": "Return TO HER to reward. If you call her to you, you are rewarding coming, not staying.",
+     "reps": "6 per session."
+    },
+    {
+     "n": 4,
+     "do": "DISTRACTION only. Back to one second, right next to her, but now bounce a ball, or have someone walk past.",
+     "look": "She holds. Start with distractions so mild they barely register.",
+     "reps": "6 per session."
+    },
+    {
+     "n": 5,
+     "do": "Combine slowly, two at a time, always dropping the third right down.",
+     "look": "Three seconds at three steps with someone walking past is a hard problem. Get there in months, not days.",
+     "reps": "6 per session."
+    },
+    {
+     "n": 6,
+     "do": "Add WAIT for the short version at doors and kerbs, and STAY for the long one, if you want two words. Or use one for both.",
+     "look": "Consistent across all three of you.",
+     "reps": "Daily."
+    }
+   ],
+   "wrong": [
+    "Raising duration, distance and distraction at once. This is why most stays fail.",
+    "Calling her out of a stay. Always go back to her.",
+    "Repeating STAY as a nervous tic while she is holding it. Say it once and be quiet.",
+    "No release word, so she decides when it is over."
+   ],
+   "next": [
+    "t-door",
+    "t-place"
+   ],
+   "tags": [
+    "stay",
+    "wait",
+    "hold",
+    "release",
+    "ok",
+    "duration",
+    "distance"
+   ],
+   "criteria": [
+    {
+     "level": "Release",
+     "test": "She moves on OK and not before.",
+     "pass": "6 out of 6.",
+     "id": "t-stay-c1"
+    },
+    {
+     "level": "Duration",
+     "test": "30 seconds, you standing next to her, no distractions.",
+     "pass": "3 out of 4 attempts.",
+     "id": "t-stay-c2"
+    },
+    {
+     "level": "Distance",
+     "test": "10 seconds while you stand three metres away.",
+     "pass": "3 out of 4.",
+     "id": "t-stay-c3"
+    },
+    {
+     "level": "Distraction",
+     "test": "10 seconds, next to her, with a toy bounced in front of her.",
+     "pass": "3 out of 4.",
+     "id": "t-stay-c4"
+    },
+    {
+     "level": "Combined",
+     "test": "30 seconds, five metres away, in a room with something going on.",
+     "pass": "3 out of 4, and it holds in two different rooms.",
+     "id": "t-stay-c5"
+    }
+   ]
+  },
+  {
+   "id": "t-leash",
+   "cat": "Next",
+   "title": "Loose lead walking",
+   "priority": 2,
+   "age": "From 12 weeks. Expect this to take months, not weeks.",
+   "sessions": "5 minutes, and separately from actual walks.",
+   "why": "The hardest thing on this list, and the one people rush. Pulling is self-rewarding: she pulls, she gets closer to the smell, pulling works. Until walking next to you pays better than pulling does, she will pull. Do her toilet trips and her exercise as normal, and train this as its own separate exercise.",
+   "need": [
+    "A flat collar or a Y-shaped harness. Never a choke, prong or slip lead on a growing puppy.",
+    "A 2 metre lead. Never retractable.",
+    "Chicken, not kibble, to start."
+   ],
+   "steps": [
+    {
+     "n": 1,
+     "do": "Indoors, no lead at all. Walk a few steps. Every time she is next to your leg, mark and feed AT YOUR LEG, at her head height.",
+     "look": "She starts to hang around your left side because that is where food appears.",
+     "reps": "2 minutes."
+    },
+    {
+     "n": 2,
+     "do": "Add the lead, still indoors. Same game. The lead should hang in a J shape and never go tight.",
+     "look": "She ignores the lead entirely.",
+     "reps": "2 minutes."
+    },
+    {
+     "n": 3,
+     "do": "Hallway, then just outside the door. Pay far more often than feels reasonable. Every two or three steps at first.",
+     "look": "Outside is a hundred times harder than inside. Your payment rate has to go up accordingly.",
+     "reps": "3 minutes."
+    },
+    {
+     "n": 4,
+     "do": "THE RULE: the lead going tight means all forward motion stops. Stand still. Say nothing. Wait.",
+     "look": "When the lead slackens, even by accident, mark and move off. She learns pulling stops the walk and slack starts it.",
+     "reps": "Every single time, from every handler."
+    },
+    {
+     "n": 5,
+     "do": "Give her sniffing time on cue. Say GO SNIFF and let her have three minutes on a loose lead to do whatever she likes.",
+     "look": "Sniffing is the point of the walk for her. If the whole walk is heelwork she has no reason to cooperate. Trade structured walking for sniffing time.",
+     "reps": "Several times per walk."
+    }
+   ],
+   "wrong": [
+    "Training this on a walk where you actually need to get somewhere. You will give in and let her pull, and that pays the pulling. Separate the two.",
+    "Jerking the lead. It does not teach position, it teaches that being next to you sometimes hurts.",
+    "A retractable lead. It teaches her that constant tension is normal, which is the exact opposite of the lesson.",
+    "Expecting a formal heel. You want a loose lead, not a dog glued to your knee. Those are different skills and only one of them is useful."
+   ],
+   "next": [
+    "t-heel",
+    "t-leaveit"
+   ],
+   "tags": [
+    "leash",
+    "lead",
+    "pulling",
+    "walking",
+    "harness",
+    "heel",
+    "walk"
+   ],
+   "note": "Her exercise limit still applies. Structured lead walking counts toward it. Free sniffing and pottering does not count the same way. Keep the total in line with her age.",
+   "criteria": [
+    {
+     "level": "Indoors",
+     "test": "Ten steps with the lead loose, indoors.",
+     "pass": "3 out of 4 attempts.",
+     "id": "t-leash-c1"
+    },
+    {
+     "level": "Doorstep",
+     "test": "Twenty steps outside your front door with a loose lead.",
+     "pass": "3 out of 4.",
+     "id": "t-leash-c2"
+    },
+    {
+     "level": "Quiet street",
+     "test": "Fifty metres on a quiet pavement without the lead going tight.",
+     "pass": "3 out of 4 outings.",
+     "id": "t-leash-c3"
+    },
+    {
+     "level": "Normal street",
+     "test": "Two minutes of continuous loose-lead walking on a normal street.",
+     "pass": "3 out of 4 outings.",
+     "id": "t-leash-c4"
+    },
+    {
+     "level": "Reliable",
+     "test": "A whole ten minute walk where the lead is loose more than it is tight, past other people and dogs.",
+     "pass": "Consistently over a fortnight.",
+     "id": "t-leash-c5"
+    }
+   ]
+  },
+  {
+   "id": "t-door",
+   "cat": "Next",
+   "title": "Waiting at doors",
+   "priority": 2,
+   "age": "From 12 weeks.",
+   "sessions": "Every time you go through a door.",
+   "why": "A door-darting puppy in a city flat is a genuine safety problem. This also becomes your kerb behaviour, which matters more every month.",
+   "need": [
+    "Kibble",
+    "Any door"
+   ],
+   "steps": [
+    {
+     "n": 1,
+     "do": "Hand on the door handle. If she surges, take your hand off. Say nothing.",
+     "look": "She learns her movement controls the door, not yours.",
+     "reps": "6."
+    },
+    {
+     "n": 2,
+     "do": "Open the door an inch. If she moves forward, close it. If she holds still, mark and feed.",
+     "look": "Stillness opens the door.",
+     "reps": "6."
+    },
+    {
+     "n": 3,
+     "do": "Build to fully open with her holding position.",
+     "look": "She waits at an open door.",
+     "reps": "6."
+    },
+    {
+     "n": 4,
+     "do": "Release her through with OK. Reward on the other side sometimes, and sometimes call her back and reward for that instead.",
+     "look": "She does not assume an open door is an invitation.",
+     "reps": "Every door, every time."
+    },
+    {
+     "n": 5,
+     "do": "Take it to the kerb. Stop at every kerb, ask for a sit, then release.",
+     "look": "An automatic kerb stop by about six months.",
+     "reps": "Every kerb."
+    }
+   ],
+   "wrong": [
+    "Only doing it when you remember. Doors are all-or-nothing; inconsistency here teaches her to try her luck.",
+    "Letting a visitor open the door without knowing the rule."
+   ],
+   "next": [
+    "t-stay"
+   ],
+   "tags": [
+    "door",
+    "wait",
+    "kerb",
+    "curb",
+    "bolting",
+    "darting",
+    "threshold",
+    "safety"
+   ],
+   "criteria": [
+    {
+     "level": "Hand on handle",
+     "test": "You touch the handle and she does not surge.",
+     "pass": "5 out of 6.",
+     "id": "t-door-c1"
+    },
+    {
+     "level": "Door ajar",
+     "test": "Door open a few inches, she holds.",
+     "pass": "5 out of 6.",
+     "id": "t-door-c2"
+    },
+    {
+     "level": "Wide open",
+     "test": "Door fully open, she holds for five seconds.",
+     "pass": "4 out of 5.",
+     "id": "t-door-c3"
+    },
+    {
+     "level": "Front door",
+     "test": "The same at your actual front door, with the hall beyond.",
+     "pass": "4 out of 5.",
+     "id": "t-door-c4"
+    },
+    {
+     "level": "Automatic",
+     "test": "She stops at doors and kerbs without being asked.",
+     "pass": "8 out of 10 occasions, with all three handlers.",
+     "id": "t-door-c5"
+    }
+   ]
+  },
+  {
+   "id": "t-alone",
+   "cat": "Next",
+   "title": "Being left alone",
+   "priority": 2,
+   "age": "Now, in tiny doses. It is genuinely urgent.",
+   "sessions": "Several very short absences a day.",
+   "why": "Being alone is not natural to a dog and it is not something she grows into. It has to be taught, deliberately, in seconds before minutes. The single biggest predictor of separation problems is never having practised it while things were calm. She has three people around constantly at the moment, which makes this easy to forget and expensive to skip.",
+   "need": [
+    "Her crate or a pen, already a good place",
+    "A stuffed frozen Kong from her ration",
+    "A phone camera or old tablet to watch her"
+   ],
+   "steps": [
+    {
+     "n": 1,
+     "do": "With her settled in the crate with a Kong, walk to the other side of the room. Come back before she looks up.",
+     "look": "She does not notice you left.",
+     "reps": "10 a day."
+    },
+    {
+     "n": 2,
+     "do": "Step out of the room for two seconds. Return calmly. No greeting, no fuss.",
+     "look": "Coming and going is unremarkable.",
+     "reps": "10 a day."
+    },
+    {
+     "n": 3,
+     "do": "Build the time in an irregular pattern: 5 seconds, 20, 10, 45, 15, 2. Never a steady climb.",
+     "look": "She cannot predict how long it will be, so she does not start counting.",
+     "reps": "Several a day."
+    },
+    {
+     "n": 4,
+     "do": "Once you are past a minute, do the full leaving routine: shoes, keys, coat, door. Then come straight back in.",
+     "look": "The departure cues stop predicting a long absence.",
+     "reps": "A few a day."
+    },
+    {
+     "n": 5,
+     "do": "Actually leave the flat. Two minutes. Five. Ten. Watch her on camera.",
+     "look": "Settled or asleep. If she is pacing, whining, drooling or scratching, you went too fast. Go back to a duration she was fine with.",
+     "reps": "Daily."
+    }
+   ],
+   "wrong": [
+    "Big emotional goodbyes and big greetings. Both make your absence the most significant event of her day. Be boring at both ends.",
+    "Only practising when you have to go out. Then leaving always means a long absence.",
+    "Assuming a quiet puppy is a settled puppy. Watch the camera. Silent pacing and drooling is distress.",
+    "Pushing through distress hoping she will get used to it. She will not; she will get worse. Distress is the signal to go back a step."
+   ],
+   "next": [
+    "t-crate",
+    "t-settle"
+   ],
+   "tags": [
+    "alone",
+    "separation",
+    "left",
+    "leaving",
+    "home alone",
+    "anxiety",
+    "crying"
+   ],
+   "note": "Genuine separation anxiety is a clinical condition, not a training failure, and it responds much better to early help. If she is panicking rather than just protesting, that is a conversation for your vet.",
+   "criteria": [
+    {
+     "level": "Different room",
+     "test": "Two minutes alone in a room while you are elsewhere in the flat.",
+     "pass": "Settled on camera, three times.",
+     "id": "t-alone-c1"
+    },
+    {
+     "level": "Out the door",
+     "test": "Five minutes out of the flat.",
+     "pass": "Settled on camera, three times.",
+     "id": "t-alone-c2"
+    },
+    {
+     "level": "Fifteen",
+     "test": "Fifteen minutes out of the flat.",
+     "pass": "Settled on camera, twice.",
+     "id": "t-alone-c3"
+    },
+    {
+     "level": "Thirty",
+     "test": "Thirty minutes.",
+     "pass": "Settled on camera, twice.",
+     "id": "t-alone-c4"
+    },
+    {
+     "level": "An hour",
+     "test": "An hour, with a Kong at the start.",
+     "pass": "She sleeps through most of it, twice.",
+     "id": "t-alone-c5"
+    }
+   ]
+  },
+  {
+   "id": "t-place",
+   "cat": "Next",
+   "title": "Go to your bed",
+   "priority": 2,
+   "age": "From 12 to 14 weeks, once settle is working.",
+   "sessions": "2 minutes a day.",
+   "why": "Sending her somewhere is more useful than asking her to stop something. Doorbell, cooking, dinner, a delivery: a dog with a place to go does not need to be managed.",
+   "need": [
+    "A defined mat or bed",
+    "Kibble"
+   ],
+   "steps": [
+    {
+     "n": 1,
+     "do": "Stand near the mat. The moment she steps on it, even one paw, mark and feed ON the mat.",
+     "look": "She comes back to it. Do not lure. Let her work out that the mat is what pays.",
+     "reps": "10."
+    },
+    {
+     "n": 2,
+     "do": "Wait for all four paws, then for a sit, then for a down.",
+     "look": "She is offering a down on the mat.",
+     "reps": "8."
+    },
+    {
+     "n": 3,
+     "do": "Add the word PLACE or BED as she is heading there.",
+     "look": "She goes on the word.",
+     "reps": "6."
+    },
+    {
+     "n": 4,
+     "do": "Add distance. Send her from one step away, then two, then across the room.",
+     "look": "She goes from wherever you are.",
+     "reps": "6."
+    },
+    {
+     "n": 5,
+     "do": "Add duration and distraction, exactly like stay. One at a time.",
+     "look": "She holds it while you cook.",
+     "reps": "Daily."
+    }
+   ],
+   "wrong": [
+    "Physically putting her on the mat. She has to choose it for the cue to mean anything.",
+    "Only using it when something stressful is happening, so the mat predicts stress."
+   ],
+   "next": [
+    "t-settle",
+    "t-stay"
+   ],
+   "tags": [
+    "place",
+    "bed",
+    "mat",
+    "go to bed",
+    "send",
+    "doorbell"
+   ],
+   "criteria": [
+    {
+     "level": "Lured",
+     "test": "With food visibly in your hand, she gets into position.",
+     "pass": "5 out of 6 tries in one session.",
+     "id": "t-place-c1"
+    },
+    {
+     "level": "Learned",
+     "test": "Empty hand, same motion. She still does it. Reward comes from the other hand afterwards.",
+     "pass": "5 out of 6 tries in one session. THIS is where most people get stuck, because they never fade the lure.",
+     "id": "t-place-c2"
+    },
+    {
+     "level": "Named",
+     "test": "Say the word once, hands still, no hand signal. She does it.",
+     "pass": "5 out of 6 tries in one session, in the room you taught it in.",
+     "id": "t-place-c3"
+    },
+    {
+     "level": "Proofed",
+     "test": "The verbal cue works in three different rooms, and once with a mild distraction: someone walking past, a toy on the floor, the TV on.",
+     "pass": "4 out of 5 in each of three locations.",
+     "id": "t-place-c4"
+    },
+    {
+     "level": "Reliable",
+     "test": "You are in another part of the room, the doorbell has just gone, and you say PLACE once.",
+     "pass": "She goes and stays there, 8 out of 10 times.",
+     "id": "t-place-c5"
+    }
+   ]
+  },
+  {
+   "id": "t-touch",
+   "cat": "Next",
+   "title": "Hand target",
+   "priority": 2,
+   "age": "Any time. It is easy and it is unreasonably useful.",
+   "sessions": "1 minute, twice a day.",
+   "why": "A nose touch to your palm. It looks like a trick, and it is the most useful single behaviour on this list after recall: it moves her without touching her, gets her past something scary, gets her onto scales, into a car, off a sofa, and gives a nervous dog something to do.",
+   "need": [
+    "Kibble",
+    "Your hand"
+   ],
+   "steps": [
+    {
+     "n": 1,
+     "do": "Hold your flat palm a few centimetres from her nose, off to one side. Say nothing.",
+     "look": "Curiosity makes her sniff it. The instant her nose touches, YES and feed.",
+     "reps": "6 to 8."
+    },
+    {
+     "n": 2,
+     "do": "Move the hand around: left, right, higher, lower.",
+     "look": "She follows and touches.",
+     "reps": "6 to 8."
+    },
+    {
+     "n": 3,
+     "do": "Add the word TOUCH just before you present the hand.",
+     "look": "She touches on the word.",
+     "reps": "6."
+    },
+    {
+     "n": 4,
+     "do": "Add distance. Present the hand a step away, then two steps.",
+     "look": "She crosses the room to touch. This is now a mini-recall.",
+     "reps": "6."
+    },
+    {
+     "n": 5,
+     "do": "Use it: to move her off the sofa, past a scary bin, onto the vet scales.",
+     "look": "It works in real situations.",
+     "reps": "Real life."
+    }
+   ],
+   "wrong": [
+    "Moving your hand toward her nose. Hold it still and let her come to it.",
+    "Rewarding a paw. Only pay the nose."
+   ],
+   "next": [
+    "t-recall"
+   ],
+   "tags": [
+    "touch",
+    "target",
+    "hand",
+    "nose",
+    "trick",
+    "useful"
+   ],
+   "criteria": [
+    {
+     "level": "Lured",
+     "test": "With food visibly in your hand, she gets into position.",
+     "pass": "5 out of 6 tries in one session.",
+     "id": "t-touch-c1"
+    },
+    {
+     "level": "Learned",
+     "test": "Empty hand, same motion. She still does it. Reward comes from the other hand afterwards.",
+     "pass": "5 out of 6 tries in one session. THIS is where most people get stuck, because they never fade the lure.",
+     "id": "t-touch-c2"
+    },
+    {
+     "level": "Named",
+     "test": "Say the word once, hands still, no hand signal. She does it.",
+     "pass": "5 out of 6 tries in one session, in the room you taught it in.",
+     "id": "t-touch-c3"
+    },
+    {
+     "level": "Proofed",
+     "test": "The verbal cue works in three different rooms, and once with a mild distraction: someone walking past, a toy on the floor, the TV on.",
+     "pass": "4 out of 5 in each of three locations.",
+     "id": "t-touch-c4"
+    },
+    {
+     "level": "Reliable",
+     "test": "Somewhere she has never done it before. Treats in a pocket or a closed pouch, not in your hand. One cue, no repeats.",
+     "pass": "8 out of 10 first-time responses. THIS is the answer to did she learn it. Not once. Not sometimes. Eight out of ten, cold, in a new place.",
+     "id": "t-touch-c5"
+    }
+   ]
+  },
+  {
+   "id": "t-emergency-recall",
+   "cat": "Later",
+   "title": "Emergency recall",
+   "priority": 3,
+   "age": "From about 4 months, once normal recall is solid.",
+   "sessions": "Once a week. No more.",
+   "why": "A second, separate recall word that you never use casually and that is always paid with something extraordinary. Normal recall is for everyday. This one is for a car, an open gate, a dog running at her. It works precisely because it is rare.",
+   "need": [
+    "A word you would never say otherwise. A whistle works well.",
+    "Something she gets at no other time: roast chicken, cheese, liver."
+   ],
+   "steps": [
+    {
+     "n": 1,
+     "do": "At home, with her a metre away, make the sound. When she looks, deliver ten to fifteen seconds of continuous feeding, one piece after another, with genuine celebration.",
+     "look": "She is startled by how good it was.",
+     "reps": "Once a day for a week, then once a week."
+    },
+    {
+     "n": 2,
+     "do": "Increase distance and distraction very gradually, always with the same enormous payment.",
+     "look": "The sound produces an immediate sprint.",
+     "reps": "Once a week."
+    },
+    {
+     "n": 3,
+     "do": "Never use it for anything else. Not to come in from the garden, not for dinner, not to test it more than once a week.",
+     "look": "It stays loaded.",
+     "reps": "Discipline, forever."
+    }
+   ],
+   "wrong": [
+    "Using it more than once a week. Every casual use spends it.",
+    "Paying it with kibble. If it is not the best thing that happens to her all week, it is not an emergency recall."
+   ],
+   "next": [
+    "t-recall"
+   ],
+   "tags": [
+    "emergency",
+    "recall",
+    "whistle",
+    "safety",
+    "road",
+    "car"
+   ],
+   "criteria": [
+    {
+     "level": "Charged",
+     "test": "The sound at home, a metre away.",
+     "pass": "Immediate turn and approach, 6 out of 6.",
+     "id": "t-emergency-recall-c1"
+    },
+    {
+     "level": "Across a room",
+     "test": "Sound from another room while she is occupied.",
+     "pass": "She comes, 5 out of 6.",
+     "id": "t-emergency-recall-c2"
+    },
+    {
+     "level": "Outdoors",
+     "test": "On a long line, mid-sniff.",
+     "pass": "Immediate turn, 5 out of 6.",
+     "id": "t-emergency-recall-c3"
+    },
+    {
+     "level": "Under distraction",
+     "test": "On a long line, while a dog is visible in the distance.",
+     "pass": "She comes, 4 out of 5.",
+     "id": "t-emergency-recall-c4"
+    },
+    {
+     "level": "Loaded",
+     "test": "Used at most once a week for three months, always paid enormously.",
+     "pass": "Still produces a sprint after three months of near-disuse.",
+     "id": "t-emergency-recall-c5"
+    }
+   ]
+  },
+  {
+   "id": "t-heel",
+   "cat": "Later",
+   "title": "Formal heel",
+   "priority": 3,
+   "age": "From 5 to 6 months, after loose lead walking is reliable.",
+   "sessions": "3 minutes, twice a week.",
+   "why": "A precise position at your side, for crossing a busy road or squeezing past a crowd. Different from loose lead walking, which is what you want for 95 percent of a walk. Do not train heel before loose lead walking works; you will end up with a dog who only knows how to be glued to your leg or pull.",
+   "need": [
+    "Chicken",
+    "A quiet space"
+   ],
+   "steps": [
+    {
+     "n": 1,
+     "do": "Stand still. Feed her repeatedly in the exact position you want: shoulder level with your leg.",
+     "look": "She learns the spot pays.",
+     "reps": "10."
+    },
+    {
+     "n": 2,
+     "do": "Take one step. If she stays in position, mark and feed there. Build to three steps, then five.",
+     "look": "Position holds through movement.",
+     "reps": "8."
+    },
+    {
+     "n": 3,
+     "do": "Add the word HEEL, and a release word to end it.",
+     "look": "She understands heel is a temporary job, not the whole walk.",
+     "reps": "8."
+    },
+    {
+     "n": 4,
+     "do": "Add turns, then pace changes, then distractions.",
+     "look": "Position holds through change.",
+     "reps": "8."
+    }
+   ],
+   "wrong": [
+    "Using heel for the entire walk. It is mentally tiring and it removes the sniffing that makes a walk worth taking.",
+    "Training it before loose lead walking exists."
+   ],
+   "next": [
+    "t-leash"
+   ],
+   "tags": [
+    "heel",
+    "position",
+    "formal",
+    "precision"
+   ],
+   "criteria": [
+    {
+     "level": "Lured",
+     "test": "With food visibly in your hand, she gets into position.",
+     "pass": "5 out of 6 tries in one session.",
+     "id": "t-heel-c1"
+    },
+    {
+     "level": "Learned",
+     "test": "Empty hand, same motion. She still does it. Reward comes from the other hand afterwards.",
+     "pass": "5 out of 6 tries in one session. THIS is where most people get stuck, because they never fade the lure.",
+     "id": "t-heel-c2"
+    },
+    {
+     "level": "Named",
+     "test": "Say the word once, hands still, no hand signal. She does it.",
+     "pass": "5 out of 6 tries in one session, in the room you taught it in.",
+     "id": "t-heel-c3"
+    },
+    {
+     "level": "Proofed",
+     "test": "The verbal cue works in three different rooms, and once with a mild distraction: someone walking past, a toy on the floor, the TV on.",
+     "pass": "4 out of 5 in each of three locations.",
+     "id": "t-heel-c4"
+    },
+    {
+     "level": "Reliable",
+     "test": "Somewhere she has never done it before. Treats in a pocket or a closed pouch, not in your hand. One cue, no repeats.",
+     "pass": "8 out of 10 first-time responses. THIS is the answer to did she learn it. Not once. Not sometimes. Eight out of ten, cold, in a new place.",
+     "id": "t-heel-c5"
+    }
+   ]
+  },
+  {
+   "id": "t-stand",
+   "cat": "Later",
+   "title": "Stand for examination",
+   "priority": 3,
+   "age": "From 4 months.",
+   "sessions": "1 minute, twice a week.",
+   "why": "A stationary stand while someone touches her. Every vet visit and every groom uses it, and it is the physical vocabulary for a dog who is easy to handle.",
+   "need": [
+    "Kibble"
+   ],
+   "steps": [
+    {
+     "n": 1,
+     "do": "From a sit, hold food at nose height and move it straight forward. She stands to follow it. Mark the moment all four feet are down and still.",
+     "look": "She stands rather than walking on.",
+     "reps": "6."
+    },
+    {
+     "n": 2,
+     "do": "Build duration: two seconds, five, ten.",
+     "look": "She holds.",
+     "reps": "6."
+    },
+    {
+     "n": 3,
+     "do": "Add the word STAND, then add handling while she holds it.",
+     "look": "She stands while you run your hands over her.",
+     "reps": "6."
+    }
+   ],
+   "wrong": [
+    "Letting her sit as soon as she stops. Mark fast, before she folds."
+   ],
+   "next": [
+    "t-handling"
+   ],
+   "tags": [
+    "stand",
+    "exam",
+    "vet",
+    "groomer",
+    "stack"
+   ],
+   "criteria": [
+    {
+     "level": "Lured",
+     "test": "With food visibly in your hand, she gets into position.",
+     "pass": "5 out of 6 tries in one session.",
+     "id": "t-stand-c1"
+    },
+    {
+     "level": "Learned",
+     "test": "Empty hand, same motion. She still does it. Reward comes from the other hand afterwards.",
+     "pass": "5 out of 6 tries in one session. THIS is where most people get stuck, because they never fade the lure.",
+     "id": "t-stand-c2"
+    },
+    {
+     "level": "Named",
+     "test": "Say the word once, hands still, no hand signal. She does it.",
+     "pass": "5 out of 6 tries in one session, in the room you taught it in.",
+     "id": "t-stand-c3"
+    },
+    {
+     "level": "Proofed",
+     "test": "The verbal cue works in three different rooms, and once with a mild distraction: someone walking past, a toy on the floor, the TV on.",
+     "pass": "4 out of 5 in each of three locations.",
+     "id": "t-stand-c4"
+    },
+    {
+     "level": "Reliable",
+     "test": "Somewhere she has never done it before. Treats in a pocket or a closed pouch, not in your hand. One cue, no repeats.",
+     "pass": "8 out of 10 first-time responses. THIS is the answer to did she learn it. Not once. Not sometimes. Eight out of ten, cold, in a new place.",
+     "id": "t-stand-c5"
+    }
+   ]
+  },
+  {
+   "id": "t-greetings",
+   "cat": "Later",
+   "title": "Greeting people without jumping",
+   "priority": 3,
+   "age": "From 4 months, and it never really stops.",
+   "sessions": "Every arrival.",
+   "why": "A golden retriever who jumps at 10 weeks is charming and at 30 kilos is not. The behaviour is being trained right now, by everyone who bends down and makes a fuss of a jumping puppy.",
+   "need": [
+    "Kibble by the door",
+    "Cooperative visitors",
+    "A lead for real arrivals"
+   ],
+   "steps": [
+    {
+     "n": 1,
+     "do": "Four on the floor. Nobody touches her, looks at her or speaks to her while any paw is off the ground.",
+     "look": "Attention arrives only when all four feet are down.",
+     "reps": "Every greeting, from everyone."
+    },
+    {
+     "n": 2,
+     "do": "The moment all four are down, mark and feed on the floor. Feeding low keeps her low.",
+     "look": "Food on the ground resets her position.",
+     "reps": "Every greeting."
+    },
+    {
+     "n": 3,
+     "do": "Ask for a sit as a greeting behaviour, once she has one.",
+     "look": "She offers a sit at people.",
+     "reps": "Every greeting."
+    },
+    {
+     "n": 4,
+     "do": "Brief guests before they come in. Most people will undo this cheerfully if you let them.",
+     "look": "Consistency across everyone she meets.",
+     "reps": "Every guest."
+    }
+   ],
+   "wrong": [
+    "Kneeing her, or pushing her off. To a social puppy that is contact, which is what she was asking for.",
+    "Letting some people allow it. One person who lets her jump keeps the behaviour alive for everyone."
+   ],
+   "next": [
+    "t-sit",
+    "t-place"
+   ],
+   "tags": [
+    "jumping",
+    "greeting",
+    "visitors",
+    "guests",
+    "door",
+    "paws up"
+   ],
+   "criteria": [
+    {
+     "level": "Lured",
+     "test": "With food visibly in your hand, she gets into position.",
+     "pass": "5 out of 6 tries in one session.",
+     "id": "t-greetings-c1"
+    },
+    {
+     "level": "Learned",
+     "test": "Empty hand, same motion. She still does it. Reward comes from the other hand afterwards.",
+     "pass": "5 out of 6 tries in one session. THIS is where most people get stuck, because they never fade the lure.",
+     "id": "t-greetings-c2"
+    },
+    {
+     "level": "Named",
+     "test": "Say the word once, hands still, no hand signal. She does it.",
+     "pass": "5 out of 6 tries in one session, in the room you taught it in.",
+     "id": "t-greetings-c3"
+    },
+    {
+     "level": "Proofed",
+     "test": "The verbal cue works in three different rooms, and once with a mild distraction: someone walking past, a toy on the floor, the TV on.",
+     "pass": "4 out of 5 in each of three locations.",
+     "id": "t-greetings-c4"
+    },
+    {
+     "level": "Reliable",
+     "test": "A visitor arrives at the door, unbriefed, and she is off the lead.",
+     "pass": "All four feet stay on the floor, 8 out of 10 arrivals.",
+     "id": "t-greetings-c5"
+    }
+   ]
+  },
+  {
+   "id": "t-retrieve",
+   "cat": "Advanced",
+   "title": "A real retrieve",
+   "priority": 4,
+   "age": "From 6 months. Informal fetch can start much earlier.",
+   "sessions": "5 minutes, a few times a week.",
+   "why": "She is a retriever. This is the thing her breed was built for over two centuries, and a golden who never gets to use it is a golden with unspent energy. A trained retrieve is also enormously practical: it burns more energy in ten minutes than a half-hour walk, and it gives you something to do in a small flat on a bad day.",
+   "need": [
+    "Two identical toys",
+    "A hallway or a long room"
+   ],
+   "steps": [
+    {
+     "n": 1,
+     "do": "Two-toy game. Throw one. The instant she picks it up, produce the second and make it exciting.",
+     "look": "She runs back to you with the first to get at the second. Do not chase her. Make the toy in your hand the interesting one.",
+     "reps": "6 throws."
+    },
+    {
+     "n": 2,
+     "do": "When she arrives, ask for DROP, then throw the second immediately as the reward.",
+     "look": "Bringing it back and dropping it is what starts the next throw.",
+     "reps": "6."
+    },
+    {
+     "n": 3,
+     "do": "Add a hold: ask her to keep it in her mouth for a second before dropping.",
+     "look": "A clean hold rather than an instant spit.",
+     "reps": "6."
+    },
+    {
+     "n": 4,
+     "do": "Add a wait before the send, so she does not break on the throw.",
+     "look": "She holds until released.",
+     "reps": "6."
+    },
+    {
+     "n": 5,
+     "do": "Add distance, then hidden retrieves, then two thrown items retrieved in sequence.",
+     "look": "A structured, thinking retrieve rather than a frenzy.",
+     "reps": "Ongoing."
+    }
+   ],
+   "wrong": [
+    "Endless repetitive ball throwing. It is high-impact on joints, it builds obsessive arousal rather than fitness, and for a large breed still growing it is genuinely bad for her. Structured retrieves in small numbers beat forty throws.",
+    "Chasing her to get the toy back. That trains keep-away.",
+    "Starting formal work before her growth plates are closer to closed. Keep it flat, short and low-impact until then."
+   ],
+   "next": [
+    "t-dropit",
+    "t-scentwork"
+   ],
+   "tags": [
+    "retrieve",
+    "fetch",
+    "ball",
+    "toy",
+    "gundog",
+    "carrying",
+    "hold"
+   ],
+   "note": "Ask your vet when she can start higher-impact work. Growth plates in a large breed generally close somewhere around 12 to 18 months, and jumping and hard turns before then are a real concern.",
+   "criteria": [
+    {
+     "level": "Lured",
+     "test": "With food visibly in your hand, she gets into position.",
+     "pass": "5 out of 6 tries in one session.",
+     "id": "t-retrieve-c1"
+    },
+    {
+     "level": "Learned",
+     "test": "Empty hand, same motion. She still does it. Reward comes from the other hand afterwards.",
+     "pass": "5 out of 6 tries in one session. THIS is where most people get stuck, because they never fade the lure.",
+     "id": "t-retrieve-c2"
+    },
+    {
+     "level": "Named",
+     "test": "Say the word once, hands still, no hand signal. She does it.",
+     "pass": "5 out of 6 tries in one session, in the room you taught it in.",
+     "id": "t-retrieve-c3"
+    },
+    {
+     "level": "Proofed",
+     "test": "The verbal cue works in three different rooms, and once with a mild distraction: someone walking past, a toy on the floor, the TV on.",
+     "pass": "4 out of 5 in each of three locations.",
+     "id": "t-retrieve-c4"
+    },
+    {
+     "level": "Reliable",
+     "test": "A hidden retrieve in an unfamiliar place: she goes out, finds it, brings it back, holds it, and gives it up on cue.",
+     "pass": "8 out of 10 clean retrieves.",
+     "id": "t-retrieve-c5"
+    }
+   ]
+  },
+  {
+   "id": "t-scentwork",
+   "cat": "Advanced",
+   "title": "Scent games and nosework",
+   "priority": 4,
+   "age": "Can start informally now. Formal work from 6 months.",
+   "sessions": "10 minutes, two or three times a week.",
+   "why": "The highest value activity per minute for a dog in a flat. Sniffing is genuinely tiring in a way walking is not, it lowers arousal, and it is something she can do brilliantly on a wet day when a walk is not appealing. For a retriever it is close to a biological need.",
+   "need": [
+    "Cardboard boxes",
+    "Her kibble to start, a specific toy later",
+    "A room you can shut off"
+   ],
+   "steps": [
+    {
+     "n": 1,
+     "do": "FIND IT. Scatter ten pieces of kibble on a rug in front of her. Let her hoover.",
+     "look": "Nose goes down. That is all you need at the start.",
+     "reps": "Daily."
+    },
+    {
+     "n": 2,
+     "do": "Hide pieces around a room while she waits outside. Let her in and say FIND IT.",
+     "look": "She searches systematically rather than randomly.",
+     "reps": "A few times a week."
+    },
+    {
+     "n": 3,
+     "do": "Move to boxes. One box has food, five do not. Mark when she indicates the right one.",
+     "look": "She works the boxes rather than knocking them over.",
+     "reps": "5 searches."
+    },
+    {
+     "n": 4,
+     "do": "Progress to a single scented item hidden out of sight, higher up, or in another room.",
+     "look": "She tracks rather than scans.",
+     "reps": "5 searches."
+    },
+    {
+     "n": 5,
+     "do": "Formal nosework introduces a target odour and a trained indication. Worth a class.",
+     "look": "A clear, still indication at source.",
+     "reps": "Class-led."
+    }
+   ],
+   "wrong": [
+    "Helping her. Point at nothing and let her solve it. The problem-solving is the exercise.",
+    "Making it too hard too early and letting her give up."
+   ],
+   "next": [
+    "t-retrieve"
+   ],
+   "tags": [
+    "scent",
+    "nose",
+    "nosework",
+    "find it",
+    "search",
+    "sniff",
+    "enrichment",
+    "rainy day"
+   ],
+   "criteria": [
+    {
+     "level": "Scatter",
+     "test": "She puts her nose down and works a scatter feed without your help.",
+     "pass": "Consistently.",
+     "id": "t-scentwork-c1"
+    },
+    {
+     "level": "Room search",
+     "test": "Five hidden pieces in a room.",
+     "pass": "Finds all five, 3 out of 4 attempts.",
+     "id": "t-scentwork-c2"
+    },
+    {
+     "level": "Boxes",
+     "test": "One baited box among six.",
+     "pass": "Finds it, 4 out of 5.",
+     "id": "t-scentwork-c3"
+    },
+    {
+     "level": "Out of sight",
+     "test": "A hidden item she has to work for, off the ground.",
+     "pass": "4 out of 5.",
+     "id": "t-scentwork-c4"
+    },
+    {
+     "level": "Indication",
+     "test": "A still, deliberate indication at source rather than pawing or grabbing.",
+     "pass": "4 out of 5.",
+     "id": "t-scentwork-c5"
+    }
+   ]
+  },
+  {
+   "id": "t-stay-advanced",
+   "cat": "Advanced",
+   "title": "Out-of-sight stay",
+   "priority": 4,
+   "age": "From 6 to 8 months, once stay is reliable.",
+   "sessions": "2 minutes, twice a week.",
+   "why": "The genuinely difficult version. It underpins being left at a cafe table, waiting outside a shop, and staying put in an emergency.",
+   "need": [
+    "An established stay at 30 seconds and 5 metres",
+    "A doorway"
+   ],
+   "steps": [
+    {
+     "n": 1,
+     "do": "Stay, walk to a doorway, step out of sight for ONE second, come straight back and reward.",
+     "look": "She holds. One second is not too small a step.",
+     "reps": "6."
+    },
+    {
+     "n": 2,
+     "do": "Build the out-of-sight time irregularly: 1, 3, 2, 6, 4, 1.",
+     "look": "No predictable climb for her to anticipate.",
+     "reps": "6."
+    },
+    {
+     "n": 3,
+     "do": "Change what she can hear. Move around out of sight, open a cupboard, run a tap.",
+     "look": "She holds through noise she cannot see the source of.",
+     "reps": "6."
+    },
+    {
+     "n": 4,
+     "do": "Take it outdoors, on a long line for safety, never off-lead in an unfenced space.",
+     "look": "It holds in a real environment.",
+     "reps": "5."
+    }
+   ],
+   "wrong": [
+    "Going too far too fast. The failure here is not a broken stay, it is a puppy who learns that you disappearing is worth worrying about.",
+    "Practising it when she is already unsettled about being alone. Fix that first."
+   ],
+   "next": [
+    "t-stay",
+    "t-alone"
+   ],
+   "tags": [
+    "stay",
+    "out of sight",
+    "advanced",
+    "cafe",
+    "duration"
+   ],
+   "criteria": [
+    {
+     "level": "One second",
+     "test": "Out of sight for one second.",
+     "pass": "6 out of 6.",
+     "id": "t-stay-advanced-c1"
+    },
+    {
+     "level": "Ten seconds",
+     "test": "Out of sight for ten seconds.",
+     "pass": "4 out of 5.",
+     "id": "t-stay-advanced-c2"
+    },
+    {
+     "level": "A minute",
+     "test": "Out of sight for a minute.",
+     "pass": "4 out of 5.",
+     "id": "t-stay-advanced-c3"
+    },
+    {
+     "level": "With noise",
+     "test": "A minute out of sight with household noise.",
+     "pass": "4 out of 5.",
+     "id": "t-stay-advanced-c4"
+    },
+    {
+     "level": "Outdoors",
+     "test": "Thirty seconds out of sight outdoors, on a long line.",
+     "pass": "4 out of 5.",
+     "id": "t-stay-advanced-c5"
+    }
+   ]
+  },
+  {
+   "id": "t-recall-distraction",
+   "cat": "Advanced",
+   "title": "Recall off something exciting",
+   "priority": 4,
+   "age": "From 6 months, and it is never finished.",
+   "sessions": "Once or twice a week.",
+   "why": "Coming back from a sniff is a different problem from coming back from a squirrel. This is the difference between a dog you can let off a lead and a dog you cannot, and it is built deliberately, in a graded ladder, not discovered in a park.",
+   "need": [
+    "A long line",
+    "The best food you have",
+    "A helper"
+   ],
+   "steps": [
+    {
+     "n": 1,
+     "do": "Build a distraction ladder, written down, from easiest to hardest. Food on the floor. A rolling ball. A person she likes. A dog at 50 metres. A dog at 20. A dog at 5. A squirrel.",
+     "look": "You know exactly what the next step is rather than guessing.",
+     "reps": "Write it once."
+    },
+    {
+     "n": 2,
+     "do": "Start at rung one, on the long line, at a distance where she can still hear you. Call once. Pay enormously.",
+     "look": "She turns. If she does not, you are too close to the distraction. Increase distance, do not increase volume.",
+     "reps": "5 per session."
+    },
+    {
+     "n": 3,
+     "do": "Move one rung at a time, over weeks. Never skip.",
+     "look": "Steady progress.",
+     "reps": "5 per session."
+    },
+    {
+     "n": 4,
+     "do": "Practise recalling her AWAY from something and then releasing her back to it, where it is safe.",
+     "look": "Coming back does not reliably end the good thing, so there is nothing to weigh up.",
+     "reps": "Often."
+    }
+   ],
+   "wrong": [
+    "Testing it off-lead to see if it works. If you are testing, you already know it might fail, and every failure trains the opposite.",
+    "Increasing your volume instead of your distance. Shouting does not make a distraction less interesting."
+   ],
+   "next": [
+    "t-recall",
+    "t-emergency-recall"
+   ],
+   "tags": [
+    "recall",
+    "distraction",
+    "squirrel",
+    "dogs",
+    "off lead",
+    "offlead",
+    "park"
+   ],
+   "criteria": [
+    {
+     "level": "Food distraction",
+     "test": "Recall past food on the floor, on a line.",
+     "pass": "8 out of 10.",
+     "id": "t-recall-distraction-c1"
+    },
+    {
+     "level": "Moving toy",
+     "test": "Recall off a rolling ball.",
+     "pass": "8 out of 10.",
+     "id": "t-recall-distraction-c2"
+    },
+    {
+     "level": "People",
+     "test": "Recall away from a person she wants to greet.",
+     "pass": "8 out of 10.",
+     "id": "t-recall-distraction-c3"
+    },
+    {
+     "level": "Dog at distance",
+     "test": "Recall with a dog visible 30 metres away.",
+     "pass": "8 out of 10.",
+     "id": "t-recall-distraction-c4"
+    },
+    {
+     "level": "Dog close",
+     "test": "Recall with a dog 10 metres away, on a long line.",
+     "pass": "9 out of 10 before you ever consider off-lead.",
+     "id": "t-recall-distraction-c5"
+    }
+   ]
+  },
+  {
+   "id": "t-tricks",
+   "cat": "Advanced",
+   "title": "Trick chains",
+   "priority": 4,
+   "age": "Any time after the foundations. Genuinely useful, not just fun.",
+   "sessions": "5 minutes, whenever.",
+   "why": "Tricks are not frivolous. They are the cheapest way to build a dog who enjoys learning, they burn mental energy on days when physical exercise is limited, and chaining several behaviours together teaches her to keep working through a sequence without a reward after every step, which is exactly what real-world obedience requires.",
+   "need": [
+    "Kibble",
+    "A marker word that is working well"
+   ],
+   "steps": [
+    {
+     "n": 1,
+     "do": "Pick single tricks she can already nearly do: spin, paw, bow, roll over, back up, chin rest.",
+     "look": "Each one trained the same way: shape or lure, fade the lure, name it last.",
+     "reps": "5 minutes."
+    },
+    {
+     "n": 2,
+     "do": "Introduce shaping: mark tiny approximations of a behaviour with no lure at all.",
+     "look": "She starts offering behaviour to see what pays. That is a dog who has learned how to learn.",
+     "reps": "5 minutes."
+    },
+    {
+     "n": 3,
+     "do": "Chain two known tricks with one reward at the end.",
+     "look": "She works through both without stopping.",
+     "reps": "6."
+    },
+    {
+     "n": 4,
+     "do": "Build to three and four behaviour chains.",
+     "look": "Sustained work on a single reward.",
+     "reps": "6."
+    }
+   ],
+   "wrong": [
+    "Cueing a chain she has not learned as separate pieces.",
+    "Chin rest is worth prioritising over the showy ones. It is genuinely useful for eye drops, ear cleaning and vet handling."
+   ],
+   "next": [
+    "t-handling"
+   ],
+   "tags": [
+    "tricks",
+    "spin",
+    "paw",
+    "shake",
+    "roll over",
+    "bow",
+    "shaping",
+    "chain",
+    "mental"
+   ],
+   "criteria": [
+    {
+     "level": "Three tricks",
+     "test": "Three separate tricks on verbal cue alone.",
+     "pass": "5 out of 6 each.",
+     "id": "t-tricks-c1"
+    },
+    {
+     "level": "Shaping",
+     "test": "She offers behaviour when you stand still with food and say nothing.",
+     "pass": "She experiments rather than waiting.",
+     "id": "t-tricks-c2"
+    },
+    {
+     "level": "Two-chain",
+     "test": "Two behaviours, one reward.",
+     "pass": "4 out of 5.",
+     "id": "t-tricks-c3"
+    },
+    {
+     "level": "Four-chain",
+     "test": "Four behaviours, one reward at the end.",
+     "pass": "3 out of 4.",
+     "id": "t-tricks-c4"
+    },
+    {
+     "level": "Novel",
+     "test": "She learns a brand new trick in under three sessions.",
+     "pass": "Twice, with two different tricks.",
+     "id": "t-tricks-c5"
+    }
+   ]
+  },
+  {
+   "id": "t-cgc",
+   "cat": "Advanced",
+   "title": "Canine Good Citizen",
+   "priority": 4,
+   "age": "Typically from 6 months.",
+   "sessions": "A class, weekly.",
+   "why": "An external, structured target with someone qualified watching you. Worth doing not for the certificate but because it forces you to proof everything in a room full of dogs and strangers, which is the one thing you cannot manufacture at home.",
+   "need": [
+    "A class near you",
+    "Her vaccinations complete"
+   ],
+   "steps": [
+    {
+     "n": 1,
+     "do": "Find a class that is explicitly reward-based. Ask what they do when a dog gets it wrong. If the answer involves a correction, a check chain, or the word dominance, find another class.",
+     "look": "A trainer who can explain their method without jargon.",
+     "reps": "Once."
+    },
+    {
+     "n": 2,
+     "do": "The test covers: accepting a friendly stranger, sitting politely for petting, appearance and grooming, walking on a loose lead, walking through a crowd, sit and down on cue and staying in place, coming when called, reaction to another dog, reaction to a distraction, and supervised separation.",
+     "look": "Every one of those is already on this list. The class is proofing, not new material.",
+     "reps": "Weekly."
+    }
+   ],
+   "wrong": [
+    "Choosing a class on convenience alone. The method matters more than the location."
+   ],
+   "next": [],
+   "tags": [
+    "cgc",
+    "class",
+    "certificate",
+    "good citizen",
+    "group",
+    "socialisation"
+   ],
+   "criteria": [
+    {
+     "level": "Enrolled",
+     "test": "You have found and started a reward-based class.",
+     "pass": "Attending weekly.",
+     "id": "t-cgc-c1"
+    },
+    {
+     "level": "Half the items",
+     "test": "Five of the ten test items pass in class conditions.",
+     "pass": "Assessed in class.",
+     "id": "t-cgc-c2"
+    },
+    {
+     "level": "All items",
+     "test": "All ten in class conditions.",
+     "pass": "Assessed in class.",
+     "id": "t-cgc-c3"
+    },
+    {
+     "level": "Tested",
+     "test": "The actual test.",
+     "pass": "Passed.",
+     "id": "t-cgc-c4"
+    },
+    {
+     "level": "Held",
+     "test": "Still holds three months after the test, outside class.",
+     "pass": "Spot-checked.",
+     "id": "t-cgc-c5"
+    }
+   ]
+  }
+ ]
+}

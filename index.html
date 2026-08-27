@@ -324,6 +324,103 @@ footer{margin-top:30px;font-size:12px;color:var(--muted);line-height:1.6}
 #timer.over .lbl{color:var(--alert)}
 #timer.over button{background:var(--alert);color:#fff}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+
+/* ================= GUIDE TAB ================= */
+/* The clock, the member row and the sync pill sit outside the tab sections, so
+   they render on every tab. On Guide they would push the search box off the
+   bottom of a phone screen, so they are hidden while this tab is open. */
+body.gon #clock,body.gon #who,body.gon #sync,body.gon #shab{display:none}
+body.gon .wrap>h1{margin-bottom:10px}
+
+#gtop{position:sticky;top:0;z-index:9;background:var(--ground);
+  padding:2px 0 10px;margin:-2px 0 0}
+#gq{width:100%;box-sizing:border-box;font:inherit;font-size:16px;color:var(--paper);
+  background:var(--raised);border:1px solid var(--line);border-radius:14px;
+  padding:13px 15px;-webkit-appearance:none;appearance:none}
+#gq::placeholder{color:var(--muted)}
+#gq:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px var(--tint)}
+.seg{display:flex;gap:6px;margin-top:9px;background:var(--raised);
+  border:1px solid var(--line);border-radius:13px;padding:4px}
+.seg button{flex:1;background:transparent;border:0;border-radius:10px;padding:9px 6px;
+  font:inherit;font-size:13px;font-weight:600;color:var(--muted)}
+.seg button.on{background:var(--gold);color:var(--onaccent)}
+
+.ghead{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);
+  font-weight:700;margin:22px 0 3px}
+.ghead:first-child{margin-top:8px}
+.gnote{font-size:13px;color:var(--muted);line-height:1.5;margin:0 0 11px}
+.grow{display:block;width:100%;text-align:left;background:var(--raised);
+  border:1px solid var(--line);border-radius:15px;padding:14px 15px;margin-bottom:8px;
+  font:inherit;color:var(--paper);position:relative}
+.grow:active{transform:scale(.988)}
+.grow .gt{font-size:15px;font-weight:600;line-height:1.35;padding-right:20px}
+.grow .gs{font-size:13px;color:var(--muted);line-height:1.45;margin-top:4px}
+.grow .arw{position:absolute;right:14px;top:15px;color:var(--line);font-size:15px}
+.grow.vet{border-left:3px solid var(--alert)}
+
+.pill{display:inline-block;font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+  font-weight:700;padding:3px 8px;border-radius:20px;margin-bottom:6px}
+.p-never{background:rgba(196,80,42,.13);color:var(--alert)}
+.p-yes{background:rgba(78,140,97,.15);color:var(--ok)}
+.p-caution,.p-later{background:var(--tint);color:var(--gold)}
+
+.dots{display:flex;gap:4px;margin-top:7px;align-items:center}
+.dots i{width:7px;height:7px;border-radius:50%;background:var(--line);display:block}
+.dots i.f{background:var(--gold)}
+.dots span{font-size:11px;color:var(--muted);margin-left:5px;letter-spacing:.04em}
+
+/* ---- detail ---- */
+.gback{display:inline-flex;align-items:center;gap:7px;background:transparent;border:0;
+  font:inherit;font-size:13px;font-weight:600;color:var(--gold);padding:6px 0 12px}
+.gd h2{font-size:23px;line-height:1.25;font-weight:600;margin:0 0 5px;letter-spacing:-.01em;
+  text-transform:none;color:var(--paper)}
+.gd .sub{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);
+  font-weight:600;margin:0 0 16px}
+.blk{background:var(--raised);border:1px solid var(--line);border-radius:16px;
+  padding:15px 16px;margin-bottom:10px}
+.blk h4{font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);
+  font-weight:700;margin:0 0 9px}
+.blk p{margin:0;font-size:14.5px;line-height:1.6}
+.blk ul{margin:0;padding:0;list-style:none}
+.blk li{font-size:14.5px;line-height:1.55;padding:0 0 0 20px;position:relative;margin-bottom:9px}
+.blk li:last-child{margin-bottom:0}
+.blk li:before{content:"\2022";position:absolute;left:4px;color:var(--gold);font-weight:700}
+.blk.no li:before{content:"\00D7";color:var(--alert);left:3px}
+.blk.now{border-left:3px solid var(--alert)}
+.blk.now h4{color:var(--alert)}
+.blk.say{background:var(--tint);border-color:rgba(217,144,42,.35)}
+.blk.vetline{background:var(--tint);border-color:rgba(217,144,42,.35)}
+.blk.vetline p{font-size:14px}
+
+.step{background:var(--raised);border:1px solid var(--line);border-radius:16px;
+  padding:15px 16px 14px;margin-bottom:9px}
+.step .n{display:inline-flex;align-items:center;justify-content:center;width:25px;height:25px;
+  border-radius:50%;background:var(--gold);color:var(--onaccent);font-size:13px;
+  font-weight:700;margin-bottom:9px}
+.step .dodo{font-size:14.5px;line-height:1.6;margin:0 0 10px}
+.step .lab{font-size:10px;letter-spacing:.13em;text-transform:uppercase;font-weight:700;
+  color:var(--muted);display:block;margin-bottom:2px}
+.step .lk{font-size:13.5px;line-height:1.5;color:var(--paper);margin:0 0 9px}
+.step .rp{font-size:13px;color:var(--gold);font-weight:600;margin:0}
+
+.crit{display:flex;gap:11px;align-items:flex-start;background:var(--raised);
+  border:1px solid var(--line);border-radius:14px;padding:13px 14px;margin-bottom:7px;
+  width:100%;text-align:left;font:inherit;color:var(--paper)}
+.crit .bx{flex:0 0 21px;width:21px;height:21px;border-radius:6px;border:2px solid var(--line);
+  display:flex;align-items:center;justify-content:center;font-size:12px;color:transparent;
+  margin-top:1px}
+.crit.on .bx{background:var(--ok);border-color:var(--ok);color:#fff}
+.crit.on .cl{color:var(--muted)}
+.crit>span:last-child{display:block;flex:1}
+.crit .cl{display:block;font-size:14px;font-weight:600;line-height:1.35}
+.crit .ct{display:block;font-size:13px;color:var(--muted);line-height:1.5;margin-top:3px}
+.crit .cp{display:block;font-size:12.5px;color:var(--gold);font-weight:600;margin-top:4px}
+
+.nextlink{display:block;width:100%;text-align:left;background:var(--tint);
+  border:1px solid rgba(217,144,42,.35);border-radius:14px;padding:13px 15px;
+  font:inherit;font-size:14px;font-weight:600;color:var(--paper);margin-bottom:7px}
+.gempty{text-align:center;color:var(--muted);font-size:14px;padding:40px 20px;line-height:1.6}
+
 </style>
 </head>
 <body>
@@ -489,6 +586,18 @@ mouthy, not sleepy.</p>
 </footer>
 
 </section>
+
+<section class="tab" id="tab-guide">
+  <div id="gtop">
+    <input id="gq" type="search" placeholder="Search anything&hellip;" autocomplete="off"
+           autocorrect="off" spellcheck="false" oninput="gSearch()">
+    <div class="seg" id="gseg">
+      <button class="on" data-m="sit" onclick="gMode('sit')">Situations</button>
+      <button data-m="train" onclick="gMode('train')">Training</button>
+    </div>
+  </div>
+  <div id="gbody"></div>
+</section>
 </div>
 
 <nav id="tabbar">
@@ -502,6 +611,8 @@ mouthy, not sleepy.</p>
     <span class="ti">&#9788;</span><span>Cover</span></button>
   <button data-tab="papers" onclick="showTab('papers')">
     <span class="ti">&#9632;</span><span>Papers</span></button>
+  <button data-tab="guide" onclick="showTab('guide')">
+    <span class="ti">&#9873;</span><span>Guide</span></button>
 </nav>
 
 <!-- The tap sheet and the toast. The CSS for these was always here; the markup was
@@ -1489,6 +1600,8 @@ function showTab(name){
     b.classList.toggle('on', b.dataset.tab === name);
   });
   if(name === 'papers') renderPapers();
+  document.body.classList.toggle('gon', name === 'guide');
+  if(name === 'guide')  gRender();
   window.scrollTo(0,0);
 }
 
@@ -2072,6 +2185,243 @@ render();
 if(SYNC_URL){ pull(false); setInterval(()=>pull(false), 120000); }
 else syncState('off','Local only');
 if(!me) setTimeout(()=>openJoin(true), 400);
+
+/* ================= GUIDE TAB =================
+   Situations (content/guide.json) and Training (content/training.json), plus one
+   search box across both. The JSON is fetched, not inlined: together they are more
+   than twice the size of this file, and the service worker caches them so the tab
+   works offline like everything else. Ticked training criteria live in
+   localStorage under mercy.train. */
+var GUIDE = null, TRAIN = null, gLoading = false;
+var gmode = 'sit', gopen = null, gq = '';
+var TDONE = {};
+try { TDONE = JSON.parse(localStorage.getItem('mercy.train') || '{}'); } catch (e) { TDONE = {}; }
+
+function gesc(s){ return String(s == null ? '' : s)
+  .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+function gLoad(){
+  if (GUIDE && TRAIN) { gRender(); return; }
+  if (gLoading) return;
+  gLoading = true;
+  document.getElementById('gbody').innerHTML = '<p class="gempty">Loading&hellip;</p>';
+  Promise.all([
+    fetch('guide.json').then(function(r){ return r.json(); }),
+    fetch('training.json').then(function(r){ return r.json(); })
+  ]).then(function(v){
+    GUIDE = v[0]; TRAIN = v[1]; gLoading = false; gRender();
+  }).catch(function(err){
+    gLoading = false;
+    document.getElementById('gbody').innerHTML =
+      '<p class="gempty">Could not load the guide.<br>Check you are online, then reopen this tab.</p>';
+    console.error('guide load failed', err);
+  });
+}
+
+function gMode(m){ gmode = m; gopen = null;
+  document.querySelectorAll('#gseg button').forEach(function(b){
+    b.classList.toggle('on', b.dataset.m === m); });
+  gRender(); window.scrollTo(0,0);
+}
+function gSearch(){ gq = document.getElementById('gq').value.trim(); gopen = null; gRender(); }
+function gOpen(id){ gopen = id; gRender(); window.scrollTo(0,0); }
+function gBack(){ gopen = null; gRender(); window.scrollTo(0,0); }
+
+/* progress: how many of a skill's criteria are ticked */
+function tDots(sk){
+  var n = sk.criteria.length, d = 0, i;
+  for (i = 0; i < n; i++) if (TDONE[sk.criteria[i].id]) d++;
+  return d;
+}
+function tLabel(sk){
+  var d = tDots(sk);
+  if (!d) return 'Not started';
+  if (d >= sk.criteria.length) return 'Done';
+  return sk.criteria[d-1].level;
+}
+function dotsHtml(sk){
+  var n = sk.criteria.length, d = tDots(sk), h = '<div class="dots">', i;
+  for (i = 0; i < n; i++) h += '<i class="' + (i < d ? 'f' : '') + '"></i>';
+  return h + '<span>' + gesc(tLabel(sk)) + '</span></div>';
+}
+
+function gTick(cid, sid){
+  TDONE[cid] = !TDONE[cid];
+  if (!TDONE[cid]) delete TDONE[cid];
+  try { localStorage.setItem('mercy.train', JSON.stringify(TDONE)); } catch (e) {}
+  gopen = sid; gRender();
+}
+
+/* ---- search across both files ---- */
+function gHay(o){
+  var p = [o.title || '', (o.tags || []).join(' ')];
+  if (o.kind) { p.push(o.line||'', o.why||'', o.lead||'', o.amount||'', o.prep||'', o.note||'');
+    ['now','not','today','mention','normal'].forEach(function(k){
+      if (o[k]) p.push(o[k].join(' ')); }); }
+  else { p.push(o.why||'', o.note||'', (o.need||[]).join(' '), (o.wrong||[]).join(' '));
+    (o.steps||[]).forEach(function(s){ p.push(s.do||'', s.look||''); }); }
+  return p.join(' ').toLowerCase();
+}
+function gResults(q){
+  var t = q.toLowerCase(), out = [];
+  GUIDE.entries.forEach(function(e){ if (gHay(e).indexOf(t) >= 0) out.push({k:'g', o:e}); });
+  TRAIN.skills.forEach(function(s){ if (gHay(s).indexOf(t) >= 0) out.push({k:'t', o:s}); });
+  out.sort(function(a,b){
+    var at = (a.o.title||'').toLowerCase().indexOf(t) >= 0 ? 0 : 1;
+    var bt = (b.o.title||'').toLowerCase().indexOf(t) >= 0 ? 0 : 1;
+    return at - bt;
+  });
+  return out;
+}
+
+/* ---- rows ---- */
+function gRowGuide(e){
+  var sub = e.kind === 'food' ? e.line
+          : e.kind === 'vet'  ? (e.lead || '').slice(0,95)
+          : (e.why || (e.now||[])[0] || '').slice(0,95);
+  var pill = e.kind === 'food'
+    ? '<span class="pill p-' + e.verdict + '">' +
+      ({never:'Never', yes:'Safe now', caution:'Careful', later:'Later'}[e.verdict] || e.verdict) +
+      '</span><br>' : '';
+  return '<button class="grow' + (e.kind === 'vet' ? ' vet' : '') + '" onclick="gOpen(\'' + e.id + '\')">'
+    + pill + '<div class="gt">' + gesc(e.title) + '</div>'
+    + (sub ? '<div class="gs">' + gesc(sub) + (sub.length >= 95 ? '&hellip;' : '') + '</div>' : '')
+    + '<span class="arw">&rsaquo;</span></button>';
+}
+function gRowSkill(s){
+  return '<button class="grow" onclick="gOpen(\'' + s.id + '\')">'
+    + '<div class="gt">' + gesc(s.title) + '</div>'
+    + '<div class="gs">' + gesc(s.age) + '</div>'
+    + dotsHtml(s) + '<span class="arw">&rsaquo;</span></button>';
+}
+
+/* ---- detail ---- */
+function blk(cls, head, items, isP){
+  if (!items || (!isP && !items.length) || (isP && !items)) return '';
+  var body = isP ? '<p>' + gesc(items) + '</p>'
+    : '<ul>' + items.map(function(x){ return '<li>' + gesc(x) + '</li>'; }).join('') + '</ul>';
+  return '<div class="blk ' + cls + '"><h4>' + head + '</h4>' + body + '</div>';
+}
+
+function gDetailGuide(e){
+  var h = '<button class="gback" onclick="gBack()">&lsaquo; Back</button><div class="gd">';
+  h += '<h2>' + gesc(e.title) + '</h2><p class="sub">' + gesc(e.cat) + '</p>';
+  if (e.kind === 'food'){
+    h += '<span class="pill p-' + e.verdict + '">' +
+      ({never:'Never', yes:'Safe now', caution:'Careful', later:'Later'}[e.verdict] || e.verdict) + '</span>';
+    h += blk('', 'The answer', e.line, true);
+    h += blk('', 'How much', e.amount, true);
+    h += blk('', 'How to give it', e.prep, true);
+    h += blk('', 'Why', e.why, true);
+    h += blk('now', 'Signs to watch for', e.signs, true);
+    h += blk('', 'When it changes', e.age, true);
+  } else if (e.kind === 'vet'){
+    h += blk('say', 'Read this first', e.lead, true);
+    h += blk('now', 'Call now', e.now);
+    h += blk('', 'Call today', e.today);
+    h += blk('', 'Mention at the next visit', e.mention);
+    h += blk('', 'Probably normal', e.normal);
+    h += blk('say', 'What to say on the phone', e.say, true);
+    h += blk('', 'Also', e.note, true);
+  } else {
+    h += blk('', 'Do this', e.now);
+    h += blk('no', 'Do not', e['not']);
+    h += blk('', 'Why', e.why, true);
+    h += blk('vetline', 'For the vet', e.vet, true);
+  }
+  return h + '</div>';
+}
+
+function gDetailSkill(s){
+  var h = '<button class="gback" onclick="gBack()">&lsaquo; Training</button><div class="gd">';
+  h += '<h2>' + gesc(s.title) + '</h2>';
+  h += '<p class="sub">' + gesc(s.cat) + ' &middot; ' + gesc(s.age) + '</p>';
+  h += blk('', 'Why this one', s.why, true);
+  h += blk('', 'How often', s.sessions, true);
+  h += blk('', 'You need', s.need);
+
+  h += '<h4 class="ghead">The steps</h4>';
+  s.steps.forEach(function(st){
+    h += '<div class="step"><span class="n">' + st.n + '</span>'
+      + '<p class="dodo">' + gesc(st['do']) + '</p>'
+      + (st.look ? '<span class="lab">Look for</span><p class="lk">' + gesc(st.look) + '</p>' : '')
+      + (st.reps ? '<p class="rp">' + gesc(st.reps) + '</p>' : '')
+      + '</div>';
+  });
+
+  h += '<h4 class="ghead">How you know it worked</h4>';
+  h += '<p class="gnote">Tick each one off when she can actually do it. The last one is the real test.</p>';
+  s.criteria.forEach(function(c){
+    h += '<button class="crit' + (TDONE[c.id] ? ' on' : '') + '" '
+      + 'onclick="gTick(\'' + c.id + '\',\'' + s.id + '\')">'
+      + '<span class="bx">&#10003;</span><span>'
+      + '<span class="cl">' + gesc(c.level) + '</span>'
+      + '<span class="ct">' + gesc(c.test) + '</span>'
+      + '<span class="cp">' + gesc(c.pass) + '</span>'
+      + '</span></button>';
+  });
+
+  if (s.wrong && s.wrong.length) h += blk('no', 'Common mistakes', s.wrong);
+  if (s.note) h += blk('vetline', 'Worth knowing', s.note, true);
+
+  if (s.next && s.next.length){
+    h += '<h4 class="ghead">Next</h4>';
+    s.next.forEach(function(id){
+      var n = TRAIN.skills.filter(function(x){ return x.id === id; })[0];
+      if (n) h += '<button class="nextlink" onclick="gOpen(\'' + n.id + '\')">'
+        + gesc(n.title) + ' &rsaquo;</button>';
+    });
+  }
+  return h + '</div>';
+}
+
+/* ---- router ---- */
+function gRender(){
+  var body = document.getElementById('gbody'), top = document.getElementById('gtop');
+  if (!GUIDE || !TRAIN) { gLoad(); return; }
+
+  if (gopen){
+    top.style.display = 'none';
+    var e = GUIDE.entries.filter(function(x){ return x.id === gopen; })[0];
+    if (e) { body.innerHTML = gDetailGuide(e); return; }
+    var s = TRAIN.skills.filter(function(x){ return x.id === gopen; })[0];
+    if (s) { body.innerHTML = gDetailSkill(s); return; }
+    gopen = null;
+  }
+  top.style.display = '';
+
+  if (gq){
+    document.getElementById('gseg').style.display = 'none';
+    var r = gResults(gq);
+    if (!r.length){ body.innerHTML = '<p class="gempty">Nothing found for &ldquo;'
+      + gesc(gq) + '&rdquo;.<br>Try a simpler word: pee, bite, food, crate, grapes.</p>'; return; }
+    body.innerHTML = '<h4 class="ghead">' + r.length + ' result' + (r.length===1?'':'s') + '</h4>'
+      + r.map(function(x){ return x.k === 'g' ? gRowGuide(x.o) : gRowSkill(x.o); }).join('');
+    return;
+  }
+  document.getElementById('gseg').style.display = '';
+
+  var h = '';
+  if (gmode === 'sit'){
+    GUIDE.categories.forEach(function(cat){
+      var rows = GUIDE.entries.filter(function(e){ return e.cat === cat; });
+      if (!rows.length) return;
+      h += '<h4 class="ghead">' + gesc(cat) + '</h4>';
+      h += rows.map(gRowGuide).join('');
+    });
+  } else {
+    TRAIN.categories.forEach(function(cat){
+      var rows = TRAIN.skills.filter(function(s){ return s.cat === cat; });
+      if (!rows.length) return;
+      h += '<h4 class="ghead">' + gesc(cat) + '</h4>';
+      if (TRAIN.cat_notes && TRAIN.cat_notes[cat])
+        h += '<p class="gnote">' + gesc(TRAIN.cat_notes[cat]) + '</p>';
+      h += rows.map(gRowSkill).join('');
+    });
+  }
+  body.innerHTML = h;
+}
+
 </script>
 </body>
 </html>
