@@ -2388,17 +2388,33 @@ function gHay(o){
 }
 function gResults(q){
   var t = q.toLowerCase(), out = [];
-  GUIDE.entries.forEach(function(e){ if (gHay(e).indexOf(t) >= 0) out.push({k:'g', o:e}); });
-  TRAIN.skills.forEach(function(s){ if (gHay(s).indexOf(t) >= 0) out.push({k:'t', o:s}); });
+  /* Every word has to appear somewhere, rather than the whole phrase appearing
+     verbatim. "what to buy" found nothing before, because no entry contains that
+     exact string, while all three words sit in the buying entry. */
+  /* Common words drag the results off, because requiring every word means "can she
+     eat grapes" fails on any entry that never says "she". Drop them, unless that
+     would leave nothing to search for. */
+  var STOP = ['a','an','the','is','it','she','her','he','his','i','me','my','we','you',
+              'to','of','for','in','on','at','and','or','do','does','did','can','should',
+              'what','when','how','why','if','be','am','are','was','been','get','got',
+              'this','that','with','about','from','have','has'];
+  var all = t.split(/\s+/).filter(Boolean);
+  var words = all.filter(function(w){ return STOP.indexOf(w) < 0; });
+  if(!words.length) words = all;
+  function hit(o){ var h = gHay(o); return words.every(function(w){ return h.indexOf(w) >= 0; }); }
+  GUIDE.entries.forEach(function(e){ if (hit(e)) out.push({k:'g', o:e}); });
+  TRAIN.skills.forEach(function(s){ if (hit(s)) out.push({k:'t', o:s}); });
   /* Rank: title match first, then an exact tag, then a body-text match. Without the
      tag rung, searching "ears" put two entries that merely contain the phrase "ears
      back" above the entry actually about cleaning her ears. */
   function rank(o){
-    if((o.title||'').toLowerCase().indexOf(t) >= 0) return 0;
+    var title = (o.title||'').toLowerCase();
+    if(title.indexOf(t) >= 0) return 0;                       /* whole phrase in the title */
     var tags = (o.tags||[]).map(function(x){ return String(x).toLowerCase(); });
-    if(tags.indexOf(t) >= 0) return 1;
-    if(tags.some(function(x){ return x.indexOf(t) >= 0; })) return 2;
-    return 3;
+    if(tags.indexOf(t) >= 0) return 1;                        /* exact tag */
+    if(words.every(function(w){ return title.indexOf(w) >= 0; })) return 2;  /* all words in title */
+    if(tags.some(function(x){ return words.some(function(w){ return x.indexOf(w) >= 0; }); })) return 3;
+    return 4;
   }
   out.sort(function(a,b){ return rank(a.o) - rank(b.o); });
   return out;

@@ -21,6 +21,369 @@
  ],
  "entries": [
   {
+   "id": "s-sleep",
+   "kind": "do",
+   "cat": "Starting out",
+   "title": "She needs 18 to 20 hours of sleep a day",
+   "tags": [
+    "sleep",
+    "tired",
+    "overtired",
+    "nap",
+    "naps",
+    "how much",
+    "biting",
+    "zoomies",
+    "wild",
+    "crazy",
+    "wont settle",
+    "ignoring me",
+    "hours"
+   ],
+   "now": [
+    "Eighteen to twenty hours a day at this age. Most of it. That is not a puppy being lazy, that is what her brain needs to build.",
+    "Roughly an hour up, two hours asleep. If she has been awake more than about an hour and she is getting wild, that is the clock, not her character.",
+    "Put her in the crate for a nap BEFORE she falls apart, not after. A puppy who is already over the edge cannot settle on her own.",
+    "Sleep is when learning consolidates. A short training session followed by a nap does more than a long session does."
+   ],
+   "not": [
+    "Do not try to train, correct or reason with an overtired puppy. She cannot take food and she cannot think. Crate, dark, quiet.",
+    "Do not assume more exercise will tire her out. Past a point it winds her up further. Sniffing and chewing tire a puppy far more reliably than running does."
+   ],
+   "why": "This is the single most useful thing a new owner can know, and almost nobody is told it. The frantic biting in the evening, the zoomies, the suddenly deaf puppy who knew her name an hour ago: that is overtiredness, and it looks exactly like naughtiness. If you take one thing from this section, take this one. Half the problems in this guide are the same problem.",
+   "vet": "A puppy who is hard to rouse, or sleeping far more than usual AND flat when awake, is a different thing. Same-day call."
+  },
+  {
+   "id": "s-when-out",
+   "kind": "do",
+   "cat": "Starting out",
+   "title": "The four times she always needs to go out",
+   "tags": [
+    "when",
+    "out",
+    "toilet",
+    "potty",
+    "schedule",
+    "after",
+    "waking",
+    "eating",
+    "playing",
+    "predictable",
+    "how often",
+    "house training"
+   ],
+   "now": [
+    "AFTER SHE WAKES UP. Every time, from any nap, not just the morning. This is the biggest one and the most missed.",
+    "AFTER SHE EATS. Her own log says one to two hours, which is slower than most puppies, so learn her timing rather than the textbook.",
+    "AFTER SHE PLAYS. Movement moves things along.",
+    "AFTER ANYTHING EXCITING. A visitor, a delivery, a game, coming out of the crate.",
+    "Plus, at this age, roughly every hour or two anyway.",
+    "The rule that covers all of it: if something just changed, take her out."
+   ],
+   "not": [
+    "Do not wait for her to tell you. A ten week old does not yet know she needs to go until she is already going. Asking her to signal you is a skill she does not have for weeks yet."
+   ],
+   "why": "House training is not really about teaching her to hold it. It is about arranging for her to be outside at the moments she was going to go anyway, and then paying her for it. Get those four right and the accidents mostly stop on their own.",
+   "vet": ""
+  },
+  {
+   "id": "s-leash-indoors",
+   "kind": "do",
+   "cat": "Starting out",
+   "title": "The house leash: how to actually stop accidents happening",
+   "tags": [
+    "leash",
+    "lead",
+    "indoors",
+    "tether",
+    "umbilical",
+    "supervision",
+    "watch",
+    "accidents",
+    "house training",
+    "belt",
+    "free run",
+    "freedom"
+   ],
+   "now": [
+    "Six foot leash. One end on her harness, the other clipped to your belt or belt loop. She goes where you go.",
+    "She can still play, still have toys, still lie down. You are just always holding the other end.",
+    "The point is not restraint. It is that you are present at the two seconds before it happens, when she starts sniffing the floor or circling, and you can get her out.",
+    "When you cannot be attached to her, shower, cooking, going out: crate or pen. That is what they are for.",
+    "Loosen it in stages once she has had about a week clean: leash off but same room, then same floor, then free run.",
+    "If accidents come back, go back a stage. That is information about your pace, not about her."
+   ],
+   "not": [
+    "NEVER tie her to furniture and walk away. She can tangle it and choke. The leash goes on YOU, and only while you are actually there.",
+    "Do not give her the run of the apartment when you are not sure she emptied outside. If you did not see a proper squat, treat her as full."
+   ],
+   "why": "You cannot interrupt what you cannot see. Every accident that happens out of sight is a rep that trains the floor, and the relief is its own reward, so it gets paid whether you are watching or not. The house leash removes the opportunity entirely rather than trying to correct after the fact, which does not work anyway because she cannot connect it. Most people need a few weeks of this. It feels like a lot on day one and then it stops being noticeable.",
+   "vet": ""
+  },
+  {
+   "id": "s-normal",
+   "kind": "do",
+   "cat": "Starting out",
+   "title": "What is actually normal at ten weeks, so you stop worrying about it",
+   "tags": [
+    "normal",
+    "worry",
+    "is this normal",
+    "hiccups",
+    "biting",
+    "chewing",
+    "crying",
+    "sleep",
+    "poop",
+    "eating",
+    "first time",
+    "new owner"
+   ],
+   "now": [
+    "Biting and mouthing constantly. Normal, developmental, not aggression. It softens over weeks if you are consistent.",
+    "Hiccups, often after eating or excitement. Normal and they pass.",
+    "Sleeping in odd positions, twitching and paddling while asleep. Normal.",
+    "Crying in the crate the first several nights. Normal, and it gets better if the crate work is done properly.",
+    "Zoomies, usually evening. Normal, and usually a sign she is overtired.",
+    "Eating grass occasionally, in a puppy who is otherwise well and passing normal stools. Usually not sinister.",
+    "Not finishing every meal, some days. Normal, as long as she is bright and her weight is climbing.",
+    "Three to five poops a day. Sleeping most of the day. Wanting to chew everything."
+   ],
+   "not": [
+    "Do not compare her to an adult dog, or to a puppy you saw online. Ten weeks is very young.",
+    "Do not read a single odd day as a trend. Look at the week."
+   ],
+   "why": "First-time owners spend a lot of energy worrying about things that are simply what puppies do, and then sometimes miss the things that matter because everything feels alarming. The point of this entry is to give you back that energy for the things in the vet section.",
+   "vet": "What is NOT normal and is worth a call: lethargy that persists, refusing food for more than one meal, repeated vomiting, blood in stool, pale gums, straining, or a puppy who is simply not herself. When in doubt with a ten week old, call. They go downhill faster than adult dogs."
+  },
+  {
+   "id": "s-window",
+   "kind": "do",
+   "cat": "Starting out",
+   "title": "The deadline nobody tells you about",
+   "tags": [
+    "socialisation",
+    "socialization",
+    "window",
+    "deadline",
+    "16 weeks",
+    "fear",
+    "scared",
+    "meeting people",
+    "experiences",
+    "critical period",
+    "urgent"
+   ],
+   "now": [
+    "Her socialisation window runs from about 3 weeks to about 16 weeks. She is 10 weeks now. What she learns to accept before it closes, she accepts for life.",
+    "Aim for new experiences every day, in small calm doses: different people, hats, beards, umbrellas, wheelchairs, children at a distance, traffic noise, lifts, stairs, tiled floors, hoovers, hairdryers, doorbells.",
+    "CARRY HER for the risky surfaces. A sling or your arms. She can see and hear a whole city without her feet touching ground that unvaccinated dogs have toileted on.",
+    "Handling counts and is easy to forget: ears, paws, mouth, tail, being held still, being lifted. Every one of those pays for itself at every vet visit for twelve years.",
+    "Quality beats quantity. One calm good experience is worth more than five overwhelming ones."
+   ],
+   "not": [
+    "Do not force her into anything she is frightened of. Pushing a scared puppy through it does lasting harm rather than getting her used to it. Let her retreat, go further away, and try smaller.",
+    "Do not wait until her vaccines are finished. The window closes at roughly the same time the vaccine series completes, and there is no second chance at it."
+   ],
+   "why": "There is a genuine tension here and anyone who pretends otherwise is oversimplifying: she is not fully vaccinated, and parvo is real. But more dogs under three years old are put to sleep for behaviour problems than die of infectious disease. The answer is not to choose one, it is to socialise deliberately while choosing safe surfaces. Carried, in your building, in friends homes with healthy vaccinated dogs, on clean hard surfaces. Not dog parks, not pet shop floors, not grass where unknown dogs toilet.",
+   "vet": "Ask your vet where they draw the line locally. They know what is circulating in your area, which you do not."
+  },
+  {
+   "id": "s-overwhelmed",
+   "kind": "do",
+   "cat": "Starting out",
+   "title": "If you are exhausted and wondering what you have done",
+   "tags": [
+    "overwhelmed",
+    "regret",
+    "exhausted",
+    "tired",
+    "puppy blues",
+    "hate",
+    "stress",
+    "crying",
+    "depressed",
+    "mistake",
+    "normal to feel"
+   ],
+   "now": [
+    "This is extremely common and it has a name. People call it the puppy blues. Almost nobody admits to it and most first-time owners feel some version of it.",
+    "It is worst somewhere in the first two to six weeks, and it lifts.",
+    "Practical things that genuinely help: use the crate for HER naps so you get your hands back, accept help when it is offered, and let some things be imperfect for a few weeks.",
+    "Get out of the apartment without her sometimes. She has to learn to be alone anyway, so a short absence is training, not neglect.",
+    "Sleep matters for you too. Broken nights are what makes everything else feel unmanageable, and they do end."
+   ],
+   "not": [
+    "Do not take it as evidence that you have made a mistake, or that you are bad at this. Feeling flattened by a ten week old is not a verdict on you.",
+    "Do not measure yourself against how it looks online."
+   ],
+   "why": "It belongs in a guide because the surprise of it is half the problem. People expect to feel delighted, feel wrung out instead, and then feel guilty about that on top. Naming it takes most of the weight off.",
+   "vet": "If it is not lifting, or it is affecting your sleep, appetite or mood more broadly, that is worth talking to your own doctor about. That is a real thing and it is not about the dog."
+  },
+  {
+   "id": "s-progress",
+   "kind": "do",
+   "cat": "Starting out",
+   "title": "Progress is not a straight line, and regression is normal",
+   "tags": [
+    "regression",
+    "worse",
+    "backwards",
+    "was doing well",
+    "stopped",
+    "plateau",
+    "progress",
+    "setback",
+    "adolescence",
+    "not improving"
+   ],
+   "now": [
+    "Expect good weeks and bad weeks. A puppy who was clean for four days and then has three accidents has not forgotten anything.",
+    "Look at the week, not the day. Your log is for exactly this: compare this week to last week rather than today to yesterday.",
+    "When something gets worse, the useful question is what changed. New food, a new person, a growth spurt, a disrupted routine, teething, less sleep.",
+    "If a skill falls apart, drop back one step and rebuild. That is not starting over, and it usually takes days rather than weeks."
+   ],
+   "not": [
+    "Do not respond to a bad week by adding pressure. Almost always the answer is more management and less asking of her.",
+    "Do not conclude the training does not work after three days."
+   ],
+   "why": "Learning in dogs is not linear and neither is physical development. A five month old who has apparently forgotten everything is a normal five month old, not a failure of training.",
+   "vet": "A sudden clear regression in house training, in a puppy who was reliably clean, is worth ruling out medically before you treat it as behaviour."
+  },
+  {
+   "id": "s-adolescence",
+   "kind": "do",
+   "cat": "Starting out",
+   "title": "What is coming: adolescence, and why to do the work now",
+   "tags": [
+    "adolescence",
+    "teenager",
+    "5 months",
+    "6 months",
+    "older",
+    "future",
+    "harder",
+    "recall",
+    "ignoring",
+    "what to expect",
+    "growth"
+   ],
+   "now": [
+    "Roughly five to eighteen months. She will get bigger, bolder, and noticeably worse at listening. This is normal and it is temporary.",
+    "The classic signs: recall falls apart, she starts noticing other dogs far more, and she tests things she had accepted for months.",
+    "The work you do at ten weeks is what you will be leaning on then. Recall, leave it, settle, handling, and being alone are all far cheaper to build now.",
+    "Keep training through it in short sessions. Keep her on a long line outdoors during the worst of the recall wobble rather than losing the behaviour entirely.",
+    "Teething runs from about 12 to 16 weeks and finishes around six or seven months. Chewing gets worse before it gets better and she needs legal things to chew."
+   ],
+   "not": [
+    "Do not assume a dog who is ignoring you at eight months has forgotten. She has not. She is choosing, and the answer is to make yourself worth choosing, not to punish."
+   ],
+   "why": "Most dogs given up to shelters are adolescents, not puppies. Knowing it is coming, that it is normal, and that it passes, is most of what gets people through it.",
+   "vet": "Neutering timing is a real conversation for a golden retriever specifically, and it belongs in this window. See the guide entry on it and ask your vet directly."
+  },
+  {
+   "id": "s-emergency",
+   "kind": "do",
+   "cat": "Starting out",
+   "title": "Set this up tonight, not at 2am",
+   "tags": [
+    "emergency",
+    "vet",
+    "24 hour",
+    "number",
+    "poison",
+    "out of hours",
+    "prepare",
+    "insurance",
+    "first aid",
+    "phone",
+    "urgent"
+   ],
+   "now": [
+    "Look up your nearest 24 hour emergency animal hospital NOW and put the address and number in all three phones. Do it before you need it.",
+    "ASPCA Animal Poison Control: (888) 426-4435. Twenty four hours, there is a fee.",
+    "Pet Poison Helpline: (855) 764-7661.",
+    "Your own vet, and their out of hours arrangement, which is often different from their main number.",
+    "Know her weight and keep it updated. Every emergency call starts with it.",
+    "Keep her microchip number and her vaccine record somewhere you can reach from your phone.",
+    "A photo of her food bag, including the ingredient panel and the lot code, on your phone."
+   ],
+   "not": [
+    "Do not plan to look this up at the moment you need it. At 2am with a frightened puppy is the worst possible time to be searching."
+   ],
+   "why": "Nearly every genuine emergency in this guide is made better by five minutes of preparation done on a calm evening. The point is that a person who is not you might be holding her when it happens.",
+   "vet": "Worth asking your vet at the next visit: who do you use out of hours, and where should I take her."
+  },
+  {
+   "id": "s-buy",
+   "kind": "do",
+   "cat": "Starting out",
+   "title": "What to actually buy, and what to skip",
+   "tags": [
+    "buy",
+    "shopping",
+    "equipment",
+    "kit",
+    "harness",
+    "crate",
+    "collar",
+    "what do i need",
+    "gear",
+    "toys",
+    "money"
+   ],
+   "now": [
+    "A crate with a divider, sized for her adult weight, so you only buy one.",
+    "A Y shaped harness and a six foot leash. Two leashes if you can, one for the house.",
+    "A five metre long line for recall work outdoors. Not a retractable.",
+    "A Kong Puppy, the softer blue or pink rubber, not the red Classic.",
+    "A lickmat with suction cups. Cheap and it does a lot of work at bath time and in the crate.",
+    "A snuffle mat or any food puzzle. Sniffing tires her more reliably than walking.",
+    "Enzymatic cleaner, a big bottle, and buy it before you need it.",
+    "Heavy non-tip stainless or ceramic bowls. One for food, and one for water in every room she uses.",
+    "A slicker brush and a comb.",
+    "Soft training treats you can break into quarters."
+   ],
+   "not": [
+    "Skip the retractable leash. It teaches constant tension, which is the opposite of what you want.",
+    "Skip choke chains, prong collars and anything that works by being unpleasant. There is no version of her life where those are needed.",
+    "Skip antlers, hooves, rawhide and hard nylon. See the chews entry.",
+    "Skip most soft toys for unsupervised time. Stuffing is a swallowing risk.",
+    "Do not buy a bed you cannot wash. Get one with a removable cover.",
+    "You do not need most of what a pet shop will sell you. The list above is genuinely most of it."
+   ],
+   "why": "The expensive mistakes are the crate you outgrow and the equipment that makes training harder. Everything else can wait.",
+   "vet": ""
+  },
+  {
+   "id": "g-accident-floor",
+   "kind": "do",
+   "title": "She had an accident on the floor",
+   "tags": [
+    "accident",
+    "pee",
+    "poop",
+    "floor",
+    "carpet",
+    "wee",
+    "housetraining",
+    "toilet",
+    "caught"
+   ],
+   "now": [
+    "Caught in the act: one small neutral sound, an uh-oh or a light clap. Just enough to pause her, not to frighten her. Then carry her to the toilet spot.",
+    "If she finishes in the right place, pay her there and then. Praise plus two or three treats, at the spot, not once you are back inside.",
+    "Found it afterwards: clean it, say nothing, note the time. That is the whole protocol.",
+    "Enzymatic cleaner. If it smells like a toilet to her it stays a toilet."
+   ],
+   "not": [
+    "No scolding, no pointing at it, no nose-rubbing, no shutting her in a room.",
+    "Do not startle her hard mid-pee. Sources differ on whether to interrupt at all; the safe version is the smallest sound that gets her to pause."
+   ],
+   "why": "An accident is a scheduling miss by a person. Out on waking, within fifteen minutes of every meal, after every play bout, and at least every two hours between. Look at the thirty minutes before it happened; almost every accident traces back to a missed trigger.",
+   "cat": "House training"
+  },
+  {
    "id": "g-did-she-go",
    "kind": "do",
    "cat": "House training",
@@ -96,34 +459,6 @@
    ],
    "why": "Two things are happening and both are learning, not defiance. FIRST, dogs form surface and place preferences. Every successful pee on your floor is a rep: the relief itself is the reward, so the floor gets reinforced every single time it happens, whether you are watching or not. If the count is running five indoors to three outdoors, the floor is winning on volume. SECOND, a city sidewalk is an overwhelming place for a ten week old who is not fully vaccinated. Traffic, other dogs, noise, a hundred smells. Emptying a bladder requires a degree of relaxation, and an overstimulated puppy often cannot do it, then goes the moment she is home and calm. That is not her preferring your floor for its own sake, it is her only being relaxed enough to go once she gets there. The third cause is the one people never spot: if going outside reliably ends the walk, she has a reason to hold on.",
    "vet": "Peeing small amounts frequently, or going again shortly after being emptied, is worth ruling out medically before you treat it purely as training. In a young female golden it is a specific thing to ask about. She has done it several times in the log."
-  },
-  {
-   "id": "g-accident-floor",
-   "kind": "do",
-   "title": "She had an accident on the floor",
-   "tags": [
-    "accident",
-    "pee",
-    "poop",
-    "floor",
-    "carpet",
-    "wee",
-    "housetraining",
-    "toilet",
-    "caught"
-   ],
-   "now": [
-    "Caught in the act: one small neutral sound, an uh-oh or a light clap. Just enough to pause her, not to frighten her. Then carry her to the toilet spot.",
-    "If she finishes in the right place, pay her there and then. Praise plus two or three treats, at the spot, not once you are back inside.",
-    "Found it afterwards: clean it, say nothing, note the time. That is the whole protocol.",
-    "Enzymatic cleaner. If it smells like a toilet to her it stays a toilet."
-   ],
-   "not": [
-    "No scolding, no pointing at it, no nose-rubbing, no shutting her in a room.",
-    "Do not startle her hard mid-pee. Sources differ on whether to interrupt at all; the safe version is the smallest sound that gets her to pause."
-   ],
-   "why": "An accident is a scheduling miss by a person. Out on waking, within fifteen minutes of every meal, after every play bout, and at least every two hours between. Look at the thirty minutes before it happened; almost every accident traces back to a missed trigger.",
-   "cat": "House training"
   },
   {
    "id": "g-crate-bedding",
@@ -2104,52 +2439,6 @@
    "why": "Dogs have limited lactase and dairy is a common cause of loose stool. Right now, with a food transition and a recent Panacur course, added dairy mostly muddies your stool signal. Realistically wait until 4 to 5 months. The probiotic claim for supermarket yogurt is weakly evidenced; a veterinary probiotic is the better tool if one is actually needed."
   },
   {
-   "id": "b-when-needed",
-   "kind": "do",
-   "cat": "Bathing & grooming",
-   "title": "Does she actually need a bath, or just a clean?",
-   "tags": [
-    "dirty",
-    "muddy",
-    "mud",
-    "rain",
-    "poop on her",
-    "stepped in",
-    "pee on her",
-    "rolled in",
-    "spot clean",
-    "wipe",
-    "wash",
-    "when",
-    "need a bath",
-    "messy",
-    "grass",
-    "vomit",
-    "sticky",
-    "reasons",
-    "garbage",
-    "diarrhoea",
-    "diarrhea"
-   ],
-   "now": [
-    "Three different things, and only one of them is a bath. Pick the smallest one that does the job.",
-    "WIPE, damp cloth, no water, 20 seconds: wet or muddy paws after rain, salt in winter, food and slobber round her mouth, dust, a bit of grass, tear crust at the eyes.",
-    "SPOT CLEAN, warm water and a cloth on one area, rinsed and dried: she stepped in poop, she sat in her own pee, her rear is dirty after a soft stool, mud up her legs and belly from wet grass, she vomited on herself, one sticky patch, she lay in something damp in the street.",
-    "FULL BATH, the whole dog with shampoo: she rolled in something foul, she got into the garbage, she is dirty all over rather than in one place, she genuinely smells, or diarrhoea has gone up her legs and tail as well as her rear.",
-    "For a poopy rear or a dirty sanitary area: warm water and a cloth, or hold just that end under the tap. She does not need to get in the tub for it.",
-    "If she stepped in poop, wash the foot properly rather than wiping it. She scavenges, so whatever is on that foot goes in her mouth.",
-    "Dry whatever you washed, properly, especially between the toes and anywhere the coat is dense."
-   ],
-   "not": [
-    "Do not full-bath her for a dirty patch. That is the mistake that turns bathe when dirty into bathe twice a week, and the full bath is the only one of the three that costs her anything.",
-    "Do not use shampoo for a spot clean unless the thing is greasy. Warm water and a cloth handles almost all of it.",
-    "Do not leave her damp after a spot clean either. A wet patch under dense coat is how a hot spot starts, whether it came from a bath or a puddle.",
-    "Do not bathe her after surgery or with stitches in until the vet says the date."
-   ],
-   "why": "Rain and wet grass in a city produce a genuinely muddy dog several times a week, and if every one becomes a bath you strip her coat and undo the work of teaching her to accept the tub. Almost all real-world dirt on an apartment puppy is on the feet, legs, belly, rear and face, which are exactly the places a cloth reaches. A full bath is for whole-dog dirt.",
-   "vet": "Repeatedly dirty at the rear, or a soft stool leaving her messy day after day, is a stool question rather than a washing one. Bring it up."
-  },
-  {
    "id": "b-damp-cold",
    "kind": "do",
    "cat": "Bathing & grooming",
@@ -2447,6 +2736,52 @@
    ],
    "why": "This is the AKC Chief Veterinary Officer position, not a grooming preference. People shave double-coated dogs in summer believing it helps them, and it does the opposite.",
    "vet": ""
+  },
+  {
+   "id": "b-when-needed",
+   "kind": "do",
+   "cat": "Bathing & grooming",
+   "title": "Does she actually need a bath, or just a clean?",
+   "tags": [
+    "dirty",
+    "muddy",
+    "mud",
+    "rain",
+    "poop on her",
+    "stepped in",
+    "pee on her",
+    "rolled in",
+    "spot clean",
+    "wipe",
+    "wash",
+    "when",
+    "need a bath",
+    "messy",
+    "grass",
+    "vomit",
+    "sticky",
+    "reasons",
+    "garbage",
+    "diarrhoea",
+    "diarrhea"
+   ],
+   "now": [
+    "Three different things, and only one of them is a bath. Pick the smallest one that does the job.",
+    "WIPE, damp cloth, no water, 20 seconds: wet or muddy paws after rain, salt in winter, food and slobber round her mouth, dust, a bit of grass, tear crust at the eyes.",
+    "SPOT CLEAN, warm water and a cloth on one area, rinsed and dried: she stepped in poop, she sat in her own pee, her rear is dirty after a soft stool, mud up her legs and belly from wet grass, she vomited on herself, one sticky patch, she lay in something damp in the street.",
+    "FULL BATH, the whole dog with shampoo: she rolled in something foul, she got into the garbage, she is dirty all over rather than in one place, she genuinely smells, or diarrhoea has gone up her legs and tail as well as her rear.",
+    "For a poopy rear or a dirty sanitary area: warm water and a cloth, or hold just that end under the tap. She does not need to get in the tub for it.",
+    "If she stepped in poop, wash the foot properly rather than wiping it. She scavenges, so whatever is on that foot goes in her mouth.",
+    "Dry whatever you washed, properly, especially between the toes and anywhere the coat is dense."
+   ],
+   "not": [
+    "Do not full-bath her for a dirty patch. That is the mistake that turns bathe when dirty into bathe twice a week, and the full bath is the only one of the three that costs her anything.",
+    "Do not use shampoo for a spot clean unless the thing is greasy. Warm water and a cloth handles almost all of it.",
+    "Do not leave her damp after a spot clean either. A wet patch under dense coat is how a hot spot starts, whether it came from a bath or a puddle.",
+    "Do not bathe her after surgery or with stitches in until the vet says the date."
+   ],
+   "why": "Rain and wet grass in a city produce a genuinely muddy dog several times a week, and if every one becomes a bath you strip her coat and undo the work of teaching her to accept the tub. Almost all real-world dirt on an apartment puppy is on the feet, legs, belly, rear and face, which are exactly the places a cloth reaches. A full bath is for whole-dog dirt.",
+   "vet": "Repeatedly dirty at the rear, or a soft stool leaving her messy day after day, is a stool question rather than a washing one. Bring it up."
   },
   {
    "id": "b-pee-after",
@@ -3166,6 +3501,7 @@
   }
  ],
  "categories": [
+  "Starting out",
   "House training",
   "Crate & sleep",
   "Behavior",
