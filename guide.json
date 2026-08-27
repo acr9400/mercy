@@ -49,6 +49,42 @@
    "cat": "House training"
   },
   {
+   "id": "g-crate-bedding",
+   "kind": "do",
+   "cat": "Crate & sleep",
+   "title": "What should go in the crate, and what should not",
+   "tags": [
+    "crate",
+    "bedding",
+    "pillow",
+    "towel",
+    "blanket",
+    "bed",
+    "mattress",
+    "soft",
+    "pee",
+    "wee",
+    "soiling",
+    "stuffing",
+    "chewing",
+    "swallow",
+    "what to put"
+   ],
+   "now": [
+    "ONE flat washable layer. Not a pile. A crate pad or a folded towel or her bed, whichever she is not chewing.",
+    "Check it every single morning. The moment you find it chewed, pulled apart, or with a seam open, it comes out.",
+    "If she soils it: strip the crate to the bare tray for a week. Once she has had seven clean nights, put one layer back.",
+    "Divider set so she can stand up, turn around and lie down. No more than that."
+   ],
+   "not": [
+    "No pillow. A pillow wicks urine down into the stuffing, so she is dry and comfortable a minute after peeing. That removes the only thing motivating her to hold it, and puppies who soil absorbent bedding tend to carry on. The stuffing is also the exact kind of thing a teething puppy swallows, and fabric in the gut is surgery.",
+    "Not a pillow AND a towel AND a bed. Three soft layers give her a bathroom at one end and a bed at the other, which is precisely what the crate size rule exists to prevent.",
+    "Nothing she can shred while you are not watching. Blankets with a loose weave, anything with a seam she has already found."
+   ],
+   "why": "Crate training works on one mechanism: most puppies will not lie in their own mess. Everything else follows from that. Absorbent bedding removes the discomfort, and extra space lets her move away from it, so between them they dismantle the only thing doing the work. A fouled crate almost always means the crate is too big, the bedding is too absorbent, or she was left too long. Fix those before you conclude anything about her.",
+   "vet": "Repeated crate soiling in a puppy who was previously clean can be medical. Mention it."
+  },
+  {
    "id": "g-crate-crying",
    "kind": "do",
    "title": "She is crying or barking in the crate at night",
@@ -106,6 +142,41 @@
    "why": "Most puppies will not soil where they sleep, so a fouled crate usually means the crate is too big, she was left too long, or she was already holding it. Check the divider is set so she can stand, turn and lie down and no more. If it keeps happening, fix the schedule, not the puppy.",
    "vet": "Repeated crate soiling can be medical. Mention it.",
    "cat": "Crate & sleep"
+  },
+  {
+   "id": "g-crate-toys",
+   "kind": "do",
+   "cat": "Crate & sleep",
+   "title": "Toys in the crate: which ones, and why most should come out",
+   "tags": [
+    "crate",
+    "toys",
+    "kong",
+    "rope",
+    "squeaker",
+    "stuffed",
+    "plush",
+    "chew",
+    "overnight",
+    "unsupervised",
+    "swallow",
+    "obstruction",
+    "safe toys"
+   ],
+   "now": [
+    "What can stay in overnight: a Kong or solid one-piece rubber toy. Nothing that can have a piece torn off it.",
+    "Everything else lives outside the crate and comes out when you are there to watch.",
+    "Check whatever stays in, every morning, for tooth damage."
+   ],
+   "not": [
+    "No stuffed or plush toys. Same swallowing problem as a pillow.",
+    "No squeaky toys. She will get the squeaker out, and it is small, hard and exactly swallowable.",
+    "NO ROPE TOYS. This is the worst one and the one people assume is safe. Swallowed strands become a linear foreign body, which can saw through the intestinal wall. It is a serious surgical emergency and it is worse than a solid object.",
+    "Nothing with eyes, tags, ribbons or glued-on parts.",
+    "Do not fill the crate with interesting things. If it is full of stuff to do, it is a playpen. You want somewhere nothing happens and she falls asleep."
+   ],
+   "why": "The crate is specifically where she is unsupervised. Every toy in there has to be safe with nobody watching for eight hours, which is a much higher bar than a toy you hand her while you sit on the floor with her. A stuffed frozen Kong is the exception worth making: it is safe, it gives her something to settle with at bedtime, and it can be filled from her measured ration so it costs nothing against her treat budget.",
+   "vet": "Retching with nothing coming up, a swollen or painful belly, vomiting after drinking, or straining with no stool means a possible blockage. That is surgical and hours matter."
   },
   {
    "id": "g-digging-bed",
