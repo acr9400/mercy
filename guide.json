@@ -291,6 +291,40 @@
    "cat": "Crate & sleep"
   },
   {
+   "id": "g-wake-her",
+   "kind": "do",
+   "cat": "Crate & sleep",
+   "title": "She fell asleep and a potty trip is due. Wake her, or let her sleep?",
+   "tags": [
+    "sleep",
+    "asleep",
+    "nap",
+    "wake",
+    "wake her",
+    "potty",
+    "trip",
+    "tired",
+    "overtired",
+    "napping",
+    "skip",
+    "miss",
+    "schedule"
+   ],
+   "now": [
+    "Let her sleep. Almost always.",
+    "Take her out the SECOND she wakes. Not after you finish the sentence, not after you find your keys. Waking up is one of the four times a puppy reliably needs to go, along with after eating, after playing and after getting excited.",
+    "Have your shoes and her leash by the door before you sit down to anything. The 60 seconds you spend hunting for them is the 60 seconds the accident happens in.",
+    "Know what waking up looks like: shifting and repositioning, a stretch and a shake, a whine or small bark, standing up. Circling is not a warning, it is the last step before it happens. Circling means go now.",
+    "The one time you DO wake her: last call at bedtime. There the alternative is nine hours of holding, which is a different problem from a 45 minute nap."
+   ],
+   "not": [
+    "Do not carry a sleeping puppy downstairs to try to make her go. She was not about to. You have just woken her and restarted the clock.",
+    "Do not treat a missed slot on the schedule as a failure. The schedule is a default for when nothing else is happening. A sleeping puppy overrides it."
+   ],
+   "why": "She needs 18 to 20 hours of sleep a day at this age, and sleep is when learning consolidates. Most of what looks like a badly behaved puppy is a tired one: the biting, the zoomies, the completely ignoring you. Waking her costs you more than an accident does. And dogs do not eliminate while asleep, so a sleeping puppy is not one who is about to go. The urge has gone quiet and it comes back when she wakes, which is exactly why the moment she wakes is the one that matters.",
+   "vet": "A puppy who is genuinely difficult to rouse, or who is sleeping far more than usual and is flat when awake, is a different thing entirely. That is a same-day call."
+  },
+  {
    "id": "g-wont-settle",
    "kind": "do",
    "title": "She will not settle. Pacing, will not lie down",
