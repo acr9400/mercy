@@ -2333,11 +2333,17 @@ function gResults(q){
   var t = q.toLowerCase(), out = [];
   GUIDE.entries.forEach(function(e){ if (gHay(e).indexOf(t) >= 0) out.push({k:'g', o:e}); });
   TRAIN.skills.forEach(function(s){ if (gHay(s).indexOf(t) >= 0) out.push({k:'t', o:s}); });
-  out.sort(function(a,b){
-    var at = (a.o.title||'').toLowerCase().indexOf(t) >= 0 ? 0 : 1;
-    var bt = (b.o.title||'').toLowerCase().indexOf(t) >= 0 ? 0 : 1;
-    return at - bt;
-  });
+  /* Rank: title match first, then an exact tag, then a body-text match. Without the
+     tag rung, searching "ears" put two entries that merely contain the phrase "ears
+     back" above the entry actually about cleaning her ears. */
+  function rank(o){
+    if((o.title||'').toLowerCase().indexOf(t) >= 0) return 0;
+    var tags = (o.tags||[]).map(function(x){ return String(x).toLowerCase(); });
+    if(tags.indexOf(t) >= 0) return 1;
+    if(tags.some(function(x){ return x.indexOf(t) >= 0; })) return 2;
+    return 3;
+  }
+  out.sort(function(a,b){ return rank(a.o) - rank(b.o); });
   return out;
 }
 

@@ -2027,6 +2027,302 @@
    "why": "Dogs have limited lactase and dairy is a common cause of loose stool. Right now, with a food transition and a recent Panacur course, added dairy mostly muddies your stool signal. Realistically wait until 4 to 5 months. The probiotic claim for supermarket yogurt is weakly evidenced; a veterinary probiotic is the better tool if one is actually needed."
   },
   {
+   "id": "b-drying",
+   "kind": "do",
+   "cat": "Bathing & grooming",
+   "title": "Drying a double coat, and why it is the step that matters most",
+   "tags": [
+    "dry",
+    "drying",
+    "towel",
+    "hairdryer",
+    "blow dry",
+    "hot spot",
+    "matting",
+    "damp",
+    "double coat"
+   ],
+   "now": [
+    "Press and blot with towels. Do not rub. Rubbing tangles a double coat and makes mats.",
+    "Expect to use three or four towels. Swap as soon as one is saturated.",
+    "A cool-air canine dryer is the right tool. If you use a human hairdryer: COOL or lowest setting only, never the heat setting, at least 12 inches away, kept constantly moving.",
+    "Direct the air AGAINST the direction of hair growth so it reaches the skin, and brush the opposite way as you go. Work section by section.",
+    "TEST WHETHER SHE IS ACTUALLY DRY. Part the coat with your fingers down to the skin and touch the skin itself in five places: base of the neck, under the elbows, chest between the front legs, base of the tail and trousers, behind the ears. Cool skin or damp roots means keep going.",
+    "On a golden this can take 30 to 60 minutes or more. It will take longer once the adult coat comes in."
+   ],
+   "not": [
+    "Never leave her in a crate with a dryer pointed at it. Not at home, and tell any groomer the same. Dogs have died of heat stroke in cage dryers.",
+    "Do not trust the surface. A double coat feels dry on top long before the undercoat is.",
+    "Do not skip this because she is wriggling. A damp undercoat is how hot spots start."
+   ],
+   "why": "Moisture trapped under a dense coat causes acute moist dermatitis, which is what a hot spot is, and dense-undercoat breeds are over-represented. VCA describes them appearing so fast that an owner can leave in the morning and come back to a raw lesion the size of a pancake. A damp undercoat also compacts into mats, and mats then trap more moisture, which is a loop that feeds itself.",
+   "vet": "A hot spot is a red, wet, painful patch that appears fast and that she will not leave alone. Same-day call."
+  },
+  {
+   "id": "b-ears",
+   "kind": "do",
+   "cat": "Bathing & grooming",
+   "title": "Ear cleaning: more important for her than bathing",
+   "tags": [
+    "ears",
+    "ear",
+    "clean",
+    "otitis",
+    "infection",
+    "drop ears",
+    "swimming",
+    "wax"
+   ],
+   "now": [
+    "Every one to two weeks as maintenance. More often if she ever has allergies or a history of infection.",
+    "Clean AFTER a bath or a swim, not before, to clear the moisture that got in.",
+    "Method: fill the canal with a veterinary ear cleaner, massage the base of the ear, let her shake, then wipe the visible parts with cotton pads from the inside outward. No deeper than one knuckle.",
+    "Start now at 10 weeks with the same graded approach as the bath. Touch her ear, treat, two seconds. This is the highest-return grooming habit you can build in this dog."
+   ],
+   "not": [
+    "No cotton swabs. They push debris deeper.",
+    "No alcohol, no hydrogen peroxide.",
+    "Do not squirt forcefully. Pressure can damage the eardrum.",
+    "Do not clean a painful, red or discharging ear. Call the vet first: if the eardrum is perforated, cleaner in the canal can cause deafness."
+   ],
+   "why": "She has drop ears, which means a poorly ventilated canal and a lifetime risk of otitis. Merck is explicit that preventing otitis externa means keeping the canals dry and well ventilated and keeping water out during bathing. For a golden this matters more than how often she is bathed.",
+   "vet": "Head shaking, head tilt, scratching at an ear, redness, odour, discharge, or pain when you touch the ear base. Any of those, call."
+  },
+  {
+   "id": "b-groomer",
+   "kind": "do",
+   "cat": "Bathing & grooming",
+   "title": "Groomers and dog washes: not yet, and here is the date",
+   "tags": [
+    "groomer",
+    "grooming",
+    "salon",
+    "self service",
+    "dog wash",
+    "vaccination",
+    "parvo",
+    "first visit",
+    "when"
+   ],
+   "now": [
+    "Do the bath protocol at home for now. That gets you most of the socialisation value with none of the infection risk.",
+    "Book a meet and greet at your chosen salon: CARRY her in, feet off the floor, five minutes in reception, treats, no bath, out. The building, the smells and the dryer noise are what need socialising, not the tub. Ask first and go at a quiet time.",
+    "Book the real first appointment for about two weeks after her final DAPP dose, likely late October. Ask for a short introductory groom, 20 to 30 minutes: bath, quick dry, light brush, feet and face tidy.",
+    "Ask the salon directly: what vaccines do you require, do you separate puppies, how do you disinfect between dogs, do you use cage dryers. A good salon has ready answers."
+   ],
+   "not": [
+    "No self-service dog wash until her series is done. Worse than a salon: nobody screens vaccination, the tub itself is the shared surface she would stand in, and she scavenges. You already have a bathtub, so there is nothing to trade against the risk.",
+    "Red flags in a groomer: will not answer questions, uses cage dryers unattended, suggests shaving a golden, or will not do a short introductory visit."
+   ],
+   "why": "Parvovirus is the concern, not germs generally. It is spread by swallowing virus shed in faeces, an apparently healthy dog can be shedding for two weeks before showing signs, and it survives in the environment for up to a year. Puppies from six weeks to six months are the most affected group. The counterweight is real too: her socialisation window closes around 16 weeks, which is the same date her vaccine series completes, and more dogs under three die from behaviour problems than from infectious disease. There is a genuine tension here and anyone who tells you otherwise is oversimplifying.",
+   "vet": "Worth raising honestly: she already walks on city sidewalks and scavenges, which is arguably a higher parvo exposure than a screened salon. If that risk has been accepted, refusing a salon purely on infection grounds is not consistent. That is a conversation for you and your vet."
+  },
+  {
+   "id": "b-how-often",
+   "kind": "do",
+   "cat": "Bathing & grooming",
+   "title": "How often should she be bathed?",
+   "tags": [
+    "bath",
+    "bathe",
+    "shower",
+    "how often",
+    "frequency",
+    "schedule",
+    "monthly",
+    "once a month",
+    "wash"
+   ],
+   "now": [
+    "No schedule. Bathe her when she is visibly dirty, when she smells, or when she has rolled in something.",
+    "Realistically that will land somewhere between every 3 and 8 weeks for her.",
+    "Brush her weekly regardless. Brushing, not bathing, is what actually maintains a double coat.",
+    "If she rolls in something foul, bathe her immediately. There is no such thing as too soon when the alternative is leaving it in an undercoat.",
+    "Most apartment dirt is feet, belly, chest and rear. A damp cloth on those four places is the right tool, not a whole bath."
+   ],
+   "not": [
+    "Do not run a calendar. The once a month rule has no evidence behind it. It is a number that circulates because it is easy to remember.",
+    "If you find yourself bathing her more than every three weeks with no reason, do not just carry on. That is a skin question for the vet, not a grooming habit.",
+    "Do not bathe a matted or tangled coat. Water tightens mats. Brush her out dry first, every time."
+   ],
+   "why": "Mainstream veterinary sources span weekly to every twelve weeks, a twelve-fold spread, which is itself the proof that nobody has measured this. The AKC says monthly for a golden; VCA says six to eight weeks; Virginia Tech says four to twelve; WSAVA says no more than monthly in a dry climate. Note the pattern though: dermatologists bathe dogs MORE often than groomers do, because in a dog with skin disease frequent bathing removes allergens and hydrates skin. The do not over-bathe instinct is a coat-cosmetics argument, not a skin-health one, and it applies to healthy dogs only. Over-bathing is real: surfactants strip the surface lipid film, and a dog has only three to five epidermal cell layers against a human ten to fifteen, so there is less barrier to spare. Signs you have overdone it are flaking, a dull or brittle coat, new itching that starts after baths, and pink skin at the belly and armpits. Under-bathing is the more likely failure in a city though, and for a golden it ends in matting and hot spots.",
+   "vet": "Odour that comes back within days of a bath is a sign to investigate skin and ears, not to bathe more often."
+  },
+  {
+   "id": "b-method",
+   "kind": "do",
+   "cat": "Bathing & grooming",
+   "title": "How to bathe her, step by step",
+   "tags": [
+    "bath",
+    "how to",
+    "method",
+    "steps",
+    "water",
+    "temperature",
+    "tub",
+    "rinse",
+    "ears",
+    "eyes",
+    "wash"
+   ],
+   "now": [
+    "BEFORE she is in the room: door shut, room warmed to at least 72F. Run the shower hot for a minute to warm it.",
+    "NON-SLIP MAT IN THE TUB. Not optional. A dog whose feet slide has no control over her own body, and that is frightening. Many dogs who hate baths actually hate sliding.",
+    "Everything within reach before she is wet: shampoo with the cap already open, three or four towels, lickmat, treats, a jug or shower hose.",
+    "Brush her out dry first. Take her out to toilet. Cotton ball resting AT the entrance of each ear, not pushed in.",
+    "Water 98 to 102F. Test on the inside of your wrist. It should feel neutral, not warm. Two to three inches depth at most, or none with a running hose.",
+    "Start the water on her feet and rear, never her head.",
+    "Wet her from the neck backwards, thoroughly. A double coat repels water. If it is beading off she is not wet enough and the shampoo will sit on top.",
+    "Shampoo diluted, worked in with fingertips down to the skin: neck, back, sides, legs, belly, tail, rear last.",
+    "RINSE, THEN RINSE AGAIN. Plan on twice as long rinsing as shampooing.",
+    "Face last, with a plain damp cloth and no shampoo at all. Never rinse her head with a hose.",
+    "Squeegee the water out with your hands before the towel. It removes a surprising amount.",
+    "Cotton out, ears dried."
+   ],
+   "not": [
+    "Do not bathe her in the kitchen sink. It works at 10 weeks and she will outgrow it within weeks, and you will have taught her a place that then gets taken away. Use the tub she will use for life.",
+    "Do not spray water into her ears. Wash the ear leather with a damp cloth.",
+    "No shampoo above her eyebrow line.",
+    "Do not take her outside for at least one to two hours afterwards, longer in winter.",
+    "Stop and dry immediately if she shivers, tucks up, or goes quiet and rigid."
+   ],
+   "why": "The rinse is the step people cut short and it matters more on a double coat than anywhere else. Shampoo left in a dense undercoat is a leading cause of itching and flaking after a bath. The test: run your hands through the coat feeling for slippery spots. Any slickness or foam means keep rinsing. Check the armpits, groin, under the tail, between the toes and behind the ears. Aim to have her wet for under ten minutes in the early baths.",
+   "vet": "If water gets deep into an ear: let her shake, that clears most of it. Wipe the visible part only, no deeper than one knuckle. Call the vet if in the following days you see head shaking, a head tilt, scratching at the ear, redness, odour, discharge, or pain when you touch the ear base."
+  },
+  {
+   "id": "b-paws",
+   "kind": "do",
+   "cat": "Bathing & grooming",
+   "title": "Paws after the sidewalk, and winter salt",
+   "tags": [
+    "paws",
+    "feet",
+    "wipe",
+    "sidewalk",
+    "salt",
+    "ice melt",
+    "winter",
+    "de-icer",
+    "rinse",
+    "clean"
+   ],
+   "now": [
+    "A damp cloth or dog-safe wipe over all four feet after every walk. Twenty seconds.",
+    "Dry between the toes afterwards. She grows hair between the pads that holds moisture.",
+    "WINTER: rinse her feet in cool or lukewarm water, never hot, after every walk. Salt dissolves in water, so you do not need soap or a special product. Dip each foot in a shallow container, massage the pads, dry thoroughly.",
+    "Consider boots or a paw wax once the salt is down.",
+    "Full paw rinsing the rest of the year only when they are visibly caked."
+   ],
+   "not": [
+    "Do not skip this because she was only out for five minutes. She scavenges off the ground, so whatever is on her feet ends up in her mouth.",
+    "Do not leave the feet damp. Wet paws left dirty are how yeast between the toes starts, which is the corn-chip smell and the constant licking."
+   ],
+   "why": "The ASPCA classes all ice-melting products as chemical irritants. Pellets wedge between the pads and burn, and then she licks them off. Serious poisoning is rare; the everyday problem is irritated cracked pads. Daily foot handling is also free training: it is what makes nail trims and the bath protocol easy later.",
+   "vet": "Constant licking at one foot, limping, redness between the toes, or a smell from the paws."
+  },
+  {
+   "id": "b-shampoo",
+   "kind": "do",
+   "cat": "Bathing & grooming",
+   "title": "What to wash her with, and what must never touch her",
+   "tags": [
+    "shampoo",
+    "soap",
+    "conditioner",
+    "oatmeal",
+    "medicated",
+    "flea shampoo",
+    "essential oil",
+    "tea tree",
+    "dish soap",
+    "baby shampoo",
+    "human shampoo",
+    "what to use"
+   ],
+   "now": [
+    "A shampoo labelled for dogs AND for puppies. Soap-free, no fragrance, no dye, tearless if it goes near her face.",
+    "Dilute a squirt in a cup of warm water before it goes on her. Neat shampoo sits on top of a double coat; diluted spreads to the skin and rinses out far more easily.",
+    "Contact time for a plain puppy shampoo is one to two minutes. That is all it needs.",
+    "Conditioner: not needed on a healthy 10 week old puppy coat. It becomes useful around 6 months when the feathering comes in.",
+    "Oatmeal shampoo is a harmless default if her skin ever looks dry. It soothes and hydrates. It does nothing against yeast, bacteria or parasites."
+   ],
+   "not": [
+    "NO FLEA SHAMPOO. She is 10 weeks old. Flea shampoos are EPA-registered pesticides and the common label restriction is do not treat puppies under 12 weeks. The label age is legally binding and it varies by product, so read the actual bottle every time, and if it does not state an age, do not use it. If she ever has fleas the answer is a vet-prescribed product for her age and weight, not a shampoo.",
+    "NO ESSENTIAL OILS, and check the label of anything marketed as natural. Toxic to dogs on the skin, not only swallowed: tea tree, pennyroyal, wintergreen, birch, pine, cinnamon, clove, peppermint, eucalyptus, undiluted citrus, ylang-ylang. Several are hepatotoxic and several can trigger seizures. If a dog shampoo lists an essential oil, put it back.",
+    "No dish soap. It is a degreaser designed to strip lipid films, which is the exact wrong action on a barrier three to five cells thick.",
+    "No human shampoo. Human scalp is acidic at 5.2 to 6.2; a dog coat is nearer neutral at 6.2 to 7.5. Honest caveat: WSAVA says whether that difference actually matters is not known. The stronger argument is that her skin is simply thinner than yours.",
+    "Baby shampoo is a one-time emergency substitute, not something to own. Veterinary sources contradict each other on whether even that is fine.",
+    "No vinegar rinses, no baking soda. Both are folklore. Baking soda is alkaline, the opposite direction from her skin, and leaves grit in an undercoat.",
+    "Medicated shampoos are vet-directed only. If one is ever prescribed, the contact time is the whole point: five to fifteen minutes on the skin, and rinsing early wastes it."
+   ],
+   "why": "Her skin is not a smaller version of yours. Fewer epidermal layers, a thinner stratum corneum and different follicle density all mean it is more sensitive to surfactants than human skin is.",
+   "vet": "Ask before using any medicated or insecticidal product on her, at any age."
+  },
+  {
+   "id": "b-shave",
+   "kind": "do",
+   "cat": "Bathing & grooming",
+   "title": "Never shave her, and what trimming is fine",
+   "tags": [
+    "shave",
+    "shaving",
+    "clip",
+    "trim",
+    "groomer",
+    "summer",
+    "hot",
+    "coat",
+    "sanitary"
+   ],
+   "now": [
+    "Tell any groomer, explicitly and every single time, that she is not to be shaved.",
+    "What IS fine to trim: hair between the foot pads, monthly, for traction. The sanitary area around the vulva and under the tail once the feathering comes in around 4 to 6 months. Light tidying of ears, feet, neck and tail.",
+    "Brush weekly with a slicker brush and then a comb. Daily during a heavy shed. Brush the hair, not the skin."
+   ],
+   "not": [
+    "DO NOT SHAVE HER, EVER, including in summer. The undercoat insulates against heat as well as cold. Shaving removes it, raises her heat stroke risk, exposes skin to sunburn, and can permanently wreck the coat: the undercoat regrows faster than the guard hairs and crowds them out, leaving her patchy and textureless."
+   ],
+   "why": "This is the AKC Chief Veterinary Officer position, not a grooming preference. People shave double-coated dogs in summer believing it helps them, and it does the opposite.",
+   "vet": ""
+  },
+  {
+   "id": "b-pee-after",
+   "kind": "vet",
+   "cat": "Bathing & grooming",
+   "title": "She peed after her bath",
+   "tags": [
+    "pee",
+    "urinate",
+    "after bath",
+    "submissive",
+    "excitement",
+    "accident",
+    "wet",
+    "bath"
+   ],
+   "lead": "Most likely she simply needed to go. A bath means fifteen or twenty minutes held still, then more time being dried, and a 10 week old bladder does not hold much. A gap of twenty to thirty minutes afterwards is completely ordinary.",
+   "now": [
+    "Straining, or posturing repeatedly and producing little or nothing",
+    "Blood in the urine, or urine that is pink, red or cloudy",
+    "Wet patches where she has been lying or sleeping, or constant dribbling. In a young female golden, call about this promptly."
+   ],
+   "today": [
+    "Frequent small volumes rather than normal-sized pees",
+    "Excessive licking at the vulva, or a strong unusual urine smell",
+    "A sudden increase in drinking alongside more urinating",
+    "House training that was going fine and then clearly regresses"
+   ],
+   "mention": [
+    "That it happens after baths specifically, and whether it happens every time"
+   ],
+   "normal": [
+    "One ordinary-looking pee, normal squat, normal volume, twenty to thirty minutes after a bath, while she is loose and relaxed. That is the expected outcome, not a problem."
+   ],
+   "say": "If you call: say how often it happens, how much, what her posture was, and whether anyone was approaching her at the time.",
+   "note": "Telling the four causes apart. NEEDED TO GO: normal squat, full puddle, she was loose and relaxed, not being approached. DELAYED STRESS: normal volume, once, on the floor after a stressful event; arousal suppresses urinating during the event and the bladder empties when it drops. SUBMISSIVE: happens when a person approaches, reaches or looms; ears back, lips pulled back, avoiding eye contact, cowering or rolling over; usually a dribble not a full void. EXCITEMENT: no submissive body language, happens standing or walking during greeting or play. Never scold her for any of them. Reprimanding a submissive pee makes her more anxious at the next approach, and with a puppy already unsure about baths you would be attaching that anxiety to you. Clean it up in silence. Prevention: take her out immediately before every bath and again after drying, and the question disappears."
+  },
+  {
    "id": "v-belly",
    "kind": "vet",
    "title": "Her belly is swollen, hard or painful",
@@ -2671,6 +2967,7 @@
   "Out & about",
   "Home & care",
   "Food & treats",
+  "Bathing & grooming",
   "When to call the vet"
  ]
 }

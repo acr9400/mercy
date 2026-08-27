@@ -974,6 +974,127 @@
    ]
   },
   {
+   "id": "t-bath",
+   "cat": "Foundation",
+   "title": "Learning to accept a bath",
+   "priority": 1,
+   "age": "Now. This one has a deadline.",
+   "sessions": "2 to 5 minutes, twice a day at most. Never right after a walk when she is tired.",
+   "why": "Bath fear is a learning problem, not a compliance problem. Every bath she is held through teaches her one thing: struggling does not work, and the people I trust will hold me down. What you get from forcing it is not a calm dog, it is a dog who has learned helplessness, which looks like calm right up until the day the restraint is not enough. Then you have a 70 lb dog with a decade of practised fear. Her socialisation window closes around 16 weeks, so you have roughly six weeks of the cheapest learning she will ever do. Ten short sessions over three weeks now costs less than a behaviour consult and years of sedated grooming later.",
+   "need": [
+    "A non-slip mat for the tub, used from the very first session even when the tub is dry",
+    "A suction lickmat",
+    "Genuinely high value food: wet food, plain cooked chicken, cream cheese. Kibble will not carry this.",
+    "Nothing else. No water for the first three steps."
+   ],
+   "steps": [
+    {
+     "n": 1,
+     "do": "The room. Door open, tub dry and empty. Feed her a meal on the bathroom floor.",
+     "look": "She walks into the bathroom on her own and eats normally.",
+     "reps": "One meal a day for a few days."
+    },
+    {
+     "n": 2,
+     "do": "The dry tub. Non-slip mat down. Lure her in with food, or lift her in and feed immediately, then lift out after five seconds.",
+     "look": "She steps in voluntarily, or is lifted in without stiffening, and eats in the tub.",
+     "reps": "5 short reps."
+    },
+    {
+     "n": 3,
+     "do": "Sound. She is in the dry tub on the lickmat. Turn the tap on for three seconds, then off. Food continues three seconds longer, then stops.",
+     "look": "She keeps licking through the tap noise. Best case she looks at the tap and then at you, which means the association is forming.",
+     "reps": "5 reps."
+    },
+    {
+     "n": 4,
+     "do": "One wet paw. Damp washcloth on one front paw. Food. Remove the cloth and the food stops.",
+     "look": "She eats through it. No pulling the paw away, no freezing.",
+     "reps": "5 reps."
+    },
+    {
+     "n": 5,
+     "do": "Water on the body, no shampoo. Warm water on her hind feet and legs only, ten seconds. Towel. Done. Nothing else happens.",
+     "look": "She stays standing, keeps eating, does not try to climb out.",
+     "reps": "One short session."
+    },
+    {
+     "n": 6,
+     "do": "Half a dog. Wet her from the shoulders back. Towel. Out. Still no shampoo.",
+     "look": "Same as above, tolerating about sixty seconds of water.",
+     "reps": "One short session."
+    },
+    {
+     "n": 7,
+     "do": "Add shampoo, still not a full bath. Whole body wet, dilute shampoo on the back only, quick rinse, out. Skip the head, skip the feathering, skip anything difficult.",
+     "look": "The whole thing under five minutes and she is still eating.",
+     "reps": "One session."
+    },
+    {
+     "n": 8,
+     "do": "The real bath, the full sequence.",
+     "look": "She completes it without struggling.",
+     "reps": "Only when step 7 is solid."
+    }
+   ],
+   "criteria": [
+    {
+     "level": "Room",
+     "test": "She walks into the bathroom on her own and eats a meal on the floor.",
+     "pass": "Two sessions running, with two different handlers.",
+     "id": "t-bath-c1"
+    },
+    {
+     "level": "Dry tub",
+     "test": "She is in the tub on the mat, eating.",
+     "pass": "Two sessions running, two handlers.",
+     "id": "t-bath-c2"
+    },
+    {
+     "level": "Sound",
+     "test": "Tap on for three seconds while she is on the lickmat.",
+     "pass": "She keeps licking through it, 4 out of 5 reps.",
+     "id": "t-bath-c3"
+    },
+    {
+     "level": "Water",
+     "test": "Warm water on her hind legs for ten seconds.",
+     "pass": "Still eating, not trying to leave, twice on different days.",
+     "id": "t-bath-c4"
+    },
+    {
+     "level": "Whole bath",
+     "test": "The full sequence from the guide.",
+     "pass": "Completed without struggle, twice.",
+     "id": "t-bath-c5"
+    }
+   ],
+   "wrong": [
+    "Pushing through when she has stopped eating. Refusing food is the single most reliable sign she is over threshold. If she stops eating, you went too far: back up one step.",
+    "Finishing the job. For the next four to six baths, deliberately STOP BEFORE SHE IS CLEAN. Wet her, do one section, dry, release. A half-done bath that ends well teaches that baths are short and survivable. A complete bath that ends badly teaches that once she is in there it never ends. You are training the dog, not cleaning her.",
+    "Two people where the second one holds her. That is restraint with extra staff, and it teaches her that two humans are now part of the bad thing. The second person feeds and talks and never restrains. If she wants to leave, she may leave.",
+    "Skipping the non-slip mat at step 2 because the tub is dry. Footing is a primary fear variable, not a nicety.",
+    "One handler quietly just getting it done. That resets the other two by weeks. All three of you run the same step."
+   ],
+   "next": [
+    "t-handling",
+    "t-paws"
+   ],
+   "tags": [
+    "bath",
+    "bathing",
+    "shower",
+    "wash",
+    "afraid",
+    "scared",
+    "hates",
+    "tub",
+    "fear",
+    "desensitise"
+   ],
+   "note": "Timeline: if she is only mildly worried, steps 1 to 8 take two to three weeks. If she is genuinely frightened, budget six to eight weeks and split the steps further. There is no prize for finishing fast, and she does not need a real bath in the meantime because she is clean. If after about three weeks of consistent work she still panics at step 3 or 4, that is past a self-help protocol: ask your vet for a referral to a veterinary behaviourist. At 10 weeks that is a short cheap intervention. At 10 months it is not."
+  },
+  {
    "id": "t-crate",
    "cat": "Foundation",
    "title": "Loving the crate",
