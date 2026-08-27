@@ -1,0 +1,248 @@
+{
+ "version": 1,
+ "_note": "The Kit tab. Four groups: what to buy, what is already here, games that need nothing, and what to skip. Every item with track:true gets a tick box, stored on each phone in localStorage under mercy.kit. Items marked have:true are seeded as ticked the first time the tab is opened, so the list starts as a true inventory. Edit, then run scripts/sync_app_config.py, add kit.json to ASSETS in sw.js if it is not there, bump the cache and re-upload.",
+ "_links": "Amazon links are direct product links, verified live. Each item also carries a search string, because a listing can go out of stock or change ASIN and the product name is what actually survives.",
+ "groups": [
+  {
+   "id": "buy",
+   "name": "Worth buying",
+   "note": "Four things, in this order. The first one is the real gap: everything she already owns is supervised-only, so right now she has nothing to do in her crate. Tick each one when it arrives.",
+   "track": true,
+   "items": [
+    {
+     "id": "k-toppl",
+     "kind": "kit",
+     "title": "West Paw Toppl, size Small",
+     "price": "about $15",
+     "why": "The hole in her kit. Solid one-piece rubber with nothing to tear off, so it is the only toy on this page that is safe in the crate with nobody watching. Stuff it with her soaked kibble and freeze it: a 20 minute activity funded from her ration.",
+     "how": "Wider opening than a Kong, so she wins early, which is the same rule as starting the puzzle on level 1. First few times, smear food round the inside rather than packing it. Freeze it only once she empties it easily unfrozen.",
+     "link": "https://www.amazon.com/dp/B00N54E7Y8",
+     "search": "West Paw Zogoflex Toppl Small",
+     "alt": "A Kong Puppy in blue or pink, size Small, does the same job. Not the red Classic, which is a harder rubber made for adult teeth.",
+     "tags": ["toppl", "west paw", "kong", "stuffable", "crate", "frozen", "unsupervised", "rubber", "buy"]
+    },
+    {
+     "id": "k-lickmat",
+     "kind": "kit",
+     "title": "Lick mat with suction cups",
+     "price": "about $8",
+     "why": "Stick it to the wall of the bath, smear it, and bath time stops being a fight. Same for nail trims and ear cleaning. The bathing entry in this guide already assumes you own one.",
+     "how": "Wet the suction cups, press it on tile or glass, and wait a minute or two before she touches it or it falls off mid-lick. Spread something thin: soaked kibble mash, a scrape of plain yoghurt. Top rack of the dishwasher.",
+     "link": "https://www.amazon.com/dp/B09KSVFBCB",
+     "search": "Hyper Pet IQ Treat Mat lick mat suction cups",
+     "tags": ["lickmat", "lick mat", "bath", "grooming", "nails", "calming", "suction", "buy"]
+    },
+    {
+     "id": "k-snuffle",
+     "kind": "kit",
+     "title": "Snuffle mat",
+     "price": "about $15",
+     "why": "Not because she needs more puzzles. Because she needs rotation. The same puzzle every single day stops being work and becomes a routine she does on autopilot.",
+     "how": "Scatter a handful of kibble deep into the fabric and let her hoover. Five to ten minutes is plenty. Supervised only, and take it up when she is done: dogs do swallow the fabric strips, and machine wash it warm.",
+     "link": "https://www.amazon.com/dp/B095FR1SMP",
+     "search": "PAW5 Wooly Snuffle Mat 12 x 18",
+     "tags": ["snuffle", "snuffle mat", "foraging", "sniffing", "rotation", "enrichment", "buy"]
+    },
+    {
+     "id": "k-longline",
+     "kind": "kit",
+     "title": "Long line, 15 to 20 feet, biothane",
+     "price": "about $20",
+     "why": "Not a game. It is the thing that makes recall trainable, and recall outranks every toy on this page. Biothane because it does not soak up puddles, does not stink, and does not give you rope burn when she bolts.",
+     "how": "Clip it to the HARNESS, never the collar. Let it drag, keep your foot near it, and pay every recall with chicken. Start at 15 feet and go longer once she is reliable. Never a retractable, which teaches constant tension.",
+     "link": "https://www.amazon.com/dp/B005CXJ2OA",
+     "search": "Signature K9 biothane long line 15 ft",
+     "tags": ["long line", "longline", "recall", "leash", "lead", "biothane", "harness", "buy"]
+    }
+   ]
+  },
+  {
+   "id": "have",
+   "name": "Already in the house",
+   "note": "The seven that arrived in August. Every one of them is supervised-only. Untick anything that gets binned, so the list stays true.",
+   "track": true,
+   "items": [
+    {
+     "id": "k-clicker",
+     "kind": "kit",
+     "have": true,
+     "title": "Clicker with wrist strap",
+     "price": "In use now",
+     "why": "The most useful thing in the box and the cheapest. See the marker word in Training.",
+     "how": "Wrist strap on, held low by your leg. One click, never two, and every click gets paid.",
+     "tags": ["clicker", "click", "marker", "have"]
+    },
+    {
+     "id": "k-puzzle",
+     "kind": "kit",
+     "have": true,
+     "title": "Food puzzle, levels 1 to 3",
+     "price": "In use now, level 1",
+     "why": "One meal a day through it instead of the bowl. It is a meal, not a treat.",
+     "how": "On a towel so it cannot slide. Level up only after three days of emptying it in under two minutes. Has a squeaker, so it never stays down empty.",
+     "tags": ["puzzle", "food puzzle", "treat dispenser", "have"]
+    },
+    {
+     "id": "k-bell",
+     "kind": "kit",
+     "have": true,
+     "title": "Wireless door bell button",
+     "price": "Starting this week",
+     "why": "One signal for asking to go out. This is the one to use, not the doorknob bells.",
+     "how": "Lowest volume, one ringtone, at her nose height by the potty door. Pay the nose, never the paw.",
+     "tags": ["bell", "button", "doorbell", "potty", "have"]
+    },
+    {
+     "id": "k-doorbells",
+     "kind": "kit",
+     "have": true,
+     "title": "Doorknob bells",
+     "price": "In a drawer, on purpose",
+     "why": "The spare. Running both means two signals for one need, and she learns neither. These jingle by themselves every time the door moves, which is the problem.",
+     "how": "Keep them for the trip bag, or anywhere there is no wall to mount a button on.",
+     "tags": ["bells", "doorknob", "luckyiren", "spare", "have"]
+    },
+    {
+     "id": "k-tug",
+     "kind": "kit",
+     "have": true,
+     "title": "Suction cup tug",
+     "price": "Supervised only",
+     "why": "Good as a tug you hold. Never the self-play the box describes: a floor anchor has no give, and it is rope.",
+     "how": "Stick it down, sit next to it, hand on the rope, 90 seconds. Check the rope before and after every game.",
+     "tags": ["tug", "suction cup", "rope", "have"]
+    },
+    {
+     "id": "k-gym",
+     "kind": "kit",
+     "have": true,
+     "title": "Wooden play gym",
+     "price": "Weeks, not months",
+     "why": "A strange object for her to choose to approach, inside the socialization window. Not agility equipment, and never a jump.",
+     "how": "On carpet, supervised, and retire it when her back is level with the top bar.",
+     "tags": ["play gym", "jungle gym", "frame", "have"]
+    },
+    {
+     "id": "k-buttons",
+     "kind": "kit",
+     "have": true,
+     "title": "Talking buttons",
+     "price": "Cupboard until about 6 months",
+     "why": "She needs to already know what words mean, and she does not yet. Nothing goes wrong if the box stays shut.",
+     "how": "When you start: one button, and not OUTSIDE, because the door bell owns that.",
+     "tags": ["buttons", "talking buttons", "soundboard", "have"]
+    }
+   ]
+  },
+  {
+   "id": "free",
+   "name": "Games that cost nothing",
+   "note": "These beat most of what money can buy, and every one is paid out of the day's container. Tick them off as you try them.",
+   "track": true,
+   "items": [
+    {
+     "id": "k-scatter",
+     "kind": "kit",
+     "title": "Scatter feed",
+     "price": "3 minutes. Needs nothing.",
+     "why": "The best value per second of anything on this page. Sniffing lowers her arousal and tires her in a way walking does not, which matters because hard exercise is the one thing a large-breed puppy must not have.",
+     "how": "Throw a handful of her kibble across a rug and walk away. A rug, not tile, so she has to work for it. Make it harder by using longer pile, scattering under furniture, or doing it in a room she does not expect.",
+     "tags": ["scatter", "scatter feed", "sniffing", "free", "rainy day", "game"]
+    },
+    {
+     "id": "k-muffin",
+     "kind": "kit",
+     "title": "The muffin tin game",
+     "price": "Free. You own a muffin tin.",
+     "why": "A food puzzle with a difficulty dial you control exactly, which is more than the bought one gives you.",
+     "how": "Kibble in the wells, a tennis ball on top of some of them. Start with two or three balls and leave the rest of the wells open so she wins immediately. Add one ball at a time. Take the balls away if she starts chewing them rather than moving them.",
+     "tags": ["muffin tin", "muffin", "puzzle", "free", "diy", "game"]
+    },
+    {
+     "id": "k-boxes",
+     "kind": "kit",
+     "title": "Box search",
+     "price": "Free. Cardboard.",
+     "why": "This is step 3 of the scentwork skill, and boxes cost nothing. Searching is the single most tiring thing she can do indoors.",
+     "how": "Six boxes on the floor, food in one. Say FIND IT. Start with every box open and the food visible, then fold the flaps over, then put a box inside a box. Bin any box she starts eating rather than searching.",
+     "tags": ["boxes", "box search", "find it", "scentwork", "nosework", "free", "game"]
+    },
+    {
+     "id": "k-towel",
+     "kind": "kit",
+     "title": "The towel roll",
+     "price": "Free. A hand towel.",
+     "why": "Ninety seconds of problem-solving with something already in the cupboard, and it is good for a hotel room or the sitter's.",
+     "how": "Sprinkle kibble along a hand towel and roll it up loosely. Let her unroll it. Then roll it tighter, then tie a loose knot in it. Take it away the moment she starts chewing the towel instead of unrolling it.",
+     "tags": ["towel", "roll", "free", "diy", "game", "travel"]
+    },
+    {
+     "id": "k-whichhand",
+     "kind": "kit",
+     "title": "Which hand",
+     "price": "Free. 90 seconds.",
+     "why": "Thinking work you can do sitting on the sofa, and it builds the nose touch the door bell needs.",
+     "how": "Food in one closed fist, both fists out. She noses one. Right guess, open it and pay. Wrong guess, a cheerful nope, and go again. If she paws, do not open it: wait for the nose, every time.",
+     "tags": ["which hand", "shell game", "nose", "target", "free", "game"]
+    },
+    {
+     "id": "k-pingpong",
+     "kind": "kit",
+     "title": "Recall ping-pong",
+     "price": "Free. Two people.",
+     "why": "The most valuable game in the house and it needs no equipment. It also puts Shira and Chayim into her recall, which matters, because a recall that only works for one person is not a recall.",
+     "how": "Two of you at opposite ends of the hallway. Take turns: her name, then COME, once. She arrives, marker, pay, every single time. Start six feet apart and grow it. Ten calls, then stop. Never call her to something she dislikes.",
+     "tags": ["recall", "come", "ping pong", "hallway", "two people", "free", "game", "shira", "chayim"]
+    }
+   ]
+  },
+  {
+   "id": "skip",
+   "name": "Skip these",
+   "note": "Commonly recommended, wrong for her, for reasons that are specific rather than fussy.",
+   "track": false,
+   "items": [
+    {
+     "id": "k-flirt",
+     "kind": "kit",
+     "title": "A flirt pole",
+     "why": "Everyone recommends these and they are genuinely fun. They are built on hard repetitive turns, which is exactly the load an open growth plate cannot take. In a large breed those plates are open until roughly 12 to 18 months.",
+     "how": "Revisit at about 18 months, not before.",
+     "tags": ["flirt pole", "lure", "skip", "growth plates"]
+    },
+    {
+     "id": "k-launcher",
+     "kind": "kit",
+     "title": "Ball launchers and repetitive fetch",
+     "why": "Same reason. Sprint, hard stop, hard turn, over and over, on a puppy whose joints are still growing. A thrown ball twenty times is not exercise, it is impact.",
+     "how": "Two or three gentle rolls along the floor is fine. The machine is not.",
+     "tags": ["chuckit", "ball launcher", "fetch", "ball", "skip"]
+    },
+    {
+     "id": "k-harder-puzzle",
+     "kind": "kit",
+     "title": "A harder puzzle",
+     "why": "You own levels 1 to 3 and she is on level 1. Rotation beats difficulty: two easy toys taking turns hold her attention better than one hard one.",
+     "how": "Spend it on the snuffle mat instead, and swap between them.",
+     "tags": ["puzzle", "level 4", "harder", "skip"]
+    },
+    {
+     "id": "k-plush",
+     "kind": "kit",
+     "title": "More rope, squeaky or plush toys",
+     "why": "Rope strands become a linear foreign body. Squeakers are small, hard and exactly swallowable. Stuffing is the same problem as a pillow. You already own one rope toy more than you need.",
+     "how": "Solid one-piece rubber is the only thing that passes the leave-her-alone-with-it test.",
+     "tags": ["rope", "plush", "squeaky", "stuffed", "skip", "swallow"]
+    },
+    {
+     "id": "k-retractable",
+     "kind": "kit",
+     "title": "A retractable leash",
+     "why": "It only works by being under constant tension, which teaches her that pulling is how walking feels. It is the opposite of loose lead walking, and the thin cord cuts.",
+     "how": "The long line above does the job it pretends to do, properly.",
+     "tags": ["retractable", "flexi", "leash", "skip"]
+    }
+   ]
+  }
+ ]
+}
