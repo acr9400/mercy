@@ -423,6 +423,41 @@
    "vet": "If she squats repeatedly and produces very little each time, that is not a training question. Frequent small volumes, or going again within minutes of being emptied, is worth ruling out medically."
   },
   {
+   "id": "g-bell-spam",
+   "kind": "do",
+   "cat": "House training",
+   "title": "She rings the bell constantly",
+   "tags": [
+    "bell",
+    "bells",
+    "button",
+    "ringing",
+    "rings",
+    "constantly",
+    "every five minutes",
+    "spam",
+    "asking out",
+    "potty bell",
+    "ignoring",
+    "nonstop"
+   ],
+   "now": [
+    "Count first. Write down every ring for two days: the time, and whether she actually eliminated. The answer is in that list and not in your memory of it.",
+    "If she goes most times she rings, she is not spamming it. She is a puppy with a small bladder telling you the truth. Keep going.",
+    "If she rings and does not go: take her out anyway, on the leash, straight to the spot, stand still and boring for two minutes, and bring her straight back in. No walk, no sniffing tour, no hello to anybody.",
+    "Make sure a bell trip is the ONLY thing that ever follows a ring. Walks and play start at a different time, or from a different door, and never immediately after.",
+    "Keep her scheduled trips running. A puppy taken out often enough has less to ask for."
+   ],
+   "not": [
+    "Do not start ignoring rings. That is how you get an accident, and a dog who stops telling you anything at all.",
+    "Do not tell her off for ringing. She is doing exactly what you taught her.",
+    "Do not rip the bell down in week one out of frustration. If it really is useless, take it down deliberately and tell the other two, so nobody quietly puts it back.",
+    "Do not add a second bell, or a soundboard button, in the hope that one of them will be the clear one."
+   ],
+   "why": "The bell means 'the door opens' unless you make it mean 'I need to pee'. What decides which one she learns is entirely what happens on the other side of the door. If a ring sometimes produces a walk, a game or a neighbour, she will ring for those too, and she will be right to.",
+   "vet": "Ringing much more often than usual, small amounts, straining, or blood is not a training problem. See she keeps squatting."
+  },
+  {
    "id": "g-prefers-indoors",
    "kind": "do",
    "cat": "House training",
@@ -870,6 +905,43 @@
    "why": "Guarding is fear of losing something, not dominance. That is why adding value works and removing value escalates it.",
    "vet": "Tell Ariel every time, and it is worth raising with the vet.",
    "cat": "Behavior"
+  },
+  {
+   "id": "g-puzzle-stuck",
+   "kind": "do",
+   "cat": "Behavior",
+   "title": "She has given up on the puzzle toy, or she is destroying it",
+   "tags": [
+    "puzzle",
+    "food puzzle",
+    "frustration",
+    "frustrated",
+    "gave up",
+    "quit",
+    "barking at it",
+    "smashing",
+    "chewing it",
+    "too hard",
+    "level",
+    "kong",
+    "snuffle mat",
+    "wont use"
+   ],
+   "now": [
+    "Giving up means it is too hard. Take it up without a word. Next time put half the food on top where she can simply eat it, and let her win for free for a few days.",
+    "Barking at it, biting it, flipping it over: same problem, same answer. That is frustration, not naughtiness.",
+    "Check the boring thing first. Is it sliding on a hard floor? Put it on a rug or a towel. Half of 'she cannot do it' is really 'it will not hold still'.",
+    "Is she overtired? A puppy past her nap cannot solve anything. That is a crate, not a puzzle.",
+    "Emptying it in under a minute every single time is the other kind of failure. Move up a level, or keep the level and move it to a different room."
+   ],
+   "not": [
+    "Do not dig the food out for her. Make it easier next time instead. Helping teaches her to look at you the moment something is hard, which is the exact opposite of what the toy is for.",
+    "Do not leave it down once it is empty. It stops being a puzzle and becomes a chew toy, and it has a squeaker inside it.",
+    "Do not stand over her or reach into it while she is working. That is how a dog learns to guard a food toy.",
+    "Do not reach for a puzzle as the answer to a bitey evening. That is a nap."
+   ],
+   "why": "Frustration tolerance is something she learns, and a food puzzle is the best place to learn it, but only while she is winning most of the time. A puppy who fails at a puzzle twice stops trying at it, and that is much harder to undo than simply starting too easy.",
+   "vet": ""
   },
   {
    "id": "g-humping",
@@ -3638,6 +3710,86 @@
    "normal": [],
    "note": "Do not withhold food or water, do not give a bland diet, do not give anything for nausea. Whether she eats next is a vet's call. The withhold-food-and-feed-chicken-and-rice advice is written for adult dogs.",
    "cat": "When to call the vet"
+  },
+  {
+   "id": "g-toys-which",
+   "kind": "do",
+   "cat": "Home & care",
+   "title": "The training toys: which is for what, and which need you in the room",
+   "tags": [
+    "toys",
+    "toy",
+    "play gym",
+    "puzzle",
+    "bell",
+    "bells",
+    "button",
+    "buttons",
+    "clicker",
+    "tug",
+    "suction cup",
+    "soundboard",
+    "what is this for",
+    "enrichment",
+    "self play",
+    "unsupervised",
+    "gear"
+   ],
+   "now": [
+    "CLICKER. Use it today. Cheapest thing in the box and the only one that changes how fast she learns. It is the marker. See the marker word in Training.",
+    "FOOD PUZZLE. Use it today, on level 1, for one meal. It comes out of her measured food, not on top of it.",
+    "ONE DOOR BELL. Use the wireless button, mounted at her nose height by the potty door, on the lowest volume. Put the doorknob bells away as the spare.",
+    "PLAY GYM. Five minutes a day, supervised, standing on carpet, as a strange object to investigate and a tug station. Not as a jump. It has a few weeks of use left before she outgrows it.",
+    "SUCTION CUP TUG. Only with your hand on the rope and you sitting next to it. Never the self-play it is sold as.",
+    "TALKING BUTTONS. In the cupboard until about six months."
+   ],
+   "not": [
+    "Nothing here stays on the floor when nobody is watching. Rope, squeakers, small parts and a wooden frame is the entire list of things the crate toys entry says must not be in front of her unsupervised. 'Indestructible' on a listing is marketing, not a test result.",
+    "Do not run three ways for her to say let me out. The doorknob bells, the wireless button and an OUTSIDE soundboard button all mean the same thing, and three signals for one need teach her none of them.",
+    "Do not add calories for any of this. Everything she earns comes out of the day's one container, so the bowl gets less. See the 10 percent rule.",
+    "Do not count any of it as exercise. Sniffing and problem-solving tire her out. Jumping and hard running damage her while her growth plates are open."
+   ],
+   "why": "Six of these seven are toys. One, the clicker, is a training tool, and it is the one that will actually make a difference. Enrichment matters, and it ranks below her sleep, her potty schedule and her recall. If a day only has room for one thing, it is not the play gym.",
+   "vet": "A missing piece off any toy, a swallowed rope strand, or retching with nothing coming up is a call, not a wait and see. See she swallowed something."
+  },
+  {
+   "id": "g-jump-height",
+   "kind": "do",
+   "cat": "Home & care",
+   "title": "Jumping on and off things: the sofa, the stairs, and her growth plates",
+   "tags": [
+    "jumping",
+    "jump",
+    "sofa",
+    "couch",
+    "bed",
+    "stairs",
+    "growth plates",
+    "joints",
+    "hips",
+    "elbows",
+    "agility",
+    "fetch",
+    "running",
+    "exercise",
+    "damage",
+    "off"
+   ],
+   "now": [
+    "Lift her on and off furniture, or put a step or a ramp there. Every time, including when it is inconvenient and she has already done it herself.",
+    "Keep the walk rule: about five minutes per month of age, twice a day. At ten weeks that is roughly twelve minutes at a time, and it is not a target to beat.",
+    "Grass, dirt and carpet before pavement, whenever you have the choice.",
+    "Stairs: carry her for now. A few slow steps up is far better than down, which is where the impact lands.",
+    "Put rugs or runners on the floor she does her zoomies on. Slipping is worse for her joints than the running is.",
+    "Tiring her out is a sniffing problem, not a running problem. A scatter feed and a food puzzle beat another walk, at every age and especially this one."
+   ],
+   "not": [
+    "No repetitive jumping. No agility jumps, no jumping on and off the play gym, no ball thrown over and over so she sprints and turns hard on the spot.",
+    "No jogging with you and no running beside a bike. Not until she is grown, and for a dog her size that is later than most people assume.",
+    "Do not read her willingness as permission. She will happily do all of this and feel fine on the day."
+   ],
+   "why": "Her growth plates are open. They are soft cartilage at the ends of the long bones, and they are where a big puppy's bones are still lengthening. Repeated impact through an open plate can damage it, and the damage shows up as a joint problem years later rather than on the day it happens. In large breeds the plates are not closed until roughly 12 to 18 months, sometimes later. She is estimated at about 65 pounds grown, so she is at the wrong end of that range.",
+   "vet": "Limping, a yelp on a jump, a leg she will not put weight on, or stiffness after she has been lying down: see she is limping. Do not give it a week."
   }
  ],
  "categories": [
