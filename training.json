@@ -7,15 +7,15 @@
   },
   {
    "t": "Pay from her ration, not on top of it.",
-   "b": "Measure the day's food into one container. Train out of it. Sixty rewards a day costs her nothing against her calorie budget, cannot unbalance the minerals a large-breed puppy needs, and cannot cause a food reaction. Save chicken and cheese for the two things that actually need them: recall, and leave it on a pavement."
+   "b": "Measure the day's food into one container. Train out of it. Sixty rewards a day costs her nothing against her calorie budget, cannot unbalance the minerals a large-breed puppy needs, and cannot cause a food reaction. Save chicken and cheese for the two things that actually need them: recall, and leave it on a sidewalk."
   },
   {
    "t": "Mark the instant it happens.",
-   "b": "The reward tells her the behaviour was worth doing. The marker tells her WHICH behaviour. A puppy can only connect a consequence to something within about a second, so without a marker you are usually paying her for whatever she did next. Teach the marker first. Everything else is faster afterwards."
+   "b": "The reward tells her the behavior was worth doing. The marker tells her WHICH behavior. A puppy can only connect a consequence to something within about a second, so without a marker you are usually paying her for whatever she did next. Teach the marker first. Everything else is faster afterwards."
   },
   {
    "t": "Name it last.",
-   "b": "Do not say the word until she is already offering the behaviour reliably. Saying sit twenty times at a puppy who does not yet know what sit means teaches her that the word is background noise. Get the behaviour, then attach the word to it."
+   "b": "Do not say the word until she is already offering the behavior reliably. Saying sit twenty times at a puppy who does not yet know what sit means teaches her that the word is background noise. Get the behavior, then attach the word to it."
   },
   {
    "t": "Nobody punishes her. Ever.",
@@ -27,7 +27,7 @@
   },
   {
    "t": "All three of you use the same word.",
-   "b": "Pick one word per behaviour and write it down. Come, not come here and here girl and c'mon. A puppy learning three sounds for one behaviour learns none of them well."
+   "b": "Pick one word per behavior and write it down. Come, not come here and here girl and c'mon. A puppy learning three sounds for one behavior learns none of them well."
   }
  ],
  "ladder": [
@@ -74,7 +74,7 @@
   "Advanced"
  ],
  "cat_notes": {
-  "Foundation": "Start these now. Several have real deadlines: bite inhibition and handling are tied to a socialisation window that closes around 12 to 16 weeks and does not reopen.",
+  "Foundation": "Start these now. Several have real deadlines: bite inhibition and handling are tied to a socialization window that closes around 12 to 16 weeks and does not reopen.",
   "Next": "From about 12 weeks, once the foundations are at the Named rung.",
   "Later": "From 4 to 6 months. Each one depends on a foundation skill being reliable first.",
   "Advanced": "From 6 months and beyond. This is where a golden retriever gets interesting, and where most people stop too early."
@@ -133,14 +133,14 @@
    },
    {
     "when": "On every walk",
-    "what": "Recall and loose lead",
+    "what": "Recall and loose leash",
     "mins": 5,
     "skills": [
      "t-recall",
      "t-leash",
      "t-door"
     ],
-    "why": "Five paid recalls per outing. Kerb stops at every kerb. Never a formal session, just paid moments."
+    "why": "Five paid recalls per outing. Curb stops at every curb. Never a formal session, just paid moments."
    },
    {
     "when": "Afternoon lull",
@@ -264,7 +264,7 @@
     },
     {
      "level": "In use",
-     "test": "You can mark a behaviour mid-motion and she keeps doing it, waiting for the food.",
+     "test": "You can mark a behavior mid-motion and she keeps doing it, waiting for the food.",
      "pass": "Used correctly in a full session of another skill without you fumbling the order.",
      "id": "t-marker-c2"
     }
@@ -286,7 +286,7 @@
    "steps": [
     {
      "n": 1,
-     "do": "Sit on the floor a metre from her, when she is not already looking at you. Say MERCY once. Clearly, warmly, once.",
+     "do": "Sit on the floor a meter from her, when she is not already looking at you. Say MERCY once. Clearly, warmly, once.",
      "look": "The moment her head turns toward you, even slightly, say YES and feed her.",
      "reps": "10, then stop. If she does not turn, do not repeat her name. Make a kissy noise instead, mark the turn, and make the next one easier."
     },
@@ -304,13 +304,13 @@
     },
     {
      "n": 4,
-     "do": "Move it around the flat. Kitchen. Hallway. Bedroom. Then near the front door, then with the TV on.",
+     "do": "Move it around the apartment. Kitchen. Hallway. Bedroom. Then near the front door, then with the TV on.",
      "look": "Same response in a room she has never done it in.",
      "reps": "5 per location."
     },
     {
      "n": 5,
-     "do": "Outside, on a lead, in a quiet spot. Then somewhere busier. Pay these with chicken, not kibble.",
+     "do": "Outside, on a leash, in a quiet spot. Then somewhere busier. Pay these with chicken, not kibble.",
      "look": "She turns to you with a street in front of her. That is a genuinely difficult thing you are asking.",
      "reps": "5 per outing, no more."
     }
@@ -373,7 +373,7 @@
    "priority": 1,
    "age": "Now.",
    "sessions": "2 minutes, 3 times a day.",
-   "why": "Sit is not important in itself. It matters because it is the easiest thing to teach, so it is where she learns HOW to learn: that offering behaviour earns food, that a word means something, that working with you is a good game. It is also the most useful default in the world. A sitting puppy is not jumping, not bolting through a door, and not mugging a guest.",
+   "why": "Sit is not important in itself. It matters because it is the easiest thing to teach, so it is where she learns HOW to learn: that offering behavior earns food, that a word means something, that working with you is a good game. It is also the most useful default in the world. A sitting puppy is not jumping, not bolting through a door, and not mugging a guest.",
    "need": [
     "10 pieces of kibble",
     "A non-slip floor. Not a wooden hallway."
@@ -470,7 +470,7 @@
    "why": "This is the most important thing she will ever learn and the easiest to destroy. Recall is not obedience, it is a bet: she has to believe that coming to you is always better than whatever she was doing. Every time you call her and something she dislikes happens, you take money out of that account. Most adult dogs with bad recall were taught, carefully and unintentionally, that come means the fun stops.",
    "need": [
     "The highest value food you have. Chicken, cheese, not kibble.",
-    "A long line, 5 metres, for outdoor work. Never a retractable lead.",
+    "A long line, 5 meters, for outdoor work. Never a retractable leash.",
     "Two people for the best version."
    ],
    "steps": [
@@ -482,7 +482,7 @@
     },
     {
      "n": 2,
-     "do": "The two-person runaway game. One of you holds her gently. The other goes a few metres away, crouches, and calls COME once, sounding delighted. The holder lets go.",
+     "do": "The two-person runaway game. One of you holds her gently. The other goes a few meters away, crouches, and calls COME once, sounding delighted. The holder lets go.",
      "look": "She barrels over. Pay her for three to five seconds, not one bite. Then the other person calls her back.",
      "reps": "6 to 8 runs, then stop before she tires."
     },
@@ -526,7 +526,7 @@
     "recall",
     "come",
     "come here",
-    "off lead",
+    "off leash",
     "offlead",
     "long line"
    ],
@@ -571,7 +571,7 @@
    "priority": 1,
    "age": "Now. Given where she walks, this is not optional.",
    "sessions": "2 minutes, twice a day.",
-   "why": "In an NYC apartment with pavements outside, this is a safety skill, not a manners skill. Discarded cooked chicken bones, rat bait in tree pits, cannabis edibles, corn cobs, mushrooms in tree pits after rain. She scavenges. Leave it is the thing that keeps her out of surgery.",
+   "why": "In an NYC apartment with sidewalks outside, this is a safety skill, not a manners skill. Discarded cooked chicken bones, rat bait in tree pits, cannabis edibles, corn cobs, mushrooms in tree pits after rain. She scavenges. Leave it is the thing that keeps her out of surgery.",
    "need": [
     "Boring food in one hand: kibble.",
     "Good food in the other: chicken.",
@@ -610,21 +610,21 @@
     },
     {
      "n": 6,
-     "do": "Walk past an item on the floor on a lead. Say LEAVE IT as you approach, pay heavily as you pass it.",
+     "do": "Walk past an item on the floor on a leash. Say LEAVE IT as you approach, pay heavily as you pass it.",
      "look": "She walks past. Build to more tempting items, then to items outdoors.",
      "reps": "5 per session."
     },
     {
      "n": 7,
-     "do": "Outdoors, on a lead, with something genuinely interesting on the pavement. Say it once. Pay with chicken every single time, forever.",
+     "do": "Outdoors, on a leash, with something genuinely interesting on the sidewalk. Say it once. Pay with chicken every single time, forever.",
      "look": "Her head comes up and toward you.",
      "reps": "Every opportunity. This one never goes on a variable schedule. It gets paid for life."
     }
    ],
    "wrong": [
     "Letting her have the item she left. That teaches her that leave it means wait a moment and then it is mine.",
-    "Saying it and then yanking the lead. She learns to associate the words with a jerk, and to grab faster next time.",
-    "Only paying with kibble. This skill has to outbid a chicken bone on a pavement. Pay it accordingly.",
+    "Saying it and then yanking the leash. She learns to associate the words with a jerk, and to grab faster next time.",
+    "Only paying with kibble. This skill has to outbid a chicken bone on a sidewalk. Pay it accordingly.",
     "Waiting until she is already eating it. At that point you need DROP IT, which is a different skill."
    ],
    "next": [
@@ -635,7 +635,7 @@
     "leave it",
     "leave",
     "street",
-    "pavement",
+    "sidewalk",
     "scavenge",
     "eating",
     "bones",
@@ -669,7 +669,7 @@
     },
     {
      "level": "Reliable",
-     "test": "On a pavement, walking past real food waste she has spotted first. One cue.",
+     "test": "On a sidewalk, walking past real food waste she has spotted first. One cue.",
      "pass": "She disengages 9 out of 10 times. This is the one skill where 8 out of 10 is not good enough, because the failure mode is surgery.",
      "id": "t-leaveit-c5"
     }
@@ -708,7 +708,7 @@
     },
     {
      "n": 4,
-     "do": "Practise with progressively better items. A chew. Then something she has stolen, like a sock.",
+     "do": "Practice with progressively better items. A chew. Then something she has stolen, like a sock.",
      "look": "Same response with a higher-value item.",
      "reps": "Whenever it happens naturally."
     },
@@ -737,7 +737,7 @@
     "sock",
     "swap"
    ],
-   "note": "If she ever stiffens, freezes, hovers over an item, or growls when you approach, stop, back off, and speak to a qualified behaviourist. Do not push through it and do not tell her off for growling. A growl is information, and punishing it teaches her to skip the warning.",
+   "note": "If she ever stiffens, freezes, hovers over an item, or growls when you approach, stop, back off, and speak to a qualified behaviorist. Do not push through it and do not tell her off for growling. A growl is information, and punishing it teaches her to skip the warning.",
    "criteria": [
     {
      "level": "Lured",
@@ -765,7 +765,7 @@
     },
     {
      "level": "Reliable",
-     "test": "She has picked up something genuinely valuable to her, and you say DROP once from a metre away.",
+     "test": "She has picked up something genuinely valuable to her, and you say DROP once from a meter away.",
      "pass": "She drops it 8 out of 10 times without you moving toward her.",
      "id": "t-dropit-c5"
     }
@@ -817,7 +817,7 @@
     },
     {
      "n": 6,
-     "do": "Do it at the door, in the real routine, with her lead still on.",
+     "do": "Do it at the door, in the real routine, with her leash still on.",
      "look": "She comes in, stops on the mat, and waits.",
      "reps": "Every return."
     }
@@ -868,7 +868,7 @@
      "id": "t-paws-c4"
     },
     {
-     "level": "Generalised",
+     "level": "Generalized",
      "test": "All three of you can do it, and she is equally relaxed for a vet or groomer holding her paw.",
      "pass": "Each handler can do all four paws.",
      "id": "t-paws-c5"
@@ -882,7 +882,7 @@
    "priority": 1,
    "age": "Now. This has a deadline.",
    "sessions": "1 minute, twice a day.",
-   "why": "Her socialisation window closes around 12 to 16 weeks. What she learns to accept now, she accepts for life; what she first meets at eight months, she can find genuinely frightening. Every vet visit, every ear clean, every tick check, every emergency for the next twelve years runs on this. It is the least glamorous skill on the list and probably the highest value.",
+   "why": "Her socialization window closes around 12 to 16 weeks. What she learns to accept now, she accepts for life; what she first meets at eight months, she can find genuinely frightening. Every vet visit, every ear clean, every tick check, every emergency for the next twelve years runs on this. It is the least glamorous skill on the list and probably the highest value.",
    "need": [
     "Kibble",
     "Two minutes",
@@ -935,7 +935,7 @@
     "ears",
     "teeth",
     "grooming",
-    "socialisation",
+    "socialization",
     "restraint",
     "nails"
    ],
@@ -960,7 +960,7 @@
      "id": "t-handling-c3"
     },
     {
-     "level": "Generalised",
+     "level": "Generalized",
      "test": "All three handlers can do the mock exam.",
      "pass": "Each handler, once.",
      "id": "t-handling-c4"
@@ -980,7 +980,7 @@
    "priority": 1,
    "age": "Now, and it should never have been rushed.",
    "sessions": "Several tiny sessions a day.",
-   "why": "The crate has to be the best place in the flat, not the place she goes when everyone is done with her. A puppy who chooses to go in on her own is safe to leave; a puppy who is put in is a puppy who is learning to dread it. This is also the foundation of being left alone, which is a separate skill she genuinely has to be taught.",
+   "why": "The crate has to be the best place in the apartment, not the place she goes when everyone is done with her. A puppy who chooses to go in on her own is safe to leave; a puppy who is put in is a puppy who is learning to dread it. This is also the foundation of being left alone, which is a separate skill she genuinely has to be taught.",
    "need": [
     "Her crate, divider set so she can stand, turn and lie down and no more",
     "A stuffed frozen Kong from her ration",
@@ -1093,7 +1093,7 @@
     {
      "n": 1,
      "do": "Put the mat down. Sit near it and read something. Say nothing. Ignore her.",
-     "look": "Eventually she gets bored and lies down. The instant she does, calmly drop a piece of kibble between her paws. Do not say YES, do not make a fuss. Quiet reward for quiet behaviour.",
+     "look": "Eventually she gets bored and lies down. The instant she does, calmly drop a piece of kibble between her paws. Do not say YES, do not make a fuss. Quiet reward for quiet behavior.",
      "reps": "One 10 minute session a day."
     },
     {
@@ -1116,7 +1116,7 @@
     },
     {
      "n": 5,
-     "do": "Practise in more stimulating places: near the door, with the TV on, in the kitchen while you cook.",
+     "do": "Practice in more stimulating places: near the door, with the TV on, in the kitchen while you cook.",
      "look": "She can switch off with things happening.",
      "reps": "A few minutes a day."
     }
@@ -1240,7 +1240,7 @@
     "sharp",
     "puppy teeth"
    ],
-   "note": "She will bite for weeks. That is developmentally normal and it is not aggression. What matters is the trend: is it getting softer and less frequent over a fortnight. If it is not, or if it comes with growling, stiffening or guarding, get a qualified behaviourist involved rather than escalating.",
+   "note": "She will bite for weeks. That is developmentally normal and it is not aggression. What matters is the trend: is it getting softer and less frequent over a fortnight. If it is not, or if it comes with growling, stiffening or guarding, get a qualified behaviorist involved rather than escalating.",
    "criteria": [
     {
      "level": "No hard bites",
@@ -1411,7 +1411,7 @@
     },
     {
      "n": 6,
-     "do": "Add WAIT for the short version at doors and kerbs, and STAY for the long one, if you want two words. Or use one for both.",
+     "do": "Add WAIT for the short version at doors and curbs, and STAY for the long one, if you want two words. Or use one for both.",
      "look": "Consistent across all three of you.",
      "reps": "Daily."
     }
@@ -1450,7 +1450,7 @@
     },
     {
      "level": "Distance",
-     "test": "10 seconds while you stand three metres away.",
+     "test": "10 seconds while you stand three meters away.",
      "pass": "3 out of 4.",
      "id": "t-stay-c3"
     },
@@ -1462,7 +1462,7 @@
     },
     {
      "level": "Combined",
-     "test": "30 seconds, five metres away, in a room with something going on.",
+     "test": "30 seconds, five meters away, in a room with something going on.",
      "pass": "3 out of 4, and it holds in two different rooms.",
      "id": "t-stay-c5"
     }
@@ -1477,21 +1477,21 @@
    "sessions": "5 minutes, and separately from actual walks.",
    "why": "The hardest thing on this list, and the one people rush. Pulling is self-rewarding: she pulls, she gets closer to the smell, pulling works. Until walking next to you pays better than pulling does, she will pull. Do her toilet trips and her exercise as normal, and train this as its own separate exercise.",
    "need": [
-    "A flat collar or a Y-shaped harness. Never a choke, prong or slip lead on a growing puppy.",
-    "A 2 metre lead. Never retractable.",
+    "A flat collar or a Y-shaped harness. Never a choke, prong or slip leash on a growing puppy.",
+    "A 6 foot leash. Never retractable.",
     "Chicken, not kibble, to start."
    ],
    "steps": [
     {
      "n": 1,
-     "do": "Indoors, no lead at all. Walk a few steps. Every time she is next to your leg, mark and feed AT YOUR LEG, at her head height.",
+     "do": "Indoors, no leash at all. Walk a few steps. Every time she is next to your leg, mark and feed AT YOUR LEG, at her head height.",
      "look": "She starts to hang around your left side because that is where food appears.",
      "reps": "2 minutes."
     },
     {
      "n": 2,
-     "do": "Add the lead, still indoors. Same game. The lead should hang in a J shape and never go tight.",
-     "look": "She ignores the lead entirely.",
+     "do": "Add the leash, still indoors. Same game. The leash should hang in a J shape and never go tight.",
+     "look": "She ignores the leash entirely.",
      "reps": "2 minutes."
     },
     {
@@ -1502,22 +1502,22 @@
     },
     {
      "n": 4,
-     "do": "THE RULE: the lead going tight means all forward motion stops. Stand still. Say nothing. Wait.",
-     "look": "When the lead slackens, even by accident, mark and move off. She learns pulling stops the walk and slack starts it.",
+     "do": "THE RULE: the leash going tight means all forward motion stops. Stand still. Say nothing. Wait.",
+     "look": "When the leash slackens, even by accident, mark and move off. She learns pulling stops the walk and slack starts it.",
      "reps": "Every single time, from every handler."
     },
     {
      "n": 5,
-     "do": "Give her sniffing time on cue. Say GO SNIFF and let her have three minutes on a loose lead to do whatever she likes.",
+     "do": "Give her sniffing time on cue. Say GO SNIFF and let her have three minutes on a loose leash to do whatever she likes.",
      "look": "Sniffing is the point of the walk for her. If the whole walk is heelwork she has no reason to cooperate. Trade structured walking for sniffing time.",
      "reps": "Several times per walk."
     }
    ],
    "wrong": [
     "Training this on a walk where you actually need to get somewhere. You will give in and let her pull, and that pays the pulling. Separate the two.",
-    "Jerking the lead. It does not teach position, it teaches that being next to you sometimes hurts.",
-    "A retractable lead. It teaches her that constant tension is normal, which is the exact opposite of the lesson.",
-    "Expecting a formal heel. You want a loose lead, not a dog glued to your knee. Those are different skills and only one of them is useful."
+    "Jerking the leash. It does not teach position, it teaches that being next to you sometimes hurts.",
+    "A retractable leash. It teaches her that constant tension is normal, which is the exact opposite of the lesson.",
+    "Expecting a formal heel. You want a loose leash, not a dog glued to your knee. Those are different skills and only one of them is useful."
    ],
    "next": [
     "t-heel",
@@ -1532,35 +1532,35 @@
     "heel",
     "walk"
    ],
-   "note": "Her exercise limit still applies. Structured lead walking counts toward it. Free sniffing and pottering does not count the same way. Keep the total in line with her age.",
+   "note": "Her exercise limit still applies. Structured leash walking counts toward it. Free sniffing and pottering does not count the same way. Keep the total in line with her age.",
    "criteria": [
     {
      "level": "Indoors",
-     "test": "Ten steps with the lead loose, indoors.",
+     "test": "Ten steps with the leash loose, indoors.",
      "pass": "3 out of 4 attempts.",
      "id": "t-leash-c1"
     },
     {
      "level": "Doorstep",
-     "test": "Twenty steps outside your front door with a loose lead.",
+     "test": "Twenty steps outside your front door with a loose leash.",
      "pass": "3 out of 4.",
      "id": "t-leash-c2"
     },
     {
      "level": "Quiet street",
-     "test": "Fifty metres on a quiet pavement without the lead going tight.",
+     "test": "Fifty meters on a quiet sidewalk without the leash going tight.",
      "pass": "3 out of 4 outings.",
      "id": "t-leash-c3"
     },
     {
      "level": "Normal street",
-     "test": "Two minutes of continuous loose-lead walking on a normal street.",
+     "test": "Two minutes of continuous loose-leash walking on a normal street.",
      "pass": "3 out of 4 outings.",
      "id": "t-leash-c4"
     },
     {
      "level": "Reliable",
-     "test": "A whole ten minute walk where the lead is loose more than it is tight, past other people and dogs.",
+     "test": "A whole ten minute walk where the leash is loose more than it is tight, past other people and dogs.",
      "pass": "Consistently over a fortnight.",
      "id": "t-leash-c5"
     }
@@ -1573,7 +1573,7 @@
    "priority": 2,
    "age": "From 12 weeks.",
    "sessions": "Every time you go through a door.",
-   "why": "A door-darting puppy in a city flat is a genuine safety problem. This also becomes your kerb behaviour, which matters more every month.",
+   "why": "A door-darting puppy in a city flat is a genuine safety problem. This also becomes your curb behavior, which matters more every month.",
    "need": [
     "Kibble",
     "Any door"
@@ -1605,9 +1605,9 @@
     },
     {
      "n": 5,
-     "do": "Take it to the kerb. Stop at every kerb, ask for a sit, then release.",
-     "look": "An automatic kerb stop by about six months.",
-     "reps": "Every kerb."
+     "do": "Take it to the curb. Stop at every curb, ask for a sit, then release.",
+     "look": "An automatic curb stop by about six months.",
+     "reps": "Every curb."
     }
    ],
    "wrong": [
@@ -1620,7 +1620,7 @@
    "tags": [
     "door",
     "wait",
-    "kerb",
+    "curb",
     "curb",
     "bolting",
     "darting",
@@ -1654,7 +1654,7 @@
     },
     {
      "level": "Automatic",
-     "test": "She stops at doors and kerbs without being asked.",
+     "test": "She stops at doors and curbs without being asked.",
      "pass": "8 out of 10 occasions, with all three handlers.",
      "id": "t-door-c5"
     }
@@ -1700,7 +1700,7 @@
     },
     {
      "n": 5,
-     "do": "Actually leave the flat. Two minutes. Five. Ten. Watch her on camera.",
+     "do": "Actually leave the apartment. Two minutes. Five. Ten. Watch her on camera.",
      "look": "Settled or asleep. If she is pacing, whining, drooling or scratching, you went too fast. Go back to a duration she was fine with.",
      "reps": "Daily."
     }
@@ -1728,19 +1728,19 @@
    "criteria": [
     {
      "level": "Different room",
-     "test": "Two minutes alone in a room while you are elsewhere in the flat.",
+     "test": "Two minutes alone in a room while you are elsewhere in the apartment.",
      "pass": "Settled on camera, three times.",
      "id": "t-alone-c1"
     },
     {
      "level": "Out the door",
-     "test": "Five minutes out of the flat.",
+     "test": "Five minutes out of the apartment.",
      "pass": "Settled on camera, three times.",
      "id": "t-alone-c2"
     },
     {
      "level": "Fifteen",
-     "test": "Fifteen minutes out of the flat.",
+     "test": "Fifteen minutes out of the apartment.",
      "pass": "Settled on camera, twice.",
      "id": "t-alone-c3"
     },
@@ -1858,7 +1858,7 @@
    "priority": 2,
    "age": "Any time. It is easy and it is unreasonably useful.",
    "sessions": "1 minute, twice a day.",
-   "why": "A nose touch to your palm. It looks like a trick, and it is the most useful single behaviour on this list after recall: it moves her without touching her, gets her past something scary, gets her onto scales, into a car, off a sofa, and gives a nervous dog something to do.",
+   "why": "A nose touch to your palm. It looks like a trick, and it is the most useful single behavior on this list after recall: it moves her without touching her, gets her past something scary, gets her onto scales, into a car, off a sofa, and gives a nervous dog something to do.",
    "need": [
     "Kibble",
     "Your hand"
@@ -1866,7 +1866,7 @@
    "steps": [
     {
      "n": 1,
-     "do": "Hold your flat palm a few centimetres from her nose, off to one side. Say nothing.",
+     "do": "Hold your apartment palm a few centimetres from her nose, off to one side. Say nothing.",
      "look": "Curiosity makes her sniff it. The instant her nose touches, YES and feed.",
      "reps": "6 to 8."
     },
@@ -1958,7 +1958,7 @@
    "steps": [
     {
      "n": 1,
-     "do": "At home, with her a metre away, make the sound. When she looks, deliver ten to fifteen seconds of continuous feeding, one piece after another, with genuine celebration.",
+     "do": "At home, with her a meter away, make the sound. When she looks, deliver ten to fifteen seconds of continuous feeding, one piece after another, with genuine celebration.",
      "look": "She is startled by how good it was.",
      "reps": "Once a day for a week, then once a week."
     },
@@ -1993,7 +1993,7 @@
    "criteria": [
     {
      "level": "Charged",
-     "test": "The sound at home, a metre away.",
+     "test": "The sound at home, a meter away.",
      "pass": "Immediate turn and approach, 6 out of 6.",
      "id": "t-emergency-recall-c1"
     },
@@ -2028,9 +2028,9 @@
    "cat": "Later",
    "title": "Formal heel",
    "priority": 3,
-   "age": "From 5 to 6 months, after loose lead walking is reliable.",
+   "age": "From 5 to 6 months, after loose leash walking is reliable.",
    "sessions": "3 minutes, twice a week.",
-   "why": "A precise position at your side, for crossing a busy road or squeezing past a crowd. Different from loose lead walking, which is what you want for 95 percent of a walk. Do not train heel before loose lead walking works; you will end up with a dog who only knows how to be glued to your leg or pull.",
+   "why": "A precise position at your side, for crossing a busy road or squeezing past a crowd. Different from loose leash walking, which is what you want for 95 percent of a walk. Do not train heel before loose leash walking works; you will end up with a dog who only knows how to be glued to your leg or pull.",
    "need": [
     "Chicken",
     "A quiet space"
@@ -2063,7 +2063,7 @@
    ],
    "wrong": [
     "Using heel for the entire walk. It is mentally tiring and it removes the sniffing that makes a walk worth taking.",
-    "Training it before loose lead walking exists."
+    "Training it before loose leash walking exists."
    ],
    "next": [
     "t-leash"
@@ -2191,7 +2191,7 @@
    "priority": 3,
    "age": "From 4 months, and it never really stops.",
    "sessions": "Every arrival.",
-   "why": "A golden retriever who jumps at 10 weeks is charming and at 30 kilos is not. The behaviour is being trained right now, by everyone who bends down and makes a fuss of a jumping puppy.",
+   "why": "A golden retriever who jumps at 10 weeks is charming and at 30 kilos is not. The behavior is being trained right now, by everyone who bends down and makes a fuss of a jumping puppy.",
    "need": [
     "Kibble by the door",
     "Cooperative visitors",
@@ -2212,7 +2212,7 @@
     },
     {
      "n": 3,
-     "do": "Ask for a sit as a greeting behaviour, once she has one.",
+     "do": "Ask for a sit as a greeting behavior, once she has one.",
      "look": "She offers a sit at people.",
      "reps": "Every greeting."
     },
@@ -2225,7 +2225,7 @@
    ],
    "wrong": [
     "Kneeing her, or pushing her off. To a social puppy that is contact, which is what she was asking for.",
-    "Letting some people allow it. One person who lets her jump keeps the behaviour alive for everyone."
+    "Letting some people allow it. One person who lets her jump keeps the behavior alive for everyone."
    ],
    "next": [
     "t-sit",
@@ -2266,7 +2266,7 @@
     },
     {
      "level": "Reliable",
-     "test": "A visitor arrives at the door, unbriefed, and she is off the lead.",
+     "test": "A visitor arrives at the door, unbriefed, and she is off the leash.",
      "pass": "All four feet stay on the floor, 8 out of 10 arrivals.",
      "id": "t-greetings-c5"
     }
@@ -2375,7 +2375,7 @@
    "priority": 4,
    "age": "Can start informally now. Formal work from 6 months.",
    "sessions": "10 minutes, two or three times a week.",
-   "why": "The highest value activity per minute for a dog in a flat. Sniffing is genuinely tiring in a way walking is not, it lowers arousal, and it is something she can do brilliantly on a wet day when a walk is not appealing. For a retriever it is close to a biological need.",
+   "why": "The highest value activity per minute for a dog in an apartment. Sniffing is genuinely tiring in a way walking is not, it lowers arousal, and it is something she can do brilliantly on a wet day when a walk is not appealing. For a retriever it is close to a biological need.",
    "need": [
     "Cardboard boxes",
     "Her kibble to start, a specific toy later",
@@ -2472,7 +2472,7 @@
    "sessions": "2 minutes, twice a week.",
    "why": "The genuinely difficult version. It underpins being left at a cafe table, waiting outside a shop, and staying put in an emergency.",
    "need": [
-    "An established stay at 30 seconds and 5 metres",
+    "An established stay at 30 seconds and 5 meters",
     "A doorway"
    ],
    "steps": [
@@ -2496,7 +2496,7 @@
     },
     {
      "n": 4,
-     "do": "Take it outdoors, on a long line for safety, never off-lead in an unfenced space.",
+     "do": "Take it outdoors, on a long line for safety, never off-leash in an unfenced space.",
      "look": "It holds in a real environment.",
      "reps": "5."
     }
@@ -2556,7 +2556,7 @@
    "priority": 4,
    "age": "From 6 months, and it is never finished.",
    "sessions": "Once or twice a week.",
-   "why": "Coming back from a sniff is a different problem from coming back from a squirrel. This is the difference between a dog you can let off a lead and a dog you cannot, and it is built deliberately, in a graded ladder, not discovered in a park.",
+   "why": "Coming back from a sniff is a different problem from coming back from a squirrel. This is the difference between a dog you can let off leash and a dog you cannot, and it is built deliberately, in a graded ladder, not discovered in a park.",
    "need": [
     "A long line",
     "The best food you have",
@@ -2565,7 +2565,7 @@
    "steps": [
     {
      "n": 1,
-     "do": "Build a distraction ladder, written down, from easiest to hardest. Food on the floor. A rolling ball. A person she likes. A dog at 50 metres. A dog at 20. A dog at 5. A squirrel.",
+     "do": "Build a distraction ladder, written down, from easiest to hardest. Food on the floor. A rolling ball. A person she likes. A dog at 50 meters. A dog at 20. A dog at 5. A squirrel.",
      "look": "You know exactly what the next step is rather than guessing.",
      "reps": "Write it once."
     },
@@ -2583,13 +2583,13 @@
     },
     {
      "n": 4,
-     "do": "Practise recalling her AWAY from something and then releasing her back to it, where it is safe.",
+     "do": "Practice recalling her AWAY from something and then releasing her back to it, where it is safe.",
      "look": "Coming back does not reliably end the good thing, so there is nothing to weigh up.",
      "reps": "Often."
     }
    ],
    "wrong": [
-    "Testing it off-lead to see if it works. If you are testing, you already know it might fail, and every failure trains the opposite.",
+    "Testing it off-leash to see if it works. If you are testing, you already know it might fail, and every failure trains the opposite.",
     "Increasing your volume instead of your distance. Shouting does not make a distraction less interesting."
    ],
    "next": [
@@ -2601,7 +2601,7 @@
     "distraction",
     "squirrel",
     "dogs",
-    "off lead",
+    "off leash",
     "offlead",
     "park"
    ],
@@ -2626,14 +2626,14 @@
     },
     {
      "level": "Dog at distance",
-     "test": "Recall with a dog visible 30 metres away.",
+     "test": "Recall with a dog visible 30 meters away.",
      "pass": "8 out of 10.",
      "id": "t-recall-distraction-c4"
     },
     {
      "level": "Dog close",
-     "test": "Recall with a dog 10 metres away, on a long line.",
-     "pass": "9 out of 10 before you ever consider off-lead.",
+     "test": "Recall with a dog 10 meters away, on a long line.",
+     "pass": "9 out of 10 before you ever consider off-leash.",
      "id": "t-recall-distraction-c5"
     }
    ]
@@ -2659,8 +2659,8 @@
     },
     {
      "n": 2,
-     "do": "Introduce shaping: mark tiny approximations of a behaviour with no lure at all.",
-     "look": "She starts offering behaviour to see what pays. That is a dog who has learned how to learn.",
+     "do": "Introduce shaping: mark tiny approximations of a behavior with no lure at all.",
+     "look": "She starts offering behavior to see what pays. That is a dog who has learned how to learn.",
      "reps": "5 minutes."
     },
     {
@@ -2671,7 +2671,7 @@
     },
     {
      "n": 4,
-     "do": "Build to three and four behaviour chains.",
+     "do": "Build to three and four behavior chains.",
      "look": "Sustained work on a single reward.",
      "reps": "6."
     }
@@ -2703,7 +2703,7 @@
     },
     {
      "level": "Shaping",
-     "test": "She offers behaviour when you stand still with food and say nothing.",
+     "test": "She offers behavior when you stand still with food and say nothing.",
      "pass": "She experiments rather than waiting.",
      "id": "t-tricks-c2"
     },
@@ -2748,7 +2748,7 @@
     },
     {
      "n": 2,
-     "do": "The test covers: accepting a friendly stranger, sitting politely for petting, appearance and grooming, walking on a loose lead, walking through a crowd, sit and down on cue and staying in place, coming when called, reaction to another dog, reaction to a distraction, and supervised separation.",
+     "do": "The test covers: accepting a friendly stranger, sitting politely for petting, appearance and grooming, walking on a loose leash, walking through a crowd, sit and down on cue and staying in place, coming when called, reaction to another dog, reaction to a distraction, and supervised separation.",
      "look": "Every one of those is already on this list. The class is proofing, not new material.",
      "reps": "Weekly."
     }
@@ -2763,7 +2763,7 @@
     "certificate",
     "good citizen",
     "group",
-    "socialisation"
+    "socialization"
    ],
    "criteria": [
     {

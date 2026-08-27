@@ -1,4 +1,4 @@
-const CACHE = 'mercy-v23';
+const CACHE = 'mercy-v24';
 const ASSETS = ['./', './index.html', './manifest.json',
   './icon-192.png', './icon-512.png',
   './icon-192-maskable.png', './icon-512-maskable.png',

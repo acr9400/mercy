@@ -421,6 +421,17 @@ body.gon .wrap>h1{margin-bottom:10px}
   font:inherit;font-size:14px;font-weight:600;color:var(--paper);margin-bottom:7px}
 .gempty{text-align:center;color:var(--muted);font-size:14px;padding:40px 20px;line-height:1.6}
 
+
+/* ---- morning shape switch ---- */
+#daysel{display:flex;gap:6px;background:var(--raised);border:1px solid var(--line);
+  border-radius:13px;padding:4px;margin:0 0 14px}
+#daysel button{flex:1;background:transparent;border:0;border-radius:10px;padding:9px 6px;
+  font:inherit;font-size:13px;font-weight:600;color:var(--muted);line-height:1.2}
+#daysel button.on{background:var(--gold);color:var(--onaccent)}
+#daysel button small{display:block;font-size:10px;font-weight:600;opacity:.8;
+  letter-spacing:.04em;margin-top:2px}
+body.gon #daysel{display:none}
+
 </style>
 </head>
 <body>
@@ -439,6 +450,8 @@ body.gon .wrap>h1{margin-bottom:10px}
   </div>
   <button onclick="stopTimer()">Done</button>
 </div>
+
+<div id="daysel"></div>
 
 <div class="clock" id="clock">
   <div class="fill" id="fill"></div>
@@ -646,27 +659,52 @@ const PLAN_MISSED_WINDOW = 120;
 const DURATIONS = {"Walk": [5, 10, 15, 20, 30], "Play": [10, 15, 20, 25, 30], "Alone": [30, 60, 90, 120, 180, 300]};
 const PUSH_URL = "https://travelling-condo-poet-diff.trycloudflare.com";
 const VAPID_KEY = "BFCqwk4kKDp2lwfFfElkdFtXBrsmtjTlts53TfUEM7eklz4D6ud0RYVOQskn_MDYsMaqhMKT-IYpHloRypdPzzQ";
-const PLAN = [
-  ["p01","04:40","Out, then Walk 1","Walk","N/A",10],
-  ["p02","06:15","Out, in from the gym","Potty Trip","N/A",5,"Out"],
-  ["p03","07:15","Out after your call","Potty Trip","N/A",5,"Out"],
-  ["p04","07:20","Breakfast","Meal","N/A",0],
-  ["p05","07:40","Out after breakfast","Potty Trip","N/A",5],
-  ["p06","08:10","Play 1 (20 min), then out","Play","N/A",20],
-  ["p07","09:45","Potty trip","Potty Trip","N/A",5],
-  ["p08","11:30","Lunch","Meal","N/A",0],
-  ["p09","11:50","Out after lunch","Potty Trip","N/A",5],
-  ["p10","12:05","Play 2 (20 min), then out","Play","N/A",20],
-  ["p11","13:15","Out before you leave","Potty Trip","N/A",5,"Out"],
-  ["p12","16:00","Mid-block break","Potty Trip","N/A",10,"Afternoon visit"],
-  ["p13","18:30","Out, in the door","Potty Trip","N/A",5,"Out"],
-  ["p14","18:45","Dinner","Meal","N/A",0],
-  ["p15","19:05","Walk 2","Walk","N/A",10],
-  ["p16","19:30","Play 3 (20 min), then out","Play","N/A",20],
-  ["p17","20:00","Pick up the water bowl","Water Up","N/A",0],
-  ["p18","20:30","Potty trip","Potty Trip","N/A",5],
-  ["p19","22:00","Last call, then crate","Potty Trip","N/A",5]
-];
+const PLANS = {
+  "gym": [
+    ["p01","04:40","Out, then Walk 1","Walk","N/A",10],
+    ["p02","06:15","Out, in from the gym","Potty Trip","N/A",5,"Out"],
+    ["p03","07:15","Out after your call","Potty Trip","N/A",5,"Out"],
+    ["p04","07:20","Breakfast","Meal","N/A",0],
+    ["p05","07:40","Out after breakfast","Potty Trip","N/A",5],
+    ["p06","08:10","Play 1 (20 min), then out","Play","N/A",20],
+    ["p07","09:45","Potty trip","Potty Trip","N/A",5],
+    ["p08","11:30","Lunch","Meal","N/A",0],
+    ["p09","11:50","Out after lunch","Potty Trip","N/A",5],
+    ["p10","12:05","Play 2 (20 min), then out","Play","N/A",20],
+    ["p11","13:15","Out before you leave","Potty Trip","N/A",5,"Out"],
+    ["p12","16:00","Mid-block break","Potty Trip","N/A",10,"Afternoon visit"],
+    ["p13","18:30","Out, in the door","Potty Trip","N/A",5,"Out"],
+    ["p14","18:45","Dinner","Meal","N/A",0],
+    ["p15","19:05","Walk 2","Walk","N/A",10],
+    ["p16","19:30","Play 3 (20 min), then out","Play","N/A",20],
+    ["p17","20:00","Pick up the water bowl","Water Up","N/A",0],
+    ["p18","20:30","Potty trip","Potty Trip","N/A",5],
+    ["p19","22:00","Last call, then crate","Potty Trip","N/A",5]
+  ],
+  "home": [
+    ["p01","06:05","Out, quick pee","Potty Trip","N/A",13],
+    ["p01b","06:18","Clean her paws","Training","N/A",5],
+    ["p04","06:25","Breakfast","Meal","N/A",0],
+    ["p03","07:15","Walk after learning","Walk","N/A",10,"Walk her"],
+    ["p05","07:45","Out again, this is the poop","Potty Trip","N/A",8],
+    ["p06","08:10","Play 1 (20 min), then out","Play","N/A",20],
+    ["p07","09:45","Potty trip","Potty Trip","N/A",5],
+    ["p08","11:30","Lunch","Meal","N/A",0],
+    ["p09","11:50","Out after lunch","Potty Trip","N/A",5],
+    ["p10","12:05","Play 2 (20 min), then out","Play","N/A",20],
+    ["p11","13:15","Out before you leave","Potty Trip","N/A",5,"Out"],
+    ["p12","16:00","Mid-block break","Potty Trip","N/A",10,"Afternoon visit"],
+    ["p13","18:30","Out, in the door","Potty Trip","N/A",5,"Out"],
+    ["p14","18:45","Dinner","Meal","N/A",0],
+    ["p15","19:05","Walk 2","Walk","N/A",10],
+    ["p16","19:30","Play 3 (20 min), then out","Play","N/A",20],
+    ["p17","20:00","Pick up the water bowl","Water Up","N/A",0],
+    ["p18","20:30","Potty trip","Potty Trip","N/A",5],
+    ["p19","22:00","Last call, then crate","Potty Trip","N/A",5]
+  ]
+};
+const VARIANTS = {"gym":{label:"Gym day",short:"Gym"},"home":{label:"Home morning",short:"Home"}};
+const DEFAULT_VARIANT = ["home","home","gym","home","gym","home","home"];   /* by weekday, Sunday first */
 const GYM_MINUTES = 75;
 const GYM_DEFAULT = {0:null, 1:null, 2:null, 3:null, 4:null, 5:null, 6:null};
 const YOMTOV = [
@@ -678,6 +716,11 @@ const YOMTOV = [
 ];
 const PAPERS = {"acquired": "2026-08-23", "ids": [["Microchip", "901011000071695"], ["AKC number", "SS57826901"], ["AKC PIN", "87063"], ["AKC type", "limited"], ["Store ID", "4130"], ["Sire", "Vikings King, AKC SS26012808"], ["Dam", "Vikings Cream Lovina, AKC SS21167809"]], "contacts": [{"who": "Sayrebrook Veterinary Hospital", "role": "Vet", "phone": "732-727-1303", "note": "Dr. Chiosi, 1400 Main St, Sayreville NJ 08872"}, {"who": "Household Pet Protection, Inc.", "role": "Warranty claims", "phone": "303-923-3872", "note": "Within 30 days, with full records. submitdocs@selectapuppy.com"}, {"who": "Select A Puppy", "role": "Seller", "phone": "732-706-7600", "note": "Ask what LMP Better Enrollment is, and whether it rebills."}, {"who": "American Kennel Club", "role": "Registration", "phone": "919-233-9767", "note": "akc.org/dogreg"}, {"who": "NJ Consumer Affairs", "role": "If the store will not honour a claim", "phone": "973-504-6200", "note": "The store is under Middletown Twp."}], "deadlines": [["2026-09-06", "NJ refund window closes", "Strongest cover you have. A vet certification inside it is worth a refund plus vet fees to twice the purchase price."], ["2026-09-11", "Rabies can be given", "Get the certificate with the tag number: the licence needs it."], ["2026-09-22", "Free exam offer ends", "Call ahead and bring the vaccination record."], ["2026-10-09", "Socialisation window closes", "Does not reopen."], ["2026-10-19", "NYC licence fee rises", "$8.50 before, $34.00 after until she is spayed. Required from this date either way."], ["2027-02-19", "NJ congenital window closes, warranty starts", "Statutory cover ends, the extended warranty picks up. No gap."], ["2027-02-23", "Hip, elbow and heart guarantees active", "Needs x-rays or an echo and a written diagnosis. Replacement only, vet bills stay yours."], ["2027-06-29", "AKC late fee starts", "$36, then $66 a year later."], ["2029-02-19", "Extended warranty ends", "24 months of hereditary and congenital cover, up to the purchase price."], ["2030-08-23", "Last store guarantee expires", "The congenital and genetic defect clause."]], "money": [], "todo": ["Register the microchip to you. Nothing in the packet does it.", "File the AKC application. New Owner section is blank.", "Decide on insurance while her record is still clean.", "NYC licence, after rabies and before her 4 month birthday.", "Get an emergency hospital near Far Rockaway from the vet.", "Set up direct billing. It needs prior authorisation.", "Find and read the United CFS financing agreement.", "Food brand, once the vet weighs in on large-breed puppy formula."], "insurance": {"decided": false, "provider": null, "phone": null, "claims_phone": null, "policy_number": null, "portal": null, "underwriter": null, "monthly_premium": null, "deductible": null, "reimbursement_pct": null, "annual_limit": null, "started": null, "accident_waiting_days": null, "illness_waiting_days": null, "orthopedic_waiting_days": null, "orthopedic_waiver_done": false, "renewal_month": null, "akc_free_30_day_included": true, "akc_underwriter": "PetPartners, Inc., 1-866-725-2747, akcpetinsurance.com/certificate", "note": "Researched Aug 2026 from actual New York policy forms. In NY, ASPCA, Spot and Pumpkin are literally the same contract (US Fire form PET-P-20000-NY-0920), so this is a price and service decision, not a coverage one.\nFill provider, phone and policy_number the day a policy is bought, set decided true, then run scripts/sync_app_config.py and re-upload app/index.html. The Papers tab swaps the shortlist for your actual policy and the numbers stay tap-to-dial.\northopedic_waiting_days matters more than the premium for this breed. If the policy offers a waiver, do it at the vet visit and set orthopedic_waiver_done true.\nPre-existing conditions are excluded for life, so the widest cover she will ever qualify for is the cover bought while her record is still clean.", "target_plan": {"deductible": 500, "reimbursement_pct": 80, "annual_limit": 10000, "wellness_rider": false, "note": "What to ask for on the phone. Skip the wellness rider: you must use about 73% of the ceiling to break even, on care you would buy anyway. Also ask the $1,000 deductible price, since a higher deductible blunts the annual escalation by compounding on a smaller base. Confirm exam fees included, no per-incident or lifetime caps, and hereditary and congenital covered in the base plan."}, "ask_before_binding": ["What happens at year three? The NY form auto-reissues for 3 years and a new enrollment restarts waiting periods. Get written confirmation it does not reset pre-existing status.", "Name the policy form number. Pumpkin's published NY PDF says United States Fire, their live system says Independence American under an unpublished form.", "Are exam fees included, or an add-on?", "What is the bilateral clause? If one knee goes, what happens to the other?"], "shortlist": [{"rank": 1, "provider": "Pumpkin", "phone": "1-866-273-6369", "hours": "Mon-Fri 8am-8pm, Sat 9am-5pm ET", "projected": "$65-90/mo", "why": "Best claims record of the three by a wide margin: the only brand where BBB and Trustpilot agree. Same NY policy as ASPCA and Spot.", "against": "14-day accident wait with no waiver in NY. No money-back guarantee here."}, {"rank": 2, "provider": "ASPCA Pet Health Insurance", "phone": "888-716-1203", "hours": "new policies; existing policies 1-866-204-6764", "projected": "$60-85/mo", "why": "The most thoroughly documented NY form. Identical coverage to Pumpkin.", "against": "Mediocre claims service record."}, {"rank": 3, "provider": "Spot", "phone": "1-800-905-1595", "hours": "Mon-Fri 8am-8pm ET", "projected": "$60-85/mo", "why": "Same policy again, but offers an unlimited annual limit with no per-incident or lifetime caps.", "against": "Identical price and paper to ASPCA, so quoting both is not shopping."}, {"rank": 4, "provider": "MetLife (backup)", "phone": "855-545-4858", "hours": "", "projected": "$75-100/mo", "why": "No orthopedic wait at all, richest base bundle. Better if your employer offers it.", "against": "Worst complaint record in the group: 1.06 of 5 across 391 BBB reviews."}, {"rank": 5, "provider": "Trupanion (backup)", "phone": "888-733-2685", "hours": "24/7, 365 days", "projected": "$120-180/mo", "why": "No payout limits ever, per-condition lifetime deductible, pays the vet directly.", "against": "Expensive. Reported denial calling a cruciate tear a disease, not an injury."}], "avoid": ["AKC / PetPartners: hip, elbow and OCD excluded entirely without a paid rider. The free 30-day certificate in the registration paperwork is not sold in New York.", "Nationwide: 12-month cruciate wait in every plan, and it is cutting NY policyholders now.", "Embrace in NY: excludes cruciate, hip, IVDD and patella 180 days, then pre-existing for life.", "Healthy Paws: 12-month hip dysplasia wait, unwaivable in NY.", "Figo: folds osteosarcoma into its 6-month orthopedic window.", "Fetch: orthopedic waiver covers knees only, the 180-day hip exclusion cannot be waived.", "Pets Best: no curable-restoration provision in the NY form; cruciate never counts as accident.", "ManyPets: exited the US in Nov 2024, not purchasable."]}, "vet": {"practice": "Sayrebrook Veterinary Hospital", "doctor": "Dr. Chiosi", "phone": "732-727-1303", "address": "1400 Main St, Sayreville NJ 08872", "license": "29V100201400", "offer": "Free exam and fecal within 30 days, free distemper and parvo boosters to completion, 50% off the 2nd and 3rd exams, direct billing with prior authorization, emergency visits", "emergency_hospital": null, "direct_billing_arranged": false, "note": "She performed the pre-sale exam on 2026-08-18, so there is already a baseline in her file. The 20% off spay and neuter belongs to Central Jersey Animal Hospital in Freehold, not to Sayrebrook. emergency_hospital is open: ask for one near Far Rockaway, because Sayreville is an hour away."}};
 /* ---- END GENERATED FROM config.json ---- */
+
+/* Today's plan, one of the two shapes in PLANS. Declared here rather than beside
+   the variant helpers below because render() reaches it long before that point,
+   and a `let` read before its declaration line runs is a TypeError, not undefined. */
+let PLAN = PLANS[DEFAULT_VARIANT[new Date().getDay()]];
 const KEY = 'mercy.events.v2';
 const OUTSIDE = ['Walk','Potty Trip'];
 
@@ -1274,7 +1317,7 @@ function lastOutside(){
 /* A Cover claim rides in the same shared log as everything else, so no backend change
    was needed. It is not something Mercy did, though, so it is excluded from every count,
    every export and every trend. */
-const isLogEvent = e => e.event!=='Join' && e.event!=='Cover';
+const isLogEvent = e => e.event!=='Join' && e.event!=='Cover' && e.event!=='Day';
 function todays(){ const k=dayKey(new Date());
   return events.filter(e=>isLogEvent(e) && dayKey(new Date(e.ts))===k); }
 
@@ -1916,6 +1959,8 @@ function applyRole(){
 }
 
 function render(){
+  syncPlan();
+  renderDaySel();
   renderWho();
   renderWhen();
   hint();
@@ -2420,6 +2465,60 @@ function gRender(){
     });
   }
   body.innerHTML = h;
+}
+
+
+/* ---- which morning is today? ------------------------------------------------
+   Two shapes of morning, generated into PLANS from config.schedule.daily: a gym
+   day and a home morning. They differ only in the rows before 08:10.
+
+   The choice rides in the shared log as {event:'Day', notes:<variant>}, the same
+   trick the Cover tab uses, so switching it on one phone reaches everyone else's
+   without a backend change. Latest entry for that date wins; with none, the day
+   falls back to DEFAULT_VARIANT for that weekday. Nothing is stored for a day
+   nobody touched, so tomorrow starts on its own default. */
+
+function variantFor(d){
+  d = d || new Date();
+  const k = dayKey(d);
+  const picks = events.filter(e => e.event==='Day' && PLANS[e.notes]
+                                   && dayKey(new Date(e.ts))===k);
+  if(picks.length) return picks[picks.length-1].notes;
+  return DEFAULT_VARIANT[d.getDay()];
+}
+
+function syncPlan(){ PLAN = PLANS[variantFor()] || PLAN; }
+
+function setVariant(v){
+  if(!PLANS[v]) return;
+  if(!me){ openJoin(true); return; }
+  if(variantFor() === v) return;
+  const d = new Date(); d.setHours(12,0,0,0);       /* noon, so it cannot slide a day */
+  const k = dayKey(d);
+  /* one choice per day: drop any earlier one rather than stacking them */
+  for(let i=events.length-1; i>=0; i--){
+    const e = events[i];
+    if(e.event==='Day' && dayKey(new Date(e.ts))===k) events.splice(i,1);
+  }
+  const e = {id:uid(), ts:d.getTime(), by:me, event:'Day', where:'N/A', notes:v};
+  events.push(e); events.sort((a,b)=>a.ts-b.ts);
+  syncPlan(); save(); queue(e); render();
+  toast('<b>'+VARIANTS[v].label+'</b><br>Her times have moved to match.');
+}
+
+function renderDaySel(){
+  const box = document.getElementById('daysel');
+  if(!box) return;
+  const cur = variantFor();
+  box.innerHTML = '';
+  Object.keys(PLANS).forEach(v => {
+    const b = document.createElement('button');
+    const first = PLANS[v][0];
+    b.className = v===cur ? 'on' : '';
+    b.innerHTML = VARIANTS[v].label + '<small>' + (first ? 'from '+first[1] : '') + '</small>';
+    b.onclick = () => setVariant(v);
+    box.appendChild(b);
+  });
 }
 
 </script>
