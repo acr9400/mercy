@@ -566,6 +566,20 @@ body.gon #daycap{display:none}
 #visit .where{font-size:13px;line-height:1.5;color:var(--muted);margin:-8px 0 14px}
 #visit .where a{color:var(--gold);text-decoration:none;font-weight:600}
 
+
+/* ---- read only ---- */
+#robar{background:rgba(120,150,200,.12);border:1px solid rgba(120,150,200,.4);
+  border-radius:14px;padding:13px 15px;margin:0 0 16px;font-size:13.5px;line-height:1.55;
+  color:var(--paper)}
+#robar[hidden]{display:none}
+#robar b{display:block;font-size:14.5px;margin-bottom:3px}
+#robar button{background:transparent;border:0;color:var(--gold);font:inherit;font-size:13px;
+  font-weight:700;padding:6px 0 0;text-decoration:underline}
+body.ro .b-out,body.ro .b-acc,body.ro #tab-log .small,body.ro #tab-log .grid,
+body.ro #tab-log h2,body.ro #when,body.ro #whenhint,body.ro .x,
+body.ro #sched li,body.ro #daysel,body.ro #holdbtn{display:none !important}
+body.ro #recent{margin-top:0}
+
 </style>
 </head>
 <body>
@@ -598,6 +612,7 @@ body.gon #daycap{display:none}
 </div>
 
 <section class="tab on" id="tab-log">
+<div id="robar" hidden></div>
 
 <ul class="recent" id="recent"></ul>
 
@@ -804,6 +819,7 @@ const SYNC_URL = "https://script.google.com/macros/s/AKfycbxEABPCdnof_NQiUvu72xP
 const SYNC_TOKEN = "5HEKZTS6zCpp4L6qqwda8jNtEI3sK6y5";
 const OWNER = "Ariel";
 const OWNER_KEY = "Mercy9400";
+const WRITE_CODE = "Mercy9400";
 const HOLD_PER_MONTH = 1.0;
 const HOLD_MAX = 6.0;
 const MEALS_UNTIL_6MO = 3;
@@ -988,6 +1004,22 @@ try { events = JSON.parse(localStorage.getItem(KEY) || '[]'); } catch(e) { event
 let me = localStorage.getItem('mercy.me') || '';
 let role = localStorage.getItem('mercy.role') || '';
 const isOwner = () => role === 'owner';
+/* Three roles. owner and helper can log; viewer can read everything and change
+   nothing. A name that is not in members lands on viewer unless they have the code.
+
+   Honest about what this is: a client-side gate on a public page. It stops a
+   neighbour tapping a button they did not mean to. It does not stop anyone
+   determined, because the sync token is in the page source. */
+const isViewer = () => role === 'viewer';
+/* An allow list, not a deny list. role is '' before anyone has signed in and after a
+   rejected code, and "not viewer" quietly let both of those write. */
+const canWrite = () => role === 'owner' || role === 'helper';
+const knownMember = n =>
+  SEED_MEMBERS.some(m => m.name.toLowerCase() === String(n||'').trim().toLowerCase());
+function refuse(){
+  toast('<b>You are signed in to look, not to log</b><br>' +
+        'Ask Ariel for the code if you need to add something.', true);
+}
 
 /* Your week, the gym times and anything about your day live on this phone only.
    They are never queued, never posted, never in the shared log. Helpers cannot see them. */
@@ -1144,7 +1176,8 @@ function merge(remote, authoritative){
 }
 /* Only dog events are ever sent. Your week, the gym times, your role and your name
    preference stay in this phone's storage and are never posted anywhere. */
-function queue(e){ if(!SYNC_URL) return; pending.push(e); save(); pull(false); }
+function queue(e){
+  if(!canWrite()) return;   /* a viewer never writes to the shared log */ if(!SYNC_URL) return; pending.push(e); save(); pull(false); }
 const pad  = n => String(n).padStart(2,'0');
 const hhmm = d => { let h=d.getHours(), m=d.getMinutes(), ap=h>=12?'PM':'AM';
                     h=h%12||12; return h+':'+pad(m)+' '+ap; };
@@ -1352,6 +1385,35 @@ function openJoin(first){
   box.appendChild(ownerRow);
   box.appendChild(keyIn);
 
+  /* Anyone not in members signs in read only. This is how they say otherwise. It is
+     shown to everyone rather than appearing after a failed name, because a field that
+     materialises when you type the "wrong" name reads like an accusation. */
+  let claimWrite = false;
+  const wRow=document.createElement('div');
+  wRow.className='ownerclaim';
+  const wBtn=document.createElement('button');
+  wBtn.type='button'; wBtn.className='ownerbtn';
+  wBtn.innerHTML='<span class="tick">&#10003;</span> I have an access code';
+  const wIn=document.createElement('input');
+  wIn.type='password'; wIn.placeholder='Access code';
+  wIn.setAttribute('autocapitalize','none');
+  wIn.style.display='none';
+  wBtn.onclick=()=>{
+    claimWrite=!claimWrite;
+    wBtn.className='ownerbtn'+(claimWrite?' on':'');
+    wIn.style.display = claimWrite ? '' : 'none';
+    if(claimWrite) wIn.focus(); else wIn.value='';
+  };
+  wRow.appendChild(wBtn);
+  box.appendChild(wRow);
+  box.appendChild(wIn);
+
+  const wNote=document.createElement('p');
+  wNote.style.cssText='font-size:12px;color:var(--muted);margin:10px 0 0;line-height:1.5';
+  wNote.textContent='Ariel, Shira and Chayim do not need a code. Anyone else can look '+
+    'around but cannot change her record without one.';
+  box.appendChild(wNote);
+
   const go=document.createElement('button');
   go.className='go'; go.textContent = first ? "That's me" : 'Save';
   go.onclick=()=>{
@@ -1366,15 +1428,29 @@ function openJoin(first){
     const clash=MEMBERS.find(m=>m.name.toLowerCase()===n.toLowerCase() && m.name!==me);
     closeSheet();
     box.style.display='';
-    role = claimOwner ? 'owner' : 'helper';
+    /* One of the three named people, or someone with the code, can write. Everyone
+       else looks. The owner tick is a separate question and only matters for his week. */
+    const codeOk = claimWrite && WRITE_CODE &&
+                   wIn.value.trim().toLowerCase() === WRITE_CODE.toLowerCase();
+    const mayWrite = knownMember(n) || codeOk || claimOwner;
+    if(claimWrite && !codeOk && !knownMember(n)){
+      toast('That code is not right. Leave the box off to look around without it.', true);
+      wIn.value=''; wIn.focus(); return;
+    }
+    role = claimOwner ? 'owner' : (mayWrite ? 'helper' : 'viewer');
     localStorage.setItem('mercy.role', role);
     if(clash){ setMe(clash.name); toast('<b>Welcome back, '+clash.name+'</b><br>Picking up where you left off.'); return; }
     me=n; localStorage.setItem('mercy.me', n);
-    const e={id:uid(), ts:Date.now(), by:n, event:'Join', where:'N/A', notes:color};
-    events.push(e); events.sort((a,b)=>a.ts-b.ts);
-    rebuildMembers(); save(); render(); queue(e);
-    toast('<b>You are logged in as '+n+'</b><br>Everything you log from now on says so.'+
-      (claimOwner?'<br>Owner view unlocked.':''));
+    if(role!=='viewer'){
+      const e={id:uid(), ts:Date.now(), by:n, event:'Join', where:'N/A', notes:color};
+      events.push(e); events.sort((a,b)=>a.ts-b.ts);
+      queue(e);
+    }
+    rebuildMembers(); save(); render();
+    toast(role==='viewer'
+      ? '<b>Signed in as '+n+', read only</b><br>Look at anything. Nothing you tap changes her record.'
+      : '<b>You are logged in as '+n+'</b><br>Everything you log from now on says so.'+
+        (claimOwner?'<br>Owner view unlocked.':''));
   };
   box.appendChild(go);
 
@@ -1389,7 +1465,9 @@ function openJoin(first){
       const b=document.createElement('button');
       b.textContent=m.name;
       b.style.borderColor=m.color+'88';
-      b.onclick=()=>{ closeSheet(); box.style.display=''; setMe(m.name); };
+      b.onclick=()=>{ closeSheet(); box.style.display='';
+        if(knownMember(m.name)){ role='helper'; localStorage.setItem('mercy.role', role); }
+        setMe(m.name); };
       row.appendChild(b);
     });
     box.appendChild(row);
@@ -1477,6 +1555,7 @@ function drawTimer(){
 }
 
 function push(event, where, extra){
+  if(!canWrite()){ refuse(); return null; }
   const e = Object.assign({ id: uid(), ts: stamp(), by: me, event, where }, extra||{});
   events.push(e);
   events.sort((a,b)=>a.ts-b.ts);
@@ -1540,6 +1619,7 @@ function logPoop(where){
    every insert, so a back-dated entry shifts every index after it and an index captured
    at render time can point at the wrong row by the time you tap the x. */
 function remove(id){
+  if(!canWrite()){ refuse(); return; }
   const i=events.findIndex(x=>x.id===id);
   if(i<0) return;
   const e=events[i];
@@ -2080,6 +2160,7 @@ function slotNeeded(p, dayOffset){
 }
 function claimSlot(p, dayOffset){
   if(!me){ openJoin(true); return; }
+  if(!canWrite()){ refuse(); return; }
   const ts=slotTs(dayOffset, p[1]);
   const e={id:uid(), ts:ts, by:me, event:'Cover', where:'N/A', notes:p[0]};
   events.push(e); events.sort((a,b)=>a.ts-b.ts);
@@ -2214,6 +2295,16 @@ function renderCover(){
 /* ---- render ---- */
 function applyRole(){
   const own=isOwner();
+  const ro=isViewer();
+  document.body.classList.toggle('ro', ro);
+  const bar=document.getElementById('robar');
+  if(bar){
+    bar.hidden = !ro;
+    if(ro) bar.innerHTML = '<b>You are looking, not logging.</b>' +
+      'You can see everything Mercy does, her guide and her training. ' +
+      'Nothing you tap changes her record.' +
+      '<br><button onclick="openJoin(false)">I have the code</button>';
+  }
   document.getElementById('ownerOnly').style.display = own ? '' : 'none';
   document.getElementById('gymBtn').style.display = own ? '' : 'none';
   document.getElementById('planHead').innerHTML = own
@@ -2887,6 +2978,7 @@ function syncPlan(){ PLAN = PLANS[variantFor()] || PLAN; }
 function setVariant(v){
   if(!PLANS[v]) return;
   if(!me){ openJoin(true); return; }
+  if(!canWrite()){ refuse(); return; }
   if(variantFor() === v) return;
   const d = new Date(); d.setHours(12,0,0,0);       /* noon, so it cannot slide a day */
   const k = dayKey(d);
@@ -3079,6 +3171,7 @@ function holdActive(){
 
 function holdTap(){
   if (!me) { openJoin(true); return; }
+  if(!canWrite()){ refuse(); return; }
   var h = holdActive();
   if (h) {                       /* she is awake: go and log the outing */
     showTab('log');
