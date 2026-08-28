@@ -528,6 +528,14 @@ body.gon #daycap{display:none}
 #crate.done{border-color:var(--ok);border-left:3px solid var(--ok)}
 #crate.done .cn{color:var(--ok)}
 
+
+#crate .clock2{font-size:34px;font-weight:200;letter-spacing:-.02em;line-height:1.05;
+  margin:2px 0 3px;font-variant-numeric:tabular-nums}
+#crate .clab{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);
+  font-weight:700;margin-bottom:12px}
+#crate.reset .clock2{color:var(--paper)}
+#crate.done .clock2{color:var(--ok)}
+
 </style>
 </head>
 <body>
@@ -3154,6 +3162,30 @@ function crateNights(){
           nights: nights.length, lastReset: lastReset};
 }
 
+/* Time since the last crate accident. Hours and minutes until a day has passed,
+   then days and hours, which is how he asked for it: "one day and twelve hours".
+   With no accident on record it counts from the moment the bedding came out. */
+function cleanFor(){
+  if(!CRATE_STRIP || !CRATE_STRIP.started) return null;
+  const from = new Date(CRATE_STRIP.started + 'T' +
+                        (CRATE_STRIP.started_time || '00:00') + ':00').getTime();
+  let last = from;
+  events.forEach(e => {
+    if(e.where === 'Crate Accident' && e.ts > last) last = e.ts;
+  });
+  return {since: last, ms: Date.now() - last, everSoiled: last !== from};
+}
+
+function cleanForStr(ms){
+  const mins = Math.max(0, Math.floor(ms / 60000));
+  const d = Math.floor(mins / 1440);
+  const h = Math.floor((mins % 1440) / 60);
+  const m = mins % 60;
+  if(d > 0) return d + (d === 1 ? ' day' : ' days') + (h ? ' ' + h + 'h' : '');
+  if(h > 0) return h + 'h' + (m ? ' ' + m + 'm' : '');
+  return m + 'm';
+}
+
 function renderCrate(){
   const box = document.getElementById('crate');
   if(!box) return;
@@ -3188,7 +3220,15 @@ function renderCrate(){
       ? 'The count restarted after a crate accident.'
       : 'Any crate accident starts it again from zero.';
   }
-  box.innerHTML = '<h3>Crate, bare tray</h3>' + pips +
+  const cf = cleanFor();
+  let clock = '';
+  if(cf){
+    clock = '<div class="clock2">' + cleanForStr(cf.ms) + '</div>' +
+            '<div class="clab">' +
+            (cf.everSoiled ? 'Clean since her last crate accident'
+                           : 'Clean since the bedding came out') + '</div>';
+  }
+  box.innerHTML = '<h3>Crate, bare tray</h3>' + clock + pips +
                   '<div class="cn">' + gesc(head) + '</div>' +
                   '<div class="cs">' + gesc(sub) + '</div>';
 }
