@@ -54,6 +54,78 @@
    "vet": "A puppy who is hard to rouse, or sleeping far more than usual AND flat when awake, is a different thing. Same-day call."
   },
   {
+   "id": "s-awake",
+   "kind": "do",
+   "cat": "Starting out",
+   "title": "Is she asleep, dozing, or actually awake? And which one means go out",
+   "tags": [
+    "asleep",
+    "sleeping",
+    "napping",
+    "nap",
+    "awake",
+    "waking",
+    "dozing",
+    "head up",
+    "tilts head",
+    "when to take her out",
+    "signal",
+    "stretch",
+    "shake",
+    "resting",
+    "half asleep",
+    "stirring"
+   ],
+   "now": [
+    "THE TRIGGER IS STANDING UP, NOT EYES OPENING. She empties when she gets up, not when she notices you.",
+    "ASLEEP: lying down, eyes closed or half closed, body loose and flopped, breathing slow. She may twitch, paddle or make noises. Leave her.",
+    "DOZING: head up, eyes open, watching you, but her body is still down and relaxed. THIS IS STILL RESTING. It is not the moment. Dogs sleep in short cycles of about twenty minutes and spend a lot of the time in light sleep, so surfacing to look at you and settling again is normal.",
+    "AWAKE: she has STOOD UP. Almost always with a stretch, then a full body shake. That shake is the most reliable signal you have. When you see it, go.",
+    "TOO LATE: circling, or nose down sniffing the floor in a small area. That is not a warning, it is the last step. Pick her up and go now.",
+    "Judge it on how long she has been down as well as what she is doing. Down for ten minutes and she repositions: nothing. Down for an hour and she stands: go, immediately."
+   ],
+   "not": [
+    "Do not take her out every time she lifts her head. You will do it fifteen times a day, most of them for nothing, and you will stop trusting the signal.",
+    "Do not wait to see whether she settles again once she has stood up and shaken. By then you are counting seconds.",
+    "Do not wake her to take her out on schedule. The schedule is a default for when nothing else is happening; a sleeping puppy overrides it. The one exception is if you are about to leave the house, or last call at bedtime."
+   ],
+   "why": "She needs eighteen to twenty hours of sleep a day and her cycles are short, roughly twenty minutes against a human ninety, so she surfaces often. Most of those surfacings are not her getting up. What actually empties a bladder is the change from lying to standing, which is why the stand-stretch-shake is the signal to watch rather than her eyes. The reason this matters is that after waking is one of the four times a puppy reliably needs to go, along with after eating, after playing and after excitement, so getting the definition right is most of getting the timing right.",
+   "vet": "A puppy who is genuinely hard to rouse, or who is sleeping far more than usual AND is flat when she is awake, is a different thing entirely. That is a same-day call."
+  },
+  {
+   "id": "s-awake-cases",
+   "kind": "do",
+   "cat": "Starting out",
+   "title": "She stirred. Do I take her out? Six situations",
+   "tags": [
+    "awake",
+    "stirring",
+    "head up",
+    "scenarios",
+    "when",
+    "take her out",
+    "walked in",
+    "woke up",
+    "nap",
+    "decide",
+    "situations"
+   ],
+   "now": [
+    "YOU WALK IN AND SHE LIFTS HER HEAD, body still down. Nothing. She woke for you, not for her bladder. Carry on and watch for her to stand.",
+    "SHE STANDS UP, STRETCHES AND SHAKES. Go. That is the moment, every time, however long she was down.",
+    "SHE STANDS, TURNS ROUND AND FLOPS BACK DOWN. That was a reposition. Nothing to do.",
+    "SHE HAS BEEN DOWN OVER AN HOUR AND LIFTS HER HEAD. Not yet, but get your shoes on. She will usually stand within a few minutes and you want to be ready rather than hunting for the leash.",
+    "SHE WOKE BECAUSE YOU CAME HOME, and it has been more than an hour. Take her anyway. She is up now and the clock was already running.",
+    "SHE IS CIRCLING OR SNIFFING THE FLOOR. Too late for a decision. Pick her up and go.",
+    "YOU ARE ABOUT TO LEAVE THE HOUSE and she is asleep. Wake her and take her out first. A puppy who wakes alone in a crate will go in it, and that is worse than a shortened nap."
+   ],
+   "not": [
+    "Do not treat every head lift as a signal. If you go out on all of them you will be downstairs fifteen times for nothing and you will stop believing the real ones."
+   ],
+   "why": "The useful question is not whether she is technically asleep. It is whether she is about to be upright, because that is what starts things moving. Head up is information. Standing is a decision.",
+   "vet": ""
+  },
+  {
    "id": "s-when-out",
    "kind": "do",
    "cat": "Starting out",

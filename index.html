@@ -1934,8 +1934,8 @@ function renderRecent(){
     const out = e.where==='Outside' || OUTSIDE.includes(e.event);
     if(acc) li.className='acc'; else if(out) li.className='out';
     if(idx===0 && Date.now()-e.ts < 8000) li.className+=' fresh';
-    let w = e.where==='Crate Accident' ? 'in crate'
-          : e.where==='Indoor Accident' ? 'indoors'
+    let w = e.where==='Crate Accident' ? 'accident in crate'
+          : e.where==='Indoor Accident' ? 'accident inside'
           : (out ? 'outside' : '');
     if(e.mins) w = (w?w+' · ':'')+e.mins+'m';
     li.innerHTML='<span class="t">'+hhmm(new Date(e.ts))+'</span><span>'+e.event+
@@ -2192,8 +2192,8 @@ function render(){
          chain entirely and got no tag at all, which made it the least visible of the
          three despite being the one that resets the crate countdown. */
       let cls='tag', label=e.where;
-      if(e.where==='Indoor Accident'){ cls='tag acc'; label='indoors'; }
-      else if(e.where==='Crate Accident'){ cls='tag acc'; label='in crate'; }
+      if(e.where==='Indoor Accident'){ cls='tag acc'; label='accident inside'; }
+      else if(e.where==='Crate Accident'){ cls='tag acc'; label='accident in crate'; }
       else if(e.where==='Outside'||OUTSIDE.includes(e.event)){ cls='tag out'; label='outside'; }
       else label='';
       let name=e.event;
