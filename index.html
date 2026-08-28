@@ -609,8 +609,8 @@ mouthy, not sleepy.</p>
 
 <section class="tab" id="tab-day">
 
-<div id="visit" hidden></div>
 <div id="crate" hidden></div>
+<div id="visit" hidden></div>
 
 <div id="datenav">
   <button id="dprev" onclick="dayBack(-1)" aria-label="Previous day">&lsaquo;</button>
@@ -1926,7 +1926,9 @@ function renderRecent(){
     const out = e.where==='Outside' || OUTSIDE.includes(e.event);
     if(acc) li.className='acc'; else if(out) li.className='out';
     if(idx===0 && Date.now()-e.ts < 8000) li.className+=' fresh';
-    let w = acc ? 'accident' : (out ? 'outside' : '');
+    let w = e.where==='Crate Accident' ? 'in crate'
+          : e.where==='Indoor Accident' ? 'indoors'
+          : (out ? 'outside' : '');
     if(e.mins) w = (w?w+' · ':'')+e.mins+'m';
     li.innerHTML='<span class="t">'+hhmm(new Date(e.ts))+'</span><span>'+e.event+
       '</span><span class="w">'+w+'</span>';
@@ -2178,8 +2180,12 @@ function render(){
     list.innerHTML='';
     t.slice().reverse().forEach(e=>{
       const li=document.createElement('li');
+      /* "accident" alone did not say where, and a Crate Accident fell through this
+         chain entirely and got no tag at all, which made it the least visible of the
+         three despite being the one that resets the crate countdown. */
       let cls='tag', label=e.where;
-      if(e.where==='Indoor Accident'){ cls='tag acc'; label='accident'; }
+      if(e.where==='Indoor Accident'){ cls='tag acc'; label='indoors'; }
+      else if(e.where==='Crate Accident'){ cls='tag acc'; label='in crate'; }
       else if(e.where==='Outside'||OUTSIDE.includes(e.event)){ cls='tag out'; label='outside'; }
       else label='';
       let name=e.event;
@@ -3125,13 +3131,18 @@ function crateNights(){
     soiled[dayKey(d)] = true;
   });
 
-  /* nights that have finished: a night beginning on day D is over once it is past
-     10am on D+1 */
+  /* An accident scores its night immediately: it is evidence and there is nothing
+     left to wait for. A CLEAN night only counts once it is over, which is 10am the
+     next morning, because until then she can still soil it. A night that is neither
+     is pending and does not count either way. */
   const nights = [];
-  for(let d = new Date(start); ; d.setDate(d.getDate() + 1)){
+  const today = new Date(); today.setHours(0,0,0,0);
+  for(let d = new Date(start); d.getTime() <= today.getTime(); d.setDate(d.getDate() + 1)){
+    const k = dayKey(d);
     const over = new Date(d); over.setDate(over.getDate() + 1); over.setHours(10,0,0,0);
-    if(over.getTime() > Date.now()) break;
-    nights.push({key: dayKey(d), clean: !soiled[dayKey(d)]});
+    if(soiled[k]) nights.push({key:k, clean:false});
+    else if(over.getTime() <= Date.now()) nights.push({key:k, clean:true});
+    /* else: still running, no verdict yet */
   }
 
   let streak = 0, lastReset = null;
@@ -3140,8 +3151,7 @@ function crateNights(){
     else { streak = 0; lastReset = n.key; }
   });
   return {need: need, streak: Math.min(streak, need), done: streak >= need,
-          nights: nights.length, lastReset: lastReset,
-          tonightPending: true};
+          nights: nights.length, lastReset: lastReset};
 }
 
 function renderCrate(){
@@ -3161,6 +3171,12 @@ function renderCrate(){
     head = 'Seven clean nights. The bed can go back.';
     sub = 'Put ONE washable layer in, not the pillow as well. If she soils it, ' +
           'strip it again and the count restarts.';
+  } else if(r.streak === 0 && r.lastReset){
+    const d = new Date(r.lastReset + 'T00:00:00');
+    head = 'Back to zero.';
+    sub = 'She soiled the crate on the night of ' +
+          d.toLocaleDateString(undefined,{weekday:'long', day:'numeric', month:'long'}) +
+          '. The count starts again tonight, and needs ' + r.need + ' clean nights.';
   } else if(r.nights === 0){
     head = 'Night one is tonight.';
     sub = 'It scores in the morning. Any crate accident sends the count back to zero.';
