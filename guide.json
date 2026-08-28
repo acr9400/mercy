@@ -1401,13 +1401,23 @@
     "shivering",
     "radiator",
     "aircon",
-    "degrees"
+    "degrees",
+    "bare tray",
+    "crate cover",
+    "blanket",
+    "vent",
+    "draft",
+    "air conditioning",
+    "ac"
    ],
    "now": [
     "69F is right and needs no adjusting. It is the exact figure the Merck Veterinary Manual gives for a puppy from week five, and it sits inside the range where she is not spending energy heating or cooling herself.",
     "One setting all day. There is no evidence for different temperatures for sleeping, resting and play, and anyone giving you three numbers is inventing them.",
+    "IF THE CRATE IS STRIPPED TO A BARE TRAY, do not change the thermostat. She has lost her insulation from below and plastic pulls heat out of her, so the fix is a blanket over the OUTSIDE of the crate: three sides covered, front left open, something woven rather than fleece. She is warmer, the draft is gone, and she cannot pee on it because it is outside the bars.",
+    "Check where the air conditioning is actually blowing. A vent pointed at the crate matters more than two degrees on the dial, because moving air over a sleeping puppy is what makes her cold, not the room reading.",
     "Keep her crate away from the radiator. Old steam radiators run far hotter than the thermostat and create a pocket the wall reading cannot see. Put a thermometer inside the crate for a night rather than trusting the wall.",
-    "Manage play, not the room. Around three quarters of heat illness in dogs is caused by exercise, not hot weather. She will not self-limit, so you enforce breaks."
+    "Manage play, not the room. Around three quarters of heat illness in dogs is caused by exercise, not hot weather. She will not self-limit, so you enforce breaks.",
+    "What being cold looks like: curling up tight in a ball, or tucking her nose under. A comfortable puppy sprawls."
    ],
    "not": [
     "Do not lower the thermostat because she pants during play. Fix the play.",
