@@ -536,6 +536,25 @@ body.gon #daycap{display:none}
 #crate.reset .clock2{color:var(--paper)}
 #crate.done .clock2{color:var(--ok)}
 
+
+/* A sheet that explains rather than asks: it can be long, so it has to scroll, and
+   its paragraphs are body copy rather than the small muted subtitle style. */
+#sheet{max-height:82vh;overflow-y:auto;-webkit-overflow-scrolling:touch}
+.sheetbody{grid-column:1/-1;text-align:left}
+.sheetbody p{color:var(--paper) !important;font-size:14px !important}
+.sheetbody p b{color:var(--gold)}
+
+
+/* ---- explained trend rows ---- */
+#pat li{cursor:pointer;position:relative}
+#pat li .sub{display:block;font-size:12.5px;color:var(--muted);line-height:1.45;margin-top:3px;
+  padding-right:8px}
+#pat li .n{display:block;font-size:11px;color:var(--muted);margin-top:4px;letter-spacing:.03em}
+#pat li .n.thin{color:var(--alert)}
+#pat li b small{display:block;font-size:10px;font-weight:600;color:var(--muted);
+  letter-spacing:.08em;text-transform:uppercase;margin-top:3px}
+.patnote{font-size:12.5px;color:var(--muted);line-height:1.55;margin:-4px 0 14px}
+
 </style>
 </head>
 <body>
@@ -647,6 +666,7 @@ mouthy, not sleepy.</p>
 <section class="tab" id="tab-trends">
 
 <h2>What she actually does</h2>
+<p class="patnote">Every number here is worked out from your own log and nothing else. Tap any row to see how it was calculated and what to do with it.</p>
 <ul class="pat" id="pat"></ul>
 
 <h2>Last 10 days</h2>
@@ -876,6 +896,62 @@ let PLAN = PLANS[DEFAULT_VARIANT[new Date().getDay()]];
    long before the helpers below, and a `let` read before its declaration line runs
    throws rather than reading undefined. */
 let dayView = 0;
+
+const PAT_HELP = {
+  'Her meal to poop window': {
+    one: 'Wait roughly this long after a meal, then take her out.',
+    how: 'Every time a Poop was logged, the app looked backwards for the last Meal before it. ' +
+         'If that meal was within six hours, it recorded the gap. This figure is the middle ' +
+         'value of all those gaps, so one unusual day cannot drag it around the way an ' +
+         'average would.',
+    use: 'After she eats, plan the outing for about this long afterwards rather than straight ' +
+         'away. The usual advice is five to thirty minutes after eating, which is the generic ' +
+         'number the row refers to. Hers is much longer than that, and hers is the one that ' +
+         'matters because it came from her.',
+    warn: 'It only counts a poop that had a meal within six hours before it. A poop first ' +
+          'thing in the morning is usually from the night before and is excluded.'
+  },
+  'Her meal to pee window': {
+    one: 'How long after eating she usually needs to pee.',
+    how: 'The same method as the poop window, but for Pee, and only counting a meal within ' +
+         'three hours before it. Middle value of those gaps.',
+    use: 'Useful for spacing the trip after a meal. Less important than the poop window, ' +
+         'because she needs to pee for reasons unconnected to food as well.',
+    warn: 'Drinking matters here and the app does not know when she drank, only when Water ' +
+          'was logged. Treat this as a rough guide.'
+  },
+  'Typical gap between pees': {
+    one: 'Roughly how often she needs to go out during the day.',
+    how: 'The time from one Pee to the next, every time, ignoring any gap longer than eight ' +
+         'hours so that overnight does not distort it. This is the middle value.',
+    use: 'This is your outing interval. If it says an hour and eighteen minutes, that is how ' +
+         'often she is actually going, so plan trips a little inside that rather than waiting ' +
+         'for the ceiling on the clock.',
+    warn: 'It counts pees you logged, indoors and out. If several were accidents you did not ' +
+          'catch, the real gap is shorter than this says.'
+  },
+  'Most common poop hour': {
+    one: 'The hour of the day she has pooped most often so far.',
+    how: 'Every Poop is filed under the hour it happened, and this is whichever hour has the ' +
+         'most. Nothing more clever than counting.',
+    use: 'Be outside with her in that hour if you can. It is the single easiest accident to ' +
+         'prevent, because you know roughly when it is coming.',
+    warn: 'This is descriptive, not explanatory. It says when it has happened, not why. With ' +
+          'only a handful of poops on record it can jump to a different hour with one more ' +
+          'entry, so do not build the day around it yet.'
+  },
+  'Riskiest hour for accidents': {
+    one: 'The hour of the day most of her indoor accidents have happened.',
+    how: 'Every accident marked "accident inside" is filed under the hour it happened, and ' +
+         'this is whichever hour has the most.',
+    use: 'Be watching in that hour, or better, be outside just before it. An hour that stands ' +
+         'out is almost always a gap in the routine rather than anything about the hour ' +
+         'itself: a stretch where nobody is taking her out.',
+    warn: 'It counts indoor accidents only, not crate accidents, so overnight does not swamp ' +
+          'it. And it is descriptive: it tells you when, not why.'
+  }
+};
+
 const KEY = 'mercy.events.v2';
 const OUTSIDE = ['Walk','Potty Trip'];
 
@@ -1196,11 +1272,14 @@ function logDuration(kind){
 
 /* ---- tap sheet, so nothing needs typing ---- */
 let sheetPick=null;
-function openSheet(title, sub, opts, onPick){
+function openSheet(title, sub, opts, onPick, body){
   document.getElementById('sh-title').textContent=title;
   document.getElementById('sh-sub').textContent=sub||'';
   const box=document.getElementById('sh-opts');
   box.innerHTML='';
+  /* An optional block of explanatory HTML above the buttons, for sheets that are
+     there to explain something rather than to ask something. */
+  if(body) box.insertAdjacentHTML('beforeend', '<div class="sheetbody">'+body+'</div>');
   opts.forEach(o=>{
     const b=document.createElement('button');
     b.innerHTML=o.label+(o.note?'<small>'+o.note+'</small>':'');
@@ -1760,8 +1839,18 @@ function renderPatterns(){
   ul.innerHTML='';
   patterns().forEach(([label,val,n,note])=>{
     const li=document.createElement('li');
-    li.innerHTML='<span>'+label+(val&&note?'<br><span style="font-size:12px">'+note+'</span>':'')+
-      '</span><b class="'+(val?'gold':'')+'">'+(val||('needs '+Math.max(0,(n<3?3:4)-n)+' more'))+'</b>';
+    const h=PAT_HELP[label];
+    /* The sample size is part of the number. A figure built on four events read the
+       same as one built on four hundred, which made these look far more solid than
+       they are. */
+    const count='<span class="n'+(val&&n<8?' thin':'')+'">from '+n+' logged event'+
+                (n===1?'':'s')+(val&&n<8?', which is not many yet':'')+'</span>';
+    li.innerHTML='<span>'+label+
+      (h?'<span class="sub">'+gesc(h.one)+'</span>':'')+count+
+      '</span><b class="'+(val?'gold':'')+'">'+
+      (val||('needs '+Math.max(0,(n<3?3:4)-n)+' more'))+
+      (val?'<small>tap to explain</small>':'')+'</b>';
+    li.onclick=()=>patHelp(label,val,n);
     ul.appendChild(li);
   });
 }
@@ -3231,6 +3320,34 @@ function renderCrate(){
   box.innerHTML = '<h3>Crate, bare tray</h3>' + clock + pips +
                   '<div class="cn">' + gesc(head) + '</div>' +
                   '<div class="cs">' + gesc(sub) + '</div>';
+}
+
+
+/* ---- what the trend numbers actually mean --------------------------------------
+   Each stat carries its own explanation: the plain-English meaning, how the number
+   was arrived at, how many events it rests on, and what to do differently because
+   of it. He has never owned a dog; a bare figure labelled "meal to poop window" is
+   not information, it is a puzzle. */
+
+function patHelp(label, val, n){
+  const h = PAT_HELP[label];
+  if(!h) return;
+  const thin = n < 8;
+  openSheet(label,
+    val ? val + ' — worked out from ' + n + ' logged event' + (n===1?'':'s') + '.'
+        : 'Not enough logged yet to work this out.',
+    [], null,
+    '<p style="margin:0 0 12px;font-size:14.5px;line-height:1.6"><b>' + gesc(h.one) + '</b></p>' +
+    '<p style="margin:0 0 10px;font-size:14px;line-height:1.6"><b>How it was worked out.</b> ' +
+      gesc(h.how) + '</p>' +
+    '<p style="margin:0 0 10px;font-size:14px;line-height:1.6"><b>What to do with it.</b> ' +
+      gesc(h.use) + '</p>' +
+    '<p style="margin:0 0 10px;font-size:14px;line-height:1.6"><b>Worth knowing.</b> ' +
+      gesc(h.warn) + '</p>' +
+    (thin && val ? '<p style="margin:0;font-size:14px;line-height:1.6;color:var(--alert)">' +
+      '<b>Treat this as a first guess.</b> It rests on ' + n + ' event' + (n===1?'':'s') +
+      ', which is not many. It will move as you log more, and it is worth more at thirty ' +
+      'than at ' + n + '.</p>' : ''));
 }
 
 </script>
