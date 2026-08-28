@@ -1205,6 +1205,44 @@
    "cat": "Behavior"
   },
   {
+   "id": "g-rodents",
+   "kind": "do",
+   "cat": "Out & about",
+   "title": "Rats and mice in the building: what actually matters",
+   "tags": [
+    "rat",
+    "rats",
+    "mouse",
+    "mice",
+    "rodent",
+    "bait",
+    "poison",
+    "rodenticide",
+    "lepto",
+    "leptospirosis",
+    "puddle",
+    "building",
+    "super",
+    "trash",
+    "compactor"
+   ],
+   "now": [
+    "ASK THE SUPER WHERE THE BAIT STATIONS ARE. Perimeter, trash area, compactor room, basement, tree pits outside. Then route around them.",
+    "Anticoagulant rodenticide is the most likely poisoning for a puppy who eats things off the ground in this city. She can also be poisoned second hand by eating a poisoned rat.",
+    "THE SIGNS ARE DELAYED, three to five days, not straight away: lethargy, pale gums, bruising, coughing, bleeding, collapse. If you think she has eaten bait, call BEFORE any of that appears.",
+    "ASPCA Animal Poison Control (888) 426-4435. Put it in all three phones now.",
+    "NO PUDDLES. Do not let her drink from one, walk through one where you can avoid it, or lick her paws before you have wiped them.",
+    "Keep her off rodent droppings and away from anything dead.",
+    "Wipe her paws every time you come in."
+   ],
+   "not": [
+    "Do not assume the vaccine covers this. The lepto vaccine does nothing about rat poison, and she is not protected from lepto itself until about two weeks after her second dose.",
+    "Do not wait for symptoms with suspected bait. Vitamin K1 is a very effective antidote if you get there in time, and much less so once she is bleeding."
+   ],
+   "why": "Two separate risks come from the same rodents. Leptospirosis spreads through rat urine in standing water, and in the 2024 New York City cases, 84 percent of owners had seen rodents where the dog spent time and 58 percent of the dogs had been exposed to puddles. Seventeen of nineteen were exposed in their own neighbourhood rather than a park, so avoiding dog parks does nothing for it. The other risk is the poison put down for the rats, and that one is immediate rather than seasonal.",
+   "vet": "Any suspicion she has eaten bait, or found a dead rodent, is a phone call the same hour, not a wait and see. Give her weight, her age, what she ate if you know, and how long ago."
+  },
+  {
    "id": "g-rain",
    "kind": "do",
    "cat": "Out & about",
