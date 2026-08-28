@@ -584,6 +584,12 @@ the gaps for you.</p>
   <button class="b-acc" onclick="logPoop('Indoor Accident')">Poop<span class="hint">inside</span></button>
 </div>
 
+<h2>Accident in the crate</h2>
+<div class="grid">
+  <button class="b-acc" onclick="log('Pee','Crate Accident')">Pee<span class="hint">in crate</span></button>
+  <button class="b-acc" onclick="logPoop('Crate Accident')">Poop<span class="hint">in crate</span></button>
+</div>
+
 <h2>Other</h2>
 <div class="grid">
   <button class="small" onclick="log('Meal','N/A')">Meal</button>
@@ -2193,7 +2199,7 @@ function render(){
   }
 
   const outs=t.filter(e=>OUTSIDE.includes(e.event)||e.where==='Outside').length;
-  const accs=t.filter(e=>e.where==='Indoor Accident').length;
+  const accs=t.filter(e=>e.where==='Indoor Accident'||e.where==='Crate Accident').length;
   const wmin=t.filter(e=>e.event==='Walk').reduce((s,e)=>s+(e.mins||0),0);
   document.getElementById('sOut').textContent=outs;
   document.getElementById('sTarget').textContent=targetOutings();
