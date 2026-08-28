@@ -557,14 +557,22 @@
     "verify",
     "check",
     "second pee",
-    "watch"
+    "watch",
+    "grass",
+    "concrete",
+    "pavement",
+    "surface",
+    "substrate",
+    "wont go on concrete",
+    "dew"
    ],
    "now": [
+    "FIND HER SURFACE FIRST. If she will not go on concrete but squats on grass, that is not fussiness, it is a substrate preference and it is the most useful thing you can learn about her. Use it. Take her to the same patch of grass every time.",
     "STOP LOOKING AT THE GROUND. Watch her body. She squats, so the squat is the evidence, not the puddle. On wet grass or after rain you will never see the puddle and you do not need to.",
     "A real pee: she stops, maybe circles once, lowers into a squat and HOLDS STILL FOR 5 TO 15 SECONDS.",
     "Not a real pee: a quick dip and back up in a second or two. That is a dribble, not an empty, and it fools everyone.",
     "Actually count it. One, two, three. Under five seconds and she is not done.",
-    "Use pavement rather than grass. You can see it, you can hear it, and there is no dew to confuse you.",
+    "USE WHATEVER SURFACE SHE WILL ACTUALLY GO ON. If that is grass, use grass, even though you cannot see the puddle. Her willingness to go beats your ability to verify it, and the squat count below solves the verification anyway. Many puppies will not go on concrete at all: it is the wrong texture and it does not smell of anything.",
     "Same spot every single time. Her own smell prompts her, and you learn what her normal looks like.",
     "WAIT FOR TWO. Puppies often go twice, a big one and a smaller one a few minutes later. Do not leave after the first.",
     "Say a quiet word while she is actually going, not before. Go pee, every time, during. In a few weeks you can say it and she will go on request, and then you never have to wonder again."
@@ -574,7 +582,7 @@
     "Do not bring her in and give her free run when you are not sure. If you did not see a proper squat, treat her as full: crate or leash for fifteen minutes and go straight back out.",
     "Do not stand there for two minutes and give up. Emptying needs her to relax, and two minutes on a busy sidewalk is not long enough for a ten week old."
    ],
-   "why": "This is the failure that makes everything else look broken. You think she went, so she comes in and gets freedom, and twenty minutes later there is a puddle on the floor. It is not that she prefers the floor in that moment, it is that she was never empty. On grass with dew on it there is no way to check afterwards, so the only reliable signal is what her body did at the time.",
+   "why": "This is the failure that makes everything else look broken. You think she went, so she comes in and gets freedom, and twenty minutes later there is a puddle on the floor. On grass with dew there is no way to check afterwards, so the only reliable signal is what her body did at the time. And the surface matters more than most people expect: dogs learn toileting by texture and smell, not by the idea of outdoors, so a puppy who has only ever gone on carpet and towel may simply not recognise bare concrete as a place where this happens. Grass is closer to what she already knows.",
    "vet": "If she squats repeatedly and produces very little each time, that is not a training question. Frequent small volumes, or going again within minutes of being emptied, is worth ruling out medically."
   },
   {
