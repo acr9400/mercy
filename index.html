@@ -631,6 +631,14 @@ body.ro #recent{margin-top:0}
 #subclocks .none .sv{color:var(--line)}
 body.gon #subclocks{display:none}
 
+
+/* ---- version stamp and force update ---- */
+#ver{font-size:10px;letter-spacing:.12em;color:var(--muted);font-weight:700;
+  margin:-8px 0 12px;display:flex;align-items:center;gap:8px}
+#ver button{background:transparent;border:0;color:var(--gold);font:inherit;font-size:10px;
+  font-weight:700;letter-spacing:.12em;text-decoration:underline;padding:0}
+body.gon #ver{display:none}
+
 </style>
 </head>
 <body>
@@ -638,6 +646,7 @@ body.gon #subclocks{display:none}
 <h1><img src="./avatar.jpg" alt="" onerror="this.style.display='none'">
   <span>Mercy &middot; <span id="age"></span></span></h1>
 <div class="who" id="who"></div>
+<div id="ver">v64 <button onclick="forceUpdate()">Force update</button></div>
 <div class="sync off" id="sync"><span class="led"></span><span id="synctext">Local only</span></div>
 
 <div class="shab" id="shab"></div>
@@ -3666,6 +3675,28 @@ function renderSubClocks(){
       '<div class="sw"><b>' + hhmm(new Date(c.e.ts)) + '</b> ' + whereWord(c.e) +
       (c.e.stool ? ' &middot; score ' + c.e.stool : '') + '</div></div>';
   }).join('');
+}
+
+
+/* ---- version, and getting out of a stale cache -------------------------------
+   The service worker is cache-first, which is what makes the app work on a
+   pavement with no signal. The cost is that a phone can sit on an old build and
+   there is no way to tell by looking. So the build number is on screen, and this
+   button tears out the service worker and every cache and reloads from the
+   network. Logged events are untouched: they live in localStorage and in the
+   shared sheet, not in the cache. */
+async function forceUpdate(){
+  try{
+    if('serviceWorker' in navigator){
+      const regs = await navigator.serviceWorker.getRegistrations();
+      for(const r of regs) await r.unregister();
+    }
+    if(window.caches){
+      const keys = await caches.keys();
+      for(const k of keys) await caches.delete(k);
+    }
+  }catch(e){ console.error('force update', e); }
+  location.replace(location.pathname + '?u=' + Date.now());
 }
 
 </script>
