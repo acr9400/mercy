@@ -23,6 +23,7 @@
   --gold:#D9902A;
   --alert:#C4502A;
   --ok:#4E8C61;
+  --neutral:#7B5EA7;
   --navbg:rgba(255,255,255,.94);
   --veil:rgba(59,47,30,.42);
   --shadow:0 8px 28px rgba(150,120,70,.22);
@@ -148,7 +149,7 @@ ul{list-style:none;margin:0;padding:0}
 .tag.out{color:var(--gold);border-color:rgba(232,176,75,.4)}
 /* The third state. Gold and green both read as "she went", red reads as an accident,
    so nothing happened gets the muted tone: present, readable, and clearly neither. */
-.tag.nil{color:var(--muted);border-color:var(--line)}
+.tag.nil{color:var(--neutral);border-color:var(--neutral);border-color:color-mix(in srgb,var(--neutral) 45%,transparent)}
 .stat{display:flex;gap:20px;font-size:13px;color:var(--muted);margin-top:12px;flex-wrap:wrap}
 .stat b{color:var(--paper);font-weight:600;font-variant-numeric:tabular-nums}
 .empty{color:var(--muted);font-size:14px;padding:14px 0}
@@ -274,7 +275,7 @@ footer{margin-top:30px;font-size:12px;color:var(--muted);line-height:1.6}
 .recent .w{margin-left:auto;font-size:11px;color:var(--muted);flex:none}
 .recent li.acc .w{color:var(--alert)}
 .recent li.out .w{color:var(--ok)}
-.recent li.nil .w{color:var(--muted)}
+.recent li.nil .w{color:var(--neutral)}
 
 /* tap sheet */
 #veil{position:fixed;inset:0;background:var(--veil);opacity:0;pointer-events:none;
@@ -720,7 +721,7 @@ body.gon #ver{display:none}
 <h1><img src="./avatar.jpg" alt="" onerror="this.style.display='none'">
   <span>Mercy &middot; <span id="age"></span></span></h1>
 <div class="who" id="who"></div>
-<div id="ver">v76 <button onclick="forceUpdate()">Force update</button></div>
+<div id="ver">v77 <button onclick="forceUpdate()">Force update</button></div>
 <div class="sync off" id="sync"><span class="led"></span><span id="synctext">Local only</span></div>
 
 <div class="shab" id="shab"></div>
