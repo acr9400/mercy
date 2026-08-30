@@ -701,7 +701,7 @@ body.gon #ver{display:none}
 <h1><img src="./avatar.jpg" alt="" onerror="this.style.display='none'">
   <span>Mercy &middot; <span id="age"></span></span></h1>
 <div class="who" id="who"></div>
-<div id="ver">v73 <button onclick="forceUpdate()">Force update</button></div>
+<div id="ver">v74 <button onclick="forceUpdate()">Force update</button></div>
 <div class="sync off" id="sync"><span class="led"></span><span id="synctext">Local only</span></div>
 
 <div class="shab" id="shab"></div>
@@ -3707,12 +3707,17 @@ function eventsOn(offset){
   const k=dayKey(d);
   return events.filter(e => isLogEvent(e) && dayKey(new Date(e.ts))===k);
 }
+/* Day navigation deliberately does NOT scroll to the top. Stepping from Sunday to
+   Saturday is the same view with different data, not a new page, so jumping to the
+   top means re-scrolling to where he already was on every single tap. Switching TAB
+   still scrolls to top, which is correct: that really is a different page. If the
+   new day has a shorter log the browser clamps the scroll position by itself. */
 function dayBack(n){
   const next = dayView + n;
   if(next > 0) return;                       /* the future holds no log */
-  dayView = next; render(); window.scrollTo(0,0);
+  dayView = next; render();
 }
-function dayGo(n){ dayView = n; render(); window.scrollTo(0,0); }
+function dayGo(n){ dayView = n; render(); }
 
 function dayCounts(offset){
   const t = eventsOn(offset);
@@ -3754,17 +3759,28 @@ function renderHist(){
     col.className='hd'+(d.i===dayView?' on':'');
     col.title=(d.c.out+' outside, '+d.c.acc+' accidents');
     const h=36;
-    const acc=document.createElement('div');
-    acc.className='hb acc';
-    acc.style.height=Math.round(d.c.acc/peak*h)+'px';
-    const out=document.createElement('div');
-    out.className='hb out';
-    out.style.height=Math.round(d.c.out/peak*h)+'px';
+    /* A bar is only built when its count is NON-ZERO. .hb carries min-height:2px so a
+       single accident on a busy day stays visible, which is right, but it also meant a
+       day with zero accidents still drew a 2px red sliver. Every clean day looked like
+       it had an accident, which on a house-training chart is the opposite of the truth.
+       Same for the green bar on a day with no outings logged. */
+    if(d.c.acc){
+      const acc=document.createElement('div');
+      acc.className='hb acc';
+      acc.style.height=Math.round(d.c.acc/peak*h)+'px';
+      col.appendChild(acc);
+    }
+    if(d.c.out){
+      const out=document.createElement('div');
+      out.className='hb out';
+      out.style.height=Math.round(d.c.out/peak*h)+'px';
+      col.appendChild(out);
+    }
     const lab=document.createElement('div');
     lab.className='hl';
     const dd=new Date(); dd.setDate(dd.getDate()+d.i);
     lab.textContent = d.i===0 ? 'today' : String(dd.getDate());
-    col.appendChild(acc); col.appendChild(out); col.appendChild(lab);
+    col.appendChild(lab);
     col.onclick=()=>dayGo(d.i);
     box.appendChild(col);
   });
