@@ -145,8 +145,13 @@ ul{list-style:none;margin:0;padding:0}
 .log .t{font-variant-numeric:tabular-nums;color:var(--muted);width:72px;flex:none;font-size:13px}
 .log .x{margin-left:auto;color:var(--muted);font-size:12px;background:none;border:none;padding:4px 6px}
 .tag{font-size:11px;padding:2px 7px;border-radius:99px;border:1px solid var(--line);color:var(--muted)}
-.tag.acc{color:var(--alert);border-color:rgba(228,87,46,.45)}
-.tag.out{color:var(--gold);border-color:rgba(232,176,75,.4)}
+/* Three states, three colours, and they must match the histogram legend directly
+   above the log: green IS outside there, so a green tag is the one that reads as
+   "it worked". The borders were hardcoded hexes lifted from the NIGHT theme, so on
+   cream they were a colour no other element used; derive them from the variable
+   instead so a theme change carries them. */
+.tag.acc{color:var(--alert);border-color:color-mix(in srgb,var(--alert) 45%,transparent)}
+.tag.out{color:var(--ok);border-color:color-mix(in srgb,var(--ok) 45%,transparent)}
 /* The third state. Gold and green both read as "she went", red reads as an accident,
    so nothing happened gets the muted tone: present, readable, and clearly neither. */
 .tag.nil{color:var(--neutral);border-color:var(--neutral);border-color:color-mix(in srgb,var(--neutral) 45%,transparent)}
@@ -721,7 +726,7 @@ body.gon #ver{display:none}
 <h1><img src="./avatar.jpg" alt="" onerror="this.style.display='none'">
   <span>Mercy &middot; <span id="age"></span></span></h1>
 <div class="who" id="who"></div>
-<div id="ver">v77 <button onclick="forceUpdate()">Force update</button></div>
+<div id="ver">v78 <button onclick="forceUpdate()">Force update</button></div>
 <div class="sync off" id="sync"><span class="led"></span><span id="synctext">Local only</span></div>
 
 <div class="shab" id="shab"></div>
