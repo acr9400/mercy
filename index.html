@@ -146,6 +146,9 @@ ul{list-style:none;margin:0;padding:0}
 .tag{font-size:11px;padding:2px 7px;border-radius:99px;border:1px solid var(--line);color:var(--muted)}
 .tag.acc{color:var(--alert);border-color:rgba(228,87,46,.45)}
 .tag.out{color:var(--gold);border-color:rgba(232,176,75,.4)}
+/* The third state. Gold and green both read as "she went", red reads as an accident,
+   so nothing happened gets the muted tone: present, readable, and clearly neither. */
+.tag.nil{color:var(--muted);border-color:var(--line)}
 .stat{display:flex;gap:20px;font-size:13px;color:var(--muted);margin-top:12px;flex-wrap:wrap}
 .stat b{color:var(--paper);font-weight:600;font-variant-numeric:tabular-nums}
 .empty{color:var(--muted);font-size:14px;padding:14px 0}
@@ -271,6 +274,7 @@ footer{margin-top:30px;font-size:12px;color:var(--muted);line-height:1.6}
 .recent .w{margin-left:auto;font-size:11px;color:var(--muted);flex:none}
 .recent li.acc .w{color:var(--alert)}
 .recent li.out .w{color:var(--ok)}
+.recent li.nil .w{color:var(--muted)}
 
 /* tap sheet */
 #veil{position:fixed;inset:0;background:var(--veil);opacity:0;pointer-events:none;
@@ -465,8 +469,6 @@ body.gon #daysel{display:none}
 #sched li.away .t{text-decoration:line-through}
 .awaytag{font-size:10px;color:var(--alert);text-transform:uppercase;
   letter-spacing:.08em;font-weight:700;margin-left:6px}
-.log .res{color:var(--muted)}
-.log .res.nil{color:var(--alert);font-weight:600}
 body.gon #awaybox{display:none}
 #daycap a{color:var(--gold);font-weight:600;text-decoration:none;border-bottom:1px solid}
 body.gon #daycap{display:none}
@@ -718,7 +720,7 @@ body.gon #ver{display:none}
 <h1><img src="./avatar.jpg" alt="" onerror="this.style.display='none'">
   <span>Mercy &middot; <span id="age"></span></span></h1>
 <div class="who" id="who"></div>
-<div id="ver">v75 <button onclick="forceUpdate()">Force update</button></div>
+<div id="ver">v76 <button onclick="forceUpdate()">Force update</button></div>
 <div class="sync off" id="sync"><span class="led"></span><span id="synctext">Local only</span></div>
 
 <div class="shab" id="shab"></div>
@@ -2756,17 +2758,22 @@ function renderPapers(){
 function renderRecent(){
   const box=document.getElementById('recent');
   if(!box) return;
-  const t=todays().filter(e=>isLogEvent(e));
+  const all=todays();
+  const t=all.filter(e=>isLogEvent(e));
   if(!t.length){ box.innerHTML=''; return; }
   box.innerHTML='';
   t.slice(-3).reverse().forEach((e,idx)=>{
     const li=document.createElement('li');
     const acc = e.where==='Indoor Accident' || e.where==='Crate Accident';
     const out = e.where==='Outside' || OUTSIDE.includes(e.event);
-    if(acc) li.className='acc'; else if(out) li.className='out';
+    /* Same three states as the log list below. This card list is a separate renderer
+       and reads off the same tripResult, so the two cannot disagree about a trip. */
+    const nil = OUTSIDE.includes(e.event) && tripResult(e, all)==='nothing';
+    if(acc) li.className='acc'; else if(nil) li.className='nil'; else if(out) li.className='out';
     if(idx===0 && Date.now()-e.ts < 8000) li.className+=' fresh';
     let w = e.where==='Crate Accident' ? 'accident in crate'
           : e.where==='Indoor Accident' ? 'accident inside'
+          : nil ? 'nothing'
           : (out ? 'outside' : '');
     if(e.mins) w = (w?w+' · ':'')+e.mins+'m';
     li.innerHTML='<span class="t">'+hhmm(new Date(e.ts))+'</span><span>'+e.event+
@@ -3036,8 +3043,14 @@ function render(){
          chain entirely and got no tag at all, which made it the least visible of the
          three despite being the one that resets the crate countdown. */
       let cls='tag', label=e.where;
+      /* A trip that produced nothing is its own third state, and it must not wear the
+         same tag as one that produced something. "outside" in the positive colour says
+         she went; she did not. Neutral, because nothing happened is neither a success
+         nor an accident. */
+      const nil = OUTSIDE.includes(e.event) && tripResult(e, tAll)==='nothing';
       if(e.where==='Indoor Accident'){ cls='tag acc'; label='accident inside'; }
       else if(e.where==='Crate Accident'){ cls='tag acc'; label='accident in crate'; }
+      else if(nil){ cls='tag nil'; label='nothing'; }
       else if(e.where==='Outside'||OUTSIDE.includes(e.event)){ cls='tag out'; label='outside'; }
       else label='';
       let name=e.event;
@@ -3047,13 +3060,6 @@ function render(){
          without it: "Held" alone does not explain a four hour gap. */
       if((e.event==='Held'||e.event==='Bath') && e.notes)
         name+=' &middot; '+String(e.notes).split('|')[0].trim();
-      /* A trip row on its own is ambiguous. "Potty Trip" is the OUTING, not the
-         result, so a reader cannot tell a trip where she went from one where she
-         did not: the result is a SEPARATE Pee or Poop row. Say it in words. */
-      if(OUTSIDE.includes(e.event)){
-        const r = tripResult(e, tAll);
-        name += ' &middot; <span class="res'+(r==='nothing'?' nil':'')+'">'+r+'</span>';
-      }
       const byTag = e.by ? '<span class="by" style="color:'+colorOf(e.by)+';border-color:'+colorOf(e.by)+'55">'+e.by+'</span>' : '';
       li.innerHTML='<span class="t">'+hhmm(new Date(e.ts))+'</span><span>'+name+'</span>'+
         (label?'<span class="'+cls+'">'+label+'</span>':'')+byTag+
