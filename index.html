@@ -618,12 +618,19 @@ body.ro #recent{margin-top:0}
 
 
 /* ---- the two sub-clocks under the main one ---- */
-#subclocks{display:flex;gap:8px;margin:-6px 0 14px}
-#subclocks > div{flex:1;background:var(--raised);border:1px solid var(--line);
-  border-radius:15px;padding:12px 13px}
+/* All three times live in ONE card. They answer one question -- how full is she --
+   so three floating boxes was the wrong shape. This is a band across the foot of the
+   clock card: negative margins pull it out to the card's edges and down onto its
+   bottom padding, so it meets the border cleanly instead of sitting on an inset.
+   position:relative lifts it above .fill, which is absolute inset:0 and would
+   otherwise wash the progress gradient straight through the text. */
+#subclocks{position:relative;display:flex;margin:17px -20px -18px;
+  border-top:1px solid var(--line)}
+#subclocks > div{flex:1;padding:12px 20px 13px;min-width:0}
+#subclocks > div + div{border-left:1px solid var(--line)}
 #subclocks .sl{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);
   font-weight:700}
-#subclocks .sv{font-size:26px;font-weight:200;letter-spacing:-.02em;line-height:1.1;margin:3px 0 2px;
+#subclocks .sv{font-size:22px;font-weight:200;letter-spacing:-.02em;line-height:1.1;margin:3px 0 2px;
   font-variant-numeric:tabular-nums}
 #subclocks .sw{font-size:11.5px;color:var(--muted);line-height:1.35}
 #subclocks .sw b{color:var(--paper);font-weight:600}
@@ -646,7 +653,7 @@ body.gon #ver{display:none}
 <h1><img src="./avatar.jpg" alt="" onerror="this.style.display='none'">
   <span>Mercy &middot; <span id="age"></span></span></h1>
 <div class="who" id="who"></div>
-<div id="ver">v64 <button onclick="forceUpdate()">Force update</button></div>
+<div id="ver">v65 <button onclick="forceUpdate()">Force update</button></div>
 <div class="sync off" id="sync"><span class="led"></span><span id="synctext">Local only</span></div>
 
 <div class="shab" id="shab"></div>
@@ -669,9 +676,8 @@ body.gon #ver{display:none}
   <div class="ceil">Her ceiling today is <b id="ceiling">2:12</b></div>
   <div class="verdict" id="verdict">Log her first outing to start the clock.</div>
   <button id="holdbtn" hidden onclick="holdTap()"></button>
+  <div id="subclocks"></div>
 </div>
-
-<div id="subclocks"></div>
 
 <section class="tab on" id="tab-log">
 <div id="robar" hidden></div>
