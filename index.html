@@ -616,6 +616,21 @@ body.ro #recent{margin-top:0}
   padding-left:12px;border-left:2px solid var(--line)}
 #pw-plan .pcost{font-size:12.5px;color:var(--muted);margin-top:5px}
 
+
+/* ---- the two sub-clocks under the main one ---- */
+#subclocks{display:flex;gap:8px;margin:-6px 0 14px}
+#subclocks > div{flex:1;background:var(--raised);border:1px solid var(--line);
+  border-radius:15px;padding:12px 13px}
+#subclocks .sl{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);
+  font-weight:700}
+#subclocks .sv{font-size:26px;font-weight:200;letter-spacing:-.02em;line-height:1.1;margin:3px 0 2px;
+  font-variant-numeric:tabular-nums}
+#subclocks .sw{font-size:11.5px;color:var(--muted);line-height:1.35}
+#subclocks .sw b{color:var(--paper);font-weight:600}
+#subclocks .acc .sv{color:var(--alert)}
+#subclocks .none .sv{color:var(--line)}
+body.gon #subclocks{display:none}
+
 </style>
 </head>
 <body>
@@ -646,6 +661,8 @@ body.ro #recent{margin-top:0}
   <div class="verdict" id="verdict">Log her first outing to start the clock.</div>
   <button id="holdbtn" hidden onclick="holdTap()"></button>
 </div>
+
+<div id="subclocks"></div>
 
 <section class="tab on" id="tab-log">
 <div id="robar" hidden></div>
@@ -2431,6 +2448,7 @@ function render(){
   renderCrate();
   renderDateNav();
   renderHist();
+  renderSubClocks();
   renderWho();
   renderWhen();
   hint();
@@ -3598,6 +3616,56 @@ function patHelp(label, val, n){
       '<b>Treat this as a first guess.</b> It rests on ' + n + ' event' + (n===1?'':'s') +
       ', which is not many. It will move as you log more, and it is worth more at thirty ' +
       'than at ' + n + '.</p>' : ''));
+}
+
+
+/* ---- the other two clocks ----------------------------------------------------
+   "Since she was outside" answers whether she is overdue for a trip. It does not
+   answer either of the two questions he actually asks himself at 11pm: when did
+   she last empty her bladder, and when did she last pass a stool. Those run on
+   different intervals, they are worth knowing separately, and a trip outside where
+   she did nothing tells you almost nothing about either.
+
+   Both count from the event wherever it happened. A pee is a pee whether it landed
+   on grass or on the rug; for "how full is she" the location is irrelevant, and
+   pretending an accident did not empty her would make the number wrong. The
+   location is shown underneath instead, because it is the interesting part. */
+function lastOfEvent(name){
+  for(let i = events.length - 1; i >= 0; i--){
+    if(events[i].event === name) return events[i];
+  }
+  return null;
+}
+function lastPeeTs(){ const e = lastOfEvent('Pee');  return e ? e.ts : null; }
+function lastPoopTs(){ const e = lastOfEvent('Poop'); return e ? e.ts : null; }
+
+function whereWord(e){
+  if(!e) return '';
+  if(e.where === 'Crate Accident') return 'in the crate';
+  if(e.where === 'Indoor Accident') return 'indoors';
+  if(e.where === 'Outside') return 'outside';
+  return '';
+}
+
+function renderSubClocks(){
+  const box = document.getElementById('subclocks');
+  if(!box) return;
+  const cards = [
+    {label:'Last pee',  e:lastOfEvent('Pee'),  none:'She has not peed since you started logging.'},
+    {label:'Last poop', e:lastOfEvent('Poop'), none:'No stool logged yet.'},
+  ];
+  box.innerHTML = cards.map(c => {
+    if(!c.e) return '<div class="none"><div class="sl">' + c.label + '</div>' +
+      '<div class="sv">--:--</div><div class="sw">' + c.none + '</div></div>';
+    const mins = Math.floor((Date.now() - c.e.ts) / 60000);
+    const h = Math.floor(mins / 60), m = mins % 60;
+    const acc = c.e.where === 'Indoor Accident' || c.e.where === 'Crate Accident';
+    return '<div class="' + (acc ? 'acc' : '') + '">' +
+      '<div class="sl">' + c.label + '</div>' +
+      '<div class="sv">' + (h >= 24 ? Math.floor(h/24) + 'd ' + (h%24) + 'h' : h + ':' + pad(m)) + '</div>' +
+      '<div class="sw"><b>' + hhmm(new Date(c.e.ts)) + '</b> ' + whereWord(c.e) +
+      (c.e.stool ? ' &middot; score ' + c.e.stool : '') + '</div></div>';
+  }).join('');
 }
 
 </script>
