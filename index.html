@@ -451,6 +451,23 @@ body.gon .wrap>h1{margin-bottom:10px}
 body.gon #daysel{display:none}
 #daycap{font-size:12px;color:var(--muted);line-height:1.4;margin:-8px 0 14px;padding:0 4px}
 #daycap b{color:var(--paper);font-weight:600}
+#awaybox{margin:-6px 0 14px;padding:0 4px;font-size:12px;line-height:1.45;color:var(--muted)}
+#awaysum b{color:var(--paper);font-weight:600}
+#awaysum .warn{color:var(--alert);font-weight:600}
+#awaybox button{background:transparent;border:0;color:var(--gold);font:inherit;
+  font-weight:600;border-bottom:1px solid;padding:0;cursor:pointer}
+#awayedit{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:6px}
+#awayedit input{background:var(--raised);border:1px solid var(--line);border-radius:8px;
+  color:var(--paper);font:inherit;padding:3px 6px}
+#awayedit button.go{color:var(--ok)}
+#awayedit button.off{color:var(--muted)}
+#sched li.away{opacity:.5}
+#sched li.away .t{text-decoration:line-through}
+.awaytag{font-size:10px;color:var(--alert);text-transform:uppercase;
+  letter-spacing:.08em;font-weight:700;margin-left:6px}
+.log .res{color:var(--muted)}
+.log .res.nil{color:var(--alert);font-weight:600}
+body.gon #awaybox{display:none}
 #daycap a{color:var(--gold);font-weight:600;text-decoration:none;border-bottom:1px solid}
 body.gon #daycap{display:none}
 
@@ -701,7 +718,7 @@ body.gon #ver{display:none}
 <h1><img src="./avatar.jpg" alt="" onerror="this.style.display='none'">
   <span>Mercy &middot; <span id="age"></span></span></h1>
 <div class="who" id="who"></div>
-<div id="ver">v74 <button onclick="forceUpdate()">Force update</button></div>
+<div id="ver">v75 <button onclick="forceUpdate()">Force update</button></div>
 <div class="sync off" id="sync"><span class="led"></span><span id="synctext">Local only</span></div>
 
 <div class="shab" id="shab"></div>
@@ -716,6 +733,16 @@ body.gon #ver{display:none}
 
 <div id="daysel"></div>
 <div id="daycap" hidden></div>
+
+<div id="awaybox">
+  <div id="awaysum"></div>
+  <div id="awayedit" hidden>
+    <span>Out from <input type="time" id="awayFrom"></span>
+    <span>back at <input type="time" id="awayTo"></span>
+    <button class="go" onclick="applyAway()">Set</button>
+    <button class="off" onclick="clearAway()">Clear</button>
+  </div>
+</div>
 
 <div class="clock" id="clock">
   <div class="fill" id="fill"></div>
@@ -955,6 +982,8 @@ const PLAY = { min:15, max:30, perDay:3 };
 const BACKDATE_MIN = [0, 15, 30, 45, 60, 75, 90, 105, 120];
 const SEED_MEMBERS = [{name:"Ariel", color:"#E8B04B"}, {name:"Shira", color:"#5FBF8F"}, {name:"Chayim", color:"#7FA6E8"}];
 const PLAN_MISSED_WINDOW = 120;
+const MEAL_MARGIN_AWAY = 45;
+const TRIP_PAIR_MINUTES = 5;
 const DURATIONS = {"Walk": [5, 10, 15, 20, 30], "Play": [10, 15, 20, 25, 30], "Alone": [30, 60, 90, 120, 180, 300]};
 const PUSH_URL = "https://travelling-condo-poet-diff.trycloudflare.com";
 const VAPID_KEY = "BFCqwk4kKDp2lwfFfElkdFtXBrsmtjTlts53TfUEM7eklz4D6ud0RYVOQskn_MDYsMaqhMKT-IYpHloRypdPzzQ";
@@ -2146,7 +2175,8 @@ function lastOutside(){
 /* A Cover claim rides in the same shared log as everything else, so no backend change
    was needed. It is not something Mercy did, though, so it is excluded from every count,
    every export and every trend. */
-const isLogEvent = e => e.event!=='Join' && e.event!=='Cover' && e.event!=='Day';
+const isLogEvent = e => e.event!=='Join' && e.event!=='Cover' && e.event!=='Day'
+                        && e.event!=='Away';
 function todays(){ const k=dayKey(new Date());
   return events.filter(e=>isLogEvent(e) && dayKey(new Date(e.ts))===k); }
 
@@ -3017,6 +3047,13 @@ function render(){
          without it: "Held" alone does not explain a four hour gap. */
       if((e.event==='Held'||e.event==='Bath') && e.notes)
         name+=' &middot; '+String(e.notes).split('|')[0].trim();
+      /* A trip row on its own is ambiguous. "Potty Trip" is the OUTING, not the
+         result, so a reader cannot tell a trip where she went from one where she
+         did not: the result is a SEPARATE Pee or Poop row. Say it in words. */
+      if(OUTSIDE.includes(e.event)){
+        const r = tripResult(e, tAll);
+        name += ' &middot; <span class="res'+(r==='nothing'?' nil':'')+'">'+r+'</span>';
+      }
       const byTag = e.by ? '<span class="by" style="color:'+colorOf(e.by)+';border-color:'+colorOf(e.by)+'55">'+e.by+'</span>' : '';
       li.innerHTML='<span class="t">'+hhmm(new Date(e.ts))+'</span><span>'+name+'</span>'+
         (label?'<span class="'+cls+'">'+label+'</span>':'')+byTag+
@@ -3054,6 +3091,8 @@ function render(){
                        p[2]= g ? 'Out, in from the gym' : 'Out'; }
     });
   }
+  const awayNow = dayView===0 ? awayFor() : null;
+  renderAway();
   const now=minsNow(), sched=document.getElementById('sched');
   const k=dayKey(new Date());
   const doneIds=planDoneIds(k);
@@ -3070,8 +3109,13 @@ function render(){
     else if(toMins(time)<now-30) li.className='gone';
     const [h,m]=time.split(':').map(Number);
     const ap=h>=12?'PM':'AM', h12=h%12||12;
+    let awayTag='';
+    if(awayNow){
+      const mm=toMins(time), af=toMins(awayNow.from), at=toMins(awayNow.to);
+      if(mm>af && mm<at){ li.classList.add('away'); awayTag='<span class="awaytag">you are out</span>'; }
+    }
     li.innerHTML='<span class="box">&#10003;</span><span class="t">'+h12+':'+pad(m)+' '+ap+
-      '</span><span>'+label+'</span>';
+      '</span><span>'+label+awayTag+'</span>';
     li.onclick=()=>togglePlan(id);
     li.setAttribute('role','button');
     li.tabIndex=0;
@@ -3083,6 +3127,166 @@ function render(){
   renderHistory();
   renderAlerts();
   renderCover();
+}
+
+/* ---- trips, and what came of them -------------------------------------------
+   A trip and its result are two log rows, not one. Pair them so a row can say in
+   words whether anything happened, because "Potty Trip" alone reads as vague and
+   he could not tell a productive trip from an empty one. TRIP_PAIR_MINUTES comes
+   from config (rules.trip_pair_window_minutes) and the window is symmetric: in the
+   real log results land 0 to 5 minutes out and sometimes BEFORE their own trip.
+   Nearest trip wins, so on a day he logged both a Walk and a Potty Trip for one
+   outing the single Pee is not counted against both.
+
+   Note what this can and cannot know: it reports what the LOG says. A trip whose
+   result was never logged reads as nothing, because that is what the record holds. */
+function tripResult(trip, all){
+  if(!OUTSIDE.includes(trip.event)) return null;
+  const w = TRIP_PAIR_MINUTES*60000;
+  const trips = all.filter(x => OUTSIDE.includes(x.event));
+  let pee=false, poo=false;
+  all.forEach(x => {
+    if(x.event!=='Pee' && x.event!=='Poop') return;
+    if(x.where!=='Outside') return;
+    if(Math.abs(x.ts-trip.ts) > w) return;
+    let best=trip, bd=Math.abs(x.ts-trip.ts);
+    trips.forEach(c => { const d=Math.abs(x.ts-c.ts); if(d<bd){ bd=d; best=c; } });
+    if(best.id!==trip.id) return;
+    if(x.event==='Pee') pee=true; else poo=true;
+  });
+  if(pee&&poo) return 'pee + poop';
+  return pee ? 'pee' : poo ? 'poop' : 'nothing';
+}
+
+/* ---- the away window ---------------------------------------------------------
+   A day where he is out for a stretch the app knows nothing about is the day the
+   plan is least use, which is backwards. On 30 August he was out 11:25 to 16:15
+   with no cover while the app showed a home-all-day Sunday.
+
+   This deliberately does NOT invent new times. Guessing a reflowed schedule is how
+   you produce a confidently wrong plan, which is the failure this exists to fix. It
+   states what he could not otherwise see: how long she is actually alone against
+   what she can hold, which planned rows cannot happen, and whether a meal sits too
+   close to the door to catch what follows it.
+
+   It rides in the shared log as {event:'Away', notes:'HH:MM-HH:MM'}, the same trick
+   as the Day variant, so setting it on one phone reaches the others with no backend
+   change. Latest row for that date wins, an empty note means cleared, and isLogEvent
+   excludes it so a setting never counts as something the puppy did. */
+function isHHMM(s){
+  if(!s || s.length!==5 || s.charAt(2)!==':') return false;
+  const h=Number(s.slice(0,2)), m=Number(s.slice(3));
+  return h>=0 && h<24 && m>=0 && m<60;
+}
+function fmtDur(mins){
+  const h=Math.floor(mins/60), m=mins%60;
+  return h ? (m ? h+'h'+pad(m)+'m' : h+'h') : m+'m';
+}
+function awayFor(d){
+  d = d || new Date();
+  const k = dayKey(d);
+  const picks = events.filter(e => e.event==='Away' && dayKey(new Date(e.ts))===k);
+  if(!picks.length) return null;
+  picks.sort(function(a,b){ return String(a.id) < String(b.id) ? -1 : 1; });
+  const n = String(picks[picks.length-1].notes || '').trim();
+  if(!n) return null;                       /* an empty note is a cleared window */
+  const parts = n.split('-');
+  if(parts.length !== 2) return null;
+  const from = parts[0].trim(), to = parts[1].trim();
+  if(!isHHMM(from) || !isHHMM(to)) return null;
+  if(toMins(to) <= toMins(from)) return null;
+  return {from:from, to:to};
+}
+function setAway(from, to){
+  if(!me){ openJoin(true); return; }
+  if(!canWrite()){ refuse(); return; }
+  const d = new Date(); d.setHours(12,0,0,0);   /* noon, so it cannot slide a day */
+  const k = dayKey(d);
+  /* Same reasoning as setVariant: splicing locally is not enough, a row already on
+     the sheet comes straight back on the next pull unless its id is queued in
+     deletes, and every tap would leave another copy behind. */
+  for(let i=events.length-1; i>=0; i--){
+    const e = events[i];
+    if(e.event==='Away' && dayKey(new Date(e.ts))===k){
+      if(e.id){
+        deletes.push(e.id);
+        const q = pending.findIndex(x => x.id===e.id);
+        if(q>=0) pending.splice(q,1);
+      }
+      events.splice(i,1);
+    }
+  }
+  const note = (from && to) ? from+'-'+to : '';
+  const e = {id:uid(), ts:d.getTime(), by:me, event:'Away', where:'N/A', notes:note};
+  events.push(e); events.sort((a,b)=>a.ts-b.ts);
+  save(); queue(e); render();
+  toast(note ? '<b>Out '+from+' to '+to+'</b><br>Her plan is marked around it.'
+             : 'Away window cleared.');
+}
+function clearAway(){
+  const b=document.getElementById('awayedit');
+  if(b) b.hidden = true;
+  setAway(null, null);
+}
+function applyAway(){
+  const f=document.getElementById('awayFrom').value;
+  const t=document.getElementById('awayTo').value;
+  if(!isHHMM(f) || !isHHMM(t)){ toast('Need both a leaving time and a back time.'); return; }
+  if(toMins(t) <= toMins(f)){ toast('The time you are back has to be after you leave.'); return; }
+  document.getElementById('awayedit').hidden = true;
+  setAway(f, t);
+}
+function toggleAwayEdit(){
+  const b=document.getElementById('awayedit');
+  if(!b) return;
+  const a=awayFor();
+  if(b.hidden && a){
+    document.getElementById('awayFrom').value = a.from;
+    document.getElementById('awayTo').value = a.to;
+  }
+  b.hidden = !b.hidden;
+}
+/* What the window MEANS. All derived, nothing stored. */
+function awayReport(a){
+  if(!a) return null;
+  const f=toMins(a.from), t=toMins(a.to);
+  const alone=t-f;
+  const hold=Math.round(holdHours()*60);
+  const inside=PLAN.filter(p => { const m=toMins(p[1]); return m>f && m<t; });
+  /* A meal too close to the door is the 30 August failure: fed at 11:07, left about
+     11:25, she went indoors at 11:11, four minutes after the bowl. Below the margin
+     the answer is not to feed earlier and squeeze, it is to feed on return. */
+  const tight=PLAN.filter(p => p[3]==='Meal' && toMins(p[1])<=f
+                               && f-toMins(p[1]) < MEAL_MARGIN_AWAY);
+  return {alone:alone, hold:hold, over:alone-hold, inside:inside, tight:tight};
+}
+function renderAway(){
+  const sum=document.getElementById('awaysum');
+  if(!sum) return;
+  const box=document.getElementById('awaybox');
+  const show = dayView===0 && isOwner();
+  if(box) box.hidden = !show;
+  if(!show) return;
+  const a=awayFor();
+  if(!a){
+    sum.innerHTML='<button onclick="toggleAwayEdit()">I am out for part of today</button>';
+    return;
+  }
+  const r=awayReport(a);
+  let s='Out <b>'+a.from+'</b> to <b>'+a.to+'</b>. She is alone <b>'+fmtDur(r.alone)+
+        '</b>, and she can hold about '+fmtDur(r.hold)+'.';
+  if(r.over>0) s+=' <span class="warn">That is '+fmtDur(r.over)+
+                  ' past her hold, so she will need to go before you are back.</span>';
+  if(r.inside.length) s+=' <b>'+r.inside.length+'</b> planned '+
+      (r.inside.length===1?'row':'rows')+' fall inside it and cannot happen.';
+  r.tight.forEach(function(pp){
+    s+=' <span class="warn">'+pp[2]+' at '+pp[1]+' is only '+
+       fmtDur(toMins(a.from)-toMins(pp[1]))+' before you go.</span> Her gut fires 5 to 30 '+
+       'minutes after she eats, so either give it '+MEAL_MARGIN_AWAY+
+       ' minutes or feed her when you are back and move the last meal earlier.';
+  });
+  s+=' <button onclick="toggleAwayEdit()">Change</button>';
+  sum.innerHTML=s;
 }
 
 /* ---- export ---- */
