@@ -937,10 +937,29 @@ const PLANS = {
     ["p15","20:35","Walk 2","Walk","N/A",10],
     ["p16","20:50","Play 3 (15 min), then out","Play","N/A",15],
     ["p19","21:45","Last call, then crate","Potty Trip","N/A",5]
+  ],
+  "shabbat": [
+    ["p01","04:50","Out, first thing","Potty Trip","N/A",12],
+    ["p03","08:30","Home from shul, out","Walk","N/A",10,"Walk her"],
+    ["p01b","08:40","Clean her paws","Training","N/A",5],
+    ["p04","08:45","Breakfast","Meal","N/A",0],
+    ["p06","09:30","Play 1 (20 min), then out","Play","N/A",20],
+    ["p05","10:15","Out, the morning stool","Potty Trip","N/A",8],
+    ["p07","11:45","Potty trip","Potty Trip","N/A",5],
+    ["p08","13:00","Lunch","Meal","N/A",0],
+    ["p09","13:30","Out after lunch","Potty Trip","N/A",5],
+    ["p10","14:30","Play 2 (20 min), then out","Play","N/A",20],
+    ["p11","15:30","Potty trip","Potty Trip","N/A",5,"Out"],
+    ["p13","17:00","Potty trip","Potty Trip","N/A",5,"Out"],
+    ["p14","17:30","Dinner","Meal","N/A",0],
+    ["p15","18:00","Out, right before you leave","Walk","N/A",10,"Walk her"],
+    ["p17","21:00","Pick up the water bowl","Water Up","N/A",0],
+    ["p18","21:00","Home, out immediately","Potty Trip","N/A",8,"Out"],
+    ["p19","21:45","Last call, then crate","Potty Trip","N/A",5]
   ]
 };
-const VARIANTS = {"gym":{label:"Gym day",short:"Gym"},"home":{label:"Home morning",short:"Home"},"mon":{label:"Monday",short:"Mon",hint:"shiur 7\u20138:30",sel:false}};
-const DEFAULT_VARIANT = ["home","mon","gym","home","gym","home","home"];   /* by weekday, Sunday first */
+const VARIANTS = {"gym":{label:"Gym day",short:"Gym"},"home":{label:"Home morning",short:"Home"},"mon":{label:"Monday",short:"Mon",hint:"shiur 7\u20138:30",sel:false},"shabbat":{label:"Shabbat",short:"Shabbat",hint:"shul 5:15, yeshiva 6:15",sel:false}};
+const DEFAULT_VARIANT = ["home","mon","gym","home","gym","home","shabbat"];   /* by weekday, Sunday first */
 const GYM_MINUTES = 75;
 const GYM_DEFAULT = {0:null, 1:null, 2:null, 3:null, 4:null, 5:null, 6:null};
 const YOMTOV = [
