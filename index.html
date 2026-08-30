@@ -320,6 +320,12 @@ footer{margin-top:30px;font-size:12px;color:var(--muted);line-height:1.6}
 .shab.on{display:block}
 .shab.pre{background:rgba(232,176,75,.14);border-color:rgba(232,176,75,.45)}
 .shab b{font-size:13px;letter-spacing:.1em;text-transform:uppercase}
+/* <b> is the shouty title line. Inline emphasis inside a sentence uses <strong>,
+   because uppercasing a time mid-sentence reads as shouting a word at him. */
+.shab strong{font-weight:700;color:var(--paper)}
+.shab button{margin-top:9px;background:transparent;border:1px solid var(--shabline);
+  border-radius:11px;color:var(--paper);font:inherit;font-size:13px;font-weight:700;
+  padding:8px 14px}
 #timer.over{background:rgba(228,87,46,.2);border-color:rgba(228,87,46,.6)}
 #timer.over .lbl{color:var(--alert)}
 #timer.over button{background:var(--alert);color:#fff}
@@ -560,7 +566,7 @@ body.gon #daycap{display:none}
   border-radius:13px;padding:13px 14px;margin-top:14px}
 #visit .free h4{color:var(--ok);margin-top:0}
 #visit .free ul li:before{content:"¹3";color:var(--ok);font-weight:700}
-#visit .free ul li.paid:before{content:" BD";color:var(--gold)}
+#visit .free ul li.paid:before{content:"$";color:var(--gold)}
 #visit .free ul li b{font-weight:600}
 #visit .free ul li small{display:block;font-size:12.5px;color:var(--muted);line-height:1.45;margin-top:2px}
 #visit .where{font-size:13px;line-height:1.5;color:var(--muted);margin:-8px 0 14px}
@@ -646,6 +652,48 @@ body.gon #subclocks{display:none}
   font-weight:700;letter-spacing:.12em;text-decoration:underline;padding:0}
 body.gon #ver{display:none}
 
+
+/* ---- the printed Shabbat card ----
+   Screen-hidden, print-only. Built from PLANS.shabbat and the computed zmanim, so the
+   paper and the app cannot disagree about her day: the whole point of the card is the
+   days he is not holding the phone, and a card that drifted from the schedule would be
+   worse than no card. */
+#printsheet{display:none}
+@media print{
+  body > *:not(#printsheet){display:none !important}
+  #printsheet{display:block !important}
+  @page{size:A4 portrait;margin:13mm 14mm}
+  #printsheet{font-family:Georgia,'Times New Roman',serif;color:#111;font-size:9.4pt;
+    line-height:1.24;background:#fff}
+  /* the app's own h1 is uppercased and letter-spaced; the card is a document, not
+     a UI, so every inherited display rule gets stated back explicitly here. */
+  #printsheet h1{font-size:16.5pt;margin:0 0 .8mm;letter-spacing:-.3pt;
+    text-transform:none;font-weight:700;color:#111}
+  #printsheet h2{text-transform:uppercase}
+  #printsheet .sub{font-size:8.6pt;color:#444;margin:0 0 2.6mm}
+  #printsheet .warn{border:1.2pt solid #000;padding:2.2mm 3mm;margin:0 0 2.6mm}
+  #printsheet .warn p{margin:1mm 0 0;font-size:8.5pt;line-height:1.3}
+  #printsheet h2{font-size:9.4pt;margin:3mm 0 1mm;padding-bottom:.6mm;
+    border-bottom:1pt solid #000;text-transform:uppercase;letter-spacing:1pt}
+  #printsheet table{width:100%;border-collapse:collapse}
+  #printsheet td{padding:.95mm 1mm;vertical-align:top;border-bottom:.4pt solid #ccc}
+  #printsheet td.t{width:17mm;font-weight:bold;white-space:nowrap}
+  #printsheet td.w{width:8mm;text-align:center}
+  #printsheet tr.key td{background:#f2f2f2}
+  /* a tick box, so square. The app rounds every small element, and inheriting that
+     here turned the checklist into a column of circles. */
+  #printsheet .box{display:inline-block;width:3.6mm;height:3.6mm;border:.8pt solid #555;
+    border-radius:0;background:#fff}
+  /* the app is cream. Paper is white, and a full page of cream is a lot of ink. */
+  html,body{background:#fff !important}
+  #printsheet .foot{margin-top:3mm;display:flex;gap:4mm}
+  #printsheet .foot > div{flex:1;border:.7pt solid #999;padding:2mm 2.5mm}
+  #printsheet .foot h3{font-size:8.2pt;margin:0 0 1mm;text-transform:uppercase;
+    letter-spacing:.8pt}
+  #printsheet .foot p{margin:0 0 .9mm;font-size:8.2pt;line-height:1.28}
+  #printsheet .note{font-size:8pt;color:#444;margin:2.2mm 0 0;font-style:italic}
+}
+
 </style>
 </head>
 <body>
@@ -653,7 +701,7 @@ body.gon #ver{display:none}
 <h1><img src="./avatar.jpg" alt="" onerror="this.style.display='none'">
   <span>Mercy &middot; <span id="age"></span></span></h1>
 <div class="who" id="who"></div>
-<div id="ver">v65 <button onclick="forceUpdate()">Force update</button></div>
+<div id="ver">v71 <button onclick="forceUpdate()">Force update</button></div>
 <div class="sync off" id="sync"><span class="led"></span><span id="synctext">Local only</span></div>
 
 <div class="shab" id="shab"></div>
@@ -809,6 +857,10 @@ mouthy, not sleepy.</p>
 </section>
 
 <section class="tab" id="tab-papers">
+
+<h2>The Shabbat card</h2>
+<p class="small" id="pw-shab"></p>
+<button class="wide" onclick="printShabbat()">Print this week&rsquo;s card</button>
 
 <h2>Her health plan to one year</h2>
 <ul id="pw-plan"></ul>
@@ -994,13 +1046,343 @@ const VARIANTS = {"gym":{label:"Gym day",short:"Gym"},"home":{label:"Home mornin
 const DEFAULT_VARIANT = ["home","mon","gym","home","gym","home","shabbat"];   /* by weekday, Sunday first */
 const GYM_MINUTES = 75;
 const GYM_DEFAULT = {0:null, 1:null, 2:null, 3:null, 4:null, 5:null, 6:null};
-const YOMTOV = [
-  ["2026-09-11","2026-09-13","Rosh Hashanah"],
-  ["2026-09-20","2026-09-21","Yom Kippur"],
-  ["2026-09-25","2026-10-02","Sukkot"],
-  ["2026-10-02","2026-10-03","Shemini Atzeret"],
-  ["2026-10-03","2026-10-04","Simchat Torah"]
+/* Shabbat and yom tov, as [candle lighting, nightfall, name] in LOCAL wall clock
+   time with no timezone suffix, so they compare straight against the phone's own
+   clock. Consecutive holy days are already merged: Rosh Hashanah 5787 is one 49 hour
+   window from Friday evening to Sunday night, not two. Built by build_zmanim.py. */
+const SHABBAT = [
+  ["2026-01-02T16:21","2026-01-03T17:30","Shabbat"],
+  ["2026-01-09T16:28","2026-01-10T17:37","Shabbat"],
+  ["2026-01-16T16:35","2026-01-17T17:44","Shabbat"],
+  ["2026-01-23T16:43","2026-01-24T17:52","Shabbat"],
+  ["2026-01-30T16:52","2026-01-31T18:01","Shabbat"],
+  ["2026-02-06T17:00","2026-02-07T18:10","Shabbat"],
+  ["2026-02-13T17:09","2026-02-14T18:18","Shabbat"],
+  ["2026-02-20T17:17","2026-02-21T18:27","Shabbat"],
+  ["2026-02-27T17:26","2026-02-28T18:35","Shabbat"],
+  ["2026-03-06T17:33","2026-03-07T18:43","Shabbat"],
+  ["2026-03-13T18:41","2026-03-14T19:50","Shabbat"],
+  ["2026-03-20T18:48","2026-03-21T19:57","Shabbat"],
+  ["2026-03-27T18:56","2026-03-28T20:05","Shabbat"],
+  ["2026-04-01T19:01","2026-04-04T20:12","Pesach with Shabbat"],
+  ["2026-04-07T19:07","2026-04-09T20:17","Pesach"],
+  ["2026-04-10T19:10","2026-04-11T20:19","Shabbat"],
+  ["2026-04-17T19:17","2026-04-18T20:27","Shabbat"],
+  ["2026-04-24T19:25","2026-04-25T20:34","Shabbat"],
+  ["2026-05-01T19:32","2026-05-02T20:41","Shabbat"],
+  ["2026-05-08T19:39","2026-05-09T20:48","Shabbat"],
+  ["2026-05-15T19:47","2026-05-16T20:55","Shabbat"],
+  ["2026-05-21T19:52","2026-05-23T21:02","Shavuot"],
+  ["2026-05-29T19:59","2026-05-30T21:08","Shabbat"],
+  ["2026-06-05T20:04","2026-06-06T21:13","Shabbat"],
+  ["2026-06-12T20:08","2026-06-13T21:17","Shabbat"],
+  ["2026-06-19T20:11","2026-06-20T21:19","Shabbat"],
+  ["2026-06-26T20:12","2026-06-27T21:20","Shabbat"],
+  ["2026-07-03T20:11","2026-07-04T21:19","Shabbat"],
+  ["2026-07-10T20:09","2026-07-11T21:17","Shabbat"],
+  ["2026-07-17T20:06","2026-07-18T21:13","Shabbat"],
+  ["2026-07-24T20:00","2026-07-25T21:08","Shabbat"],
+  ["2026-07-31T19:54","2026-08-01T21:01","Shabbat"],
+  ["2026-08-07T19:46","2026-08-08T20:53","Shabbat"],
+  ["2026-08-14T19:37","2026-08-15T20:44","Shabbat"],
+  ["2026-08-21T19:27","2026-08-22T20:34","Shabbat"],
+  ["2026-08-28T19:17","2026-08-29T20:23","Shabbat"],
+  ["2026-09-04T19:06","2026-09-05T20:12","Shabbat"],
+  ["2026-09-11T18:54","2026-09-13T19:59","Rosh Hashanah"],
+  ["2026-09-18T18:42","2026-09-19T19:48","Shabbat"],
+  ["2026-09-20T18:39","2026-09-21T19:45","Yom Kippur"],
+  ["2026-09-25T18:30","2026-09-27T19:35","Sukkot"],
+  ["2026-10-02T18:18","2026-10-04T19:23","Shemini Atzeret and Simchat Torah"],
+  ["2026-10-09T18:07","2026-10-10T19:13","Shabbat"],
+  ["2026-10-16T17:56","2026-10-17T19:03","Shabbat"],
+  ["2026-10-23T17:46","2026-10-24T18:53","Shabbat"],
+  ["2026-10-30T17:37","2026-10-31T18:43","Shabbat"],
+  ["2026-11-06T16:28","2026-11-07T17:35","Shabbat"],
+  ["2026-11-13T16:22","2026-11-14T17:29","Shabbat"],
+  ["2026-11-20T16:16","2026-11-21T17:24","Shabbat"],
+  ["2026-11-27T16:12","2026-11-28T17:20","Shabbat"],
+  ["2026-12-04T16:10","2026-12-05T17:18","Shabbat"],
+  ["2026-12-11T16:10","2026-12-12T17:18","Shabbat"],
+  ["2026-12-18T16:12","2026-12-19T17:20","Shabbat"],
+  ["2026-12-25T16:15","2026-12-26T17:24","Shabbat"],
+  ["2027-01-01T16:20","2027-01-02T17:29","Shabbat"],
+  ["2027-01-08T16:26","2027-01-09T17:35","Shabbat"],
+  ["2027-01-15T16:34","2027-01-16T17:43","Shabbat"],
+  ["2027-01-22T16:42","2027-01-23T17:51","Shabbat"],
+  ["2027-01-29T16:50","2027-01-30T17:59","Shabbat"],
+  ["2027-02-05T16:59","2027-02-06T18:08","Shabbat"],
+  ["2027-02-12T17:08","2027-02-13T18:17","Shabbat"],
+  ["2027-02-19T17:16","2027-02-20T18:25","Shabbat"],
+  ["2027-02-26T17:24","2027-02-27T18:33","Shabbat"],
+  ["2027-03-05T17:32","2027-03-06T18:41","Shabbat"],
+  ["2027-03-12T17:40","2027-03-13T18:49","Shabbat"],
+  ["2027-03-19T18:47","2027-03-20T19:56","Shabbat"],
+  ["2027-03-26T18:54","2027-03-27T20:03","Shabbat"],
+  ["2027-04-02T19:02","2027-04-03T20:11","Shabbat"],
+  ["2027-04-09T19:09","2027-04-10T20:18","Shabbat"],
+  ["2027-04-16T19:16","2027-04-17T20:25","Shabbat"],
+  ["2027-04-21T19:21","2027-04-24T20:33","Pesach with Shabbat"],
+  ["2027-04-27T19:28","2027-04-29T20:38","Pesach"],
+  ["2027-04-30T19:31","2027-05-01T20:40","Shabbat"],
+  ["2027-05-07T19:38","2027-05-08T20:47","Shabbat"],
+  ["2027-05-14T19:45","2027-05-15T20:54","Shabbat"],
+  ["2027-05-21T19:52","2027-05-22T21:01","Shabbat"],
+  ["2027-05-28T19:58","2027-05-29T21:07","Shabbat"],
+  ["2027-06-04T20:03","2027-06-05T21:12","Shabbat"],
+  ["2027-06-10T20:07","2027-06-12T21:16","Shavuot"],
+  ["2027-06-18T20:10","2027-06-19T21:19","Shabbat"],
+  ["2027-06-25T20:12","2027-06-26T21:20","Shabbat"],
+  ["2027-07-02T20:12","2027-07-03T21:19","Shabbat"],
+  ["2027-07-09T20:10","2027-07-10T21:17","Shabbat"],
+  ["2027-07-16T20:06","2027-07-17T21:14","Shabbat"],
+  ["2027-07-23T20:01","2027-07-24T21:09","Shabbat"],
+  ["2027-07-30T19:55","2027-07-31T21:02","Shabbat"],
+  ["2027-08-06T19:48","2027-08-07T20:54","Shabbat"],
+  ["2027-08-13T19:39","2027-08-14T20:45","Shabbat"],
+  ["2027-08-20T19:29","2027-08-21T20:36","Shabbat"],
+  ["2027-08-27T19:19","2027-08-28T20:25","Shabbat"],
+  ["2027-09-03T19:08","2027-09-04T20:14","Shabbat"],
+  ["2027-09-10T18:56","2027-09-11T20:02","Shabbat"],
+  ["2027-09-17T18:44","2027-09-18T19:50","Shabbat"],
+  ["2027-09-24T18:32","2027-09-25T19:39","Shabbat"],
+  ["2027-10-01T18:20","2027-10-03T19:25","Rosh Hashanah"],
+  ["2027-10-08T18:09","2027-10-09T19:15","Shabbat"],
+  ["2027-10-10T18:06","2027-10-11T19:12","Yom Kippur"],
+  ["2027-10-15T17:58","2027-10-17T19:03","Sukkot"],
+  ["2027-10-22T17:48","2027-10-24T18:53","Shemini Atzeret and Simchat Torah"],
+  ["2027-10-29T17:38","2027-10-30T18:45","Shabbat"],
+  ["2027-11-05T17:30","2027-11-06T18:37","Shabbat"],
+  ["2027-11-12T16:23","2027-11-13T17:30","Shabbat"],
+  ["2027-11-19T16:17","2027-11-20T17:24","Shabbat"],
+  ["2027-11-26T16:13","2027-11-27T17:21","Shabbat"],
+  ["2027-12-03T16:11","2027-12-04T17:18","Shabbat"],
+  ["2027-12-10T16:10","2027-12-11T17:18","Shabbat"],
+  ["2027-12-17T16:11","2027-12-18T17:20","Shabbat"],
+  ["2027-12-24T16:14","2027-12-25T17:23","Shabbat"],
+  ["2027-12-31T16:19","2028-01-01T17:28","Shabbat"],
+  ["2028-01-07T16:25","2028-01-08T17:34","Shabbat"],
+  ["2028-01-14T16:32","2028-01-15T17:41","Shabbat"],
+  ["2028-01-21T16:40","2028-01-22T17:49","Shabbat"],
+  ["2028-01-28T16:49","2028-01-29T17:58","Shabbat"],
+  ["2028-02-04T16:57","2028-02-05T18:07","Shabbat"],
+  ["2028-02-11T17:06","2028-02-12T18:15","Shabbat"],
+  ["2028-02-18T17:14","2028-02-19T18:24","Shabbat"],
+  ["2028-02-25T17:23","2028-02-26T18:32","Shabbat"],
+  ["2028-03-03T17:31","2028-03-04T18:40","Shabbat"],
+  ["2028-03-10T17:38","2028-03-11T18:47","Shabbat"],
+  ["2028-03-17T18:46","2028-03-18T19:55","Shabbat"],
+  ["2028-03-24T18:53","2028-03-25T20:02","Shabbat"],
+  ["2028-03-31T19:00","2028-04-01T20:09","Shabbat"],
+  ["2028-04-07T19:08","2028-04-08T20:17","Shabbat"],
+  ["2028-04-10T19:11","2028-04-12T20:21","Pesach"],
+  ["2028-04-14T19:15","2028-04-15T20:24","Shabbat"],
+  ["2028-04-16T19:17","2028-04-18T20:27","Pesach"],
+  ["2028-04-21T19:22","2028-04-22T20:31","Shabbat"],
+  ["2028-04-28T19:30","2028-04-29T20:39","Shabbat"],
+  ["2028-05-05T19:37","2028-05-06T20:46","Shabbat"],
+  ["2028-05-12T19:44","2028-05-13T20:53","Shabbat"],
+  ["2028-05-19T19:51","2028-05-20T21:00","Shabbat"],
+  ["2028-05-26T19:57","2028-05-27T21:06","Shabbat"],
+  ["2028-05-30T20:00","2028-06-01T21:10","Shavuot"],
+  ["2028-06-02T20:02","2028-06-03T21:11","Shabbat"],
+  ["2028-06-09T20:07","2028-06-10T21:15","Shabbat"],
+  ["2028-06-16T20:10","2028-06-17T21:18","Shabbat"],
+  ["2028-06-23T20:12","2028-06-24T21:20","Shabbat"],
+  ["2028-06-30T20:12","2028-07-01T21:20","Shabbat"],
+  ["2028-07-07T20:10","2028-07-08T21:18","Shabbat"],
+  ["2028-07-14T20:07","2028-07-15T21:15","Shabbat"],
+  ["2028-07-21T20:02","2028-07-22T21:10","Shabbat"],
+  ["2028-07-28T19:56","2028-07-29T21:03","Shabbat"],
+  ["2028-08-04T19:49","2028-08-05T20:56","Shabbat"],
+  ["2028-08-11T19:40","2028-08-12T20:47","Shabbat"],
+  ["2028-08-18T19:31","2028-08-19T20:38","Shabbat"],
+  ["2028-08-25T19:21","2028-08-26T20:27","Shabbat"],
+  ["2028-09-01T19:10","2028-09-02T20:16","Shabbat"],
+  ["2028-09-08T18:58","2028-09-09T20:04","Shabbat"],
+  ["2028-09-15T18:46","2028-09-16T19:53","Shabbat"],
+  ["2028-09-20T18:38","2028-09-23T19:41","Rosh Hashanah with Shabbat"],
+  ["2028-09-29T18:23","2028-09-30T19:29","Yom Kippur"],
+  ["2028-10-04T18:14","2028-10-07T19:17","Sukkot with Shabbat"],
+  ["2028-10-11T18:03","2028-10-14T19:06","Shemini Atzeret and Simchat Torah with Shabbat"],
+  ["2028-10-20T17:49","2028-10-21T18:56","Shabbat"],
+  ["2028-10-27T17:40","2028-10-28T18:47","Shabbat"],
+  ["2028-11-03T17:31","2028-11-04T18:38","Shabbat"],
+  ["2028-11-10T16:24","2028-11-11T17:31","Shabbat"],
+  ["2028-11-17T16:18","2028-11-18T17:25","Shabbat"],
+  ["2028-11-24T16:14","2028-11-25T17:21","Shabbat"],
+  ["2028-12-01T16:11","2028-12-02T17:19","Shabbat"],
+  ["2028-12-08T16:10","2028-12-09T17:18","Shabbat"],
+  ["2028-12-15T16:11","2028-12-16T17:19","Shabbat"],
+  ["2028-12-22T16:14","2028-12-23T17:22","Shabbat"],
+  ["2028-12-29T16:18","2028-12-30T17:27","Shabbat"],
+  ["2029-01-05T16:24","2029-01-06T17:33","Shabbat"],
+  ["2029-01-12T16:31","2029-01-13T17:40","Shabbat"],
+  ["2029-01-19T16:39","2029-01-20T17:48","Shabbat"],
+  ["2029-01-26T16:47","2029-01-27T17:56","Shabbat"],
+  ["2029-02-02T16:56","2029-02-03T18:05","Shabbat"],
+  ["2029-02-09T17:04","2029-02-10T18:14","Shabbat"],
+  ["2029-02-16T17:13","2029-02-17T18:22","Shabbat"],
+  ["2029-02-23T17:21","2029-02-24T18:30","Shabbat"],
+  ["2029-03-02T17:29","2029-03-03T18:38","Shabbat"],
+  ["2029-03-09T17:37","2029-03-10T18:46","Shabbat"],
+  ["2029-03-16T18:44","2029-03-17T19:54","Shabbat"],
+  ["2029-03-23T18:52","2029-03-24T20:01","Shabbat"],
+  ["2029-03-30T18:59","2029-04-01T20:09","Pesach"],
+  ["2029-04-05T19:05","2029-04-07T20:15","Pesach"],
+  ["2029-04-13T19:14","2029-04-14T20:23","Shabbat"],
+  ["2029-04-20T19:21","2029-04-21T20:30","Shabbat"],
+  ["2029-04-27T19:28","2029-04-28T20:37","Shabbat"],
+  ["2029-05-04T19:36","2029-05-05T20:45","Shabbat"],
+  ["2029-05-11T19:43","2029-05-12T20:52","Shabbat"],
+  ["2029-05-18T19:50","2029-05-21T21:00","Shavuot with Shabbat"],
+  ["2029-05-25T19:56","2029-05-26T21:05","Shabbat"],
+  ["2029-06-01T20:02","2029-06-02T21:10","Shabbat"],
+  ["2029-06-08T20:06","2029-06-09T21:15","Shabbat"],
+  ["2029-06-15T20:09","2029-06-16T21:18","Shabbat"],
+  ["2029-06-22T20:11","2029-06-23T21:20","Shabbat"],
+  ["2029-06-29T20:12","2029-06-30T21:20","Shabbat"],
+  ["2029-07-06T20:11","2029-07-07T21:18","Shabbat"],
+  ["2029-07-13T20:08","2029-07-14T21:15","Shabbat"],
+  ["2029-07-20T20:03","2029-07-21T21:11","Shabbat"],
+  ["2029-07-27T19:58","2029-07-28T21:05","Shabbat"],
+  ["2029-08-03T19:50","2029-08-04T20:57","Shabbat"],
+  ["2029-08-10T19:42","2029-08-11T20:49","Shabbat"],
+  ["2029-08-17T19:33","2029-08-18T20:39","Shabbat"],
+  ["2029-08-24T19:23","2029-08-25T20:29","Shabbat"],
+  ["2029-08-31T19:12","2029-09-01T20:18","Shabbat"],
+  ["2029-09-07T19:00","2029-09-08T20:07","Shabbat"],
+  ["2029-09-09T18:57","2029-09-11T20:02","Rosh Hashanah"],
+  ["2029-09-14T18:48","2029-09-15T19:55","Shabbat"],
+  ["2029-09-18T18:42","2029-09-19T19:48","Yom Kippur"],
+  ["2029-09-21T18:37","2029-09-22T19:43","Shabbat"],
+  ["2029-09-23T18:33","2029-09-25T19:38","Sukkot"],
+  ["2029-09-28T18:25","2029-09-29T19:31","Shabbat"],
+  ["2029-09-30T18:21","2029-10-02T19:26","Shemini Atzeret and Simchat Torah"],
+  ["2029-10-05T18:13","2029-10-06T19:19","Shabbat"],
+  ["2029-10-12T18:02","2029-10-13T19:08","Shabbat"],
+  ["2029-10-19T17:51","2029-10-20T18:58","Shabbat"],
+  ["2029-10-26T17:42","2029-10-27T18:48","Shabbat"],
+  ["2029-11-02T17:33","2029-11-03T18:40","Shabbat"],
+  ["2029-11-09T16:25","2029-11-10T17:32","Shabbat"],
+  ["2029-11-16T16:19","2029-11-17T17:26","Shabbat"],
+  ["2029-11-23T16:14","2029-11-24T17:22","Shabbat"],
+  ["2029-11-30T16:11","2029-12-01T17:19","Shabbat"],
+  ["2029-12-07T16:10","2029-12-08T17:18","Shabbat"],
+  ["2029-12-14T16:11","2029-12-15T17:19","Shabbat"],
+  ["2029-12-21T16:13","2029-12-22T17:22","Shabbat"],
+  ["2029-12-28T16:17","2029-12-29T17:26","Shabbat"],
+  ["2030-01-04T16:23","2030-01-05T17:32","Shabbat"],
+  ["2030-01-11T16:30","2030-01-12T17:39","Shabbat"],
+  ["2030-01-18T16:37","2030-01-19T17:46","Shabbat"],
+  ["2030-01-25T16:46","2030-01-26T17:55","Shabbat"],
+  ["2030-02-01T16:54","2030-02-02T18:03","Shabbat"],
+  ["2030-02-08T17:03","2030-02-09T18:12","Shabbat"],
+  ["2030-02-15T17:11","2030-02-16T18:21","Shabbat"],
+  ["2030-02-22T17:20","2030-02-23T18:29","Shabbat"],
+  ["2030-03-01T17:28","2030-03-02T18:37","Shabbat"],
+  ["2030-03-08T17:36","2030-03-09T18:45","Shabbat"],
+  ["2030-03-15T18:43","2030-03-16T19:52","Shabbat"],
+  ["2030-03-22T18:50","2030-03-23T20:00","Shabbat"],
+  ["2030-03-29T18:58","2030-03-30T20:07","Shabbat"],
+  ["2030-04-05T19:05","2030-04-06T20:14","Shabbat"],
+  ["2030-04-12T19:12","2030-04-13T20:21","Shabbat"],
+  ["2030-04-17T19:17","2030-04-20T20:29","Pesach with Shabbat"],
+  ["2030-04-23T19:24","2030-04-25T20:34","Pesach"],
+  ["2030-04-26T19:27","2030-04-27T20:36","Shabbat"],
+  ["2030-05-03T19:34","2030-05-04T20:43","Shabbat"],
+  ["2030-05-10T19:41","2030-05-11T20:50","Shabbat"],
+  ["2030-05-17T19:48","2030-05-18T20:57","Shabbat"],
+  ["2030-05-24T19:55","2030-05-25T21:04","Shabbat"],
+  ["2030-05-31T20:01","2030-06-01T21:09","Shabbat"],
+  ["2030-06-06T20:05","2030-06-08T21:14","Shavuot"],
+  ["2030-06-14T20:09","2030-06-15T21:17","Shabbat"],
+  ["2030-06-21T20:11","2030-06-22T21:19","Shabbat"],
+  ["2030-06-28T20:12","2030-06-29T21:20","Shabbat"],
+  ["2030-07-05T20:11","2030-07-06T21:19","Shabbat"],
+  ["2030-07-12T20:08","2030-07-13T21:16","Shabbat"],
+  ["2030-07-19T20:04","2030-07-20T21:12","Shabbat"],
+  ["2030-07-26T19:59","2030-07-27T21:06","Shabbat"],
+  ["2030-08-02T19:52","2030-08-03T20:59","Shabbat"],
+  ["2030-08-09T19:44","2030-08-10T20:50","Shabbat"],
+  ["2030-08-16T19:34","2030-08-17T20:41","Shabbat"],
+  ["2030-08-23T19:24","2030-08-24T20:31","Shabbat"],
+  ["2030-08-30T19:14","2030-08-31T20:20","Shabbat"],
+  ["2030-09-06T19:02","2030-09-07T20:09","Shabbat"],
+  ["2030-09-13T18:51","2030-09-14T19:57","Shabbat"],
+  ["2030-09-20T18:39","2030-09-21T19:45","Shabbat"],
+  ["2030-09-27T18:27","2030-09-29T19:31","Rosh Hashanah"],
+  ["2030-10-04T18:15","2030-10-05T19:21","Shabbat"],
+  ["2030-10-06T18:12","2030-10-07T19:18","Yom Kippur"],
+  ["2030-10-11T18:04","2030-10-13T19:09","Sukkot"],
+  ["2030-10-18T17:53","2030-10-20T18:58","Shemini Atzeret and Simchat Torah"],
+  ["2030-10-25T17:43","2030-10-26T18:50","Shabbat"],
+  ["2030-11-01T17:34","2030-11-02T18:41","Shabbat"],
+  ["2030-11-08T16:26","2030-11-09T17:33","Shabbat"],
+  ["2030-11-15T16:20","2030-11-16T17:27","Shabbat"],
+  ["2030-11-22T16:15","2030-11-23T17:22","Shabbat"],
+  ["2030-11-29T16:12","2030-11-30T17:19","Shabbat"],
+  ["2030-12-06T16:10","2030-12-07T17:18","Shabbat"],
+  ["2030-12-13T16:10","2030-12-14T17:19","Shabbat"],
+  ["2030-12-20T16:12","2030-12-21T17:21","Shabbat"],
+  ["2030-12-27T16:16","2030-12-28T17:25","Shabbat"],
+  ["2031-01-03T16:22","2031-01-04T17:30","Shabbat"],
+  ["2031-01-10T16:28","2031-01-11T17:37","Shabbat"],
+  ["2031-01-17T16:36","2031-01-18T17:45","Shabbat"],
+  ["2031-01-24T16:44","2031-01-25T17:53","Shabbat"],
+  ["2031-01-31T16:53","2031-02-01T18:02","Shabbat"],
+  ["2031-02-07T17:01","2031-02-08T18:11","Shabbat"],
+  ["2031-02-14T17:10","2031-02-15T18:19","Shabbat"],
+  ["2031-02-21T17:18","2031-02-22T18:27","Shabbat"],
+  ["2031-02-28T17:26","2031-03-01T18:36","Shabbat"],
+  ["2031-03-07T17:34","2031-03-08T18:43","Shabbat"],
+  ["2031-03-14T18:42","2031-03-15T19:51","Shabbat"],
+  ["2031-03-21T18:49","2031-03-22T19:58","Shabbat"],
+  ["2031-03-28T18:56","2031-03-29T20:05","Shabbat"],
+  ["2031-04-04T19:04","2031-04-05T20:13","Shabbat"],
+  ["2031-04-07T19:07","2031-04-09T20:17","Pesach"],
+  ["2031-04-11T19:11","2031-04-12T20:20","Shabbat"],
+  ["2031-04-13T19:13","2031-04-15T20:23","Pesach"],
+  ["2031-04-18T19:18","2031-04-19T20:27","Shabbat"],
+  ["2031-04-25T19:26","2031-04-26T20:35","Shabbat"],
+  ["2031-05-02T19:33","2031-05-03T20:42","Shabbat"],
+  ["2031-05-09T19:40","2031-05-10T20:49","Shabbat"],
+  ["2031-05-16T19:47","2031-05-17T20:56","Shabbat"],
+  ["2031-05-23T19:54","2031-05-24T21:03","Shabbat"],
+  ["2031-05-27T19:57","2031-05-29T21:07","Shavuot"],
+  ["2031-05-30T20:00","2031-05-31T21:08","Shabbat"],
+  ["2031-06-06T20:05","2031-06-07T21:13","Shabbat"],
+  ["2031-06-13T20:08","2031-06-14T21:17","Shabbat"],
+  ["2031-06-20T20:11","2031-06-21T21:19","Shabbat"],
+  ["2031-06-27T20:12","2031-06-28T21:20","Shabbat"],
+  ["2031-07-04T20:11","2031-07-05T21:19","Shabbat"],
+  ["2031-07-11T20:09","2031-07-12T21:17","Shabbat"],
+  ["2031-07-18T20:05","2031-07-19T21:12","Shabbat"],
+  ["2031-07-25T20:00","2031-07-26T21:07","Shabbat"],
+  ["2031-08-01T19:53","2031-08-02T21:00","Shabbat"],
+  ["2031-08-08T19:45","2031-08-09T20:52","Shabbat"],
+  ["2031-08-15T19:36","2031-08-16T20:43","Shabbat"],
+  ["2031-08-22T19:26","2031-08-23T20:33","Shabbat"],
+  ["2031-08-29T19:16","2031-08-30T20:22","Shabbat"],
+  ["2031-09-05T19:04","2031-09-06T20:11","Shabbat"],
+  ["2031-09-12T18:53","2031-09-13T19:59","Shabbat"],
+  ["2031-09-17T18:44","2031-09-20T19:47","Rosh Hashanah with Shabbat"],
+  ["2031-09-26T18:29","2031-09-27T19:35","Yom Kippur"],
+  ["2031-10-01T18:21","2031-10-04T19:24","Sukkot with Shabbat"],
+  ["2031-10-08T18:09","2031-10-11T19:12","Shemini Atzeret and Simchat Torah with Shabbat"],
+  ["2031-10-17T17:55","2031-10-18T19:02","Shabbat"],
+  ["2031-10-24T17:45","2031-10-25T18:52","Shabbat"],
+  ["2031-10-31T17:36","2031-11-01T18:43","Shabbat"],
+  ["2031-11-07T16:28","2031-11-08T17:35","Shabbat"],
+  ["2031-11-14T16:21","2031-11-15T17:28","Shabbat"],
+  ["2031-11-21T16:16","2031-11-22T17:23","Shabbat"],
+  ["2031-11-28T16:12","2031-11-29T17:20","Shabbat"],
+  ["2031-12-05T16:10","2031-12-06T17:18","Shabbat"],
+  ["2031-12-12T16:10","2031-12-13T17:18","Shabbat"],
+  ["2031-12-19T16:12","2031-12-20T17:20","Shabbat"],
+  ["2031-12-26T16:15","2031-12-27T17:24","Shabbat"]
 ];
+const SHABBAT_THROUGH = 2031;
+const PREP_LEAD_H = 5;
 const PAPERS = {"acquired": "2026-08-23", "ids": [["Microchip", "901011000071695"], ["AKC number", "SS57826901"], ["AKC PIN", "87063"], ["AKC type", "limited"], ["Store ID", "4130"], ["Sire", "Vikings King, AKC SS26012808"], ["Dam", "Vikings Cream Lovina, AKC SS21167809"]], "contacts": [{"who": "Sayrebrook Veterinary Hospital", "role": "Vet", "phone": "732-727-1303", "note": "Dr. Chiosi, 1400 Main St, Sayreville NJ 08872"}, {"who": "Household Pet Protection, Inc.", "role": "Warranty claims", "phone": "303-923-3872", "note": "Within 30 days, with full records. submitdocs@selectapuppy.com"}, {"who": "Select A Puppy", "role": "Seller", "phone": "732-706-7600", "note": "Ask what LMP Better Enrollment is, and whether it rebills."}, {"who": "American Kennel Club", "role": "Registration", "phone": "919-233-9767", "note": "akc.org/dogreg"}, {"who": "NJ Consumer Affairs", "role": "If the store will not honour a claim", "phone": "973-504-6200", "note": "The store is under Middletown Twp."}], "deadlines": [["2026-09-06", "NJ refund window closes", "Strongest cover you have. A vet certification inside it is worth a refund plus vet fees to twice the purchase price."], ["2026-09-11", "Rabies can be given", "Get the certificate with the tag number: the licence needs it."], ["2026-09-22", "Free exam offer ends", "Call ahead and bring the vaccination record."], ["2026-10-09", "Socialisation window closes", "Does not reopen."], ["2026-10-19", "NYC licence fee rises", "$8.50 before, $34.00 after until she is spayed. Required from this date either way."], ["2027-02-19", "NJ congenital window closes, warranty starts", "Statutory cover ends, the extended warranty picks up. No gap."], ["2027-02-23", "Hip, elbow and heart guarantees active", "Needs x-rays or an echo and a written diagnosis. Replacement only, vet bills stay yours."], ["2027-06-29", "AKC late fee starts", "$36, then $66 a year later."], ["2029-02-19", "Extended warranty ends", "24 months of hereditary and congenital cover, up to the purchase price."], ["2030-08-23", "Last store guarantee expires", "The congenital and genetic defect clause."]], "money": [], "todo": ["Register the microchip to you. Nothing in the packet does it.", "File the AKC application. New Owner section is blank.", "Decide on insurance while her record is still clean.", "NYC licence, after rabies and before her 4 month birthday.", "Get an emergency hospital near Far Rockaway from the vet.", "Set up direct billing. It needs prior authorisation.", "Find and read the United CFS financing agreement.", "Food brand, once the vet weighs in on large-breed puppy formula."], "insurance": {"decided": false, "provider": null, "phone": null, "claims_phone": null, "policy_number": null, "portal": null, "underwriter": null, "monthly_premium": null, "deductible": null, "reimbursement_pct": null, "annual_limit": null, "started": null, "accident_waiting_days": null, "illness_waiting_days": null, "orthopedic_waiting_days": null, "orthopedic_waiver_done": false, "renewal_month": null, "akc_free_30_day_included": true, "akc_underwriter": "PetPartners, Inc., 1-866-725-2747, akcpetinsurance.com/certificate", "note": "Researched Aug 2026 from actual New York policy forms. In NY, ASPCA, Spot and Pumpkin are literally the same contract (US Fire form PET-P-20000-NY-0920), so this is a price and service decision, not a coverage one.\nFill provider, phone and policy_number the day a policy is bought, set decided true, then run scripts/sync_app_config.py and re-upload app/index.html. The Papers tab swaps the shortlist for your actual policy and the numbers stay tap-to-dial.\northopedic_waiting_days matters more than the premium for this breed. If the policy offers a waiver, do it at the vet visit and set orthopedic_waiver_done true.\nPre-existing conditions are excluded for life, so the widest cover she will ever qualify for is the cover bought while her record is still clean.", "target_plan": {"deductible": 500, "reimbursement_pct": 80, "annual_limit": 10000, "wellness_rider": false, "note": "What to ask for on the phone. Skip the wellness rider: you must use about 73% of the ceiling to break even, on care you would buy anyway. Also ask the $1,000 deductible price, since a higher deductible blunts the annual escalation by compounding on a smaller base. Confirm exam fees included, no per-incident or lifetime caps, and hereditary and congenital covered in the base plan."}, "ask_before_binding": ["What happens at year three? The NY form auto-reissues for 3 years and a new enrollment restarts waiting periods. Get written confirmation it does not reset pre-existing status.", "Name the policy form number. Pumpkin's published NY PDF says United States Fire, their live system says Independence American under an unpublished form.", "Are exam fees included, or an add-on?", "What is the bilateral clause? If one knee goes, what happens to the other?"], "shortlist": [{"rank": 1, "provider": "Pumpkin", "phone": "1-866-273-6369", "hours": "Mon-Fri 8am-8pm, Sat 9am-5pm ET", "projected": "$65-90/mo", "why": "Best claims record of the three by a wide margin: the only brand where BBB and Trustpilot agree. Same NY policy as ASPCA and Spot.", "against": "14-day accident wait with no waiver in NY. No money-back guarantee here."}, {"rank": 2, "provider": "ASPCA Pet Health Insurance", "phone": "888-716-1203", "hours": "new policies; existing policies 1-866-204-6764", "projected": "$60-85/mo", "why": "The most thoroughly documented NY form. Identical coverage to Pumpkin.", "against": "Mediocre claims service record."}, {"rank": 3, "provider": "Spot", "phone": "1-800-905-1595", "hours": "Mon-Fri 8am-8pm ET", "projected": "$60-85/mo", "why": "Same policy again, but offers an unlimited annual limit with no per-incident or lifetime caps.", "against": "Identical price and paper to ASPCA, so quoting both is not shopping."}, {"rank": 4, "provider": "MetLife (backup)", "phone": "855-545-4858", "hours": "", "projected": "$75-100/mo", "why": "No orthopedic wait at all, richest base bundle. Better if your employer offers it.", "against": "Worst complaint record in the group: 1.06 of 5 across 391 BBB reviews."}, {"rank": 5, "provider": "Trupanion (backup)", "phone": "888-733-2685", "hours": "24/7, 365 days", "projected": "$120-180/mo", "why": "No payout limits ever, per-condition lifetime deductible, pays the vet directly.", "against": "Expensive. Reported denial calling a cruciate tear a disease, not an injury."}], "avoid": ["AKC / PetPartners: hip, elbow and OCD excluded entirely without a paid rider. The free 30-day certificate in the registration paperwork is not sold in New York.", "Nationwide: 12-month cruciate wait in every plan, and it is cutting NY policyholders now.", "Embrace in NY: excludes cruciate, hip, IVDD and patella 180 days, then pre-existing for life.", "Healthy Paws: 12-month hip dysplasia wait, unwaivable in NY.", "Figo: folds osteosarcoma into its 6-month orthopedic window.", "Fetch: orthopedic waiver covers knees only, the 180-day hip exclusion cannot be waived.", "Pets Best: no curable-restoration provision in the NY form; cruciate never counts as accident.", "ManyPets: exited the US in Nov 2024, not purchasable."]}, "vet": {"practice": "Sayrebrook Veterinary Hospital", "doctor": "Dr. Chiosi", "phone": "732-727-1303", "address": "1400 Main St, Sayreville NJ 08872", "license": "29V100201400", "offer": "Free exam and fecal within 30 days, free distemper and parvo boosters to completion, 50% off the 2nd and 3rd exams, direct billing with prior authorization, emergency visits", "emergency_hospital": null, "direct_billing_arranged": false, "note": "She performed the pre-sale exam on 2026-08-18, so there is already a baseline in her file. The 20% off spay and neuter belongs to Central Jersey Animal Hospital in Freehold, not to Sayrebrook. emergency_hospital is open: ask for one near Far Rockaway, because Sayreville is an hour away.", "covered": [{"what": "The exam itself", "free": true, "until_days_from_acquired": 30, "note": "Free within 30 days of collection. Say the puppy came from Select A Puppy."}, {"what": "The fecal test", "free": true, "until_days_from_acquired": 30, "note": "Free within the same 30 days. This is the one you are bringing the sample for."}, {"what": "Distemper and parvo boosters", "free": true, "until_days_from_acquired": null, "note": "Free to completion of the series, with no deadline. That is every DAPP dose until 16 weeks or later."}, {"what": "The 2nd and 3rd exams", "free": false, "until_days_from_acquired": null, "note": "Half price, not free. Applies to the next two visits after this one."}, {"what": "The lepto portion of the next shot", "free": false, "until_days_from_acquired": null, "note": "About $5.20 a dose, two doses. The distemper part of the same combination IS covered."}, {"what": "Rabies", "free": false, "until_days_from_acquired": null, "note": "Not covered. One year shot first, then every three years. Earliest at 12 weeks, 11 September."}, {"what": "Lyme", "free": false, "until_days_from_acquired": null, "note": "Not covered. Two doses at about $60 each. He rates it important in HIS area and said he does not know about Queens. Worth asking a local vet first."}, {"what": "Flu", "free": false, "until_days_from_acquired": null, "note": "Not covered. His own rule: valuable for social dogs at daycare or boarding, not valuable otherwise. She does neither."}], "ask_about": ["An emergency hospital near Far Rockaway. Sayreville is an hour away and no use at 2am.", "Direct billing, which needs prior authorisation and is not set up yet."]}};
 const VISIT = {date:"2026-09-05",time:"",what:"Second puppy shot, and lepto starts",ask:["The fecal result from 28 August. Was she positive for Giardia or coccidia? If so I need the unfit for purchase form, because Select A Puppy pays for the medication.", "She is on Purina Pro Plan now, changed on your recommendation. Is Large Breed Puppy the right one for a golden?", "Her stools. Before the switch, five in a row were either hard pellets or a log that broke apart, and she was only passing one or two a day. Has that changed on the new food?", "She was peeing very often and in small amounts, twice inside nine minutes on one afternoon, and going again within the hour of being emptied outside. Is that still worth looking at?", "Neutering timing for a golden retriever, given the joint disorder data. I asked last time and we did not get to it.", "Can you weigh her and show me how to body condition score her?", "Lyme. You said it matters in your area but you did not know about Queens. Should I be doing it in Far Rockaway, or ask someone local?", "An emergency hospital near Far Rockaway. Sayreville is two hours away."],bring:["A fresh stool sample if her stools are still not normal, refrigerated not frozen", "The Purina bag, so the exact formula is on the record", "This app, on the Day tab"],dob:"2026-06-19",breed:"Golden Retriever",sex:"female",source:"Select A Puppy, Middletown NJ",practice:"Sayrebrook Veterinary Hospital",phone:"732-727-1303",addr:"1400 Main St, Sayreville NJ 08872",covered:[{"what": "The exam itself", "free": true, "until": "2026-09-22", "free_now": true, "note": "Free within 30 days of collection. Say the puppy came from Select A Puppy."}, {"what": "The fecal test", "free": true, "until": "2026-09-22", "free_now": true, "note": "Free within the same 30 days. This is the one you are bringing the sample for."}, {"what": "Distemper and parvo boosters", "free": true, "until": null, "free_now": true, "note": "Free to completion of the series, with no deadline. That is every DAPP dose until 16 weeks or later."}, {"what": "The 2nd and 3rd exams", "free": false, "until": null, "free_now": false, "note": "Half price, not free. Applies to the next two visits after this one."}, {"what": "The lepto portion of the next shot", "free": false, "until": null, "free_now": false, "note": "About $5.20 a dose, two doses. The distemper part of the same combination IS covered."}, {"what": "Rabies", "free": false, "until": null, "free_now": false, "note": "Not covered. One year shot first, then every three years. Earliest at 12 weeks, 11 September."}, {"what": "Lyme", "free": false, "until": null, "free_now": false, "note": "Not covered. Two doses at about $60 each. He rates it important in HIS area and said he does not know about Queens. Worth asking a local vet first."}, {"what": "Flu", "free": false, "until": null, "free_now": false, "note": "Not covered. His own rule: valuable for social dogs at daycare or boarding, not valuable otherwise. She does neither."}],askAbout:["An emergency hospital near Far Rockaway. Sayreville is an hour away and no use at 2am.", "Direct billing, which needs prior authorisation and is not set up yet."]};
 const VISIT_HISTORY = [{"date": "2026-08-28", "what": "First vet visit", "outcome": "Exam clear. Fecal sent to the lab. Food changed to Purina Pro Plan.", "vet": "Dr Chiosi, Sayrebrook Veterinary Hospital", "exam": "Clear. His words: she looks fine to me, I do not see any problems at all with her.", "notes": ["Comprehensive fecal sent to the lab, no charge. If it comes back positive for Giardia or coccidia that is grounds for unfit for purchase under the sales contract: he writes a form and Select A Puppy pays for the medication, and the practice often bills the store directly. Positive without diarrhoea is not clinical. CHASE THIS RESULT.", "He recommends exactly three and rates Purina Pro Plan the best value. On her current food: \"I do not even know who makes Health Extension. How can I recommend something where I do not know from a scientific basis it is proven.\" He also said some puppies do not like it, which matches her not finishing meals. Royal Canin also acceptable, Blue Buffalo he is lukewarm on. Pro Plan Large Breed Puppy carries the AAFCO statement for large size growth, which also settles the calcium question.", "Be patient, it does not happen overnight. On the crate: it is like potty training kids, it is not 100 percent, it is a work in progress, and as long as the overall progression is toward improvement, go with it. His trick for her surface problem: take a wee wee pad OUTSIDE and put it on the ground, so she has a surface she recognises out there, then shrink and fade it. He does not like pads indoors.", "The peeing frequency including twice inside nine minutes, the five consecutive abnormal stools, neutering timing, and body condition scoring. He said explicitly to phone if there are concerns, even from Queens."]}];
@@ -1790,20 +2172,73 @@ function planDoneIds(k){
 function toMins(s){ const [h,m]=s.split(':').map(Number); return h*60+m; }
 
 /* ---- Shabbat and yom tov ---- */
-function noLogDay(dt){
-  dt = dt || new Date();
-  if(dt.getDay()===6) return 'Shabbat';
-  const k=dayKey(dt);
-  const hit=YOMTOV.find(([a,b])=> k>=a && k<=b);
-  return hit ? hit[2] : null;
+/* ---- Shabbat and yom tov -------------------------------------------------------
+   SHABBAT holds [candle lighting, nightfall, name] as local wall clock strings, with
+   consecutive holy days already merged into one window. Two different questions get
+   asked of it, and conflating them was the bug:
+
+   noLogDay(date) is about a CALENDAR DAY, and it is what the stats use. A date counts
+   when a window covers its midday. That is the rule that gets Friday right: Friday is
+   inside the window from candle lighting onward, but he logs all Friday morning and
+   afternoon, so scoring the whole day as blank would throw real data away.
+
+   shabbatNow() is about an INSTANT, and it is what the banner and the overdue alarm
+   use. The old code used the calendar day for both, so at 11:52pm on a Saturday the
+   app still said "the app is quiet, use the printed card" three and a half hours after
+   havdalah, and it would happily have buzzed him at 9pm on a Friday, which is the same
+   mistake pointing the other way. */
+function zdt(str){
+  const m = String(str).match(/^(\d{4})-(\d\d)-(\d\d)T(\d\d):(\d\d)$/);
+  return m ? new Date(+m[1], +m[2]-1, +m[3], +m[4], +m[5], 0, 0) : null;
 }
-function preWindow(){
-  const d=new Date();
-  if(d.getDay()===5 && d.getHours()>=12) return 'Shabbat';
-  const t=new Date(Date.now()+86400000);
-  const nx=noLogDay(t);
-  if(nx && d.getHours()>=12 && !noLogDay(d)) return nx;
+function shabWin(w){ return {start:zdt(w[0]), end:zdt(w[1]), name:w[2]}; }
+
+function shabbatNow(at){
+  const t = (at || new Date()).getTime();
+  for(let i = 0; i < SHABBAT.length; i++){
+    const a = zdt(SHABBAT[i][0]);
+    if(!a) continue;
+    if(a.getTime() > t) break;                 /* the table is in date order */
+    if(t <= zdt(SHABBAT[i][1]).getTime()) return shabWin(SHABBAT[i]);
+  }
   return null;
+}
+function shabbatNext(at){
+  const t = (at || new Date()).getTime();
+  for(let i = 0; i < SHABBAT.length; i++){
+    const a = zdt(SHABBAT[i][0]);
+    if(a && a.getTime() > t) return shabWin(SHABBAT[i]);
+  }
+  return null;
+}
+function noLogDay(dt){
+  const d = dt || new Date();
+  const noon = new Date(d.getFullYear(), d.getMonth(), d.getDate(), 12, 0).getTime();
+  for(let i = 0; i < SHABBAT.length; i++){
+    const a = zdt(SHABBAT[i][0]);
+    if(!a) continue;
+    if(a.getTime() > noon) break;
+    if(noon <= zdt(SHABBAT[i][1]).getTime()) return SHABBAT[i][2];
+  }
+  return null;
+}
+
+/* "4 hours 20 minutes", "35 minutes", "2 days 3 hours". Spelled out rather than 4:20,
+   because next to a clock that already shows h:mm for how long she has been holding,
+   a second h:mm reads as the same kind of number and it is not. */
+function longGap(ms){
+  const mins = Math.max(0, Math.round(ms/60000));
+  const d = Math.floor(mins/1440), h = Math.floor((mins%1440)/60), m = mins%60;
+  const bit = (n, w) => n + ' ' + w + (n === 1 ? '' : 's');
+  if(d) return bit(d,'day') + (h ? ' ' + bit(h,'hour') : '');
+  if(h) return bit(h,'hour') + (m ? ' ' + bit(m,'minute') : '');
+  return bit(m,'minute');
+}
+/* "Saturday 8:23 PM", or just the time when it is today. */
+function dayTime(d){
+  const now = new Date(), same = d.toDateString() === now.toDateString();
+  const nm = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'][d.getDay()];
+  return (same ? '' : nm + ' ') + hhmm(d);
 }
 
 function catchUp(){
@@ -1836,18 +2271,39 @@ function fillGap(outs, accs){
 
 function shabbatBanner(){
   const el=document.getElementById('shab');
-  const now=noLogDay(), pre=preWindow();
+  const now=shabbatNow(), nx=shabbatNext();
   if(now){
     el.className='shab on';
-    el.innerHTML='<b>'+now+'</b><br>The app is quiet. Use the printed card. '+
-      'Out before you go anywhere, out the moment you are back. Tap Catch up afterwards.';
-  } else if(pre){
-    el.className='shab on pre';
-    el.innerHTML='<b>'+pre+' is coming in</b><br>Log anything outstanding now. '+
-      'Card on the fridge. Her pegs: before candles, home from shul, after the meal, before bed.';
-  } else {
-    el.className='shab';
+    el.innerHTML='<b>'+now.name+'</b>'+
+      '<br>Out at <strong>'+dayTime(now.end)+'</strong>, in '+longGap(now.end-Date.now())+'.'+
+      '<br>The app is quiet. Use the printed card. Out before you go anywhere, out the '+
+      'moment you are back. Tap Catch up afterwards.';
+    return;
   }
+  if(nx && nx.start-Date.now() <= PREP_LEAD_H*3600000){
+    /* Hours she is not loggable for, which on a three day yom tov is the number that
+       actually changes what he has to arrange. A crate cannot be the answer to 49. */
+    const hrs = Math.round((nx.end-nx.start)/3600000);
+    el.className='shab on pre';
+    el.innerHTML='<b>'+nx.name+' in '+longGap(nx.start-Date.now())+'</b>'+
+      '<br>Candles <strong>'+dayTime(nx.start)+'</strong>, out again <strong>'+dayTime(nx.end)+'</strong>'+
+      (hrs>26 ? ' &mdash; <strong>'+hrs+' hours</strong>, so she cannot be crated through it. '+
+                'Pen and pad, and set it up before candles.' : '.')+
+      '<br>Log anything outstanding now, and print this week\u2019s card.'+
+      '<br><button onclick="printShabbat()">Print the card</button>';
+    return;
+  }
+  /* The table has an end date. Say so a year out, while there is time to do something,
+     rather than silently treating Pesach as an ordinary Tuesday the way the old
+     hardcoded list was going to in October 2026. */
+  if(new Date().getFullYear() >= SHABBAT_THROUGH){
+    el.className='shab on pre';
+    el.innerHTML='<b>The Shabbat times run out this year</b>'+
+      '<br>They are computed up to the end of '+SHABBAT_THROUGH+'. Ask Claude to rerun '+
+      'build_zmanim.py so the app keeps knowing when Shabbat and yom tov are.';
+    return;
+  }
+  el.className='shab';
 }
 
 /* ---- sound and buzz, for when the phone is in your pocket ---- */
@@ -2470,6 +2926,7 @@ function render(){
   drawTimer();
   applyRole();
   shabbatBanner();
+  renderShabCard();
   if(isOwner()) renderWeek();
   document.getElementById('age').textContent = ageWeeks().toFixed(1)+' weeks old';
 
@@ -2737,7 +3194,7 @@ setInterval(()=>{
   render();
   const last=lastOutside(); if(last===null) return;
   const el=(Date.now()-last)/3600000, hold=holdHours();
-  if(el>hold && !warned && !noLogDay()){
+  if(el>hold && !warned && !shabbatNow()){
     alarm('Mercy is past her ceiling', 'She has not been out in '+el.toFixed(1)+' hours.');
     warned=true;
   }
@@ -3705,6 +4162,95 @@ async function forceUpdate(){
   location.replace(location.pathname + '?u=' + Date.now());
 }
 
+
+/* ---- the printed card ----------------------------------------------------------
+   He does not use the phone on Shabbat, so the card is the whole interface for about
+   a quarter of her week. It is GENERATED, from PLANS.shabbat and the computed candle
+   and nightfall times, rather than written out once: a hand-written card is accurate
+   the day it is printed and quietly wrong every week after, and the weeks it would be
+   wrong are exactly the weeks nobody can check it against the app.
+
+   Printing is done by a print stylesheet rather than a popup window, because a popup
+   is blocked on iOS often enough to be useless and this has to work from his phone. */
+function shabPlanRows(){
+  const rows = (PLANS && PLANS.shabbat) || [];
+  return rows.slice().sort((a,b) => a[1] < b[1] ? -1 : 1);
+}
+function printShabbat(){
+  const w = shabbatNow() || shabbatNext();
+  const el = document.getElementById('printsheet');
+  if(!w || !el) return;
+  const hrs = Math.round((w.end - w.start)/3600000);
+  const wk = Math.floor(ageWeeks());
+  const hold = holdHours();
+  const holdTxt = Math.floor(hold) + 'h ' + Math.round((hold%1)*60) + 'm';
+  const dstr = d => d.toLocaleDateString(undefined,
+    {weekday:'long', day:'numeric', month:'long'});
+
+  let body = '';
+  shabPlanRows().forEach(r => {
+    const meal = r[3] === 'Meal';
+    body += '<tr' + (meal ? ' class="key"' : '') + '><td class="t">' + r[1] + '</td>' +
+      '<td class="w"><span class="box"></span></td><td>' +
+      (meal ? '<b>' + r[2] + '</b>. Bowl down 20 minutes, then up whether she finished '
+              + 'or not.' : r[2]) +
+      /* several rows already say their own length in the wording, and printing
+         "Play 1 (20 min), then out (20 min)" reads as two different numbers.
+         Plain indexOf, not a regex: this was written with a word boundary and the
+         backslash did not survive the edit, leaving a literal control character in
+         the pattern that silently matched nothing. */
+      (r[5] && r[2].indexOf(' min') < 0 ? ' <i>(' + r[5] + ' min)</i>' : '') + '</td></tr>';
+  });
+
+  el.innerHTML =
+    '<h1>Mercy &mdash; ' + w.name + ', ' + dstr(w.end) + '</h1>' +
+    '<p class="sub">' + wk + ' weeks old &middot; She can hold about <b>' + holdTxt +
+      '</b>, and no longer. Bare crate, no bedding. Food down 20 minutes, then picked up.</p>' +
+    '<div class="warn"><b>Candles ' + hhmm(w.start) + ' &middot; out at ' + hhmm(w.end) +
+      ' &middot; ' + hrs + ' hours</b>' +
+    (hrs > 26
+      ? '<p>This one is <b>' + hrs + ' hours</b>, which is far longer than she can hold and '
+        + 'longer than a crate can be the answer to. Anywhere you are out for more than ' +
+        holdTxt + ', she goes in a <b>pen on a pad</b>, not the crate: she soils the pad, the '
+        + 'crate stays clean, and you mop a floor instead of washing a crate tray. Set it up '
+        + '<b>before candles</b>.</p>'
+      : '<p>Any block where you are out longer than <b>' + holdTxt + '</b>, she goes in a pen '
+        + 'on a pad rather than the crate. Set it up before candles.</p>') +
+    '<p>Nothing gets logged today. A blank day in the app is correct, not a missed day. '
+      + 'Tap <b>Catch up</b> afterwards.</p></div>' +
+    '<h2>Her day</h2><table>' + body + '</table>' +
+    '<div class="foot"><div><h3>If something is wrong</h3>' +
+      '<p><b>Emergency vet:</b> ______________________</p>' +
+      '<p><i>Write it in before Shabbat.</i></p>' +
+      '<p><b>Poison control: (888) 426-4435</b></p>' +
+      '<p>Rat bait, something swallowed, a swollen or painful belly, repeated retching with '
+      + 'nothing coming up, pale gums, or collapse: that is a phone call, not a wait.</p></div>' +
+      '<div><h3>Her facts, if someone else needs them</h3>' +
+      '<p>Golden retriever, female, born 19 June 2026.</p>' +
+      '<p>Not fully vaccinated. No dog parks, no strange dogs, no puddles.</p>' +
+      '<p>She will not pee on concrete. Take her to grass.</p>' +
+      '<p>Marker word, then a kibble, within a second of her finishing.</p></div></div>' +
+    '<p class="note">The crate streak is about the CRATE, not her bladder. If she goes on a '
+      + 'pad in a pen while you are out, the night still counts as clean. That is the whole '
+      + 'reason for the pen.</p>';
+
+  window.print();
+}
+function renderShabCard(){
+  const el = document.getElementById('pw-shab');
+  if(!el) return;
+  const w = shabbatNow() || shabbatNext();
+  if(!w){ el.textContent = 'No upcoming date in the table.'; return; }
+  const hrs = Math.round((w.end - w.start)/3600000);
+  el.innerHTML = 'Next: <b>' + w.name + '</b>, candles ' + dayTime(w.start) +
+    ', out ' + dayTime(w.end) + '. ' + hrs + ' hours' +
+    (hrs > 26 ? ' &mdash; pen and pad, not the crate.' : '.');
+}
+
 </script>
+<!-- Direct child of <body>, and it has to stay one: the print rule hides every
+     other top level element, so nesting this inside .wrap made the rule hide its
+     own parent and the printed page came out blank. -->
+<div id="printsheet"></div>
 </body>
 </html>
