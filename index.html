@@ -701,7 +701,7 @@ body.gon #ver{display:none}
 <h1><img src="./avatar.jpg" alt="" onerror="this.style.display='none'">
   <span>Mercy &middot; <span id="age"></span></span></h1>
 <div class="who" id="who"></div>
-<div id="ver">v71 <button onclick="forceUpdate()">Force update</button></div>
+<div id="ver">v72 <button onclick="forceUpdate()">Force update</button></div>
 <div class="sync off" id="sync"><span class="led"></span><span id="synctext">Local only</span></div>
 
 <div class="shab" id="shab"></div>
@@ -1022,6 +1022,27 @@ const PLANS = {
     ["p16","20:50","Play 3 (15 min), then out","Play","N/A",15],
     ["p19","21:45","Last call, then crate","Potty Trip","N/A",5]
   ],
+  "sun": [
+    ["p01","06:40","Out, then Walk 1","Walk","N/A",15],
+    ["p01b","06:55","Clean her paws","Training","N/A",5],
+    ["p04","07:05","Breakfast","Meal","N/A",0],
+    ["p03","07:20","Walk after breakfast","Walk","N/A",10,"Walk her"],
+    ["p05","08:15","Out again, this is the poop","Potty Trip","N/A",8],
+    ["p06","08:30","Play 1 (20 min), then out","Play","N/A",20],
+    ["p07","09:45","Potty trip","Potty Trip","N/A",5],
+    ["p08","11:30","Lunch","Meal","N/A",0],
+    ["p09","11:50","Out after lunch","Potty Trip","N/A",5],
+    ["p10","12:05","Play 2 (20 min), then out","Play","N/A",20],
+    ["p11","13:40","Potty trip","Potty Trip","N/A",5,"Out"],
+    ["p12","16:00","Potty trip","Potty Trip","N/A",5,"Out"],
+    ["p13","18:10","Potty trip","Potty Trip","N/A",5,"Out"],
+    ["p14","18:45","Dinner","Meal","N/A",0],
+    ["p15","19:05","Walk 2","Walk","N/A",10],
+    ["p16","19:30","Play 3 (20 min), then out","Play","N/A",20],
+    ["p17","20:00","Pick up the water bowl","Water Up","N/A",0],
+    ["p18","20:30","Potty trip","Potty Trip","N/A",5],
+    ["p19","21:45","Last call, then crate","Potty Trip","N/A",5]
+  ],
   "shabbat": [
     ["p01","04:50","Out, first thing","Potty Trip","N/A",12],
     ["p03","08:30","Home from shul, out","Walk","N/A",10,"Walk her"],
@@ -1042,8 +1063,8 @@ const PLANS = {
     ["p19","21:45","Last call, then crate","Potty Trip","N/A",5]
   ]
 };
-const VARIANTS = {"gym":{label:"Gym day",short:"Gym"},"home":{label:"Home morning",short:"Home"},"mon":{label:"Monday",short:"Mon",hint:"shiur 7\u20138:30",sel:false},"shabbat":{label:"Shabbat",short:"Shabbat",hint:"shul 5:15, yeshiva 6:15",sel:false}};
-const DEFAULT_VARIANT = ["home","mon","gym","home","gym","home","shabbat"];   /* by weekday, Sunday first */
+const VARIANTS = {"gym":{label:"Gym day",short:"Gym"},"home":{label:"Home morning",short:"Home"},"mon":{label:"Monday",short:"Mon",hint:"shiur 7\u20138:30",sel:false},"sun":{label:"Sunday",short:"Sun",hint:"later start, open houses vary",sel:false},"shabbat":{label:"Shabbat",short:"Shabbat",hint:"shul 5:15, yeshiva 6:15",sel:false}};
+const DEFAULT_VARIANT = ["sun","mon","gym","home","gym","home","shabbat"];   /* by weekday, Sunday first */
 const GYM_MINUTES = 75;
 const GYM_DEFAULT = {0:null, 1:null, 2:null, 3:null, 4:null, 5:null, 6:null};
 /* Shabbat and yom tov, as [candle lighting, nightfall, name] in LOCAL wall clock
