@@ -684,6 +684,15 @@ body.ro #recent{margin-top:0}
 .chart .cread{font-size:12.5px;color:var(--muted);line-height:1.55;margin:11px 0 0;
   border-top:1px solid var(--line);padding-top:10px}
 .chart .cread b{color:var(--paper);font-weight:600}
+/* How to read it, in ordinary words, above the picture rather than below it. */
+.chart .csteps{margin:0 0 13px;padding:0 0 0 17px;font-size:12.5px;color:var(--muted);
+  line-height:1.5}
+.chart .csteps li{margin-bottom:5px;padding-left:2px}
+.chart .csteps li::marker{color:var(--gold);font-weight:700}
+.chart .csteps b{color:var(--paper);font-weight:600}
+.chart .cwhy{background:transparent;border:0;color:var(--gold);font:inherit;font-size:12px;
+  font-weight:700;padding:10px 0 0;text-decoration:underline}
+.chart .cwhynote{font-size:12px;color:var(--muted);line-height:1.6;margin:8px 0 0}
 
 /* Marks. Thin, hairline SOLID grid, rounded data ends, and never a stroke drawn
    round a fill to separate it: the 2px of surface between segments does that. */
@@ -697,6 +706,10 @@ body.ro #recent{margin-top:0}
   stroke-linecap:round;stroke-linejoin:round}
 /* the ring is surface coloured so a dot stays legible where it crosses its own line */
 .chart .cdot{fill:var(--gold);stroke:var(--raised);stroke-width:2}
+/* A day she was held past her ceiling. Position above the line and the shaded band
+   already say it; the colour is a third, redundant channel, never the only one. */
+.chart .cdot.over{fill:var(--alert)}
+.chart .cband{fill:var(--alert);opacity:.09}
 .chart .cbar,.chart .cacc{fill:var(--alert)}
 .chart .cacc.soft{opacity:.42}
 .chart .cout{fill:var(--ok)}
@@ -821,7 +834,7 @@ body.gon #ver{display:none}
 <h1><img src="./avatar.jpg" alt="" onerror="this.style.display='none'">
   <span>Mercy &middot; <span id="age"></span></span></h1>
 <div class="who" id="who"></div>
-<div id="ver">v85 <button onclick="forceUpdate()">Force update</button></div>
+<div id="ver">v86 <button onclick="forceUpdate()">Force update</button></div>
 <div class="sync off" id="sync"><span class="led"></span><span id="synctext">Local only</span></div>
 
 <div class="shab" id="shab"></div>
@@ -1601,6 +1614,10 @@ function logTime(e){ return timeUnknown(e) ? 'overnight' : hhmm(new Date(e.ts));
    file, and a chartRange still sitting at undefined would take slice(-undefined) and
    silently return an empty window. */
 var chartRange = 14;
+/* Which cards have their reasoning note open. It has to live out here because
+   renderCharts() rebuilds the whole card on every render and would otherwise close
+   the note the moment anything else in the app changed. */
+var chartWhyOpen = {};
 
 /* Food tab state. Up here rather than beside its functions because gRender()
    reads FOOD_CAT to skip the Food category, and render() runs near the top of
@@ -4746,6 +4763,22 @@ function dateAtHours(h){
   return new Date(DOB.getTime() + months * 30.4375 * 86400000);
 }
 
+/* Every card is built the same way, and that is the point: a plain title, a few
+   short steps saying HOW TO READ IT, the picture, one line of what it says right
+   now, and the reasoning tucked behind a toggle. The reasoning is not gone, it is
+   just no longer the first thing to get through. Any chart added later uses this
+   same shell; do not go back to a paragraph of method above the picture. */
+function toggleWhy(id){ chartWhyOpen[id] = !chartWhyOpen[id]; renderCharts(); }
+function card(id, title, steps, legend, svg, read, why){
+  return '<h3>' + title + '</h3>' +
+    '<ol class="csteps"><li>' + steps.join('</li><li>') + '</li></ol>' +
+    (legend || '') + svg +
+    '<p class="cread">' + read + '</p>' +
+    '<button class="cwhy" onclick="toggleWhy(&quot;' + id + '&quot;)">' +
+      (chartWhyOpen[id] ? 'Hide the reasoning' : 'Why it is built this way') + '</button>' +
+    (chartWhyOpen[id] ? '<p class="cwhynote">' + why + '</p>' : '');
+}
+
 /* ---- svg plumbing ---- */
 function sTxt(x, y, str, cls, anchor){
   return '<text x="' + x + '" y="' + y + '" class="' + (cls || 'cx') + '"' +
@@ -4840,7 +4873,15 @@ function chartHold(){
   rows.forEach(function(r, i){
     dr += (dr ? 'L' : 'M') + X(i) + ' ' + Y(Math.min(ruleHours(weeksOn(r.date)), top));
   });
+  /* Everything ABOVE the rule is shaded, because the rule is a ceiling and nothing on
+     the chart used to say so. Two lines crossing, with no stated direction, left him
+     working out whether high was good or bad before the chart told him anything. Now
+     the question is "is the dot in the shaded part", which needs no key. */
+  g += '<path d="' + dr + ' L' + (W - R) + ' ' + T + ' L' + L + ' ' + T + ' Z" class="cband"/>';
   g += '<path d="' + dr + '" class="crule"/>';
+  /* No inline label on the grey line. It sat right where her own line runs and the
+     two collided; the legend already names it and the shaded band is labelled. */
+  g += sTxt(W - R, T + 9, 'too long', 'cx', 'end');
 
   /* her own line, BROKEN across days with too little to say. Drawn straight over a
      missing day it would claim she was measured on a day she was not. */
@@ -4855,13 +4896,15 @@ function chartHold(){
 
   rows.forEach(function(r, i){
     var p = byKey[r.key];
-    if(p) g += '<circle cx="' + X(i) + '" cy="' + Y(Math.min(p.hours, top)) + '" r="4" class="cdot"/>';
+    if(p) g += '<circle cx="' + X(i) + '" cy="' + Y(Math.min(p.hours, top)) + '" r="4" class="cdot' +
+                (p.hours > ruleHours(weeksOn(r.date)) ? ' over' : '') + '"/>';
     hits += '<rect x="' + (X(i) - band/2) + '" y="' + T + '" width="' + band + '" height="' + (H - T - B) +
          '" class="hit" data-r="' + gesc(
            r.date.toLocaleDateString(undefined,{weekday:'long', day:'numeric', month:'long'}) + ': ' +
-           (p ? 'middle gap between pees was ' + hrLabel(p.hours) + ', from ' + p.n +
-                ' gaps. The rule that day was ' + hrLabel(ruleHours(weeksOn(r.date))) + '.'
-              : 'fewer than three gaps logged, so this day gets no point.')) + '"/>';
+           (p ? 'she usually waited ' + hrLabel(p.hours) + ' between pees, from ' + p.n +
+                ' gaps. She could hold ' + hrLabel(ruleHours(weeksOn(r.date))) + ' that day' +
+                (p.hours > ruleHours(weeksOn(r.date)) ? ', so this one is over her limit.' : '.')
+              : 'fewer than three pees logged, so this day gets no dot.')) + '"/>';
     if(i % Math.ceil(n/7) === 0) g += sTxt(X(i), H - 7, shortDay(r.date), 'cx', 'middle');
   });
 
@@ -4874,30 +4917,37 @@ function chartHold(){
   g += hits;
 
   var read;
+  var overDays = seen.filter(function(p){ return p.hours > ruleHours(p.weeks); }).length;
   if(!seen.length){
-    read = 'No day in this window has three or more gaps between pees, which is what a point needs.';
+    read = 'No day here has three or more pees logged, which is what a dot needs.';
   } else {
     var lastH = seen[seen.length-1].hours, ruleNow = holdHours();
-    read = '<b>' + seen[seen.length-1].date.toLocaleDateString(undefined,{weekday:'long', day:'numeric', month:'long'}) +
-      '</b>, her most recent day with enough gaps, sat at <b>' + hrLabel(lastH) +
-      '</b> between pees, against a rule of <b>' +
-      hrLabel(ruleNow) + '</b>. ' + (lastH < ruleNow * 0.8
-        ? 'Under the rule, which at her age is normal and is also the right way round: the rule is a ceiling you keep her below, not a score to beat.'
-        : 'That is at or about the rule.') +
+    read = 'On <b>' + seen[seen.length-1].date.toLocaleDateString(undefined,{weekday:'long', day:'numeric', month:'long'}) +
+      '</b> she usually waited <b>' + hrLabel(lastH) + '</b>. She can hold about <b>' +
+      hrLabel(ruleNow) + '</b>. ' +
+      (overDays ? 'On <b>' + overDays + '</b> of these days she was made to wait longer than she can hold, ' +
+                  'which is where accidents come from.'
+                : 'She has not been made to wait past her limit on any day here. That is what you want.') +
       (seen.length < 4 ? ' Only ' + seen.length + ' day' + (seen.length === 1 ? '' : 's') +
-        ' here have enough gaps to plot, so the shape means very little yet.' : '');
+        ' here have enough pees to draw a dot, so do not read much into the shape yet.' : '');
   }
 
-  el.innerHTML =
-    '<h3>How long she goes between pees</h3>' +
-    '<p class="csub">Her middle gap each day against the rule for that day. Middle rather than ' +
-    'average, because one long overnight stretch drags an average up and makes her look more ' +
-    'capable than she is. A day needs three gaps to earn a dot, and the line breaks where a day ' +
-    'has too few.</p>' +
-    '<div class="lg"><span><i class="ln" style="background:var(--muted)"></i>the rule that day</span>' +
-    '<span><i class="ln" style="background:var(--gold)"></i>her middle gap</span></div>' +
-    '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="Her middle gap between pees each day against the rule">' + g + '</svg>' +
-    '<p class="cread">' + read + '</p>';
+  el.innerHTML = card('ch-hold', 'How long she waits between pees',
+    ['Each <b>dot</b> is one day. It is how long she usually waited between pees that day.',
+     'The <b>grey line</b> is how long she can hold it. It is a limit, not a target.',
+     'A dot <b>under</b> the line is fine. A dot up in the <b>shaded part</b> means she was made to wait longer than she can manage, and that is where accidents come from.',
+     'A day with <b>no dot</b> did not have enough pees logged to work one out.'],
+    '<div class="lg"><span><i class="ln" style="background:var(--muted)"></i>how long she can hold it</span>' +
+    '<span><i class="ln" style="background:var(--gold)"></i>how long she waited</span>' +
+    '<span><i style="background:var(--alert);border-radius:50%"></i>over her limit</span></div>',
+    '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="How long she waited between pees each day against how long she can hold it">' + g + '</svg>',
+    read,
+    'The dot is the MIDDLE of that day&rsquo;s waits, not the average. One long overnight stretch ' +
+    'drags an average up and makes her look more capable than she is. Gaps longer than eight hours ' +
+    'are dropped altogether, because that is a night&rsquo;s sleep and not a hold. A day needs three ' +
+    'gaps before it gets a dot, and the gold line breaks across days that do not have them &mdash; ' +
+    'drawn straight across, it would claim she was measured on a day she was not. The grey line is ' +
+    'one hour of bladder per month of age, the same rule the clock on the Log tab runs on.');
   wireHits(el);
 }
 
@@ -4934,19 +4984,25 @@ function chartProjection(){
   });
 
   var next = future.length ? future[0] : null;
-  el.innerHTML =
-    '<h3>When she will hold it longer</h3>' +
-    '<p class="csub">One hour per month of age, capped at ' + HOLD_MAX + '. This is arithmetic on her ' +
-    'birthday, <b>not a forecast fitted to her log</b>. Read the dates as the earliest it is worth ' +
-    'trying a longer gap, never as a promise.</p>' +
-    '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="Her bladder rule from today to the six hour cap">' + g + '</svg>' +
-    '<p class="cread">' + (next
-      ? 'She reaches <b>' + next + ' hours</b> around <b>' +
+  el.innerHTML = card('ch-proj', 'When she will be able to wait longer',
+    ['The whole bar is nothing on the left up to <b>' + HOLD_MAX + ' hours</b> on the right.',
+     'The <b>gold part</b> is how long she can hold it today.',
+     'The <b>marks ahead</b> are when she should be able to hold 3, 4, 5 and 6 hours, with the date under each.',
+     'These come from <b>her birthday, not from her log</b>. They say what she should become able to do, not what she will do on the day.'],
+    '',
+    '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="How long she can hold it today and when she reaches each hour">' + g + '</svg>',
+    (next
+      ? 'She should manage <b>' + next + ' hours</b> around <b>' +
         dateAtHours(next).toLocaleDateString(undefined,{weekday:'long', day:'numeric', month:'long'}) +
-        '</b>, and the ' + HOLD_MAX + ' hour cap around ' +
+        '</b>, and ' + HOLD_MAX + ' hours around ' +
         dateAtHours(HOLD_MAX).toLocaleDateString(undefined,{day:'numeric', month:'long', year:'numeric'}) +
-        '. None of it arrives on its own. It is what she becomes capable of, not what she does.'
-      : 'She is at the cap. The rule has nothing further to say.') + '</p>';
+        '. None of it arrives on its own.'
+      : 'She is at the cap. The rule has nothing further to say.'),
+    'This is a meter and not a rising line, on purpose. The figure is one hour of bladder per ' +
+    'month of age capped at ' + HOLD_MAX + ', which is arithmetic on her birthday and nothing ' +
+    'else &mdash; no part of it is fitted to her own log. Drawn as a line next to her own dots it ' +
+    'would look like a prediction made from her data, and nine days of log cannot support one. ' +
+    'Treat every date as the earliest it is worth TRYING a longer gap, never as a promise.');
 }
 
 /* ---- 2. accidents a day ---- */
@@ -5011,18 +5067,24 @@ function chartAccidents(){
   var live = rows.filter(function(r){ return !r.quiet; });
   var tot = live.reduce(function(s, r){ return s + r.acc; }, 0);
   var clean = live.filter(function(r){ return r.acc === 0; }).length;
-  el.innerHTML =
-    '<h3>Accidents a day</h3>' +
-    '<p class="csub">One column per day. A day with none draws nothing, so the flat stretches ' +
-    'are the good ones. A hollow tick is a day nobody logged — Shabbat is unlogged, not clean, ' +
-    'and it is left out of the average.</p>' +
+  el.innerHTML = card('ch-acc', 'Accidents each day',
+    ['Each <b>red bar</b> is one day. Taller means more accidents.',
+     'A day with none has <b>no bar at all</b>, so empty is good.',
+     'The <b>gold line</b> is the average of the last seven days. If it slopes down, she is getting better.',
+     'A small <b>flat tick</b> is a day nobody logged. It does not count either way.',
+     '<b>Tap any day</b> to see its numbers.'],
     '<div class="lg"><span><i style="background:var(--alert)"></i>accidents that day</span>' +
     '<span><i class="ln" style="background:var(--gold)"></i>7 day average</span>' +
-    '<span><i class="ln" style="background:var(--line)"></i>not logged</span></div>' +
-    '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="Accidents per day">' + g + '</svg>' +
-    '<p class="cread"><b>' + clean + ' clean ' + (clean === 1 ? 'day' : 'days') + '</b> out of ' +
+    '<span><i class="ln" style="background:var(--line)"></i>not logged</span></div>',
+    '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="Accidents each day">' + g + '</svg>',
+    '<b>' + clean + ' clean ' + (clean === 1 ? 'day' : 'days') + '</b> out of ' +
     live.length + ' logged, and <b>' + tot + '</b> ' + (tot === 1 ? 'accident' : 'accidents') +
-    ' in total. Tap a column for that day.</p>';
+    ' in total.',
+    'A clean day draws nothing rather than a two pixel sliver, because a sliver on every clean ' +
+    'day made the chart look like she had an accident every single day, which on a house training ' +
+    'chart is the opposite of the truth. An unlogged day is a HOLE and not a zero: a blank Shabbat ' +
+    'means nobody logged, not that she was clean, and drawing it as zero would quietly make ' +
+    'Saturday her best day of the week. Those days are left out of the seven day average too.');
   wireHits(el);
 }
 
@@ -5084,16 +5146,21 @@ function chartWhere(){
         (qq === null ? '--' : qq + '%') + '</b> outside, from ' + (peeT + poopT) + ' logged events.';
   }
 
-  el.innerHTML =
-    '<h3>Where it lands</h3>' +
-    '<p class="csub">Two bars on one baseline rather than two pie charts, because the question ' +
-    'is whether her stools are better than her pees, and circles cannot be compared to each other ' +
-    'the way two bars can.</p>' +
+  el.innerHTML = card('ch-where', 'Where it lands',
+    ['Each <b>bar is one whole thing</b>, split into parts. The numbers under it say how many and what share.',
+     '<b>Green is outside. Red is an accident.</b> The more green, the better she is doing.',
+     'The top bar is her <b>pees</b>. The middle bar is her <b>stools</b>.',
+     'The bottom bar takes <b>only the accidents</b> and splits them into ones in the house and ones in the crate.'],
     '<div class="lg"><span><i style="background:var(--ok)"></i>outside</span>' +
-    '<span><i style="background:var(--alert)"></i>accident</span>' +
-    '<span><i style="background:var(--alert);opacity:.42"></i>in the house</span></div>' +
-    '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="Where her pees and stools land">' + g + '</svg>' +
-    '<p class="cread">' + read + '</p>';
+    '<span><i style="background:var(--alert)"></i>accident, and in the crate</span>' +
+    '<span><i style="background:var(--alert);opacity:.42"></i>in the house</span></div>',
+    '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="Where her pees and stools land">' + g + '</svg>',
+    read,
+    'Two bars on one baseline rather than two pie charts. The question worth asking is whether her ' +
+    'stools are better than her pees, and two circles cannot be compared to each other the way two ' +
+    'bars sharing a left edge can. Every segment carries its own count and share underneath rather ' +
+    'than relying on the colour, which also makes the green and red readable for anyone who cannot ' +
+    'tell those two apart. Do not strip those labels to tidy the chart up.');
 }
 
 /* ---- 4. when accidents happen ---- */
@@ -5140,19 +5207,27 @@ function chartHour(){
   if(solid) g += sTxt(L + band * top + band / 2, Y(peak) - 5, hourName(top), 'cv', 'middle');
   g += hits;
 
-  el.innerHTML =
-    '<h3>When accidents happen</h3>' +
-    '<p class="csub">Every accident by the hour it was logged. This is descriptive: it says ' +
-    'when, never why.' + (unknown ? ' ' + unknown + ' overnight ' + (unknown === 1 ? 'entry has' : 'entries have') +
-    ' no hour anybody saw and ' + (unknown === 1 ? 'is' : 'are') + ' left out.' : '') + '</p>' +
-    '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="Accidents by hour of day">' + g + '</svg>' +
-    '<p class="cread">' + (solid
+  el.innerHTML = card('ch-hour', 'What time of day accidents happen',
+    ['The bottom is <b>the clock</b>, from midnight on the left round to midnight on the right.',
+     'Each <b>bar</b> is how many accidents happened in that hour, across every day.',
+     'The <b>tallest bar</b> is her riskiest time. Take her out about fifteen minutes before it.',
+     '<b>Tap any hour</b> to see its count.'],
+    '',
+    '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="Accidents by hour of the day">' + g + '</svg>',
+    (solid
       ? 'Her worst hour is <b>' + hourName(top) + '</b>, clear of the next one. Put a trip fifteen ' +
         'minutes before it and watch whether this column comes down. Tap any hour.'
       : total < 5
         ? 'Only ' + total + ' logged so far, which is far too few for a shape.'
         : '<b>' + total + ' accidents</b> so far, and no hour stands clear of the rest, so there is ' +
-          'no worst hour to name yet. Tap any hour for its count.') + '</p>';
+          'no worst hour to name yet.'),
+    'This is descriptive. It says WHEN, never why, and a tall bar is as likely to be about your ' +
+    'day as about hers. No hour gets named unless it clears three accidents and actually beats ' +
+    'the runner up: with two dozen accidents spread over twenty four hours the tallest bar is ' +
+    'usually a coin toss, and a label on it would turn noise into advice you would act on.' +
+    (unknown ? ' ' + unknown + ' overnight ' + (unknown === 1 ? 'entry has' : 'entries have') +
+      ' no hour anybody actually saw, so ' + (unknown === 1 ? 'it is' : 'they are') +
+      ' left out rather than binned at a made up time.' : ''));
   wireHits(el);
 }
 
