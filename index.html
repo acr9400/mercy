@@ -648,6 +648,65 @@ body.ro #sched li,body.ro #daysel,body.ro #holdbtn{display:none !important}
 body.ro #recent{margin-top:0}
 
 
+/* ---- charts ------------------------------------------------------------------
+   Every colour below is a var, never a hex. config.app.themes carries four themes
+   and one of them is dark, so a literal green would be the only thing on the page
+   that did not move when he switches. In SVG a var only resolves through a STYLE
+   property, never through a fill="" attribute, which is why the chart code writes
+   the identity colours as classes here rather than inline attributes. */
+.crange{display:flex;gap:7px;margin:0 0 13px}
+.crange button{flex:1;min-width:0;padding:9px 4px;font-size:12.5px;border-radius:10px;
+  background:transparent;color:var(--muted);border:1px solid var(--line)}
+.crange button.on{background:var(--paper);color:var(--ground);border-color:var(--paper);
+  font-weight:600}
+
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:0 0 14px}
+.kpi{background:var(--raised);border:1px solid var(--line);border-radius:15px;
+  padding:11px 10px 10px;min-width:0}
+.kpi .kl{font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);
+  font-weight:600;line-height:1.35;margin-bottom:7px;min-height:4em;overflow-wrap:anywhere}
+.kpi .kv{font-size:23px;font-weight:200;letter-spacing:-.02em;line-height:1;
+  font-variant-numeric:tabular-nums}
+.kpi .kd{font-size:10.5px;color:var(--muted);margin-top:5px;line-height:1.35}
+.kpi .kd.up{color:var(--alert)}
+.kpi .kd.down{color:var(--ok)}
+
+.chart{background:var(--raised);border:1px solid var(--line);border-radius:16px;
+  padding:15px 15px 13px;margin:0 0 13px}
+.chart h3{font-size:15.5px;font-weight:600;margin:0 0 4px}
+.chart .csub{font-size:11.5px;color:var(--muted);line-height:1.55;margin:0 0 12px}
+.chart .lg{display:flex;flex-wrap:wrap;gap:11px;margin:0 0 9px;font-size:11px;
+  color:var(--muted)}
+.chart .lg span{display:flex;align-items:center;gap:5px}
+.chart .lg i{width:10px;height:10px;border-radius:3px;flex:none}
+.chart .lg i.ln{height:2px;width:14px;border-radius:2px}
+.chart svg{display:block;width:100%;height:auto}
+.chart .cread{font-size:12.5px;color:var(--muted);line-height:1.55;margin:11px 0 0;
+  border-top:1px solid var(--line);padding-top:10px}
+.chart .cread b{color:var(--paper);font-weight:600}
+
+/* Marks. Thin, hairline SOLID grid, rounded data ends, and never a stroke drawn
+   round a fill to separate it: the 2px of surface between segments does that. */
+.chart .cg{stroke:var(--line);stroke-width:1}
+.chart .cx{font-size:9px;fill:var(--muted)}
+.chart .cv{font-size:10px;font-weight:600;fill:var(--paper)}
+.chart .cl{font-size:12px;font-weight:600;fill:var(--paper)}
+.chart .crule{fill:none;stroke:var(--muted);stroke-width:2;stroke-linecap:round;
+  stroke-linejoin:round}
+.chart .cher,.chart .cmean{fill:none;stroke:var(--gold);stroke-width:2;
+  stroke-linecap:round;stroke-linejoin:round}
+/* the ring is surface coloured so a dot stays legible where it crosses its own line */
+.chart .cdot{fill:var(--gold);stroke:var(--raised);stroke-width:2}
+.chart .cbar,.chart .cacc{fill:var(--alert)}
+.chart .cacc.soft{opacity:.42}
+.chart .cout{fill:var(--ok)}
+.chart .cq{stroke:var(--line);stroke-width:2.5;stroke-linecap:round}
+.chart .ctrack{fill:var(--line)}
+.chart .cfill{fill:var(--gold)}
+.chart .ctick{stroke:var(--raised);stroke-width:1.5}
+.chart .hit{fill:transparent;cursor:pointer}
+.chart .hit.on{fill:var(--tint)}
+
 /* ---- vet visit history ---- */
 #pw-visits{list-style:none;margin:0;padding:0}
 #pw-visits li{background:var(--raised);border:1px solid var(--line);border-radius:15px;
@@ -762,7 +821,7 @@ body.gon #ver{display:none}
 <h1><img src="./avatar.jpg" alt="" onerror="this.style.display='none'">
   <span>Mercy &middot; <span id="age"></span></span></h1>
 <div class="who" id="who"></div>
-<div id="ver">v84 <button onclick="forceUpdate()">Force update</button></div>
+<div id="ver">v85 <button onclick="forceUpdate()">Force update</button></div>
 <div class="sync off" id="sync"><span class="led"></span><span id="synctext">Local only</span></div>
 
 <div class="shab" id="shab"></div>
@@ -880,6 +939,15 @@ mouthy, not sleepy.</p>
 </section>
 
 <section class="tab" id="tab-trends">
+
+<h2>Her numbers</h2>
+<div class="crange" id="crange"></div>
+<div class="kpis" id="kpis"></div>
+<div class="chart" id="ch-hold"></div>
+<div class="chart" id="ch-proj"></div>
+<div class="chart" id="ch-acc"></div>
+<div class="chart" id="ch-where"></div>
+<div class="chart" id="ch-hour"></div>
 
 <h2>What she actually does</h2>
 <p class="patnote">Every number here is worked out from your own log and nothing else. Tap any row to see how it was calculated and what to do with it.</p>
@@ -1527,6 +1595,12 @@ function timeUnknown(e){
 /* Every list that prints a time goes through this, so an entry whose time nobody
    knows can never show a clock face that looks like something he watched happen. */
 function logTime(e){ return timeUnknown(e) ? 'overnight' : hhmm(new Date(e.ts)); }
+
+/* Which window the day charts cover: 7, 14, or 0 for all of it. Up here rather than
+   beside the chart code because render() reaches renderCharts() near the top of the
+   file, and a chartRange still sitting at undefined would take slice(-undefined) and
+   silently return an empty window. */
+var chartRange = 14;
 
 /* Food tab state. Up here rather than beside its functions because gRender()
    reads FOOD_CAT to skip the Food category, and render() runs near the top of
@@ -3313,6 +3387,7 @@ function render(){
 
   renderPatterns();
   renderHistory();
+  renderCharts();
   renderAlerts();
   renderCover();
 }
@@ -4562,6 +4637,563 @@ function renderVisit(){
   box.innerHTML = h;
 }
 
+
+/* ---- the charts -----------------------------------------------------------------
+   Four pictures and three tiles, all of it worked out from the same log everything
+   else on this tab reads. Nothing here is fetched, fitted or smoothed beyond what
+   is stated on the card.
+
+   COLOUR. Every fill and stroke is a CSS variable, never a hex, because there are
+   four themes in config.app.themes and one of them is dark. A hardcoded green would
+   survive a theme switch as the only thing on the page that did not move. Note that
+   `fill="var(--ok)"` as an ATTRIBUTE does not work; a var only resolves in a style
+   property, so these are all written `style="fill:var(--ok)"`.
+
+   Green and red are already spoken for app-wide: green is outside, red is an
+   accident. Under deutan and protan vision that pair separates by about 7 on the
+   OKLab scale, which is inside the 6 to 8 band where the pair is only safe WITH a
+   second channel carrying the same information. So wherever those two touch, in
+   "Where it lands", every segment is directly labelled with its own count and share
+   and the legend is always drawn. Do not remove those labels to tidy the chart up;
+   they are the reason the chart is readable without colour.
+
+   NO-LOG DAYS ARE HOLES, NOT ZEROES. A blank Saturday means nobody logged, not that
+   she was clean. Drawing it as a zero bar would quietly turn Shabbat into her best
+   day of the week. noLogDay() marks them and they are drawn as a hollow tick and
+   left out of every average. */
+
+function setRange(n){ chartRange = n; renderCharts(); }
+
+/* ---- the numbers behind the pictures ---- */
+
+/* One entry per calendar day from her first logged event to today, holes included,
+   so a chart can draw a gap where there is a gap. */
+function dayRows(){
+  var byDay = {}, first = null;
+  events.forEach(function(e){
+    if(!isLogEvent(e)) return;
+    if(first === null || e.ts < first) first = e.ts;
+    var k = dayKey(new Date(e.ts));
+    var r = byDay[k] || (byDay[k] = {out:0, acc:0, house:0, crate:0,
+                                     peeOut:0, peeIn:0, poopOut:0, poopIn:0});
+    if(OUTSIDE.includes(e.event) || e.where === 'Outside') r.out++;
+    if(e.where === 'Indoor Accident'){ r.acc++; r.house++; }
+    if(e.where === 'Crate Accident'){ r.acc++; r.crate++; }
+    if(e.event === 'Pee'){ if(e.where === 'Outside') r.peeOut++; else if(e.where !== 'N/A') r.peeIn++; }
+    if(e.event === 'Poop'){ if(e.where === 'Outside') r.poopOut++; else if(e.where !== 'N/A') r.poopIn++; }
+  });
+  if(first === null) return [];
+  var out = [];
+  var d = new Date(first); d.setHours(0,0,0,0);
+  var end = new Date(); end.setHours(0,0,0,0);
+  for(; d.getTime() <= end.getTime(); d.setDate(d.getDate() + 1)){
+    var k = dayKey(d);
+    var r = byDay[k] || {out:0, acc:0, house:0, crate:0,
+                         peeOut:0, peeIn:0, poopOut:0, poopIn:0};
+    r.key = k;
+    r.date = new Date(d);
+    r.quiet = !!noLogDay(new Date(d)) && !byDay[k];   /* Shabbat with nothing logged */
+    out.push(r);
+  }
+  return out;
+}
+
+/* The last n rows, or all of them. */
+function windowRows(){
+  var rows = dayRows();
+  return chartRange === 0 ? rows : rows.slice(-chartRange);
+}
+
+/* Her observed hold, one point per day: the MEDIAN gap between consecutive pees.
+   Median rather than mean because one four hour overnight stretch would drag a mean
+   up and make her look more capable than she is. Gaps over 8 hours are dropped for
+   the same reason patterns() drops them: that is a night's sleep, not a hold. Days
+   with fewer than three gaps are not plotted at all. */
+function holdPoints(){
+  var byDay = {};
+  var prev = null;
+  events.filter(function(e){ return isLogEvent(e) && e.event === 'Pee' && !timeUnknown(e); })
+        .forEach(function(e){
+    if(prev !== null && e.ts - prev < 8*3600000){
+      var k = dayKey(new Date(e.ts));
+      (byDay[k] || (byDay[k] = [])).push(e.ts - prev);
+    }
+    prev = e.ts;
+  });
+  var pts = [];
+  Object.keys(byDay).sort().forEach(function(k){
+    var g = byDay[k];
+    if(g.length < 3) return;
+    g = g.slice().sort(function(a,b){ return a-b; });
+    var m = Math.floor(g.length/2);
+    var med = g.length % 2 ? g[m] : (g[m-1] + g[m]) / 2;
+    var p = k.split('-');
+    var d = new Date(+p[0], +p[1]-1, +p[2], 12);
+    pts.push({ weeks: (d.getTime() - DOB.getTime()) / 604800000,
+               hours: med / 3600000, n: g.length, key: k, date: d });
+  });
+  return pts;
+}
+
+/* The rule the whole app runs on: one hour per month of age, capped. It is a rule of
+   thumb, not a forecast fitted to her, and the card says so. Nine days of log cannot
+   support a fitted slope, and drawing one would dress noise up as a prediction. */
+function ruleHours(weeks){
+  return Math.min(HOLD_MAX, (weeks * 7 / 30.4375) * HOLD_PER_MONTH);
+}
+function dateAtHours(h){
+  var months = Math.min(HOLD_MAX, h) / HOLD_PER_MONTH;
+  return new Date(DOB.getTime() + months * 30.4375 * 86400000);
+}
+
+/* ---- svg plumbing ---- */
+function sTxt(x, y, str, cls, anchor){
+  return '<text x="' + x + '" y="' + y + '" class="' + (cls || 'cx') + '"' +
+         (anchor ? ' text-anchor="' + anchor + '"' : '') + '>' + str + '</text>';
+}
+function shortDay(d){ return d.toLocaleDateString(undefined, {day:'numeric'}); }
+function hrLabel(h){
+  var wh = Math.floor(h), m = Math.round((h - wh) * 60);
+  if(m === 60){ wh++; m = 0; }
+  return wh + 'h' + (m ? ' ' + pad(m) + 'm' : '');
+}
+
+/* ---- the three tiles ---- */
+function renderKpis(){
+  var box = document.getElementById('kpis'); if(!box) return;
+  var rows = dayRows();
+  var live = rows.filter(function(r){ return !r.quiet; });
+  var wk = live.slice(-7), prev = live.slice(-14, -7);
+  var sum = function(a){ return a.reduce(function(s, r){ return s + r.acc; }, 0); };
+  var now = sum(wk), was = sum(prev);
+
+  var tiles = [];
+  var delta = prev.length
+    ? (now === was ? 'the same as the seven before'
+        : now < was ? (was - now) + ' fewer than the seven before'
+                    : (now - was) + ' more than the seven before')
+    : 'no earlier week to compare with yet';
+  tiles.push({ lab: 'Accidents, last 7 logged days', val: String(now),
+               d: delta, cls: prev.length ? (now < was ? 'down' : now > was ? 'up' : '') : '' });
+
+  var c = crateNights();
+  tiles.push({ lab: 'Clean nights in the bare crate', val: c ? c.streak + ' / ' + c.need : '--',
+               d: c ? (c.done ? 'the bed can go back'
+                              : c.streak === 0 ? 'back to zero' : 'running') : 'not being counted' });
+
+  var h = holdHours();
+  tiles.push({ lab: 'Her bladder rule today', val: hrLabel(h),
+               d: h < HOLD_MAX ? hrLabel(HOLD_MAX) + ' around ' +
+                    dateAtHours(HOLD_MAX).toLocaleDateString(undefined,{month:'short', year:'numeric'})
+                  : 'fully grown' });
+
+  box.innerHTML = '';
+  tiles.forEach(function(t){
+    var d = document.createElement('div');
+    d.className = 'kpi';
+    d.innerHTML = '<div class="kl">' + t.lab + '</div><div class="kv">' + t.val +
+                  '</div><div class="kd ' + (t.cls || '') + '">' + t.d + '</div>';
+    box.appendChild(d);
+  });
+}
+
+/* ---- 1. how long she can hold, day by day ------------------------------------
+   The first draft put her days on an AGE axis running six weeks to six months, so
+   the rule could be drawn rising across it and the projection would sit in the same
+   picture. It does not work, and the arithmetic says so before you ever look at it:
+   twenty-two weeks across 286 pixels is thirteen pixels a week, so consecutive DAYS
+   land 1.9 pixels apart and five of them merge into one blob. Daily points need a
+   daily axis. The projection moved to its own card, where it is a meter rather than
+   a line, because it is not fitted to her at all. */
+function chartHold(){
+  var el = document.getElementById('ch-hold'); if(!el) return;
+  var rows = windowRows();
+  var byKey = {};
+  holdPoints().forEach(function(p){ byKey[p.key] = p; });
+
+  var W = 320, H = 138, L = 24, R = 8, T = 12, B = 22;
+  var n = rows.length;
+  if(!n){ el.innerHTML = '<h3>How long she goes between pees</h3>' +
+    '<p class="csub">Nothing logged yet.</p>'; return; }
+  var seen = rows.map(function(r){ return byKey[r.key]; }).filter(Boolean);
+
+  var top = Math.max(holdHours(), 1);
+  seen.forEach(function(p){ top = Math.max(top, p.hours); });
+  top = Math.ceil(top * 2) / 2 + 0.5;
+  var band = (W - L - R) / n;
+  var X = function(i){ return L + band * i + band / 2; };
+  var Y = function(h){ return T + (1 - h / top) * (H - T - B); };
+  var weeksOn = function(d){ return (d.getTime() + 43200000 - DOB.getTime()) / 604800000; };
+
+  /* Hit rects are collected and emitted LAST. SVG hit-testing takes the topmost
+     element, so a value label or a line drawn after a transparent rect steals the
+     taps meant for it. */
+  var g = '', hits = '';
+  for(var gv = 0; gv <= top; gv += 1){
+    g += '<line x1="' + L + '" y1="' + Y(gv) + '" x2="' + (W - R) + '" y2="' + Y(gv) + '" class="cg"/>';
+    g += sTxt(L - 5, Y(gv) + 3.5, gv + 'h', 'cx', 'end');
+  }
+
+  /* the rule for each of those days: barely a slope across two weeks, which is itself
+     worth seeing. Her ceiling is not what changes week to week; the routine is. */
+  var dr = '';
+  rows.forEach(function(r, i){
+    dr += (dr ? 'L' : 'M') + X(i) + ' ' + Y(Math.min(ruleHours(weeksOn(r.date)), top));
+  });
+  g += '<path d="' + dr + '" class="crule"/>';
+
+  /* her own line, BROKEN across days with too little to say. Drawn straight over a
+     missing day it would claim she was measured on a day she was not. */
+  var dh = '', open = false;
+  rows.forEach(function(r, i){
+    var p = byKey[r.key];
+    if(!p){ open = false; return; }
+    dh += (open ? 'L' : 'M') + X(i) + ' ' + Y(Math.min(p.hours, top));
+    open = true;
+  });
+  if(dh) g += '<path d="' + dh + '" class="cher"/>';
+
+  rows.forEach(function(r, i){
+    var p = byKey[r.key];
+    if(p) g += '<circle cx="' + X(i) + '" cy="' + Y(Math.min(p.hours, top)) + '" r="4" class="cdot"/>';
+    hits += '<rect x="' + (X(i) - band/2) + '" y="' + T + '" width="' + band + '" height="' + (H - T - B) +
+         '" class="hit" data-r="' + gesc(
+           r.date.toLocaleDateString(undefined,{weekday:'long', day:'numeric', month:'long'}) + ': ' +
+           (p ? 'middle gap between pees was ' + hrLabel(p.hours) + ', from ' + p.n +
+                ' gaps. The rule that day was ' + hrLabel(ruleHours(weeksOn(r.date))) + '.'
+              : 'fewer than three gaps logged, so this day gets no point.')) + '"/>';
+    if(i % Math.ceil(n/7) === 0) g += sTxt(X(i), H - 7, shortDay(r.date), 'cx', 'middle');
+  });
+
+  /* one direct label, on the last day that actually has one */
+  if(seen.length){
+    var lastP = seen[seen.length - 1];
+    var li = rows.map(function(r){ return r.key; }).indexOf(lastP.key);
+    if(li >= 0) g += sTxt(X(li), Y(Math.min(lastP.hours, top)) - 8, hrLabel(lastP.hours), 'cv', 'middle');
+  }
+  g += hits;
+
+  var read;
+  if(!seen.length){
+    read = 'No day in this window has three or more gaps between pees, which is what a point needs.';
+  } else {
+    var lastH = seen[seen.length-1].hours, ruleNow = holdHours();
+    read = '<b>' + seen[seen.length-1].date.toLocaleDateString(undefined,{weekday:'long', day:'numeric', month:'long'}) +
+      '</b>, her most recent day with enough gaps, sat at <b>' + hrLabel(lastH) +
+      '</b> between pees, against a rule of <b>' +
+      hrLabel(ruleNow) + '</b>. ' + (lastH < ruleNow * 0.8
+        ? 'Under the rule, which at her age is normal and is also the right way round: the rule is a ceiling you keep her below, not a score to beat.'
+        : 'That is at or about the rule.') +
+      (seen.length < 4 ? ' Only ' + seen.length + ' day' + (seen.length === 1 ? '' : 's') +
+        ' here have enough gaps to plot, so the shape means very little yet.' : '');
+  }
+
+  el.innerHTML =
+    '<h3>How long she goes between pees</h3>' +
+    '<p class="csub">Her middle gap each day against the rule for that day. Middle rather than ' +
+    'average, because one long overnight stretch drags an average up and makes her look more ' +
+    'capable than she is. A day needs three gaps to earn a dot, and the line breaks where a day ' +
+    'has too few.</p>' +
+    '<div class="lg"><span><i class="ln" style="background:var(--muted)"></i>the rule that day</span>' +
+    '<span><i class="ln" style="background:var(--gold)"></i>her middle gap</span></div>' +
+    '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="Her middle gap between pees each day against the rule">' + g + '</svg>' +
+    '<p class="cread">' + read + '</p>';
+  wireHits(el);
+}
+
+/* ---- 2. the projection ---------------------------------------------------------
+   A METER, not a line, and deliberately so. This is not a forecast: it is one hour of
+   bladder per month of age capped at six, which is arithmetic on her birthday and
+   nothing else. Drawn as a rising line beside her own dots it would invite being read
+   as a fit to her data, and nine days of log cannot support a fit. A track with her
+   position marked on it says the same thing and makes no claim it cannot keep. */
+function chartProjection(){
+  var el = document.getElementById('ch-proj'); if(!el) return;
+  var now = holdHours();
+  var W = 320, L = 4, R = 4, H = 76, ty = 18, th = 16;
+  var full = W - L - R;
+  var X = function(h){ return L + h / HOLD_MAX * full; };
+  var g = '<rect x="' + L + '" y="' + ty + '" width="' + full + '" height="' + th + '" rx="4" class="ctrack"/>';
+  g += '<rect x="' + L + '" y="' + ty + '" width="' + Math.max(3, X(now) - L) + '" height="' + th + '" rx="4" class="cfill"/>';
+  g += sTxt(L, ty - 6, 'today, ' + hrLabel(now), 'cv');
+
+  var future = [];
+  for(var k = 1; k <= HOLD_MAX; k++) if(k > now + 0.05) future.push(k);
+  var step = future.length > 4 ? 2 : 1;
+  future.forEach(function(h, i){
+    var x = X(h);
+    g += '<line x1="' + x + '" y1="' + ty + '" x2="' + x + '" y2="' + (ty + th) + '" class="ctick"/>';
+    if(i % step) return;
+    /* A middle anchored label on the last tick hangs half its width past the viewBox
+       and gets clipped. Near either edge the label anchors inward instead. */
+    var anc = x > W - 30 ? 'end' : x < 30 ? 'start' : 'middle';
+    var lx = anc === 'end' ? W - R : anc === 'start' ? L : x;
+    g += sTxt(lx, ty + th + 14, h + 'h', 'cv', anc);
+    g += sTxt(lx, ty + th + 26, dateAtHours(h).toLocaleDateString(undefined,{day:'numeric', month:'short'}),
+              'cx', anc);
+  });
+
+  var next = future.length ? future[0] : null;
+  el.innerHTML =
+    '<h3>When she will hold it longer</h3>' +
+    '<p class="csub">One hour per month of age, capped at ' + HOLD_MAX + '. This is arithmetic on her ' +
+    'birthday, <b>not a forecast fitted to her log</b>. Read the dates as the earliest it is worth ' +
+    'trying a longer gap, never as a promise.</p>' +
+    '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="Her bladder rule from today to the six hour cap">' + g + '</svg>' +
+    '<p class="cread">' + (next
+      ? 'She reaches <b>' + next + ' hours</b> around <b>' +
+        dateAtHours(next).toLocaleDateString(undefined,{weekday:'long', day:'numeric', month:'long'}) +
+        '</b>, and the ' + HOLD_MAX + ' hour cap around ' +
+        dateAtHours(HOLD_MAX).toLocaleDateString(undefined,{day:'numeric', month:'long', year:'numeric'}) +
+        '. None of it arrives on its own. It is what she becomes capable of, not what she does.'
+      : 'She is at the cap. The rule has nothing further to say.') + '</p>';
+}
+
+/* ---- 2. accidents a day ---- */
+function chartAccidents(){
+  var el = document.getElementById('ch-acc'); if(!el) return;
+  var rows = windowRows();
+  var W = 320, H = 130, L = 20, R = 8, T = 12, B = 22;
+  var n = rows.length;
+  if(!n){ el.innerHTML = '<h3>Accidents a day</h3><p class="csub">Nothing logged yet.</p>'; return; }
+  var peak = Math.max(1, Math.max.apply(null, rows.map(function(r){ return r.acc; })));
+  var band = (W - L - R) / n;
+  var bw = Math.min(24, band - 4);          /* capped, and the leftover stays as air */
+  var Y = function(v){ return T + (1 - v / peak) * (H - T - B); };
+
+  var g = '', hits = '';
+  [0, peak].forEach(function(v){
+    g += '<line x1="' + L + '" y1="' + Y(v) + '" x2="' + (W - R) + '" y2="' + Y(v) + '" class="cg"/>';
+    g += sTxt(L - 5, Y(v) + 3.5, String(v), 'cx', 'end');
+  });
+
+  /* the seven day mean, over LOGGED days only */
+  var mean = [], run = [];
+  rows.forEach(function(r){
+    if(!r.quiet){ run.push(r.acc); if(run.length > 7) run.shift(); }
+    mean.push(run.length >= 3 ? run.reduce(function(a,b){ return a+b; }, 0) / run.length : null);
+  });
+
+  rows.forEach(function(r, i){
+    var cx = L + band * i + band / 2;
+    if(r.quiet){
+      /* a hole, not a zero. Shabbat is unlogged, not clean. */
+      g += '<line x1="' + (cx - 4) + '" y1="' + (H - B) + '" x2="' + (cx + 4) + '" y2="' + (H - B) + '" class="cq"/>';
+    } else if(r.acc > 0){
+      var y = Y(r.acc), h = (H - B) - y;
+      g += '<rect x="' + (cx - bw/2) + '" y="' + y + '" width="' + bw + '" height="' + h +
+           '" rx="3" class="cbar"/>';
+    }
+    hits += '<rect x="' + (cx - band/2) + '" y="' + T + '" width="' + band + '" height="' + (H - T - B) +
+         '" class="hit" data-r="' + gesc(
+           r.date.toLocaleDateString(undefined,{weekday:'long', day:'numeric', month:'long'}) + ': ' +
+           (r.quiet ? 'nothing logged, so this day counts neither way.'
+                    : r.acc + (r.acc === 1 ? ' accident' : ' accidents') + ', ' +
+                      r.out + ' trips outside.')) + '"/>';
+    if(i % Math.ceil(n/7) === 0) g += sTxt(cx, H - 7, shortDay(r.date), 'cx', 'middle');
+  });
+
+  var dm = '';
+  mean.forEach(function(v, i){
+    if(v === null) return;
+    dm += (dm ? 'L' : 'M') + (L + band * i + band / 2) + ' ' + Y(v);
+  });
+  if(dm) g += '<path d="' + dm + '" class="cmean"/>';
+
+  /* label the worst day only, not every bar */
+  var worst = rows.reduce(function(a, r){ return r.acc > a.acc ? r : a; }, rows[0]);
+  if(worst.acc === peak && peak > 0){
+    var wi = rows.indexOf(worst);
+    g += sTxt(L + band * wi + band / 2, Y(peak) - 5, String(peak), 'cv', 'middle');
+  }
+  g += hits;
+
+  var live = rows.filter(function(r){ return !r.quiet; });
+  var tot = live.reduce(function(s, r){ return s + r.acc; }, 0);
+  var clean = live.filter(function(r){ return r.acc === 0; }).length;
+  el.innerHTML =
+    '<h3>Accidents a day</h3>' +
+    '<p class="csub">One column per day. A day with none draws nothing, so the flat stretches ' +
+    'are the good ones. A hollow tick is a day nobody logged — Shabbat is unlogged, not clean, ' +
+    'and it is left out of the average.</p>' +
+    '<div class="lg"><span><i style="background:var(--alert)"></i>accidents that day</span>' +
+    '<span><i class="ln" style="background:var(--gold)"></i>7 day average</span>' +
+    '<span><i class="ln" style="background:var(--line)"></i>not logged</span></div>' +
+    '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="Accidents per day">' + g + '</svg>' +
+    '<p class="cread"><b>' + clean + ' clean ' + (clean === 1 ? 'day' : 'days') + '</b> out of ' +
+    live.length + ' logged, and <b>' + tot + '</b> ' + (tot === 1 ? 'accident' : 'accidents') +
+    ' in total. Tap a column for that day.</p>';
+  wireHits(el);
+}
+
+/* ---- 3. where it lands ---- */
+function chartWhere(){
+  var el = document.getElementById('ch-where'); if(!el) return;
+  var rows = windowRows();
+  var t = rows.reduce(function(a, r){
+    a.peeOut += r.peeOut; a.peeIn += r.peeIn;
+    a.poopOut += r.poopOut; a.poopIn += r.poopIn;
+    a.house += r.house; a.crate += r.crate;
+    return a;
+  }, {peeOut:0, peeIn:0, poopOut:0, poopIn:0, house:0, crate:0});
+
+  /* Three two-part bars rather than two pies. A pie cannot be read against another
+     pie, and "is her poop better than her pee" is exactly the comparison he asked
+     for; two bars on a shared 0 to 100 baseline answer it at a glance and a pair of
+     circles does not. Every segment carries its own count and share, which is also
+     what makes the green and red pair safe for a colourblind reader. */
+  var bars = [
+    {lab:'Pee',  a:t.peeOut,  b:t.peeIn,  an:'outside', bn:'accident'},
+    {lab:'Poop', a:t.poopOut, b:t.poopIn, an:'outside', bn:'accident'},
+    {lab:'The accidents', a:t.house, b:t.crate, an:'in the house', bn:'in the crate', shade:true}
+  ];
+  var W = 320, L = 4, R = 4, rowH = 52, T = 4;
+  var H = T + bars.length * rowH;   /* rowH must clear the label at y+48 */
+  var g = '';
+  bars.forEach(function(bar, i){
+    var y = T + i * rowH;
+    var tot = bar.a + bar.b;
+    g += sTxt(L, y + 11, bar.lab + (tot ? '' : ' — none yet'), 'cl');
+    if(!tot) return;
+    var full = W - L - R, bh = 18, by = y + 18;
+    var aw = full * bar.a / tot;
+    /* 2px of surface between the two fills; never a stroke around them */
+    var gap = bar.a && bar.b ? 2 : 0;
+    if(bar.a) g += '<rect x="' + L + '" y="' + by + '" width="' + Math.max(0, aw - gap/2) +
+                   '" height="' + bh + '" rx="3" class="' + (bar.shade ? 'cacc soft' : 'cout') + '"/>';
+    if(bar.b) g += '<rect x="' + (L + aw + gap/2) + '" y="' + by + '" width="' + Math.max(0, full - aw - gap/2) +
+                   '" height="' + bh + '" rx="3" class="cacc"/>';
+    /* Direct labels go OUTSIDE the bar, under it, so a one-count sliver never has
+       its text clipped by its own mark. */
+    var pc = function(v){ return Math.round(v / tot * 100) + '%'; };
+    g += sTxt(L, by + bh + 12, bar.a + ' ' + bar.an + ' · ' + pc(bar.a), 'cx');
+    g += sTxt(W - R, by + bh + 12, bar.b + ' ' + bar.bn + ' · ' + pc(bar.b), 'cx', 'end');
+  });
+
+  var peeT = t.peeOut + t.peeIn, poopT = t.poopOut + t.poopIn;
+  var read;
+  if(!peeT && !poopT) read = 'Nothing logged in this window yet.';
+  else {
+    var pp = peeT ? Math.round(t.peeOut/peeT*100) : null;
+    var qq = poopT ? Math.round(t.poopOut/poopT*100) : null;
+    read = (qq !== null && pp !== null && qq > pp + 10)
+      ? 'Her stools are the solid part: <b>' + qq + '%</b> outside against <b>' + pp +
+        '%</b> of her pees. Stools come on a schedule she gives you warning of; pees do not, ' +
+        'which is why the pee number moves with your trips and not with her training.'
+      : 'Pee <b>' + (pp === null ? '--' : pp + '%') + '</b> outside, stool <b>' +
+        (qq === null ? '--' : qq + '%') + '</b> outside, from ' + (peeT + poopT) + ' logged events.';
+  }
+
+  el.innerHTML =
+    '<h3>Where it lands</h3>' +
+    '<p class="csub">Two bars on one baseline rather than two pie charts, because the question ' +
+    'is whether her stools are better than her pees, and circles cannot be compared to each other ' +
+    'the way two bars can.</p>' +
+    '<div class="lg"><span><i style="background:var(--ok)"></i>outside</span>' +
+    '<span><i style="background:var(--alert)"></i>accident</span>' +
+    '<span><i style="background:var(--alert);opacity:.42"></i>in the house</span></div>' +
+    '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="Where her pees and stools land">' + g + '</svg>' +
+    '<p class="cread">' + read + '</p>';
+}
+
+/* ---- 4. when accidents happen ---- */
+function chartHour(){
+  var el = document.getElementById('ch-hour'); if(!el) return;
+  var from = chartRange === 0 ? 0 : Date.now() - chartRange * 86400000;
+  var bins = new Array(24).fill(0), unknown = 0, total = 0;
+  events.forEach(function(e){
+    if(!isLogEvent(e)) return;
+    if(e.where !== 'Indoor Accident' && e.where !== 'Crate Accident') return;
+    if(e.ts < from) return;
+    total++;
+    /* An entry logged as overnight has no hour anybody saw. Binning it would put a
+       derived 1 AM into this chart and it would read as an observation. */
+    if(timeUnknown(e)){ unknown++; return; }
+    bins[new Date(e.ts).getHours()]++;
+  });
+  var W = 320, H = 120, L = 18, R = 6, T = 12, B = 22;
+  var peak = Math.max(1, Math.max.apply(null, bins));
+  var band = (W - L - R) / 24;
+  var bw = Math.min(24, band - 3);
+  var Y = function(v){ return T + (1 - v / peak) * (H - T - B); };
+  var g = '<line x1="' + L + '" y1="' + (H - B) + '" x2="' + (W - R) + '" y2="' + (H - B) + '" class="cg"/>', hits = '';
+  g += '<line x1="' + L + '" y1="' + Y(peak) + '" x2="' + (W - R) + '" y2="' + Y(peak) + '" class="cg"/>';
+  g += sTxt(L - 4, Y(peak) + 3.5, String(peak), 'cx', 'end');
+  bins.forEach(function(v, h){
+    var cx = L + band * h + band / 2;
+    if(v > 0) g += '<rect x="' + (cx - bw/2) + '" y="' + Y(v) + '" width="' + bw +
+                   '" height="' + ((H - B) - Y(v)) + '" rx="3" class="cbar"/>';
+    hits += '<rect x="' + (cx - band/2) + '" y="' + T + '" width="' + band + '" height="' + (H - T - B) +
+         '" class="hit" data-r="' + gesc(hourName(h) + ': ' + v +
+           (v === 1 ? ' accident' : ' accidents')) + '"/>';
+  });
+  [0, 6, 12, 18].forEach(function(h){
+    g += sTxt(L + band * h + band / 2, H - 7, hourName(h), 'cx', 'middle');
+  });
+  /* Name a worst hour only when there is one. With two dozen accidents spread over
+     twenty-four bins the tallest column is usually a tie or a coin toss, and putting
+     a label on it turns noise into advice he would act on. It has to clear three,
+     and it has to actually beat the runner up. */
+  var top = bins.indexOf(peak);
+  var second = bins.slice().sort(function(a, b){ return b - a; })[1] || 0;
+  var solid = total >= 12 && peak >= 3 && peak > second;
+  if(solid) g += sTxt(L + band * top + band / 2, Y(peak) - 5, hourName(top), 'cv', 'middle');
+  g += hits;
+
+  el.innerHTML =
+    '<h3>When accidents happen</h3>' +
+    '<p class="csub">Every accident by the hour it was logged. This is descriptive: it says ' +
+    'when, never why.' + (unknown ? ' ' + unknown + ' overnight ' + (unknown === 1 ? 'entry has' : 'entries have') +
+    ' no hour anybody saw and ' + (unknown === 1 ? 'is' : 'are') + ' left out.' : '') + '</p>' +
+    '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="Accidents by hour of day">' + g + '</svg>' +
+    '<p class="cread">' + (solid
+      ? 'Her worst hour is <b>' + hourName(top) + '</b>, clear of the next one. Put a trip fifteen ' +
+        'minutes before it and watch whether this column comes down. Tap any hour.'
+      : total < 5
+        ? 'Only ' + total + ' logged so far, which is far too few for a shape.'
+        : '<b>' + total + ' accidents</b> so far, and no hour stands clear of the rest, so there is ' +
+          'no worst hour to name yet. Tap any hour for its count.') + '</p>';
+  wireHits(el);
+}
+
+function hourName(h){ return (h % 12 || 12) + (h < 12 ? 'am' : 'pm'); }
+
+/* Tapping a mark writes into that card's readout line. A phone has no hover, so the
+   tap IS the tooltip; the readout sits in the card rather than floating, because a
+   floating bubble under a thumb is a bubble you cannot see. */
+function wireHits(card){
+  var out = card.querySelector('.cread');
+  if(!out) return;
+  var home = out.innerHTML;
+  card.querySelectorAll('.hit').forEach(function(h){
+    h.addEventListener('click', function(){
+      card.querySelectorAll('.hit').forEach(function(o){ o.classList.remove('on'); });
+      h.classList.add('on');
+      out.textContent = h.getAttribute('data-r');
+    });
+  });
+  card.addEventListener('dblclick', function(){ out.innerHTML = home; });
+}
+
+function renderCharts(){
+  var bar = document.getElementById('crange');
+  if(bar){
+    bar.innerHTML = '';
+    [[7,'7 days'],[14,'14 days'],[0,'All']].forEach(function(o){
+      var b = document.createElement('button');
+      b.textContent = o[1];
+      if(chartRange === o[0]) b.className = 'on';
+      b.onclick = function(){ setRange(o[0]); };
+      bar.appendChild(b);
+    });
+  }
+  renderKpis();
+  chartHold();
+  chartProjection();
+  chartAccidents();
+  chartWhere();
+  chartHour();
+}
 
 /* ---- the bare crate countdown -----------------------------------------------
    Seven CLEAN nights, not seven calendar days. Any crate accident sends it back
