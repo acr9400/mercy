@@ -1,9 +1,9 @@
-const CACHE = 'mercy-v78';
+const CACHE = 'mercy-v83';
 const ASSETS = ['./', './index.html', './manifest.json',
   './icon-192.png', './icon-512.png',
   './icon-192-maskable.png', './icon-512-maskable.png',
   './apple-touch-icon.png', './favicon-32.png', './avatar.jpg',
-  './guide.json', './training.json', './kit.json'];
+  './guide.json', './training.json', './kit.json', './food.json'];
 
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(ASSETS)).then(() => self.skipWaiting()));
