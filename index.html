@@ -105,9 +105,26 @@ h2{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--mute
 /* ---- signature: the ceiling clock ---- */
 .clock{position:relative;background:var(--raised);border:1px solid var(--line);
   border-radius:20px;padding:22px 20px 18px;overflow:hidden}
-.fill{position:absolute;inset:0;width:0%;background:linear-gradient(90deg,
-  rgba(232,176,75,.13),rgba(232,176,75,.26));transition:width .6s ease,background .6s ease}
-.clock.over .fill{background:linear-gradient(90deg,rgba(228,87,46,.20),rgba(228,87,46,.38))}
+/* The fill is a flat tint in a THEME VARIABLE now, not a hardcoded gradient. The old
+   rgba(232,176,75) was the NIGHT theme's gold sitting in the cream theme, so the one
+   part of the clock that actually moves has never matched the palette it moves in. */
+/* .clock>.fill, NOT .fill. Both this and .clock>*{position:relative} below are one
+   class specific, and .clock>* comes later, so a bare .fill lost the tie and the bar
+   resolved to position:relative with height 0. The signature clock has been drawing
+   no fill at all since it was written; nothing warned because it fails silently. */
+.clock>.fill{position:absolute;inset:0;width:0%;background:var(--gold);opacity:.22;
+  transition:width .6s ease,background .35s ease,opacity .35s ease}
+.clock.z-safe .fill{background:var(--ok);opacity:.20}
+.clock.z-warn .fill{opacity:.38}
+.clock.over .fill{background:var(--alert);opacity:.34}
+/* The two zone marks, drawn ON the clock at ZONE_HALF and ZONE_WARN. A percentage he
+   has to work out from two clock times is a percentage he will not work out at 8am
+   with the shower running, which is the whole reason this exists. */
+.clock .zmark{position:absolute;top:0;bottom:0;width:1px;background:var(--muted);
+  opacity:.30;z-index:1;pointer-events:none}
+.clock.over .zmark{opacity:.45}
+.zpct{color:var(--muted)}
+.clock.z-warn .zpct,.clock.over .zpct{color:var(--alert);font-weight:600}
 .clock>*{position:relative}
 .since{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
 .big{font-size:58px;line-height:1;font-weight:200;letter-spacing:-.03em;
@@ -118,6 +135,7 @@ h2{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--mute
 .verdict{margin-top:12px;font-size:14px;font-weight:500}
 .verdict.ok{color:var(--ok)}
 .verdict.warn{color:var(--gold)}
+.verdict.half{color:var(--paper)}
 .verdict.over{color:var(--alert)}
 
 /* ---- buttons ---- */
@@ -834,7 +852,7 @@ body.gon #ver{display:none}
 <h1><img src="./avatar.jpg" alt="" onerror="this.style.display='none'">
   <span>Mercy &middot; <span id="age"></span></span></h1>
 <div class="who" id="who"></div>
-<div id="ver">v86 <button onclick="forceUpdate()">Force update</button></div>
+<div id="ver">v87 <button onclick="forceUpdate()">Force update</button></div>
 <div class="sync off" id="sync"><span class="led"></span><span id="synctext">Local only</span></div>
 
 <div class="shab" id="shab"></div>
@@ -862,9 +880,11 @@ body.gon #ver{display:none}
 
 <div class="clock" id="clock">
   <div class="fill" id="fill"></div>
+  <div class="zmark" id="z1"></div>
+  <div class="zmark" id="z2"></div>
   <div class="since" id="sincelbl">Since she was outside</div>
   <div class="big" id="elapsed">--:--</div>
-  <div class="ceil">Her ceiling today is <b id="ceiling">2:12</b></div>
+  <div class="ceil">Her ceiling today is <b id="ceiling">2:12</b><span id="pctnow"></span></div>
   <div class="verdict" id="verdict">Log her first outing to start the clock.</div>
   <button id="holdbtn" hidden onclick="holdTap()"></button>
   <div id="subclocks"></div>
@@ -1118,6 +1138,8 @@ const OWNER_KEY = "Mercy9400";
 const WRITE_CODE = "Mercy9400";
 const HOLD_PER_MONTH = 1.0;
 const HOLD_MAX = 6.0;
+const ZONE_HALF = 50;
+const ZONE_WARN = 75;
 const MEALS_UNTIL_6MO = 3;
 const MEALS_AFTER_6MO = 2;
 const WALK_PER_MONTH = 5.0;
@@ -3271,7 +3293,8 @@ function render(){
   if(last===null){
     document.getElementById('elapsed').textContent='--:--';
     document.getElementById('fill').style.width='0%';
-    clock.classList.remove('over','asleep');
+    clock.classList.remove('over','asleep','z-safe','z-warn');
+    var pn0=document.getElementById('pctnow'); if(pn0) pn0.textContent='';
     verdict.className='verdict';
     verdict.textContent='Log her first outing to start the clock.';
     const hb=document.getElementById('holdbtn'); if(hb) hb.hidden=true;
@@ -3280,17 +3303,33 @@ function render(){
     const el=(Date.now()-last)/3600000;
     document.getElementById('elapsed').textContent =
       Math.floor(el)+':'+pad(Math.floor((el%1)*60));
-    const pct=Math.min(100, el/hold*100);
+    /* raw can exceed 100 and the WORDS need that; only the bar is clamped, because a
+       fill wider than its track just overflows the card. */
+    const raw = el/hold*100;
+    const pct = Math.min(100, raw);
     document.getElementById('fill').style.width=pct+'%';
     const over = el>hold;
+    /* The marks are positioned from config, so 50 and 75 exist in exactly one place
+       and the CSS never has to know either number. */
+    const z1=document.getElementById('z1'), z2=document.getElementById('z2');
+    if(z1) z1.style.left=ZONE_HALF+'%';
+    if(z2) z2.style.left=ZONE_WARN+'%';
+    const pn=document.getElementById('pctnow');
+    if(pn) pn.innerHTML=' &middot; <span class="zpct">'+Math.round(raw)+'% used</span>';
     /* A running hold owns the whole card: no red, no take her out now. */
     if(!paintHold(el, hold)){
+      clock.classList.remove('z-safe','z-warn');
       clock.classList.toggle('over', over);
-      if(over){ verdict.className='verdict over'; verdict.textContent='Past her ceiling. Take her out now.'; }
-      else if(pct>75){ verdict.className='verdict warn';
-        verdict.textContent='Getting close. About '+Math.round((hold-el)*60)+' minutes left.'; }
-      else { verdict.className='verdict ok';
-        verdict.textContent='Fine for about '+Math.round((hold-el)*60)+' more minutes.'; }
+      const left = Math.round((hold-el)*60);
+      if(over){ verdict.className='verdict over';
+        verdict.textContent='Past her ceiling. Take her out now.'; }
+      else if(raw >= ZONE_WARN){ clock.classList.add('z-warn'); verdict.className='verdict warn';
+        verdict.textContent='Danger zone. '+Math.round(raw)+'% gone, about '+left+
+                            ' minutes left. Take her out.'; }
+      else if(raw >= ZONE_HALF){ verdict.className='verdict half';
+        verdict.textContent='Halfway. '+Math.round(raw)+'% gone, about '+left+' minutes left.'; }
+      else { clock.classList.add('z-safe'); verdict.className='verdict ok';
+        verdict.textContent='Safe zone. About '+left+' more minutes.'; }
     }
   }
 
@@ -3647,9 +3686,11 @@ function renderAlerts(){
   let on=false, label='', body='';
   if(perm==='granted' && armed){
     on=true; label='Alerts are on';
-    body='This phone will beep, buzz and show a notification when she goes past her '+
-         'hold, or a walk or play session runs over. Only while the app is open, which '+
-         'is a browser limit: the calendar file is what wakes you when it is closed.';
+    body='This phone will beep, buzz and show a notification at '+ZONE_WARN+'% of her '+
+         'hold, again if she goes past it, and if a walk or play session runs over. The '+
+         ZONE_WARN+'% one is the useful one: past her hold is already too late. Only '+
+         'while the app is OPEN, which is a browser limit and not a setting \u2014 the '+
+         'calendar file is what wakes you when it is closed.';
   } else if(perm==='denied'){
     label='Blocked by iOS';
     body='You said no to notifications. Turn them back on in Settings, Mercy, '+
@@ -3657,8 +3698,10 @@ function renderAlerts(){
     btn.textContent='Enable sound and buzz';
   } else {
     label='Alerts are off';
-    body='Tap once on this phone. You will get a beep, a buzz and a notification when '+
-         'she is past her hold. Everyone using the app has to do this on their own phone.';
+    body='Tap once on this phone. You will get a beep, a buzz and a notification at '+
+         ZONE_WARN+'% of her hold, while there is still time to do something about it, '+
+         'and again if she goes past it. Everyone using the app has to do this on their '+
+         'own phone.';
     btn.textContent='Turn alerts on';
   }
   card.className='alertcard '+(on?'on':'off');
@@ -3698,16 +3741,36 @@ function askNotify(){
       p!=='granted');
   });
 }
-let warned=false;
+/* Two one-shot flags, one per zone crossing, both cleared when she drops back under.
+   The ceiling alarm on its own was too late to be useful: by the time it fires she is
+   already past what she can do, and on 31 August she had gone eleven minutes earlier
+   than that anyway. The 75 percent ping is the one that can still change the outcome. */
+let warned=false, warnedEarly=false;
 setInterval(()=>{
   render();
   const last=lastOutside(); if(last===null) return;
   const el=(Date.now()-last)/3600000, hold=holdHours();
-  if(el>hold && !warned && !shabbatNow()){
-    alarm('Mercy is past her ceiling', 'She has not been out in '+el.toFixed(1)+' hours.');
-    warned=true;
+  const pct=el/hold*100;
+  /* Resets run FIRST and outside every guard, so a flag can never get stuck on across
+     a Shabbat or a nap and silently cost him the next warning. */
+  if(pct < ZONE_WARN) warnedEarly=false;
+  if(el < hold) warned=false;
+  if(shabbatNow()) return;
+  /* A running hold means she is ASLEEP and he deliberately deferred the outing.
+     Pinging him to go and wake her is the exact opposite of what that button is for. */
+  if(holdActive()) return;
+  if(el > hold){
+    /* Past the ceiling supersedes the 75 mark rather than firing beside it: a first
+       tick after a long absence would otherwise sound two alarms back to back. */
+    if(!warned){
+      alarm('Mercy is past her ceiling', 'She has not been out in '+el.toFixed(1)+' hours.');
+      warned=true; warnedEarly=true;
+    }
+  } else if(pct >= ZONE_WARN && !warnedEarly){
+    alarm('Mercy is '+Math.round(pct)+'% through her window',
+          'About '+Math.round((hold-el)*60)+' minutes left. Take her out before she has to ask.');
+    warnedEarly=true;
   }
-  if(el<hold) warned=false;
 }, 30000);
 
 if('serviceWorker' in navigator){
