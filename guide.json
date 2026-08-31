@@ -1547,6 +1547,40 @@
    "cat": "Home & care"
   },
   {
+   "id": "f-bloat",
+   "kind": "do",
+   "cat": "Food & treats",
+   "title": "Eating speed, bowl height and bloat",
+   "tags": [
+    "bloat",
+    "gdv",
+    "torsion",
+    "twisted stomach",
+    "raised",
+    "elevated",
+    "feeder",
+    "stand",
+    "slow feeder",
+    "gulp",
+    "speed",
+    "gastropexy",
+    "exercise after eating",
+    "deep chested"
+   ],
+   "now": [
+    "Bowl ON THE FLOOR. Not on a stand, not raised. Where the bowls go and what they are made of is the bowls entry; this is only about height.",
+    "Slow her down if she inhales it. A slow-feeder bowl, a snuffle mat, or the free version: spread the meal across a flat baking tray so she cannot take big mouthfuls.",
+    "Keep hard play and walks away from meals, roughly an hour either side. The out-after-eating trip is a toilet trip, not a game.",
+    "Three measured meals a day rather than one big one, which is already what she is on."
+   ],
+   "not": [
+    "Do not buy a raised feeder. People buy them for large breeds believing they help. The evidence points the other way.",
+    "Do not let a helper top her up because she looked hungry."
+   ],
+   "why": "Bloat, properly gastric dilatation and volvulus, is her breed's signature emergency: the stomach fills with gas and twists, and it kills in about two hours. It is an adult dog's risk rather than a ten week old's, which is exactly why the habits go in now, while nothing is at stake and she is still learning what normal looks like. Glickman's 2000 study of non-dietary risk factors found a raised feeder roughly doubled the risk in large breed dogs, alongside fast eating, a deep narrow chest, and a first-degree relative who had an episode. Be honest about how strong that is: only two studies have looked at feeder height and they disagree with each other. What is not in dispute is the direction. No study has ever found a raised bowl REDUCES the risk, so a bowl on the floor is the safe default and it costs nothing to choose. She is a deep-chested large breed, which is the part that is not in doubt. Her health plan already carries the other half of this: ask about a preventive gastropexy at the same operation whenever she is eventually spayed.",
+   "vet": "The emergency signs are in 'Her belly is swollen, hard or painful'. Retching that brings nothing up, a hard swollen belly, restlessness and drooling in a large breed dog is a drive-there-now. This is the reason the 24 hour hospital had to be found before the vaccines."
+  },
+  {
    "id": "f-bowls",
    "kind": "do",
    "cat": "Food & treats",
@@ -1594,7 +1628,11 @@
     "overfeeding",
     "handlers",
     "weight",
-    "free feed"
+    "free feed",
+    "pomc",
+    "appetite",
+    "obesity",
+    "breed"
    ],
    "now": [
     "No more than about 70 to 100 kcal a day from anything that is not her complete-and-balanced food. That is roughly 10 percent of her intake.",
@@ -1604,10 +1642,10 @@
    ],
    "not": [
     "Do not free-feed. Measure every meal.",
-    "Do not treat \"she is still hungry\" as evidence that she needs more. Golden retrievers carry a documented appetite-drive gene variant. Hunger in this breed is a poor guide to requirement. Use the scale and the ribs.",
+    "Do not treat \"she is still hungry\" as evidence that she needs more. Golden retrievers are one of the three breeds most likely to end up overweight. Hunger in this breed is a poor guide to requirement. Use the scale and the ribs.",
     "Do not read a visible waist on a golden puppy as neglect. It is correct."
    ],
-   "why": "Kealy 1992 is the strongest single piece of evidence in this whole guide. Forty-eight Labradors from 8 weeks old, randomised: one group fed freely, one fed 25 percent less of the same food, followed for life with serial hip X-rays. Hip dysplasia appeared in 7 of 24 limit-fed dogs versus 16 of 24 fed freely. Same food, same breed, only the amount differed. The restricted group also developed arthritis later and lived longer.",
+   "why": "Kealy 1992 is the strongest single piece of evidence in this whole guide. Forty-eight Labradors from 8 weeks old, randomised: one group fed freely, one fed 25 percent less of the same food, followed for life with serial hip X-rays. Hip dysplasia appeared in 7 of 24 limit-fed dogs versus 16 of 24 fed freely. Same food, same breed, only the amount differed. The restricted group also developed arthritis later and lived longer. On the breed claim, corrected 30 August 2026: the appetite gene people quote is a 14 base pair POMC deletion, and it is a LABRADOR and flat-coated retriever finding, not a golden one. Raffan 2016 looked for it in a cohort of four obesity-prone breeds that included goldens and found it only in Labradors, and it has since been looked for in about forty breeds without turning up. What IS true of her breed: a 2025 primary-care study of fifteen breeds put pugs, golden retrievers and Labradors at the highest underlying susceptibility to being overweight, and the golden retriever cohort in Simpson 2019 found spaying raised that risk 1.6 to 2.2 times depending on age at surgery. So the answer is still measure her, not trust her appetite. The mechanism is breed and neutering, not a gene she has.",
    "vet": "Ask your vet to show you how to body condition score her, and to weigh her at every visit."
   },
   {
@@ -1965,6 +2003,28 @@
    "why": "High sugar for the calories. Excellent Kong filler because it is sticky."
   },
   {
+   "id": "f-beef",
+   "kind": "food",
+   "cat": "Food & treats",
+   "title": "Beef, plain and cooked",
+   "verdict": "yes",
+   "tags": [
+    "beef",
+    "ground beef",
+    "mince",
+    "steak",
+    "burger",
+    "meat",
+    "protein",
+    "topper"
+   ],
+   "line": "Yes, lean and rinsed. It is the fat that causes the trouble, not the beef.",
+   "amount": "An inch cube of cooked lean beef is roughly 60 kcal, which is most of her day. Think a teaspoon, not a spoonful.",
+   "prep": "Buy 93/7 rather than 80/20. Brown it in a dry pan with no oil, tip it into a sieve, rinse under hot water and let it drain. Nothing else in the pan: no salt, no oil, no onion, no garlic, no seasoning of any kind.",
+   "why": "Plain cooked beef is one of the safest things in this section and one of the easiest to overdo, because it is calorie-dense and she loves it. The other reason to keep it small is the mineral one: meat is phosphorus-rich and calcium-poor, so a spoon of mince on top of a balanced food pulls her ratio the wrong way while she is building a skeleton. See the calcium entry.",
+   "age": "Raw beef is a separate question and the answer is no while she is unvaccinated. See the raw meat entry."
+  },
+  {
    "id": "f-blueberries",
    "kind": "food",
    "cat": "Food & treats",
@@ -1982,6 +2042,59 @@
    "amount": "Three to five berries, about 2 to 3 kcal.",
    "prep": "Fresh or thawed. Whole is fine, they are soft and compressible.",
    "why": "Frozen ones are a good teething soother."
+  },
+  {
+   "id": "f-broccoli",
+   "kind": "food",
+   "cat": "Food & treats",
+   "title": "Broccoli, cauliflower and cabbage",
+   "verdict": "caution",
+   "tags": [
+    "broccoli",
+    "cauliflower",
+    "cabbage",
+    "brussels",
+    "sprouts",
+    "kale",
+    "cruciferous",
+    "gas",
+    "isothiocyanate",
+    "thyroid",
+    "goitrogen",
+    "vegetable"
+   ],
+   "line": "Yes but small, and cooked. Not a bowlful.",
+   "amount": "One or two small florets. Safe below about 10 percent of what she eats in a day; above about 25 percent it is genuinely toxic rather than just unwise.",
+   "prep": "Cook it until soft and skip the tough stalk, which is the wrong shape to swallow. Raw and in quantity is what causes the trouble.",
+   "why": "The florets carry isothiocyanates, which irritate the lining of the stomach and gut, and the dose response is steep rather than gradual. Brussels sprouts are safe on the same terms and famously gassy, which in a puppy who sleeps in a crate in the bedroom is a decision you make with your nose.",
+   "signs": "Gas, gurgling, loose stool, occasionally vomiting. Sustained rather than dramatic.",
+   "age": "On the thyroid worry, honestly: these are goitrogens, goldens do appear in the breed lists for hypothyroidism, and cooking destroys most of it. But there is no evidence that food amounts of broccoli cause thyroid disease in dogs, and the studies disagree about how much extra risk her breed actually carries. Keep the portion small because of her stomach, not because of her thyroid."
+  },
+  {
+   "id": "f-broth",
+   "kind": "food",
+   "cat": "Food & treats",
+   "title": "Stock, broth and bouillon",
+   "verdict": "never",
+   "tags": [
+    "stock",
+    "broth",
+    "bone broth",
+    "bouillon",
+    "cube",
+    "stock cube",
+    "onion",
+    "garlic",
+    "seasoning",
+    "flavouring",
+    "gravy"
+   ],
+   "line": "Never, from a carton, a tin or a cube. This is the likeliest way somebody poisons her by being kind.",
+   "amount": "There is no safe amount of a stock that contains onion or garlic, and almost all of them do.",
+   "prep": "Read the label of anything you are about to pour on her food. Onion powder, garlic powder, yeast extract, 'natural flavouring' and 'vegetable concentrate' all commonly mean allium. Even products sold AS dog bone broth sometimes carry it.",
+   "why": "Stock is the classic route in. It looks like plain savoury water, nobody thinks of it as a food, and it is concentrated: the powder form is worse than the fresh vegetable it came from because the water has been taken out. Cooking does not destroy it. This is why every recipe in the Food tab says water and only water.",
+   "signs": "Allium damage shows up days later, not at the time: weakness, pale gums, dark urine, jaundice. See the onion entry.",
+   "age": "The plain version is fine and easy: water you cooked meat or vegetables in, with nothing added. That is all a broth is for her."
   },
   {
    "id": "f-bully",
@@ -2172,6 +2285,30 @@
    "signs": "Repeated retching, vomiting after drinking, refusing food, painful belly, no stool. Surgical emergency."
   },
   {
+   "id": "f-cottage",
+   "kind": "food",
+   "cat": "Food & treats",
+   "title": "Milk, cream and cottage cheese",
+   "verdict": "caution",
+   "tags": [
+    "milk",
+    "cream",
+    "cottage cheese",
+    "lactose",
+    "dairy",
+    "calcium",
+    "lactose",
+    "lactase",
+    "intolerant",
+    "intolerance"
+   ],
+   "line": "Small and occasional. And yes, the lactose point is real: that is why the form matters.",
+   "amount": "A tablespoon of cottage cheese is about 12 kcal. A saucer of milk is not a portion for a puppy, it is a meal.",
+   "prep": "Plain, whole, unsweetened. Milk is the worst of the three for her, cottage cheese and yogurt are better tolerated, and an aged hard cheese is better again. Check anything labelled light or sugar-free for xylitol.",
+   "why": "Dogs do lose most of their lactase after weaning, so the intolerance is real and milk in any quantity is a straightforward route to gas and loose stool. The reason yogurt and hard cheese still appear on the safe side of this app is that they are not the same object: fermentation converts much of the lactose to lactic acid, and cheese-making drains off the whey, which is where the lactose lives. So the ladder runs milk, then cottage cheese and yogurt, then aged hard cheese, from worst tolerated to best. It is a difference of degree, not a loophole. The second reason to keep all of it small is the one people miss: dairy is a calcium source, and she is a large breed puppy on a food whose whole job is holding calcium at a controlled level. A little is fine. A daily bowl of cottage cheese is quietly supplementing her.",
+   "age": "For her, right now, the answer is still not yet. The yogurt entry says wait until four to five months, and that stands: with a food transition running and a fecal still out, added dairy mostly muddies the stool signal you are trying to read. Read the calcium entry before you make any dairy routine after that."
+  },
+  {
    "id": "f-cucumber",
    "kind": "food",
    "cat": "Food & treats",
@@ -2231,6 +2368,32 @@
    "why": "Very useful for a picky eater."
   },
   {
+   "id": "f-fish",
+   "kind": "food",
+   "cat": "Food & treats",
+   "title": "Cooked fish: salmon, white fish, tilapia",
+   "verdict": "yes",
+   "tags": [
+    "fish",
+    "salmon",
+    "cod",
+    "tilapia",
+    "haddock",
+    "pollock",
+    "white fish",
+    "omega",
+    "omega-3",
+    "raw fish",
+    "salmon poisoning"
+   ],
+   "line": "Yes, cooked through and boned. Never raw.",
+   "amount": "A piece the size of your thumb, once or twice a week. Cooked salmon runs about 55 kcal an ounce, white fish about 30.",
+   "prep": "Cooked until it flakes, plain, no oil, no salt, no lemon, no seasoning. Go through it with your fingers for bones: small sharp fish bones are a genuine hazard and the reason people are told to skip fish entirely. No breading, no batter.",
+   "why": "Cooked fish is a good protein and a real source of the omega-3s that matter for skin and coat. Raw is a different object. Raw salmon and trout can carry a fluke that carries Neorickettsia helminthoeca, which causes salmon poisoning disease and kills up to 90 percent of untreated dogs. Being straight about the geography: that fluke is a Pacific Northwest problem and this is New York, so the realistic risk to her is low. Cook it anyway, because raw fish also carries the ordinary bacteria and parasites she has no vaccine cover for.",
+   "signs": "From raw salmonid, five to seven days later and sometimes up to a month: fever, vomiting, diarrhoea, swollen glands, going flat. Tell the vet she ate raw fish, because the treatment is specific.",
+   "age": "Smoked salmon is not cooked fish. It is salt-cured, and it belongs with the processed meats."
+  },
+  {
    "id": "f-grapes",
    "kind": "food",
    "cat": "Food & treats",
@@ -2272,6 +2435,40 @@
    "why": "Fresh or frozen plain. Never canned with salt, never green bean casserole, which contains onion."
   },
   {
+   "id": "f-homemade",
+   "kind": "do",
+   "cat": "Food & treats",
+   "title": "Cooking for her yourself",
+   "tags": [
+    "homemade",
+    "home cooked",
+    "recipe",
+    "recipes",
+    "ground beef",
+    "mince",
+    "chicken",
+    "lamb",
+    "topper",
+    "balance",
+    "calcium",
+    "diy"
+   ],
+   "now": [
+    "Cook toppers, not meals. Anything you make sits INSIDE the 10 percent budget, on top of her complete food, and you take the same amount back out of her bowl.",
+    "Keep a meat topper small and occasional, and lean on the vegetable ones for anything regular. Pumpkin and green beans barely move her mineral balance; a spoon of mince does. The calcium entry explains why, and it outranks any recipe.",
+    "Three rules, every recipe, no exceptions: no onion or garlic in any form, including stock, broth cubes, and anything labelled seasoning or flavouring; no salt, no oil, no butter; drain and rinse the fat off cooked mince.",
+    "Freeze it in an ice cube tray. One cube is about a tablespoon and a half, which is the right unit for her.",
+    "If you want to feed her a genuinely homemade diet rather than a topper, that is a real thing people do and it needs a formulation, not a recipe. balance.it generates one free around your own ingredients; petdiets.com sells nutritionist-written puppy recipes from about $25; a board-certified veterinary nutritionist by telemedicine is the proper answer for a large breed puppy."
+   ],
+   "not": [
+    "Do not replace a meal with home-cooked food while she is growing. This is the part that matters.",
+    "Do not fix the mineral problem by adding calcium yourself. Read the calcium entry first: too much during large breed growth causes its own skeletal disease, and you cannot correct this by guessing in either direction. A formulated diet's supplement comes from the formulation, not from a scoop.",
+    "Do not trust a recipe off a website or out of a book because it looks wholesome."
+   ],
+   "why": "UC Davis took 200 home-prepared recipes from 34 sources, including veterinary textbooks, and measured them against the requirements. Ninety-five percent were short of at least one essential nutrient, and only five passed, all five written by veterinarians; the usual gaps were choline, vitamin D, zinc and vitamin E. That is the case against cooking her whole diet from a recipe. The case for keeping even a topper small is the calcium entry: mince is phosphorus-rich and calcium-poor, so meat on top of a balanced food pulls the ratio the wrong way, and she is a large breed puppy building a skeleton. Ten percent is small enough not to matter. A quarter of her bowl is not. The thing a topper sits on top of has to be carrying that load on its own, which is why WHICH Pro Plan she is on is still on the question list: only the large-size growth formula carries the AAFCO statement her vet meant when he said it settles the calcium question. Confirm that off the bag before you start adding to her bowl.",
+   "vet": "Ask before you change anything structural about how she is fed, not after. If you do go to a formulated homemade diet, tell him and bring the formulation."
+  },
+  {
    "id": "f-hooves",
    "kind": "food",
    "cat": "Food & treats",
@@ -2304,7 +2501,8 @@
    ],
    "line": "Fine, with a caveat, and not worth arguing about.",
    "prep": "Crushed ice or shavings are the safer version.",
-   "why": "The claim that ice cracks teeth is repeated everywhere with almost no evidence behind it. Ice does fail the thumbnail test, but it shatters rather than resisting."
+   "why": "The claim that ice cracks teeth is repeated everywhere with almost no evidence behind it. Ice does fail the thumbnail test, but it shatters rather than resisting.",
+   "amount": "No calories worth counting. A few cubes in her water bowl on a hot day, or one to chew while you are watching."
   },
   {
    "id": "f-kong",
@@ -2329,6 +2527,63 @@
    "why": "Passes the thumbnail test, no fracture risk, nothing to swallow. Stuff it with her own soaked kibble mash and freeze it: that is a 20 minute enrichment activity, a teething soother and a crate-training tool, all funded from her measured ration rather than from her treat budget. Check it regularly and throw it away if pieces come off."
   },
   {
+   "id": "f-kosher",
+   "kind": "do",
+   "cat": "Food & treats",
+   "title": "Kashrut: the three questions, and the one with a deadline",
+   "tags": [
+    "kosher",
+    "kashrut",
+    "halacha",
+    "rav",
+    "meat and milk",
+    "basar bechalav",
+    "milchig",
+    "fleishig",
+    "pesach",
+    "passover",
+    "chametz",
+    "kitniyot",
+    "pork",
+    "shellfish",
+    "treif"
+   ],
+   "now": [
+    "MEAT AND MILK. Feeding her is a form of benefit, and benefit from a meat-and-milk mixture is the issue, not just eating it. Practically: do not put dairy on a meat meal. Her Pro Plan is chicken and rice based with dried egg and no dairy in the ingredient list, so the food as it stands does not raise this. It is adding a spoon of yogurt or cottage cheese on top that would, which is one of two reasons the Kong recipe no longer lists yogurt.",
+    "PESACH, AND THIS ONE HAS A DATE. Chametz may not be owned or benefited from, so it may not be fed to her. Purina Pro Plan Puppy Large Breed lists WHOLE GRAIN WHEAT. Wheat is one of the five grains. Kitniyot is a different question and the usual position is that pets may be fed it, which is why rice, corn and soy based foods are the route people take.",
+    "NEXT PESACH IS 21 APRIL 2027. She will be about ten months old and still on a large breed growth food. Do not leave this to the week before: a puppy's food is not something you swap overnight, the transition ladder is two weeks, and the replacement still has to carry the AAFCO statement for large size growth. Start looking in February.",
+    "PORK AND SHELLFISH. Be precise about this one rather than lumping it in: these are forbidden to eat, but unlike chametz and meat-with-milk they are not forbidden to own or benefit from, so it is not the same category of question. Ask anyway, and separately from that, they are not in this house.",
+    "ASK YOUR RAV ON ALL THREE. Nothing in this app is a psak and none of it should be treated as one. What it can do is make sure the right question gets asked early enough to act on."
+   ],
+   "not": [
+    "Do not switch her food abruptly for Pesach. A sudden change in a growing large breed puppy costs you a week of diarrhoea and a lost stool baseline, and it is entirely avoidable with six weeks of notice.",
+    "Do not assume a food is chametz-free because it looks grain-free on the front of the bag. Read the ingredient panel, and check for wheat, barley, spelt, oats and rye by name.",
+    "Do not let the halachic question and the veterinary question get answered by the same person. Which formula is safe for a large breed puppy is a vet question. Whether you may own it in Nisan is a rav question."
+   ],
+   "why": "This section was originally written as though the house were not kosher, which made three separate pieces of it wrong or incomplete. The Pesach one is the only one with a clock on it, and it is the one most likely to go wrong quietly: the deadline arrives once a year, the food she is on contains wheat, and the fallback of just buying something else that week is exactly the thing you cannot safely do to a puppy's gut on short notice. Certifying agencies publish Pesach pet food lists each year, and some rabbis permit a sale of the chametz or of the animal instead. Which of those applies here is not a question this app can answer.",
+   "vet": "The vet question that pairs with it: ask him for a chametz-free food that still carries the AAFCO statement for growth including large size dogs, so you are choosing from a list he has already approved rather than reading panels alone in March."
+  },
+  {
+   "id": "f-lamb",
+   "kind": "food",
+   "cat": "Food & treats",
+   "title": "Lamb, plain and cooked",
+   "verdict": "caution",
+   "tags": [
+    "lamb",
+    "ground lamb",
+    "mutton",
+    "meat",
+    "protein",
+    "fat",
+    "novel protein"
+   ],
+   "line": "Fine, but it is the fattiest of the common meats and the priciest.",
+   "amount": "Half of what you would give of beef, and less often.",
+   "prep": "Brown it, pour the fat off as it renders, then sieve and rinse under hot water. With lamb do the rinse twice; there is a lot more fat to get rid of than with beef.",
+   "why": "Nutritionally there is nothing wrong with plain lamb. The practical case against it for her is fat load and cost: a sudden slug of fat is the most common trigger of pancreatitis in dogs, and she is a puppy with an unsettled gut and a fecal still out. Its one genuine use is as a novel protein, meaning a meat she has never eaten, if she ever turns out to react to chicken or beef. That is a conversation with her vet rather than something to start on your own."
+  },
+  {
    "id": "f-leftovers",
    "kind": "food",
    "cat": "Food & treats",
@@ -2351,6 +2606,28 @@
    "line": "The realistic poisoning risk in this apartment is not a raw onion. It is your dinner.",
    "prep": "Onion and garlic powder are in almost all savoury leftovers: gravy, stock, soup, pizza, Chinese takeaway, rotisserie chicken skin and rub, hummus, most commercial broths, baby food.",
    "why": "People check for chocolate and never check for garlic powder, and it is in nearly everything savoury."
+  },
+  {
+   "id": "f-liver",
+   "kind": "food",
+   "cat": "Food & treats",
+   "title": "Liver, kidney and organ meat",
+   "verdict": "caution",
+   "tags": [
+    "liver",
+    "kidney",
+    "organ",
+    "offal",
+    "vitamin a",
+    "training treat",
+    "high value"
+   ],
+   "line": "The best training treat there is, and the easiest one to overdo.",
+   "amount": "A few crumbs a day. Not three servings a week, and never a whole portion.",
+   "prep": "Cooked, plain, unseasoned, then broken very small. Baked dry it crumbles into pea-sized pieces that are perfect for training and easy to carry.",
+   "why": "Liver is genuinely high-value: most dogs will work harder for it than for chicken, which is why it is worth having for the hard jobs like recall. The limit is vitamin A. Liver is extremely concentrated in it, and unlike most vitamins there is no easy off-switch for the excess. Sustained overfeeding causes hypervitaminosis A: appetite loss, lethargy, and bone changes, which is the last thing a large breed puppy needs. Copper is the same story in miniature.",
+   "signs": "Over weeks rather than days: appetite loss, diarrhoea, lethargy, stiffness or reluctance to move.",
+   "age": "Never give liver alongside any vitamin A supplement. She should not be on one anyway."
   },
   {
    "id": "f-macadamia",
@@ -2472,6 +2749,26 @@
    "why": "Two hazards. Hard grades fracture teeth. And swallowed shards do not show up on a plain X-ray, which makes an obstruction much harder to diagnose."
   },
   {
+   "id": "f-oats",
+   "kind": "food",
+   "cat": "Food & treats",
+   "title": "Plain oatmeal",
+   "verdict": "yes",
+   "tags": [
+    "oats",
+    "oatmeal",
+    "porridge",
+    "grain",
+    "fibre",
+    "fiber"
+   ],
+   "line": "Yes, cooked with water and nothing else.",
+   "amount": "A tablespoon of cooked oatmeal is about 10 kcal.",
+   "prep": "Cooked in plain water. No milk, no sugar, no honey, no cinnamon, and absolutely no flavoured instant sachets, some of which contain xylitol.",
+   "why": "Oats are a decent source of soluble fibre and one of the gentler grains, which makes them a reasonable thing to stir a little of into a meal. They are not a treatment for anything and they are not better than her food; they are just harmless calories with some fibre attached.",
+   "age": "PESACH: oats are one of the five grains and are chametz. So are wheat, barley, spelt and rye. Rice is kitniyot, which is a different question. See the kashrut entry."
+  },
+  {
    "id": "f-onion",
    "kind": "food",
    "cat": "Food & treats",
@@ -2519,6 +2816,27 @@
    "why": "Skip spinach if she ever has urinary problems, because of the oxalates. Applesauce, honey and marshmallows are just sugar for a growing puppy and are not worth it."
   },
   {
+   "id": "f-pasta",
+   "kind": "food",
+   "cat": "Food & treats",
+   "title": "Plain pasta and bread",
+   "verdict": "caution",
+   "tags": [
+    "pasta",
+    "bread",
+    "toast",
+    "noodles",
+    "spaghetti",
+    "carbs",
+    "empty calories"
+   ],
+   "line": "Not harmful, not worth it. Empty calories out of a budget she does not have.",
+   "amount": "If you must, a small piece. Half a slice of bread is about 40 kcal, which is half her day for nothing.",
+   "prep": "Plain and cooked. No sauce, no butter, no garlic bread, which is a poisoning rather than a snack.",
+   "why": "There is no toxin here and a scrap off the floor is not an emergency. The argument against is arithmetic: she has 70 to 100 kcal a day for everything that is not her food, and bread buys you nothing in exchange for a large slice of it. There are better ways to spend that budget, and every one of them is elsewhere in this list.",
+   "age": "Raw bread dough is a completely different and genuinely dangerous thing. See its own entry. PESACH: both are wheat, so both are chametz. See the kashrut entry."
+  },
+  {
    "id": "f-peanutbutter",
    "kind": "food",
    "cat": "Food & treats",
@@ -2536,6 +2854,75 @@
    "amount": "A teaspoon is about 30 kcal, which is a third of her entire daily treat budget.",
    "prep": "Check for xylitol or birch sugar on every single jar. Unsalted, unsweetened, ideally 100 percent peanuts.",
    "why": "Best used as a thin smear inside a Kong, not spooned. A pea-sized amount is plenty. Peanut butter is also the standard way people hide pills, which is exactly why a xylitol jar in the cupboard is unusually dangerous."
+  },
+  {
+   "id": "f-pork",
+   "kind": "food",
+   "cat": "Food & treats",
+   "title": "Pork, plain and fully cooked",
+   "verdict": "caution",
+   "tags": [
+    "pork",
+    "ground pork",
+    "chop",
+    "trichinella",
+    "trichinosis",
+    "meat"
+   ],
+   "line": "Not in this house. If she scavenges some outside, it is not an emergency.",
+   "amount": "Same as beef, and it is fattier, so less.",
+   "prep": "There is nothing to prepare, because there is none here. What this entry is for is the moment she picks something up on a walk and you need to know how worried to be.",
+   "why": "Worth separating the two questions rather than blurring them. Halachically, pork is forbidden to eat but is not in the category of things forbidden to own or benefit from, so feeding it to a dog is a different question from chametz or meat-with-milk. Ask your rav; do not take that from an app. Practically it is moot, because it is not in the house. Medically: plain cooked pork is not toxic, raw or undercooked pork can carry Trichinella spiralis, and the processed forms are genuinely bad for her for reasons that have nothing to do with kashrut. See the bacon and ham entry.",
+   "age": "If you want a plain meat topper, beef or chicken does the same job with less fat, and no question attached."
+  },
+  {
+   "id": "f-potato",
+   "kind": "food",
+   "cat": "Food & treats",
+   "title": "Potato, cooked",
+   "verdict": "caution",
+   "tags": [
+    "potato",
+    "mashed potato",
+    "boiled potato",
+    "chips",
+    "fries",
+    "crisps",
+    "solanine",
+    "raw potato"
+   ],
+   "line": "Cooked and plain, yes. Raw or green, never.",
+   "amount": "A tablespoon of plain mash is about 20 kcal. Sweet potato is the better choice of the two.",
+   "prep": "Boiled or baked, skinned, no butter, no milk, no salt. Never fried. Chips and crisps are salt and fat, not food.",
+   "why": "Cooked potato is bland, digestible and dull, which is exactly what you want from a filler. Raw potato and any potato with green on it carry solanine, the same glycoalkaloid as green tomato and in higher concentration, which causes vomiting, diarrhoea and in real quantity neurological signs. Green skin and sprouting eyes are the parts to throw away rather than peel around."
+  },
+  {
+   "id": "f-processed",
+   "kind": "food",
+   "cat": "Food & treats",
+   "title": "Bacon, ham, sausage, hot dogs, deli meat",
+   "verdict": "never",
+   "tags": [
+    "bacon",
+    "ham",
+    "sausage",
+    "hot dog",
+    "frankfurter",
+    "salami",
+    "deli",
+    "cold cuts",
+    "pastrami",
+    "nitrates",
+    "salt",
+    "pancreatitis",
+    "processed"
+   ],
+   "line": "Not in this house, and still a never if she meets it anywhere else.",
+   "amount": "One slice of bacon is roughly a third of her entire day's treat budget, before anything else it does to her.",
+   "prep": "Nothing to prepare, because none of it is here. This entry exists for outside the house: a sitter, a neighbour, a barbecue, a park bin, and the Far Rockaway pavement she eats off. Say it out loud to anyone minding her rather than assuming it is obvious.",
+   "why": "Kashrut settles most of this before the veterinary argument starts, and that is the practical answer here: it is not in the house. The veterinary reasons are still worth knowing, because they are what you tell a sitter who thinks one slice is a kindness. Three problems stacked in one item. Salt, at levels built for an adult human palate and landing in a 17 lb puppy. Fat, delivered as a sudden load, which is the commonest trigger of pancreatitis in dogs and the reason vets see a spike after every holiday. And seasoning: sausages, salami, deli meat and most hot dogs contain onion or garlic powder, which is the concentrated form of the worst thing on this whole list.",
+   "signs": "Repeated vomiting, a hunched or painful belly, refusing food, diarrhoea, going flat. Pancreatitis is a same-day call.",
+   "age": "This does not become fine when she is grown, on either count. The fat load argument gets worse as she gets heavier, not better. It matters most on the trip: 24 November to 10 December she is with somebody else, and that is exactly when a well-meaning person gives a dog a piece of hot dog."
   },
   {
    "id": "f-pumpkin",
@@ -2635,6 +3022,26 @@
    "why": "Swallowed chunks swell up to about four times their size in the stomach. Plus choking on the softened end, bacterial contamination, and chemical processing residues. Some vets accept it for dogs that shred rather than gulp, correctly sized and supervised. A 10 week old puppy is a gulper by definition. The AKC openly acknowledges that vets are split on this one."
   },
   {
+   "id": "f-rice",
+   "kind": "food",
+   "cat": "Food & treats",
+   "title": "Plain cooked rice",
+   "verdict": "yes",
+   "tags": [
+    "rice",
+    "white rice",
+    "brown rice",
+    "bland diet",
+    "chicken and rice",
+    "grain"
+   ],
+   "line": "Yes, plain and cooked, but understand what it is for.",
+   "amount": "A tablespoon of cooked white rice is about 13 kcal.",
+   "prep": "Boiled in water. No salt, no butter, no stock, nothing fried. White rice is more digestible than brown, which is the opposite of the human advice and is the point.",
+   "why": "Rice is safe, bland and easy to digest, which is why it is half of the chicken-and-rice combination vets reach for after a gut upset. Two things to keep straight. It is not nutrition, it is filler, so it belongs inside the 10 percent like everything else. And chicken and rice is not a balanced diet: it is a short-term measure for a specific problem, prescribed by a vet, not a food you switch her to because her stool looked odd.",
+   "age": "Do not use a bland diet to settle her stool while a cause is still being looked for. Read the introducing-anything-new entry: masking the signal is how a diagnosis gets lost. PESACH: rice is kitniyot rather than chametz, and the usual position is that pets may be fed kitniyot. That is still a question for your rav, not a conclusion from this app. See the kashrut entry."
+  },
+  {
    "id": "f-salt",
    "kind": "food",
    "cat": "Food & treats",
@@ -2651,6 +3058,51 @@
    ],
    "line": "Including craft salt dough and children play dough.",
    "why": "Too much sodium causes vomiting, tremors and seizures."
+  },
+  {
+   "id": "f-sardines",
+   "kind": "food",
+   "cat": "Food & treats",
+   "title": "Canned sardines in water",
+   "verdict": "yes",
+   "tags": [
+    "sardines",
+    "sardine",
+    "canned fish",
+    "omega",
+    "omega-3",
+    "epa",
+    "dha",
+    "skin",
+    "coat",
+    "topper"
+   ],
+   "line": "Yes, and one of the few things here that does something her food might not.",
+   "amount": "Half a sardine, twice a week, at her size. That is roughly 12 to 15 grams and about 25 kcal.",
+   "prep": "Packed in WATER, no added salt, drained. Not in oil, not in brine, not in tomato sauce. The bones in canned sardines are soft and safe and do not need removing; that is the one fish where you leave them in.",
+   "why": "Small oily fish are a real source of EPA and DHA, the marine omega-3s tied to skin, coat and joint health, and sardines sit low enough in the food chain that mercury is not the concern it is with tuna. It is a genuine addition rather than just calories. Two caveats: it is rich, so introduce it the way you introduce anything, and the smell gets on everything.",
+   "age": "Watch her stool for the first two weeks. Oily fish loosens some dogs."
+  },
+  {
+   "id": "f-shrimp",
+   "kind": "food",
+   "cat": "Food & treats",
+   "title": "Shrimp and shellfish",
+   "verdict": "caution",
+   "tags": [
+    "shrimp",
+    "prawn",
+    "shellfish",
+    "crab",
+    "lobster",
+    "mussels",
+    "seafood"
+   ],
+   "line": "Not in this house either. Listed so you know what it does if she gets some.",
+   "amount": "Half a shrimp for her, and rarely. This is a novelty, not a food.",
+   "prep": "If she is ever given some by somebody else: cooked through, shell and tail and vein off, plain. Never raw. Realistically this is an entry about other people's kitchens.",
+   "why": "Cooked plain shrimp is low in fat and not toxic. Raw shellfish is where the trouble is: it carries bacteria and, in some species, marine biotoxins, and she has an incomplete vaccine series and a habit of gulping. The shell and tail are a separate mechanical problem, sharp and the wrong shape for a puppy who does not chew.",
+   "age": "Shellfish is also a plausible allergen. If you are going to try it, do it as a single new food on its own three-day clock like everything else."
   },
   {
    "id": "f-sticks",
@@ -2708,7 +3160,51 @@
    ],
    "line": "Supervised only, and correctly sized.",
    "prep": "Use a rubber ball too large to fit fully in her mouth.",
-   "why": "The fuzz is abrasive and wears teeth down over years, and a compressed ball can spring open in the throat."
+   "why": "The fuzz is abrasive and wears teeth down over years, and a compressed ball can spring open in the throat.",
+   "amount": "Not a portion, a duration. Supervised minutes only, then it goes away in a cupboard. Never left in the crate or on the floor with her."
+  },
+  {
+   "id": "f-tomato",
+   "kind": "food",
+   "cat": "Food & treats",
+   "title": "Tomato",
+   "verdict": "caution",
+   "tags": [
+    "tomato",
+    "tomatoes",
+    "cherry tomato",
+    "grape tomato",
+    "solanine",
+    "tomatine",
+    "nightshade",
+    "vegetable",
+    "salad"
+   ],
+   "line": "The ripe red flesh yes. The green cap, stem and leaves never.",
+   "amount": "Two or three cherry tomato halves. About 3 kcal each.",
+   "prep": "Pull the green star cap off, and cut every cherry tomato in half. Fully red only, no green shoulders. Plain, never from a dressed salad.",
+   "why": "Two separate problems that get muddled together. The poison is tomatine and solanine, and it lives in the leaves, stems, vines, flowers and unripe green fruit rather than in ripe red flesh, which is why 'tomatoes are toxic' and 'tomatoes are fine' are both half right. The halving is not about poison at all: a whole cherry tomato is a smooth round object about the width of her throat, and she gulps rather than chews.",
+   "signs": "From green plant material: drooling, vomiting, diarrhoea, and in a real quantity weakness, wobbliness or tremors. Kitchen amounts of ripe fruit do not do this.",
+   "age": "The real tomato risk is a garden, not a kitchen. A puppy chewing vines or eating dropped green fruit is the case that actually poisons dogs. Tomatoes are also acidic, so a handful will loosen her stool even when every one of them was ripe."
+  },
+  {
+   "id": "f-tuna",
+   "kind": "food",
+   "cat": "Food & treats",
+   "title": "Canned tuna",
+   "verdict": "caution",
+   "tags": [
+    "tuna",
+    "canned tuna",
+    "albacore",
+    "mercury",
+    "fish"
+   ],
+   "line": "Not poison, but there is no good reason to give it to her. Sardines do the same job better.",
+   "amount": "If you do: a teaspoon, chunk light rather than albacore, in water, drained, no more than once a week.",
+   "prep": "In water, never in oil or brine. Drain it. No added salt.",
+   "why": "The issue is mercury, and it is cumulative rather than acute. One small serving is nothing; the harm comes from tuna becoming a regular habit over months, because it accumulates faster than the body clears it, and albacore carries substantially more than chunk light. Tuna is high in the food chain, which is exactly why sardines are the better choice: same omega-3 argument, a fraction of the mercury. There is also no veterinary guideline that makes routine tuna feeding sensible, which tells you something.",
+   "age": "Tuna in oil, in brine, or as part of a made-up tuna salad with mayonnaise and onion is a different and worse question. That one is a never."
   },
   {
    "id": "f-watermelon",
@@ -2770,7 +3266,8 @@
    "line": "Not now, and honestly still marginal later.",
    "prep": "If you use one at all, puff the end in the microwave and let it cool completely first.",
    "why": "Very hard when dry and usually fails the thumbnail test, so tooth fracture is the risk. Also concentrated dairy and calorie-dense. The nub left at the end is a classic obstruction object.",
-   "age": "Not before 6 months."
+   "age": "Not before 6 months.",
+   "amount": "None now. If ever, from six months: one chew, supervised, and the end nub goes in the bin the moment it is small enough to swallow."
   },
   {
    "id": "f-yogurt",
@@ -2789,7 +3286,7 @@
    "line": "Technically fine, but wait. Not a good idea this month.",
    "amount": "A teaspoon is about 3 kcal. Cap at a teaspoon a day if you use it at all.",
    "prep": "Plain, whole-milk, unsweetened. Check for xylitol in anything labelled light or sugar-free.",
-   "why": "Dogs have limited lactase and dairy is a common cause of loose stool. Right now, with a food transition and a recent Panacur course, added dairy mostly muddies your stool signal. Realistically wait until 4 to 5 months. The probiotic claim for supermarket yogurt is weakly evidenced; a veterinary probiotic is the better tool if one is actually needed."
+   "why": "Dogs have limited lactase and dairy is a common cause of loose stool. Right now, with a food transition and a recent Panacur course, added dairy mostly muddies your stool signal. Realistically wait until 4 to 5 months. The probiotic claim for supermarket yogurt is weakly evidenced; a veterinary probiotic is the better tool if one is actually needed. On the apparent contradiction with cheese: fermentation and draining remove much of the lactose, so yogurt and hard cheese really are better tolerated than milk. That is why they sit differently in this list. It does not change the answer for her this month, which is wait."
   },
   {
    "id": "b-damp-cold",
