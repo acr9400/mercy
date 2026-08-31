@@ -762,7 +762,7 @@ body.gon #ver{display:none}
 <h1><img src="./avatar.jpg" alt="" onerror="this.style.display='none'">
   <span>Mercy &middot; <span id="age"></span></span></h1>
 <div class="who" id="who"></div>
-<div id="ver">v83 <button onclick="forceUpdate()">Force update</button></div>
+<div id="ver">v84 <button onclick="forceUpdate()">Force update</button></div>
 <div class="sync off" id="sync"><span class="led"></span><span id="synctext">Local only</span></div>
 
 <div class="shab" id="shab"></div>
@@ -828,6 +828,9 @@ the gaps for you.</p>
 <div class="grid">
   <button class="b-acc" onclick="log('Pee','Crate Accident')">Pee<span class="hint">in crate</span></button>
   <button class="b-acc" onclick="logPoop('Crate Accident')">Poop<span class="hint">in crate</span></button>
+</div>
+<div class="row">
+  <button class="small b-acc" onclick="logOvernight()">Found it in the morning<span class="hint">overnight, you were asleep, no time to give</span></button>
 </div>
 
 <h2>Other</h2>
@@ -1498,6 +1501,32 @@ const VISIT_HISTORY = [{"date": "2026-08-28", "what": "First vet visit", "outcom
 const HEALTH_PLAN = [{"id": "h-puddle", "title": "No puddles, until late October at least", "due": "2026-08-28", "cat": "urgent", "why": "Leptospirosis spreads through rat urine in standing water, and 58 percent of the NYC dogs who caught it in 2024 had been exposed to puddles. She is not protected until about two weeks after her second lepto dose, so until late October this is the only thing actually stopping it, and it is the one part you fully control.", "note": "Do not let her drink from a puddle, walk through one where you can avoid it, or lick her paws before you have wiped them. Also keep her off rodent droppings and away from anything dead. Wipe her paws every time you come in, which you already do."}, {"id": "h-er", "title": "Find a 24 hour emergency vet near home", "due": "2026-08-31", "cat": "urgent", "why": "A vet two hours away is not a vet in an emergency. Bloat is a golden retriever\u2019s signature emergency and it kills in about two hours. So do rodenticide, an obstruction from something she scavenged, and heat stroke. This outranks every vaccine on this list.", "note": "Call to confirm they are actually open 24 hours, save the number and address, and drive the route once so you know it at 3am. Also save ASPCA Animal Poison Control on (888) 426-4435. Nearby options to check: Central Veterinary Associates has a Far Rockaway clinic on Cornaga Ave and a 24 hour hospital in Valley Stream. Veterinary Emergency Group has NYC locations. Verify by phone yourself, listed hours change."}, {"id": "h-bait", "title": "Find out where the rat bait is in your building", "due": "2026-08-31", "cat": "urgent", "why": "If the building has rats it has bait. Anticoagulant rodenticide is the most likely poisoning for a puppy who eats things off the ground in this city, and she can also be poisoned second hand by eating a poisoned rat. The lepto vaccine does nothing for this, and she is not protected from lepto until late October anyway.", "note": "Ask the super: perimeter, trash area, compactor room, basement, tree pits outside. Then route around them. THE SIGNS ARE DELAYED, three to five days, not immediate: lethargy, pale gums, bruising, coughing, bleeding, collapse. Vitamin K1 is a very effective antidote if you get there in time, which is another reason the emergency vet matters this week. ASPCA Animal Poison Control (888) 426-4435 in all three phones."}, {"id": "h-cq", "title": "Start Credelio Quattro, then monthly forever", "due": "2026-08-28", "cat": "core", "why": "Year round flea, tick, heartworm, roundworm, hookworm and tapeworm cover. The tick half is what lets you reasonably skip the Lyme vaccine, because it kills the deer tick and Lyme needs 24 to 48 hours attached to transmit.", "note": "Same day every month, always with food. A missed or vomited dose is the usual cause of prevention failing. IT DOES NOT COVER WHIPWORM, which is the parasite a constant ground scavenger picks up from soil, and whipworm eggs survive in soil for years. Fleas do reach a fourth floor, via the lift, neighbours, and rodents in the walls."}, {"id": "h-v1", "title": "Vet visit: DAPP dose 3 and leptospirosis dose 1", "due": "2026-09-11", "cat": "core", "window": "2026-09-05 to 2026-09-12", "why": "DAPP because maternal antibodies can block a vaccine up to 13 to 15 weeks, so the middle doses are insurance. Lepto because AAHA made it CORE in 2024, and because of where you live.", "note": "Ask for the FOUR serovar lepto product, and insist the first dose is at 12 weeks or later, which is what the guideline says to minimise reactions. Also: fecal exam, and ask by name for whipworm and a Giardia antigen test. CONFIRMED HIGHER RISK: he reports rats and mice in his building and has seen a mouse where he walks her. In the 2024 NYC case interviews, 84 percent of owners had seen rodents where the dog spent time and 17 of 19 exposures were in the dog\u2019s own neighbourhood. The zero reported cases in his postcode is weak evidence against that: the health department warns in the same document that an absence of cases may reflect lack of veterinary access or reporting, and Far Rockaway fits that description. Lepto is not a borderline call for her."}, {"id": "h-v2", "title": "Vet visit: final DAPP, lepto dose 2, and rabies", "due": "2026-10-12", "cat": "legal", "window": "2026-10-09 to 2026-10-19, hard legal deadline", "why": "The only DAPP dose that reliably counts is the one AFTER 16 weeks, which is 9 October for her. Rabies is legally required by four months under NY Public Health Law and the NYC Health Code, and that deadline is 19 October.", "note": "Dated deliberately at 16 weeks and 3 days so the final DAPP is unambiguously past 16 weeks. If you want to follow the advice about leaving two weeks between vaccines, split rabies to a short second visit around 16 October. She is a large breed, which is the lowest risk group for a vaccine reaction, so giving all three together is also defensible."}, {"id": "h-prot", "title": "She is fully protected from about this date", "due": "2026-10-26", "cat": "core", "why": "Roughly two weeks after her final DAPP. Until then: no dog runs, no communal grass, avoid puddles, no unknown dogs. After it, normal city dog life."}, {"id": "h-lic", "title": "NYC dog licence", "due": "2026-10-19", "cat": "legal", "why": "Legally required, and it needs the rabies certificate. You also have to carry proof of both whenever she is out in public in NYC."}, {"id": "h-dapp4", "title": "Optional extra DAPP at 20 weeks", "due": "2026-11-06", "cat": "optional", "why": "AAHA says 18 to 20 weeks may be preferred in areas of high distemper or parvo risk. NYC qualifies: the health department has issued alerts for canine distemper circulating in raccoons and skunks in Brooklyn and Manhattan, and parvo is stable on pavement, which she eats off. Worth about $40 given her scavenging. Reasonable people skip it."}, {"id": "h-lyme", "title": "Lyme vaccine: deferred, revisit spring 2027", "due": null, "cat": "optional", "why": "Probably not worth it for her, but it is a genuine close call rather than a clear no.", "note": "WHY NOT: NYC health department says blacklegged ticks are primarily on Staten Island and in parts of the Bronx. Queens appears in their table only for the lone star tick, which does not carry Lyme. Local Lyme transmission is reported from Staten Island and rarely the Bronx, not Queens. There is no deer population in Far Rockaway. And Credelio already kills the tick that carries it. WHY IT IS CLOSE: she is a GOLDEN RETRIEVER, and AAHA says retriever breeds may be predisposed to Lyme nephritis, which is usually fatal, perhaps warranting extra consideration for vaccination in those breeds. Her vet did not make that argument. Surveillance also found a very small number of adult blacklegged ticks in eastern Queens, thought to be dropped by migrating birds, and 2026 surveillance is running now to see whether they are establishing. THE PROFESSION DISAGREES HERE, genuinely: WSAVA calls the vaccine controversial and says it is unclear whether it protects against Lyme nephritis, and the 2018 ACVIM Lyme statement reached no consensus. FLIP IT TO YES IF: she starts spending weekends anywhere wooded, you lapse on Credelio, or the 2027 NYC advisory reports the tick establishing in Queens.", "cost": "about $120 for two doses, then about $60 a year"}, {"id": "h-flu", "title": "Canine influenza: skip", "due": null, "cat": "skip", "why": "Her vet was right and a New York vet would agree. AAHA is explicit that routine influenza vaccination of all dogs is not recommended, because it comes in outbreaks rather than being endemic. It is for boarded, daycare, show and travelling dogs. She is none of those.", "note": "Revisit only if she ever boards or does daycare, or if NYC declares an outbreak. As of the most recent reporting there was no NYC outbreak."}, {"id": "h-cv", "title": "Coronavirus vaccine: do not buy it again", "due": null, "cat": "skip", "why": "She already had it as part of the DAPPv-CV on 1 August. WSAVA classifies the canine coronavirus vaccine as not recommended. No harm was done; just do not pay for it twice."}, {"id": "h-bord", "title": "Bordetella: already done, next due August 2027", "due": "2027-08-01", "cat": "recommended", "why": "The Intra-Trac 3 up her nose on 1 August covers kennel cough, parainfluenza and adenovirus for about a year. Keep it current even though she does not board: she is a golden and will need professional grooming, and NYC groomers and puppy classes almost all require proof."}, {"id": "h-fec", "title": "Fecal exams, four times in her first year", "due": "2026-09-11", "cat": "recommended", "why": "She scavenges off NYC pavement constantly, and her monthly preventive does not cover whipworm, Giardia, coccidia or raccoon roundworm. The fecal exams are how you catch what the tablet misses.", "note": "Dates: 11 September, 12 December, 13 March, 12 June. Ask BY NAME for whipworm and a Giardia antigen test each time."}, {"id": "h-whip", "title": "Ask about the whipworm gap", "due": "2026-09-11", "cat": "recommended", "why": "Credelio Quattro has no whipworm claim. Milbemycin based combinations do, but they drop the tapeworm cover. For a Far Rockaway ground scavenger whipworm is arguably the bigger risk. Let the vet who examines her decide, but make sure the question gets asked."}, {"id": "h-hw", "title": "First heartworm test", "due": "2027-02-28", "cat": "core", "why": "Puppies under seven months start prevention without a test, then test six months after starting, again six months later, then every year."}, {"id": "h-local", "title": "Get a local primary vet", "due": "2026-11-30", "cat": "recommended", "why": "The free boosters in New Jersey run out around 12 October. After that the only thing keeping you driving two hours is habit, and he cannot advise you on Queens rabies, NYC leptospirosis patterns, or which emergency room takes her at 3am. He said as much himself.", "note": "Book a healthy meet-the-practice visit rather than arriving in a crisis, and request her full record from Sayrebrook. Finish the free NJ boosters if you are driving down anyway. No reason to fall out with a good vet; plenty of people keep two."}, {"id": "h-spay", "title": "Do NOT default to spaying at six months", "due": "2027-06-19", "cat": "recommended", "why": "UC Davis work on golden retrievers specifically associates early spaying with more joint disorders and certain cancers in this breed. Current guidance for female goldens is to delay past twelve months, and many say eighteen to twenty four. Ask about a preventive gastropexy at the same time, because bloat is her breed\u2019s signature emergency."}];
 const CRATE_STRIP = {"started": "2026-08-27", "nights_required": 7, "note": "Bedding out of the crate, day and night, from the evening of 27 Aug after she soiled a towel. The count is CLEAN NIGHTS, not calendar days: any crate accident after started_time resets it to zero, because the point is seven nights of evidence that she is reliably clean, not seven nights of waiting. started_time matters: the 8pm accident that prompted this happened BEFORE the bedding came out and must not count against night one. Clear `started` to remove the card from the app once the bed is back for good.", "started_time": "22:00"};
 /* ---- END GENERATED FROM config.json ---- */
+
+/* An accident nobody was awake for. He sleeps through the night, so an overnight
+   accident is DISCOVERED, never witnessed: there is no time to give and there never
+   will be one, and CLAUDE.md is explicit that we do not invent one. But the app
+   cannot hold an event without a ts. It sorts on it, buckets days by it and derives
+   every figure from it. So an entry like this carries a DERIVED ts purely so it can
+   be ordered, and this marker at the head of its notes to say that the clock time is
+   ours and not his.
+
+   The marker lives in NOTES rather than in a field of its own because notes is the
+   only free text column the shared sheet carries. A new field would be dropped by
+   doPost on the way up, so the flag would be gone the moment another phone pulled the
+   entry back down, which is the one place it matters most. Day, Away and Held all
+   ride in notes for the same reason.
+
+   The wording is the data/log.csv convention from CLAUDE.md verbatim, so the export
+   needs no second phrase: blank Time, "time not recorded" in Notes, counts unaffected.
+
+   Declared up here rather than beside logOvernight() because render() reads it. */
+var UNKNOWN_TIME = 'time not recorded';
+function timeUnknown(e){
+  return typeof e.notes === 'string' && e.notes.indexOf(UNKNOWN_TIME) === 0;
+}
+/* Every list that prints a time goes through this, so an entry whose time nobody
+   knows can never show a clock face that looks like something he watched happen. */
+function logTime(e){ return timeUnknown(e) ? 'overnight' : hhmm(new Date(e.ts)); }
 
 /* Food tab state. Up here rather than beside its functions because gRender()
    reads FOOD_CAT to skip the Food category, and render() runs near the top of
@@ -2212,6 +2241,85 @@ function logPoop(where){
     STOOL, v => push('Poop', where, v ? {stool:v} : {}));
 }
 
+/* ---- an accident found in the morning -----------------------------------------
+   Logging one of these with the Pee in crate button stamps the minute he NOTICED it,
+   and every gap then takes that minute seriously: an accident found at 6:30 reads as
+   her going eighteen minutes after her 6:12 outing, which is not what happened and
+   makes her look far worse than she is. This button asks what he found and nothing
+   else, because what he found is all he knows.
+
+   It writes at the MIDPOINT of the stretch she was shut in, not at her last outing
+   plus her hold. Her daytime ceiling describes an awake puppy who has been drinking;
+   applied to a sleeping one it would land the entry an hour after bedtime with a
+   confidence we do not have. The middle of the window is the honest answer to
+   "somewhere in here", and the note says it is derived. */
+function overnightSpan(){
+  /* her first outing today, and the last one logged before it */
+  var k = dayKey(new Date()), end = null;
+  for(var i = 0; i < events.length; i++){
+    var e = events[i];
+    if(dayKey(new Date(e.ts)) !== k) continue;
+    if(OUTSIDE.includes(e.event) || e.where === 'Outside'){ end = e.ts; break; }
+  }
+  if(end === null) end = Date.now();
+  var prev = lastBefore(end, function(x){
+    return OUTSIDE.includes(x.event) || x.where === 'Outside'; });
+  var start = prev ? prev.ts : end - 8*3600000;
+  /* Nothing logged last night, or nothing logged for days: a midpoint across that
+     would drop the entry into the middle of yesterday afternoon. Fall back to a plain
+     eight hour night so it stays where it belongs. */
+  if(end - start > 16*3600000) start = end - 8*3600000;
+  return { start: start, end: end };
+}
+
+function logOvernight(){
+  if(!me){ openJoin(true); return; }
+  if(!canWrite()){ refuse(); return; }
+  /* An armed backdate means nothing here, and must not be left armed for the next
+     tap either, so it is cleared exactly as any other log would clear it. */
+  stamp();
+  var w = overnightSpan();
+  var mid = w.start + Math.round((w.end - w.start) / 2);
+  var span = hhmm(new Date(w.start)) + ' and ' + hhmm(new Date(w.end));
+  var note = UNKNOWN_TIME + '. Overnight crate accident, found in the morning. Nobody '
+    + 'was awake for it, so nothing about the timing was observed. The stamp is the '
+    + 'midpoint between her ' + hhmm(new Date(w.start)) + ' outing and her '
+    + hhmm(new Date(w.end)) + ' one, derived so the entry can be ordered, not seen.';
+
+  /* push() stamps the clock and then runs feedback(), whose "only 20 minutes after she
+     was outside" line is exactly the false reading this button exists to prevent. So
+     the entry is built and queued directly, the way Held and Away are. */
+  function put(event, extra){
+    var e = Object.assign({ id: uid(), ts: mid, by: me, event: event,
+                            where: 'Crate Accident', notes: note }, extra || {});
+    events.push(e); events.sort(function(a, b){ return a.ts - b.ts; });
+    save(); render(); queue(e);
+  }
+  function done(){
+    toast('<b>Logged as overnight</b><br>No time recorded, because you did not see it. '
+      + 'It sits between ' + span + ' in the log, and stays out of her hour and gap '
+      + 'figures so it cannot teach them a time nobody knows.', true);
+  }
+
+  openSheet('Found it in the morning',
+    'You were asleep, so there is no time and the app will not make one up. This goes '
+    + 'in between ' + span + ', the middle of the stretch she was shut in, and is '
+    + 'marked as a time nobody knows.',
+    [{value:'pee',  label:'Pee',  note:'wet bedding, no stool'},
+     {value:'poop', label:'Poop', note:'stool only'},
+     {value:'both', label:'Both', note:'she did both'}],
+    function(v){
+      if(v === 'pee' || v === 'both') put('Pee');
+      if(v === 'poop' || v === 'both'){
+        setTimeout(function(){ openSheet('Stool score',
+          'A stool found hours later has dried out and reads firmer than it was, so '
+          + 'score it a rung softer than it looks, or skip it. Two days running at 5 '
+          + 'or above is a vet question, not a training one.',
+          STOOL, function(sc){ put('Poop', sc ? {stool:sc} : {}); done(); }); }, 240);
+      } else done();
+    });
+}
+
 /* Keyed on the entry's id, not its array position. events is re-sorted by timestamp on
    every insert, so a back-dated entry shifts every index after it and an index captured
    at render time can point at the wrong row by the time you tap the x. */
@@ -2570,6 +2678,11 @@ function patterns(){
   const mealToPoop=[], mealToPee=[], peeGaps=[], poopHours=[], accHours=[];
   let lastPee=null;
   events.filter(e=>isLogEvent(e)).forEach(e=>{
+    /* An entry with no known time cannot teach us an hour or a gap. Left in, it would
+       put a derived 1 AM into "riskiest hour for accidents" and a derived nine hour
+       gap into the pee interval, and both would then read as measurements. One fewer
+       data point is much the cheaper mistake. */
+    if(timeUnknown(e)) return;
     if(e.event==='Poop'){
       const m=lastBefore(e.ts,x=>x.event==='Meal');
       if(m && e.ts-m.ts<6*3600000) mealToPoop.push(e.ts-m.ts);
@@ -2845,7 +2958,7 @@ function renderRecent(){
           : nil ? 'nothing'
           : (out ? 'outside' : '');
     if(e.mins) w = (w?w+' · ':'')+e.mins+'m';
-    li.innerHTML='<span class="t">'+hhmm(new Date(e.ts))+'</span><span>'+e.event+
+    li.innerHTML='<span class="t">'+logTime(e)+'</span><span>'+e.event+
       '</span><span class="w">'+w+'</span>';
     box.appendChild(li);
   });
@@ -3130,7 +3243,7 @@ function render(){
       if((e.event==='Held'||e.event==='Bath') && e.notes)
         name+=' &middot; '+String(e.notes).split('|')[0].trim();
       const byTag = e.by ? '<span class="by" style="color:'+colorOf(e.by)+';border-color:'+colorOf(e.by)+'55">'+e.by+'</span>' : '';
-      li.innerHTML='<span class="t">'+hhmm(new Date(e.ts))+'</span><span>'+name+'</span>'+
+      li.innerHTML='<span class="t">'+logTime(e)+'</span><span>'+name+'</span>'+
         (label?'<span class="'+cls+'">'+label+'</span>':'')+byTag+
         '<button class="x" aria-label="Delete">remove</button>';
       li.querySelector('.x').onclick=()=>remove(e.id);
@@ -3369,9 +3482,13 @@ function exportCsv(){
   const rows=[['Date','Time','Event','Where','Duration (min)','Stool Score','Amount (cups)','Notes','Logged By']];
   events.filter(e=>isLogEvent(e)).forEach(e=>{
     const d=new Date(e.ts);
+    /* The data/log.csv rule: never invent a time, leave Time blank, say so in Notes.
+       These notes already open with that exact phrase, so the cell is simply left
+       empty and the row explains itself to whoever reads the sheet. */
     rows.push([
       (d.getMonth()+1)+'/'+d.getDate()+'/'+d.getFullYear(),
-      hhmm(d), e.event, e.where||'N/A', e.mins||'', e.stool||'', e.cups||'', e.notes||'', e.by||''
+      timeUnknown(e) ? '' : hhmm(d),
+      e.event, e.where||'N/A', e.mins||'', e.stool||'', e.cups||'', e.notes||'', e.by||''
     ]);
   });
   const csv=rows.map(r=>r.map(c=>'"'+String(c).replace(/"/g,'""')+'"').join(',')).join('\n');
