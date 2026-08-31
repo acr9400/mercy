@@ -1,0 +1,415 @@
+{
+ "_note": "The Food tab's own content: the recipes and the kitchen rules around them. Everything that answers 'can she eat X' lives in guide.json as kind 'food' and is rendered here from there, so there is one source for a verdict and not two. Edit, then run scripts/sync_app_config.py and re-upload the app.",
+ "_sources": "Stockman, Fascetti, Kass & Larsen, Evaluation of recipes of home-prepared maintenance diets for dogs, JAVMA 242(11):1500-1505, 2013. Merck Veterinary Manual on Allium toxicosis and on salmon poisoning disease. VCA on vitamin A toxicosis. AKC and PetMD food guidance. Pet Poison Helpline on tomatoes. Calorie figures are USDA rounded, and they are estimates: they are here to keep the 10 percent budget honest, not to be precise.",
+ "gate": {
+  "until": "2026-09-10",
+  "t": "Not this week. Around the second week of September.",
+  "b": "Three things are open at once. She changed to Pro Plan on 28 August, so a transition is still running. Her comprehensive fecal is still at the lab. And five stools in a row before the switch were hard pellets or a log that broke apart. Add tomato and beef and pumpkin into that week and if her stool changes nobody can say which one did it, including her vet. Wait for seven clear days on Pro Plan alone AND the fecal result, then start with one thing, the way the introducing-anything-new entry says.",
+  "after": "The gate date has passed. If her stools settled and the fecal came back, start cooking. If either is still open, it is still not the week."
+ },
+ "exception": {
+  "t": "One thing you do not have to wait for",
+  "b": "Plain boiled chicken, torn into pea-sized pieces. It is already what she gets paid with the moment she finishes outside, so it is not a new food and no clock applies to it. The last recipe here is just a better way to make it."
+ },
+ "rules": [
+  {
+   "t": "Toppers, not meals.",
+   "b": "Everything on this page sits inside the 10 percent budget, on top of her complete food, and you take the same amount back out of her bowl. It goes in the one container like everything else. None of it replaces a meal while she is growing."
+  },
+  {
+   "t": "No onion or garlic. In any form.",
+   "b": "That means no stock, no broth, no bouillon cube, no seasoning blend, and nothing whose label says flavouring. Cooking, drying and powdering do not destroy it, and powders are the concentrated version. This is the rule that turns a nice idea into a vet visit, and it is why every recipe here is bland to the point of insulting."
+  },
+  {
+   "t": "No salt, no oil, no butter. Drain the fat.",
+   "b": "Brown mince in a dry pan, tip it into a sieve, rinse it under hot water and let it drain properly. This is the step people skip and it is the one that decides whether her stool survives the experiment."
+  },
+  {
+   "t": "Lean on the vegetable one for anything regular.",
+   "b": "Mince is phosphorus-rich and calcium-poor, so meat on top of a balanced food pulls her mineral ratio the wrong way, and she is a large breed puppy building a skeleton. At 10 percent that does not matter. It is the reason the meat recipes say occasional and the vegetable one says daily. Read 'Why she must never have a calcium supplement' before you decide this is fussy."
+  },
+  {
+   "t": "Ice cube tray, then bag them.",
+   "b": "One cube is about a tablespoon and a half. Frozen portions keep 3 to 4 months, thaw in the fridge and never on the counter, and the 2 hour bowl clock starts the moment a thawed cube goes down."
+  }
+ ],
+ "recipes": [
+  {
+   "id": "r-potty",
+   "title": "Potty chicken",
+   "grade": "yes",
+   "tag": "Make this week",
+   "line": "The highest-value job food does in her day, and it costs about four dollars.",
+   "meta": [
+    "about $4 a batch",
+    "makes about 250 pieces",
+    "about 2.5 kcal a piece",
+    "20 minutes"
+   ],
+   "ingredients": [
+    {
+     "q": "2",
+     "w": "chicken breasts, boneless and skinless"
+    },
+    {
+     "q": "-",
+     "w": "water. Nothing else. No stock, no salt, no bouillon"
+    }
+   ],
+   "steps": [
+    "Cover with cold water, bring to a simmer, cook 15 minutes until no pink is left anywhere.",
+    "Cool, then TEAR rather than chop into pea-sized pieces. Torn pieces are grippier and faster to hand over.",
+    "One small bag per day in the fridge, three days maximum, and freeze the rest."
+   ],
+   "serve": "Within two seconds of her finishing outside, while her feet are still on the pavement. Out of the day's one container, like everything else.",
+   "note": "Watch the arithmetic on this one, because it is the thing that actually eats her budget. Thirty pieces in a day is about 75 kcal, which is most of her 70 to 100. Training beats a topper at ten weeks, so if the numbers collide, the cubes lose and the chicken wins.",
+   "group": "train"
+  },
+  {
+   "id": "r-kong",
+   "group": "train",
+   "title": "The freezer Kong",
+   "grade": "yes",
+   "tag": "Make this week",
+   "line": "Costs nothing extra, because it is made out of her own dinner.",
+   "meta": [
+    "free",
+    "makes 3 or 4",
+    "about 10 kcal added",
+    "5 minutes"
+   ],
+   "ingredients": [
+    {
+     "q": "1 meal",
+     "w": "of her own kibble, soaked the ten minutes it needs"
+    },
+    {
+     "q": "1 tbsp",
+     "w": "100 percent pumpkin puree, plain"
+    },
+    {
+     "q": "-",
+     "w": "a Kong Puppy, the soft blue or pink rubber, not the red Classic"
+    }
+   ],
+   "steps": [
+    "Mix the soaked kibble with the pumpkin so it holds together.",
+    "First few times, SMEAR it round the inside rather than packing it. A Kong she cannot empty is a Kong she gives up on.",
+    "Only once she empties it easily should you pack it properly and freeze it.",
+    "Freeze for at least four hours. Frozen makes it last three times longer."
+   ],
+   "serve": "One at the start of a nap, or when you need twenty minutes. Because the kibble comes out of her ration, the only extra calories are the pumpkin.",
+   "note": "This is the highest-value thing on the whole page for a ten week old, and it is the one that costs nothing. Chewing and licking tire a puppy far more reliably than running does, and the guide is blunt about that: past a point more exercise winds her up further. Two reasons there is no yogurt in this: the app's own yogurt entry says wait until four to five months, and putting dairy on a meat-based kibble raises a meat-and-milk question in a kosher kitchen. The pumpkin does the binding job on its own. Wash it in hot soapy water every time."
+  },
+  {
+   "id": "r-egg",
+   "group": "train",
+   "title": "Egg crumble",
+   "grade": "yes",
+   "tag": "Cheapest training treat",
+   "line": "Two eggs, no pan grease, about eighty pieces. Under a dollar.",
+   "meta": [
+    "about $0.60 a batch",
+    "makes about 80 pieces",
+    "about 1.8 kcal a piece",
+    "10 minutes"
+   ],
+   "ingredients": [
+    {
+     "q": "2",
+     "w": "eggs"
+    },
+    {
+     "q": "-",
+     "w": "nothing else. No milk, no butter, no oil, no salt"
+    }
+   ],
+   "steps": [
+    "Hard boil for 10 minutes, or scramble in a dry non-stick pan on a low heat.",
+    "Cool completely, then crumble or chop into pea-sized pieces.",
+    "Fridge, three days. Egg does not freeze well for this."
+   ],
+   "serve": "Training sessions and the Kong. About 1.8 kcal a piece means a forty-repetition session costs her roughly 70 kcal, which is her whole day, so alternate it with her own kibble rather than paying every repetition in egg.",
+   "note": "Cook them. Raw egg white contains avidin, which blocks biotin, and that part is mostly theoretical at real intakes. Salmonella is not theoretical, and she has an incomplete vaccine series. Shell on a cooked egg is a calcium source, so leave it out; read the calcium entry for why that matters for her specifically."
+  },
+  {
+   "id": "r-liver",
+   "group": "train",
+   "title": "Baked liver crumbs",
+   "grade": "caution",
+   "tag": "For the hard jobs",
+   "line": "The highest-value treat there is, with a hard cap on it.",
+   "meta": [
+    "about $2 a batch",
+    "makes about 100 crumbs",
+    "about 1.5 kcal a crumb",
+    "1 hour, mostly oven"
+   ],
+   "ingredients": [
+    {
+     "q": "1/4 lb",
+     "w": "chicken or beef liver"
+    },
+    {
+     "q": "-",
+     "w": "nothing else at all"
+    }
+   ],
+   "steps": [
+    "Rinse, pat dry, and lay flat on a lined tray.",
+    "Bake at 300F for about 45 minutes, until it is dry and firm rather than soft.",
+    "Cool, then break into pea-sized crumbs. It should crumble rather than tear.",
+    "Fridge a week, or freeze. Bag one day at a time."
+   ],
+   "serve": "A FEW CRUMBS A DAY. Not a handful, and not three sessions a week. Save it for the jobs that are worth it: recall, and the vet's table.",
+   "note": "The cap is not fussiness. Liver is extremely concentrated in vitamin A, there is no easy off-switch for the excess, and sustained overfeeding causes appetite loss, lethargy and bone changes, which is the last thing a large breed puppy needs. Copper is a smaller version of the same problem. Never give liver alongside a vitamin A supplement, and she should not be on one anyway."
+  },
+  {
+   "id": "r-veg",
+   "title": "Everyday vegetable cubes",
+   "grade": "yes",
+   "tag": "The daily one",
+   "line": "No meat, barely any calories, and the one aimed at her stools.",
+   "meta": [
+    "about $4 a batch",
+    "makes about 28 cubes",
+    "about 5 kcal a cube",
+    "15 minutes"
+   ],
+   "ingredients": [
+    {
+     "q": "2 cups",
+     "w": "frozen green beans, chopped small"
+    },
+    {
+     "q": "1 cup",
+     "w": "100 percent pumpkin puree, plain, NOT pie filling"
+    },
+    {
+     "q": "1/2 cup",
+     "w": "water"
+    }
+   ],
+   "steps": [
+    "Simmer the green beans in the water for 8 minutes, until you can squash one between your fingers.",
+    "Take it off the heat and stir the pumpkin through. Do not cook the pumpkin, there is no reason to.",
+    "Cool completely, spoon into an ice cube tray, freeze, then bag the cubes."
+   ],
+   "serve": "One cube stirred through a meal. At 5 kcal it is the only thing here you can give every day without doing arithmetic.",
+   "note": "This is the recipe pointed at the hard stools: soluble fibre plus water, which is what a dry pellet is short of. But not until the gate above clears. Firming or loosening her stool while the fecal is still out is how you hide the thing you are trying to find.",
+   "group": "topper"
+  },
+  {
+   "id": "r-beef",
+   "title": "Beef and vegetable cubes",
+   "grade": "caution",
+   "tag": "Occasional",
+   "line": "Vegetable-led on purpose. The beef is flavour, not the bulk.",
+   "meta": [
+    "about $6 a batch",
+    "makes about 32 cubes",
+    "about 14 kcal a cube",
+    "25 minutes"
+   ],
+   "ingredients": [
+    {
+     "q": "1/2 lb",
+     "w": "lean ground beef, 93/7. Not 80/20, the fat is the problem"
+    },
+    {
+     "q": "1 cup",
+     "w": "frozen green beans, chopped small"
+    },
+    {
+     "q": "1",
+     "w": "medium carrot, grated"
+    },
+    {
+     "q": "1 cup",
+     "w": "100 percent pumpkin puree, plain"
+    },
+    {
+     "q": "1/2 cup",
+     "w": "water"
+    }
+   ],
+   "steps": [
+    "Brown the beef in a dry pan. No oil, it releases its own.",
+    "Tip it into a sieve, rinse under hot water, and let it drain properly.",
+    "Back in the pan with the green beans, grated carrot and water. Simmer 8 minutes with a lid on.",
+    "Off the heat, stir in the pumpkin. Cool completely.",
+    "Ice cube tray, freeze, bag."
+   ],
+   "serve": "One cube, not more, and not every day. One cube is about a sixth of her whole day's treat budget.",
+   "note": "Grating the carrot is not fussiness. Dogs cannot break down plant cell walls, so a chunk of raw carrot comes out looking exactly like it went in. Grated or cooked, she actually gets something from it.",
+   "group": "topper"
+  },
+  {
+   "id": "r-chicken",
+   "title": "Chicken and orange vegetables",
+   "grade": "caution",
+   "tag": "Occasional",
+   "line": "The cheapest of the meat ones, and the gentlest on her stomach.",
+   "meta": [
+    "about $5 a batch",
+    "makes about 28 cubes",
+    "about 15 kcal a cube",
+    "25 minutes"
+   ],
+   "ingredients": [
+    {
+     "q": "1/2 lb",
+     "w": "ground chicken"
+    },
+    {
+     "q": "1",
+     "w": "medium carrot, grated"
+    },
+    {
+     "q": "1",
+     "w": "small zucchini, grated"
+    },
+    {
+     "q": "1/2 cup",
+     "w": "cooked sweet potato, mashed, no skin"
+    },
+    {
+     "q": "1/2 cup",
+     "w": "water"
+    }
+   ],
+   "steps": [
+    "Cook the chicken through in a dry pan, breaking it up as it goes. Ground chicken sticks, so keep it moving.",
+    "Add the grated carrot, zucchini and water. Simmer 10 minutes with a lid on.",
+    "Stir the sweet potato through. Cool completely.",
+    "Ice cube tray, freeze, bag."
+   ],
+   "serve": "One cube stirred through a meal, occasionally rather than daily.",
+   "note": "Sweet potato has to be cooked and skinned. Raw sweet potato is not a treat, and the skin is the wrong shape for a puppy who gulps.",
+   "group": "topper"
+  },
+  {
+   "id": "r-sardine",
+   "group": "topper",
+   "title": "Sardine and pumpkin",
+   "grade": "caution",
+   "tag": "Twice a week",
+   "line": "The only recipe here that adds something her food might actually be short of.",
+   "meta": [
+    "about $2 a batch",
+    "makes about 8 cubes",
+    "about 20 kcal a cube",
+    "10 minutes"
+   ],
+   "ingredients": [
+    {
+     "q": "1 tin",
+     "w": "sardines IN WATER, no added salt. Not oil, not brine, not tomato sauce"
+    },
+    {
+     "q": "1 cup",
+     "w": "100 percent pumpkin puree, plain"
+    }
+   ],
+   "steps": [
+    "Drain the sardines properly. Leave the bones in: canned sardine bones are soft and are the one fish bone you do not pick out.",
+    "Mash them into the pumpkin until there are no big pieces.",
+    "Ice cube tray, freeze, bag. Bag them well, the smell travels."
+   ],
+   "serve": "Half a cube twice a week is right for her size. That is roughly half a sardine, which is the portion for a dog her weight.",
+   "note": "Sardines are a real source of EPA and DHA, the marine omega-3s tied to skin, coat and joints, and they sit low enough in the food chain that mercury is not the worry it is with tuna. That is why this is here and canned tuna is not. It is rich, so watch her stool for the first fortnight; oily fish loosens some dogs."
+  },
+  {
+   "id": "r-lamb",
+   "title": "Lamb and pumpkin",
+   "grade": "caution",
+   "tag": "Only if you need it",
+   "line": "Honestly the weakest of the three. Here because you asked, with the reason it is last.",
+   "meta": [
+    "about $9 a batch",
+    "makes about 28 cubes",
+    "about 19 kcal a cube",
+    "25 minutes"
+   ],
+   "ingredients": [
+    {
+     "q": "1/2 lb",
+     "w": "ground lamb"
+    },
+    {
+     "q": "1 cup",
+     "w": "100 percent pumpkin puree, plain"
+    },
+    {
+     "q": "1 cup",
+     "w": "frozen peas and green beans"
+    },
+    {
+     "q": "1/2 cup",
+     "w": "water"
+    }
+   ],
+   "steps": [
+    "Brown the lamb, pouring the fat off as it appears. There will be a lot of it.",
+    "Sieve and rinse under hot water. With lamb, do this twice.",
+    "Simmer with the peas, beans and water for 10 minutes.",
+    "Stir the pumpkin in off the heat. Cool, freeze in cubes."
+   ],
+   "serve": "One cube, rarely.",
+   "note": "Lamb costs roughly double the chicken and it is the fattiest of the three, which is the wrong direction for a puppy with an unsettled gut and a fecal still out. Its one real use is as a novel protein if she ever turns out to react to chicken or beef, and that is a conversation with her vet rather than a recipe. Worth knowing about. Not worth starting with.",
+   "group": "topper"
+  },
+  {
+   "id": "r-bland",
+   "group": "vet",
+   "title": "Chicken and rice",
+   "grade": "caution",
+   "tag": "Only on instruction",
+   "line": "The one recipe here you must not decide to make on your own.",
+   "meta": [
+    "about $4",
+    "makes 2 days",
+    "not balanced",
+    "30 minutes"
+   ],
+   "ingredients": [
+    {
+     "q": "1/2 lb",
+     "w": "chicken breast, boneless and skinless"
+    },
+    {
+     "q": "1.5 cups",
+     "w": "cooked white rice, plain. White, not brown"
+    },
+    {
+     "q": "-",
+     "w": "water. No salt, no oil, no stock"
+    }
+   ],
+   "steps": [
+    "Boil the chicken 15 minutes until no pink is left, then shred it.",
+    "Boil the rice in plain water until soft.",
+    "Mix roughly one part chicken to two parts rice. Serve at room temperature, in small frequent portions rather than one bowl."
+   ],
+   "serve": "Only in the amount and for the number of days her vet tells you. Then transition back to Pro Plan on the usual ladder rather than switching straight over.",
+   "note": "This is here so that when somebody tells you to feed chicken and rice, you make it correctly instead of guessing. Two warnings that matter more than the recipe. It is NOT a balanced diet, so it is a short-term measure and not a food you move her onto. And do not use it to settle her stool while a cause is still being looked for: her fecal is out and five stools were abnormal, and quietly firming things up is how the answer gets lost. That is the whole point of the introducing-anything-new entry."
+  }
+ ],
+ "groups": [
+  {
+   "id": "train",
+   "name": "Training treats",
+   "note": "Tiny, fast to hand over, and cheap enough to use forty times in a day. At ten weeks this is where food does its most valuable work, so these come first."
+  },
+  {
+   "id": "topper",
+   "name": "Toppers for her bowl",
+   "note": "Frozen in cubes, stirred through a meal. All of it comes out of the day's one container, and the vegetable one is the only daily one."
+  },
+  {
+   "id": "vet",
+   "name": "Only when the vet says",
+   "note": "Not a recipe you reach for yourself."
+  }
+ ]
+}
