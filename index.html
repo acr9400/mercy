@@ -165,7 +165,11 @@ ul{list-style:none;margin:0;padding:0}
 .log li{display:flex;gap:10px;align-items:baseline;padding:9px 0;
   border-bottom:1px solid var(--line);font-size:15px}
 .log .t{font-variant-numeric:tabular-nums;color:var(--muted);width:72px;flex:none;font-size:13px}
+.log li{cursor:pointer}
+.log li:active{background:var(--tint)}
 .log .x{margin-left:auto;color:var(--muted);font-size:12px;background:none;border:none;padding:4px 6px}
+.loghint{font-size:11.5px;color:var(--muted);margin:0 0 2px}
+body.ro .loghint{display:none}
 .tag{font-size:11px;padding:2px 7px;border-radius:99px;border:1px solid var(--line);color:var(--muted)}
 /* Three states, three colours, and they must match the histogram legend directly
    above the log: green IS outside there, so a green tag is the one that reads as
@@ -316,6 +320,12 @@ footer{margin-top:30px;font-size:12px;color:var(--muted);line-height:1.6}
 #sheet h3{margin:0 0 4px;font-size:17px;font-weight:600}
 #sheet p{margin:0 0 16px;font-size:13px;color:var(--muted);line-height:1.45}
 #sheet .opts{display:grid;gap:8px;grid-template-columns:repeat(auto-fit,minmax(72px,1fr))}
+/* The default grid packs 72px columns, which is right for 5m / 10m / Skip and wrong
+   for a menu whose options are sentences: "Change how long it was" in a 72px column
+   wraps to four lines. A sheet asks for .stack when its labels are phrases. */
+#sheet .opts.stack{grid-template-columns:1fr}
+#sheet .opts.stack button{text-align:left;padding:14px 15px;font-size:15px}
+#sheet .opts.stack button small{margin-top:3px}
 #sheet .opts button{padding:15px 6px;font-size:15px}
 #sheet .opts button small{display:block;font-size:10px;color:var(--muted);margin-top:3px;
   font-weight:400;line-height:1.2}
@@ -852,7 +862,7 @@ body.gon #ver{display:none}
 <h1><img src="./avatar.jpg" alt="" onerror="this.style.display='none'">
   <span>Mercy &middot; <span id="age"></span></span></h1>
 <div class="who" id="who"></div>
-<div id="ver">v87 <button onclick="forceUpdate()">Force update</button></div>
+<div id="ver">v88 <button onclick="forceUpdate()">Force update</button></div>
 <div class="sync off" id="sync"><span class="led"></span><span id="synctext">Local only</span></div>
 
 <div class="shab" id="shab"></div>
@@ -958,6 +968,7 @@ mouthy, not sleepy.</p>
 <p class="histkey"><span><i class="out"></i>outside</span><span><i class="acc"></i>accidents</span></p>
 
 <p class="filterbar" id="filterbar" style="display:none"></p>
+<p class="loghint">Tap any entry to change its time or how long it was.</p>
 <ul class="log" id="loglist"></ul>
 <div class="stat">
   <span>Outings <b id="sOut">0</b> of <b id="sTarget">0</b></span>
@@ -2060,6 +2071,7 @@ function openSheet(title, sub, opts, onPick, body){
   document.getElementById('sh-sub').textContent=sub||'';
   const box=document.getElementById('sh-opts');
   box.innerHTML='';
+  box.classList.remove('stack');   /* or one stacked sheet restyles every later one */
   /* An optional block of explanatory HTML above the buttons, for sheets that are
      there to explain something rather than to ask something. */
   if(body) box.insertAdjacentHTML('beforeend', '<div class="sheetbody">'+body+'</div>');
@@ -2453,6 +2465,135 @@ function wipe(){
   try{ localStorage.removeItem('mercy.timer'); }catch(e){}
   timer=null;
   save(); render(); pull(false);
+}
+
+/* ---- fixing something already logged -------------------------------------------
+   He walks her for a planned five minutes and it turns into ten, or he taps the wrong
+   thing, and until now the only repair was to delete the row and build it again from
+   the buttons.
+
+   An edit is a DELETE PLUS AN INSERT, never an update, because the shared sheet has no
+   update: doPost skips any id it has already seen, so writing the same id again is a
+   silent no-op. The replacement therefore carries a NEW id, and the old one goes on the
+   deletes list exactly as the x button would put it there. Both halves happen in one
+   pass with a single save and a single render, so there is never a moment where the old
+   row is gone and the new one has not arrived: a pull landing in that gap would see the
+   entry as missing and honour it as a deletion.
+
+   WHERE is deliberately not editable. An accident quietly becoming an outing after the
+   fact would rewrite the one number this whole app exists to keep honest, and unlike a
+   deletion it leaves no trace that anything was changed. If the where is wrong the entry
+   is wrong: delete it and log it again, which the same sheet offers. */
+function entryLabel(e){
+  var n = e.event;
+  if(e.mins) n += ' ' + e.mins + 'm';
+  if(e.stool) n += ', stool ' + e.stool;
+  if(e.where && e.where !== 'N/A') n += ', ' + e.where.toLowerCase();
+  return n + ' at ' + logTime(e);
+}
+
+function replaceEntry(e, changes){
+  if(!canWrite()){ refuse(); return; }
+  var i = events.findIndex(function(x){ return x.id === e.id; });
+  if(i < 0) return;
+  var next = Object.assign({}, e, changes, { id: uid() });
+  if(e.id){
+    deletes.push(e.id);
+    var p = pending.findIndex(function(x){ return x.id === e.id; });
+    if(p >= 0) pending.splice(p, 1);
+  }
+  events.splice(i, 1);
+  events.push(next);
+  events.sort(function(a, b){ return a.ts - b.ts; });
+  save(); render(); queue(next);
+  toast('<b>Changed</b><br>' + entryLabel(next));
+}
+
+function editEntry(id){
+  if(!canWrite()){ refuse(); return; }
+  var e = events.find(function(x){ return x.id === id; });
+  if(!e) return;
+  var opts = [{value:'time', label:'Change the time', note:'says ' + logTime(e) + ' now'}];
+  if(DURATIONS[e.event] || e.mins)
+    opts.push({value:'mins', label:'Change how long it was',
+               note: e.mins ? 'says ' + e.mins + ' minutes now' : 'no length on it yet'});
+  if(e.event === 'Poop')
+    opts.push({value:'stool', label:'Change the stool score',
+               note: e.stool ? 'says ' + e.stool + ' now' : 'not scored'});
+  opts.push({value:'del', label:'Delete it', note:'removes it from every phone'});
+
+  openSheet(entryLabel(e), timeUnknown(e)
+      ? 'This one has no time on it because nobody saw it happen. Giving it a time says you did.'
+      : 'Where it happened is not editable here. An accident turned into an outing would '
+        + 'quietly rewrite the numbers, so if that is what is wrong, delete it and log it again.',
+    opts, function(v){
+      if(v === 'del'){ remove(e.id); toast('<b>Deleted</b><br>' + entryLabel(e)); return; }
+      /* the 240ms is what every other chained sheet in this file waits, so the first
+         one has finished sliding out before the second slides in */
+      setTimeout(function(){
+        if(v === 'mins') editMins(e);
+        else if(v === 'stool') editStool(e);
+        else editTime(e);
+      }, 240);
+    });
+  document.getElementById('sh-opts').classList.add('stack');
+}
+
+function editMins(e){
+  var opts = (DURATIONS[e.event] || [5, 10, 15, 20, 30]).map(function(m){
+    return { value:m, label:m + 'm',
+             note: m === e.mins ? 'what it says now'
+                 : e.event === 'Walk' && m > walkCeiling() ? 'over her limit'
+                 : e.event === 'Play' && m > PLAY.max ? 'too long' : '' };
+  });
+  openSheet('How long was it really?',
+    'You logged ' + (e.mins ? e.mins + ' minutes' : 'no length') + '. Pick what it actually was.',
+    opts, function(m){ replaceEntry(e, {mins:m}); });
+}
+
+function editStool(e){
+  openSheet('Stool score',
+    'It reads ' + (e.stool ? e.stool : 'unscored') + ' now. The test: pick it up. Does it '
+    + 'leave anything behind? 3 picks up clean.',
+    STOOL, function(v){ replaceEntry(e, v ? {stool:v} : {stool:null}); });
+}
+
+function editTime(e){
+  var d = new Date(e.ts);
+  var box = document.getElementById('sh-opts');
+  document.getElementById('sh-title').textContent = 'What time was it?';
+  document.getElementById('sh-sub').textContent =
+    'It stays on ' + d.toLocaleDateString(undefined,{weekday:'long', day:'numeric', month:'long'}) +
+    '. To move it to a different day, delete it and log it again.';
+  box.innerHTML = ''; box.style.display = 'block';
+  var inp = document.createElement('input');
+  inp.type = 'time'; inp.step = 60;
+  inp.value = pad(d.getHours()) + ':' + pad(d.getMinutes());
+  box.appendChild(inp);
+  var go = document.createElement('button');
+  go.className = 'go'; go.textContent = 'Use this time';
+  go.onclick = function(){
+    if(!inp.value) return;
+    var hm = inp.value.split(':');
+    var when = new Date(e.ts);
+    when.setHours(+hm[0], +hm[1], 0, 0);
+    if(when.getTime() > Date.now()){
+      toast('That has not happened yet. Pick a time already gone.', true);
+      return;
+    }
+    closeSheet();
+    var ch = { ts: when.getTime() };
+    /* A time he has now supplied is no longer an unknown one, so the marker comes off
+       the notes: the row stops reading "overnight", the hour chart starts counting it,
+       and the export writes the time instead of a blank. Say where it came from. */
+    if(timeUnknown(e))
+      ch.notes = 'Time filled in afterwards from memory, not observed when it happened.';
+    replaceEntry(e, ch);
+  };
+  box.appendChild(go);
+  document.getElementById('veil').classList.add('on');
+  document.getElementById('sheet').classList.add('on');
+  setTimeout(function(){ inp.focus(); }, 260);
 }
 
 /* ---- derived ---- */
@@ -3376,7 +3517,11 @@ function render(){
       li.innerHTML='<span class="t">'+logTime(e)+'</span><span>'+name+'</span>'+
         (label?'<span class="'+cls+'">'+label+'</span>':'')+byTag+
         '<button class="x" aria-label="Delete">remove</button>';
-      li.querySelector('.x').onclick=()=>remove(e.id);
+      /* The row opens the editor; the x stays a one tap delete, so the fast path
+         nobody has to learn is still there. stopPropagation or the x would open the
+         editor on its way to deleting the row underneath it. */
+      li.onclick=()=>editEntry(e.id);
+      li.querySelector('.x').onclick=(ev)=>{ ev.stopPropagation(); remove(e.id); };
       list.appendChild(li);
     });
   }
