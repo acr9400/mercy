@@ -872,6 +872,11 @@ body.ro #recent{margin-top:0}
    the second signal, and that one needs no colour at all. */
 #subclocks .due .sv{color:var(--alert);font-weight:400}
 #subclocks .due .scr{background:var(--tint)}
+/* Done: a full rail, but pale. At full strength it would shout across the strip as
+   loudly as a bar that is actually due, and this is the one state that wants nothing
+   from you. The muted number says the same thing a second time. */
+#subclocks .done .scf{opacity:.34}
+#subclocks .done .sv{color:var(--muted)}
 /* Not enough events yet: a dashed empty track. It says "this is coming" without
    drawing a line she has not earned. */
 #subclocks .thin .scr{background:repeating-linear-gradient(90deg,var(--line) 0 3px,
@@ -939,7 +944,7 @@ body.gon #ver{display:none}
 <h1><img src="./avatar.jpg" alt="" onerror="this.style.display='none'">
   <span>Mercy &middot; <span id="age"></span></span></h1>
 <div class="who" id="who"></div>
-<div id="ver">v90 <button onclick="forceUpdate()">Force update</button></div>
+<div id="ver">v91 <button onclick="forceUpdate()">Force update</button></div>
 <div class="sync off" id="sync"><span class="led"></span><span id="synctext">Local only</span></div>
 
 <div class="shab" id="shab"></div>
@@ -5940,6 +5945,12 @@ function forecast(){
     poop.basis = 'since her poop';
     poop.est = 'already gone';
     poop.acc = lq.where === 'Indoor Accident' || lq.where === 'Crate Accident';
+    /* A full rail, and `ready` stays false. Those two are doing different jobs and must
+       not be conflated: the rail says the window is behind her, and `ready` false is
+       what keeps this state out of `due` and out of forecastPing, so a finished bar can
+       never buzz. Nothing is measured against a median here, so there is no mark either. */
+    poop.done = true;
+    poop.pct = 100;
   } else {
     poop.value = gapClock(now - lm.ts);
     poop.basis = 'since her meal';
@@ -6037,17 +6048,20 @@ function renderSubClocks(){
        "over by 40 min" is the sentence that matters; a fill wider than its own track
        just spills out of the card. */
     var w = Math.max(0, Math.min(100, c.pct));
-    /* The rail goes last, under the words, and only where there is something to draw:
-       a panel with nothing to count toward gets no track at all rather than an empty
-       one, which would read as a bar stuck at zero. */
-    var rail = (c.ready || c.thin)
+    /* The rail goes last, under the words. Every live panel gets one: a track that is
+       absent reads as a bug, which is exactly how the done state was read the first
+       time anyone looked at it. The notch is the part that is conditional, because it
+       marks where a bar warns and a finished one never does. */
+    var rail = (c.ready || c.thin || c.done)
       ? '<div class="scr">' +
-        (c.ready ? '<i class="scf" style="width:' + w.toFixed(1) + '%"></i>' +
-                   '<u class="sct" style="left:' + c.mark.toFixed(1) + '%"></u>' : '') +
+        (c.ready || c.done
+           ? '<i class="scf" style="width:' + w.toFixed(1) + '%"></i>' : '') +
+        (c.ready
+           ? '<u class="sct" style="left:' + c.mark.toFixed(1) + '%"></u>' : '') +
         '</div>'
       : '';
     return '<div class="' + c.cls + (c.due ? ' due' : '') + (c.thin ? ' thin' : '') +
-      (c.acc ? ' acc' : '') + '">' +
+      (c.done ? ' done' : '') + (c.acc ? ' acc' : '') + '">' +
       '<div class="sl">' + c.label + '</div>' +
       '<div class="sv">' + c.value + '</div>' +
       '<div class="sw">' + c.basis + '<br>' + c.est + '</div>' + rail + '</div>';
