@@ -24,6 +24,9 @@
   --alert:#C4502A;
   --ok:#4E8C61;
   --neutral:#7B5EA7;
+  --pee:#B08A00;
+  --poop:#7A5237;
+  --walk:#3C7FA8;
   --navbg:rgba(255,255,255,.94);
   --veil:rgba(59,47,30,.42);
   --shadow:0 8px 28px rgba(150,120,70,.22);
@@ -91,15 +94,27 @@ h2{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--mute
   background:var(--navbg);backdrop-filter:blur(12px);
   border-top:1px solid var(--line);
   padding:6px 4px calc(6px + env(safe-area-inset-bottom))}
-#tabbar button{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;
-  background:transparent;border:0;padding:8px 2px 6px;border-radius:12px;
-  color:var(--muted);font-size:11px;letter-spacing:.1em;text-transform:uppercase;
-  font-weight:600;font-family:inherit}
-#tabbar button .ti{font-size:13px;line-height:1}
+/* flex:1 alone is not enough. A flex item defaults to min-width:auto, so it refuses to
+   shrink below its own text width: at four tabs that fit, at seven the row overflowed
+   and the last tab fell off the right edge. min-width:0 lets them actually divide the
+   width, and the label ellipsises rather than pushing its neighbours out. */
+#tabbar button{flex:1 1 0;min-width:0;display:flex;flex-direction:column;align-items:center;
+  gap:3px;background:transparent;border:0;padding:8px 1px 6px;border-radius:12px;
+  color:var(--muted);font-size:11px;letter-spacing:.08em;text-transform:uppercase;
+  font-weight:600;font-family:inherit;overflow:hidden}
+#tabbar button > span{max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#tabbar button .ti{font-size:13px;line-height:1;overflow:visible}
 #tabbar button.on{color:var(--gold)}
-@media (max-width:400px){
-  #tabbar button{font-size:10px;letter-spacing:.04em}
+/* Seven tabs on a phone need the tracking back. Stepped, so a narrow phone still
+   shows whole words instead of ellipses. */
+@media (max-width:460px){
+  #tabbar{padding-left:0;padding-right:0}
+  #tabbar button{font-size:9.5px;letter-spacing:.02em}
   #tabbar button .ti{font-size:12px}
+}
+@media (max-width:380px){
+  #tabbar button{font-size:9px;letter-spacing:0}
+  #tabbar button .ti{font-size:11px}
 }
 
 /* ---- signature: the ceiling clock ---- */
@@ -784,25 +799,70 @@ body.ro #recent{margin-top:0}
 #pw-plan .pcost{font-size:12.5px;color:var(--muted);margin-top:5px}
 
 
-/* ---- the two sub-clocks under the main one ---- */
-/* All three times live in ONE card. They answer one question -- how full is she --
-   so three floating boxes was the wrong shape. This is a band across the foot of the
+/* ---- the three forecast bars under the main clock ---- */
+/* All four times live in ONE card. They answer one question -- how full is she --
+   so four floating boxes was the wrong shape. This is a band across the foot of the
    clock card: negative margins pull it out to the card's edges and down onto its
    bottom padding, so it meets the border cleanly instead of sitting on an inset.
    position:relative lifts it above .fill, which is absolute inset:0 and would
-   otherwise wash the progress gradient straight through the text. */
+   otherwise wash the progress gradient straight through the text.
+
+   Each panel now carries its OWN fill, on the same idea as the big one, but the two
+   are not the same kind of thing and must not look the same. The big bar fills toward
+   her ceiling, which is a rule out of config and cannot be wrong. These fill toward a
+   median of her own last ten days, which is a guess. So a guess bar is drawn at lower
+   opacity than the rule above it, and an estimate with too few events behind it draws
+   a dotted empty track instead of a confident line. */
 #subclocks{position:relative;display:flex;margin:17px -20px -18px;
   border-top:1px solid var(--line)}
-#subclocks > div{flex:1;padding:12px 20px 13px;min-width:0}
+/* Three panels, not two. At 20px of padding a side each one had about 90px of usable
+   width on a 393px phone, which cut "usually ~1:10" in half, so the inner padding is
+   tighter and only the two outer edges keep the card's own 20px. */
+#subclocks > div{flex:1;padding:11px 12px 12px;min-width:0;position:relative;
+  overflow:hidden}
+#subclocks > div:first-child{padding-left:20px}
+#subclocks > div:last-child{padding-right:20px}
 #subclocks > div + div{border-left:1px solid var(--line)}
-#subclocks .sl{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);
-  font-weight:700}
-#subclocks .sv{font-size:22px;font-weight:200;letter-spacing:-.02em;line-height:1.1;margin:3px 0 2px;
+/* The id makes this two-specific, which beats the bare .fill trap the big clock fell
+   into: a one-class .scf lost the tie to any later rule and resolved to height 0. */
+#subclocks > div > .scf{position:absolute;left:0;top:0;bottom:0;width:0%;opacity:.16;
+  transition:width .6s ease,opacity .35s ease}
+#subclocks > div > .sct{position:absolute;top:0;bottom:0;width:1px;background:var(--muted);
+  opacity:.28;pointer-events:none}
+/* The text has to be lifted the same way the whole band is lifted off .fill. */
+#subclocks > div > .sl,#subclocks > div > .sv,#subclocks > div > .sw{position:relative}
+#subclocks .sl{font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);
+  font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#subclocks .sv{font-size:20px;font-weight:200;letter-spacing:-.02em;line-height:1.1;margin:3px 0 2px;
   font-variant-numeric:tabular-nums}
-#subclocks .sw{font-size:11.5px;color:var(--muted);line-height:1.35}
+#subclocks .sw{font-size:11px;color:var(--muted);line-height:1.32}
 #subclocks .sw b{color:var(--paper);font-weight:600}
 #subclocks .acc .sv{color:var(--alert)}
 #subclocks .none .sv{color:var(--line)}
+/* One colour per bar, from config, because you are meant to read the strip at a glance
+   and three identical gold bars are three bars you have to stop and label. The label
+   takes the colour too, so the panel is identified twice: once by a word and once by a
+   hue, which is what makes it survive a phone held at arm's length. */
+#subclocks .b-pee  > .scf{background:var(--pee)}
+#subclocks .b-pee  > .sl{color:var(--pee)}
+#subclocks .b-poop > .scf{background:var(--poop)}
+#subclocks .b-poop > .sl{color:var(--poop)}
+#subclocks .b-walk > .scf{background:var(--walk)}
+#subclocks .b-walk > .sl{color:var(--walk)}
+/* Due keeps the panel's own hue on the fill and puts alert on the number only. Turning
+   the fill red as well would mean three red bars whenever she is due for everything at
+   once, which is exactly the moment the strip has to stay readable. */
+#subclocks .due > .scf{opacity:.30}
+#subclocks .due > .sv{color:var(--alert);font-weight:400}
+/* Not enough events yet. An empty dotted track says "this is coming" without drawing a
+   number she has not earned. */
+#subclocks .thin > .scf{width:0% !important}
+#subclocks .thin{background:repeating-linear-gradient(135deg,transparent 0 6px,
+  var(--tint) 6px 12px)}
+/* --line, the near invisible one, is right for the none state because there is
+   genuinely nothing there. Here the elapsed time is real and readable even with no
+   forecast behind it, so it stays muted rather than being greyed almost out. */
+#subclocks .thin .sv{color:var(--muted)}
 body.gon #subclocks{display:none}
 
 
@@ -862,7 +922,7 @@ body.gon #ver{display:none}
 <h1><img src="./avatar.jpg" alt="" onerror="this.style.display='none'">
   <span>Mercy &middot; <span id="age"></span></span></h1>
 <div class="who" id="who"></div>
-<div id="ver">v88 <button onclick="forceUpdate()">Force update</button></div>
+<div id="ver">v89 <button onclick="forceUpdate()">Force update</button></div>
 <div class="sync off" id="sync"><span class="led"></span><span id="synctext">Local only</span></div>
 
 <div class="shab" id="shab"></div>
@@ -1151,6 +1211,10 @@ const HOLD_PER_MONTH = 1.0;
 const HOLD_MAX = 6.0;
 const ZONE_HALF = 50;
 const ZONE_WARN = 75;
+const FORECAST_DAYS = 10;
+const FORECAST_MIN_PEE = 4;
+const FORECAST_MIN_POOP = 3;
+const WALK_LEAD_MIN = 30;
 const MEALS_UNTIL_6MO = 3;
 const MEALS_AFTER_6MO = 2;
 const WALK_PER_MONTH = 5.0;
@@ -1673,6 +1737,26 @@ let PLAN = PLANS[DEFAULT_VARIANT[new Date().getDay()]];
    long before the helpers below, and a `let` read before its declaration line runs
    throws rather than reading undefined. */
 let dayView = 0;
+
+/* The two caps that decide what counts as a measurable gap, in ONE place. patterns()
+   on the Trends tab and forecast() under the clock ask the same two questions of the
+   same log, and when the numbers were written out twice they were free to drift: a
+   Trends row saying her meal-to-poop window is 22 minutes while the bar under the
+   clock counted a different set of poops would be indefensible, and neither screen
+   would look wrong on its own.
+
+   Eight hours for a pee gap drops the overnight: she does not hold for nine hours
+   because her bladder is good, she holds because everyone is asleep, and letting that
+   into the median would push her typical gap out past anything real. Six hours for a
+   meal is generous on purpose -- her actual window sits far below it, and the cap is
+   only there to stop a poop that follows no meal at all from being attributed to
+   breakfast.
+
+   Declared up here with PLAN and dayView, not beside forecast() at the foot of the
+   file, because render() reaches renderSubClocks() near the top and a const read
+   before its declaration line runs is a TypeError that kills the whole page. */
+const GAP_CAP_PEE  = 8 * 3600000;
+const GAP_CAP_POOP = 6 * 3600000;
 
 const PAT_HELP = {
   'Her meal to poop window': {
@@ -2813,11 +2897,15 @@ function beep(times){
     o.start(t); o.stop(t+0.32);
   }
 }
-function alarm(title, body){
+/* `tag` groups a notification in the tray: same tag replaces, different tag stacks.
+   It defaults to the ceiling's own tag so a repeat ceiling warning still replaces
+   itself rather than piling up, but the three forecast bars each pass their own, or
+   a poop warning would silently erase a pee warning he had not read yet. */
+function alarm(title, body, tag){
   beep(3);
   toast('<b>'+title+'</b><br>'+body, true);
   if(typeof Notification!=='undefined' && Notification.permission==='granted'){
-    try{ new Notification(title,{body:body, tag:'mercy-alarm', renotify:true}); }catch(e){}
+    try{ new Notification(title,{body:body, tag:tag||'mercy-alarm', renotify:true}); }catch(e){}
   }
 }
 
@@ -2939,13 +3027,13 @@ function patterns(){
     if(timeUnknown(e)) return;
     if(e.event==='Poop'){
       const m=lastBefore(e.ts,x=>x.event==='Meal');
-      if(m && e.ts-m.ts<6*3600000) mealToPoop.push(e.ts-m.ts);
+      if(m && e.ts-m.ts<GAP_CAP_POOP) mealToPoop.push(e.ts-m.ts);
       poopHours.push(new Date(e.ts).getHours());
     }
     if(e.event==='Pee'){
       const m=lastBefore(e.ts,x=>x.event==='Meal');
       if(m && e.ts-m.ts<3*3600000) mealToPee.push(e.ts-m.ts);
-      if(lastPee && e.ts-lastPee<8*3600000) peeGaps.push(e.ts-lastPee);
+      if(lastPee && e.ts-lastPee<GAP_CAP_PEE) peeGaps.push(e.ts-lastPee);
       lastPee=e.ts;
     }
     if(e.where==='Indoor Accident') accHours.push(new Date(e.ts).getHours());
@@ -3891,31 +3979,76 @@ function askNotify(){
    already past what she can do, and on 31 August she had gone eleven minutes earlier
    than that anyway. The 75 percent ping is the one that can still change the outcome. */
 let warned=false, warnedEarly=false;
+/* One flag per forecast bar, same one-shot shape as the two above: set when it
+   fires, cleared the moment that bar drops back under the mark. */
+let subWarned = { pee:false, poop:false, walk:false };
+
+/* The 75 per cent ping for the three bars under the clock. It reads forecast(),
+   the same function that draws them, so the thing that buzzes and the thing on
+   screen cannot disagree.
+
+   At most ONE fires per tick, and the ceiling always outranks all three. Four
+   alarms landing together is not four times the warning, it is a noise he learns
+   to swipe away, and the ceiling is the only one of the four that is a rule rather
+   than a guess. Anything skipped keeps its flag clear and comes back on the next
+   tick thirty seconds later. */
+function forecastPing(blocked){
+  var f = forecast(), pick = null;
+  /* Resets run FIRST and outside every guard, exactly as they do for the ceiling:
+     a flag stuck on across a Shabbat or a nap silently costs him the next warning. */
+  for(var i = 0; i < f.length; i++){
+    var c = f[i];
+    if(!c.due){ subWarned[c.key] = false; continue; }
+    if(!subWarned[c.key] && pick === null) pick = c;
+  }
+  if(blocked || !pick) return;
+  if(shabbatNow() || holdActive() || !planDayNow()) return;
+  subWarned[pick.key] = true;
+  var left = pick.leftMin;
+  var lead = (typeof left === 'number' && left > 0)
+    ? 'About ' + left + ' minute' + (left === 1 ? '' : 's') + '. '
+    : 'Past her usual window. ';
+  alarm(pick.title || ('Mercy: ' + pick.label), lead + (pick.alarm || ''),
+        'mercy-' + pick.key);
+}
 setInterval(()=>{
   render();
-  const last=lastOutside(); if(last===null) return;
-  const el=(Date.now()-last)/3600000, hold=holdHours();
-  const pct=el/hold*100;
+  /* null until she has been outside once. That used to return early, which was fine
+     when the ceiling was the only alarm; it is not fine now, because the three
+     forecast bars do not depend on her last outing and would have gone silent on a
+     phone that had logged a pee but no trip. */
+  const last=lastOutside();
+  const hold=holdHours();
+  const el = last===null ? null : (Date.now()-last)/3600000;
+  const pct = el===null ? 0 : el/hold*100;
   /* Resets run FIRST and outside every guard, so a flag can never get stuck on across
      a Shabbat or a nap and silently cost him the next warning. */
-  if(pct < ZONE_WARN) warnedEarly=false;
-  if(el < hold) warned=false;
-  if(shabbatNow()) return;
+  if(el===null || pct < ZONE_WARN) warnedEarly=false;
+  if(el===null || el < hold) warned=false;
   /* A running hold means she is ASLEEP and he deliberately deferred the outing.
      Pinging him to go and wake her is the exact opposite of what that button is for. */
-  if(holdActive()) return;
-  if(el > hold){
-    /* Past the ceiling supersedes the 75 mark rather than firing beside it: a first
-       tick after a long absence would otherwise sound two alarms back to back. */
-    if(!warned){
-      alarm('Mercy is past her ceiling', 'She has not been out in '+el.toFixed(1)+' hours.');
-      warned=true; warnedEarly=true;
+  const quiet = shabbatNow() || !!holdActive();
+  var fired = false;
+  if(el !== null && !quiet){
+    if(el > hold){
+      /* Past the ceiling supersedes the 75 mark rather than firing beside it: a first
+         tick after a long absence would otherwise sound two alarms back to back. */
+      if(!warned){
+        alarm('Mercy is past her ceiling', 'She has not been out in '+el.toFixed(1)+' hours.');
+        warned=true; warnedEarly=true; fired=true;
+      }
+    } else if(pct >= ZONE_WARN && !warnedEarly){
+      alarm('Mercy is '+Math.round(pct)+'% through her window',
+            'About '+Math.round((hold-el)*60)+' minutes left. Take her out before she has to ask.');
+      warnedEarly=true; fired=true;
     }
-  } else if(pct >= ZONE_WARN && !warnedEarly){
-    alarm('Mercy is '+Math.round(pct)+'% through her window',
-          'About '+Math.round((hold-el)*60)+' minutes left. Take her out before she has to ask.');
-    warnedEarly=true;
   }
+  /* Called on EVERY tick and never from behind one of the guards above, because its
+     own one-shot flags have to be cleared even on a Shabbat and even through a hold.
+     Sitting behind an early return, a flag set at 75 just before candle lighting would
+     still be set at havdalah and would eat the next warning. It re-checks the guards
+     itself before making any noise. */
+  forecastPing(fired || quiet);
 }, 30000);
 
 if('serviceWorker' in navigator){
@@ -5655,24 +5788,245 @@ function whereWord(e){
   return '';
 }
 
+/* ---- the three forecast bars -------------------------------------------------
+   The strip under the clock used to be two dead read-outs: last pee, last poop. It
+   now answers the question those were really being asked, which is not "when did
+   she" but "when will she", and it answers it the way the big clock does, with a
+   bar filling across the panel.
+
+   The three bars are NOT three copies of one idea, and that difference is the whole
+   design. Each is driven by something different:
+
+     Pee   fills from her last pee toward her own median gap between pees.
+     Poop  fills from her last MEAL, not her last poop, toward her median meal to
+           poop window. Counting from the last poop would have produced a bar that
+           ticks quietly up through 9, 14, 19 hours and never means anything: her
+           gut is started by food, not by a clock. This is the one that can actually
+           catch the accident, and it is the one that would have been wrong had all
+           three panels been built to the same recipe.
+     Walk  is not a forecast at all. Walks are in config.schedule.daily, so this is
+           a countdown to a decision already made, and it fills from the previous
+           scheduled walk to the next one.
+
+   Two of the three are guesses and the CSS draws them as guesses, at a lower opacity
+   than the rule above them. Below the sample minimums in config they draw a dotted
+   empty track and say how many more events they need, in the same voice the Trends
+   panel already uses, because a confident bar drawn from three events is worse than
+   no bar: it gets believed once, it is wrong, and then the ceiling clock beside it
+   stops being believed too. */
+
+/* Her typical gaps, from the last FORECAST_DAYS ONLY, never from all of it. She is
+   ten weeks old and her bladder is physically growing week by week, so an all time
+   median averages a puppy who has already changed and lags her real capacity badly.
+   The Trends tab keeps its all time view on purpose; this is the one that has to be
+   about the dog she is this week. */
+function forecastGaps(){
+  var since = Date.now() - FORECAST_DAYS * 86400000;
+  var peeGaps = [], mealToPoop = [], lastPee = null;
+  for(var i = 0; i < events.length; i++){
+    var e = events[i];
+    /* The same exclusion the Trends panel makes: an entry nobody timed cannot teach
+       us a gap, and left in it would put a derived nine hour overnight in the median. */
+    if(!isLogEvent(e) || timeUnknown(e)) continue;
+    if(e.event === 'Pee'){
+      if(lastPee !== null && e.ts - lastPee < GAP_CAP_PEE && e.ts >= since)
+        peeGaps.push(e.ts - lastPee);
+      lastPee = e.ts;
+    } else if(e.event === 'Poop' && e.ts >= since){
+      var m = lastBefore(e.ts, function(x){ return x.event === 'Meal'; });
+      if(m && e.ts - m.ts < GAP_CAP_POOP) mealToPoop.push(e.ts - m.ts);
+    }
+  }
+  return { pee: peeGaps, poop: mealToPoop };
+}
+
+/* A wall clock time on today, or on a neighbouring day. */
+function planAt(hm, dayOffset){
+  var p = hm.split(':');
+  var d = new Date();
+  d.setDate(d.getDate() + (dayOffset || 0));
+  d.setHours(+p[0], +p[1], 0, 0);
+  return d.getTime();
+}
+function planWalks(rows){
+  var out = [];
+  for(var i = 0; i < (rows || []).length; i++) if(rows[i][3] === 'Walk') out.push(rows[i]);
+  return out;
+}
+/* The walk either side of now. Today's shape can be overridden in the shared log and
+   PLAN already carries that; yesterday's and tomorrow's fall back to the weekday
+   default, which is all that is knowable about a day nobody has touched yet. */
+function walkWindow(){
+  var now = Date.now(), today = planWalks(PLAN), prev = null, next = null;
+  for(var i = 0; i < today.length; i++){
+    var t = planAt(today[i][1], 0);
+    if(t <= now) prev = { ts: t, row: today[i] };
+    else if(next === null) next = { ts: t, row: today[i] };
+  }
+  var dow = new Date().getDay();
+  if(next === null){
+    var tm = planWalks(PLANS[DEFAULT_VARIANT[(dow + 1) % 7]]);
+    if(tm.length) next = { ts: planAt(tm[0][1], 1), row: tm[0] };
+  }
+  if(prev === null){
+    var yd = planWalks(PLANS[DEFAULT_VARIANT[(dow + 6) % 7]]);
+    if(yd.length) prev = { ts: planAt(yd[yd.length - 1][1], -1), row: yd[yd.length - 1] };
+  }
+  return { prev: prev, next: next };
+}
+
+/* One place decides what each bar says. render() draws from it and the alarm loop
+   pings from it, so what buzzes in his pocket is by construction the same thing the
+   strip is showing. Two copies of this arithmetic would be two chances for the
+   notification to disagree with the screen, with no way to tell which was lying. */
+function forecast(){
+  var now = Date.now(), g = forecastGaps(), out = [];
+
+  /* --- pee: her own rhythm --- */
+  var lp = lastOfEvent('Pee');
+  var pMed = g.pee.length >= FORECAST_MIN_PEE ? median(g.pee) : null;
+  var pee = { key: 'pee', cls: 'b-pee', label: 'Pee', ready: false, pct: 0,
+              due: false, mark: ZONE_WARN };
+  if(!lp){
+    pee.none = 'No pee logged yet.';
+  } else {
+    pee.value = gapClock(now - lp.ts);
+    pee.basis = 'since her pee';
+    pee.acc = lp.where === 'Indoor Accident' || lp.where === 'Crate Accident';
+    if(pMed === null){
+      pee.thin = true;
+      pee.est = 'needs ' + Math.max(1, FORECAST_MIN_PEE - g.pee.length) + ' more';
+    } else {
+      pee.ready = true;
+      pee.pct = (now - lp.ts) / pMed * 100;
+      pee.est = pee.pct >= 100 ? overdueText(now - lp.ts - pMed)
+                               : 'usually ~' + gapText(pMed);
+      pee.leftMin = Math.round((pMed - (now - lp.ts)) / 60000);
+      pee.title = 'Mercy is due a pee soon';
+      pee.alarm = 'She usually goes about every ' + gapText(pMed) + '.';
+    }
+  }
+  out.push(pee);
+
+  /* --- poop: her stomach, not her clock --- */
+  var lm = lastOfEvent('Meal'), lq = lastOfEvent('Poop');
+  var qMed = g.poop.length >= FORECAST_MIN_POOP ? median(g.poop) : null;
+  var poop = { key: 'poop', cls: 'b-poop', label: 'Poop', ready: false, pct: 0,
+               due: false, mark: ZONE_WARN };
+  if(!lm){
+    poop.none = 'No meal logged yet.';
+  } else if(lq && lq.ts > lm.ts){
+    /* She has already been since she ate, so there is nothing left to count toward.
+       Saying so is the useful answer; a bar creeping on regardless would be inviting
+       him to stand outside with a dog who has nothing left to give. */
+    poop.value = gapClock(now - lq.ts);
+    poop.basis = 'since her poop';
+    poop.est = 'done after her meal';
+    poop.acc = lq.where === 'Indoor Accident' || lq.where === 'Crate Accident';
+  } else {
+    poop.value = gapClock(now - lm.ts);
+    poop.basis = 'since her meal';
+    if(qMed === null){
+      poop.thin = true;
+      poop.est = 'needs ' + Math.max(1, FORECAST_MIN_POOP - g.poop.length) + ' more';
+    } else {
+      poop.ready = true;
+      poop.pct = (now - lm.ts) / qMed * 100;
+      poop.est = poop.pct >= 100 ? overdueText(now - lm.ts - qMed)
+                                 : 'usually ~' + gapText(qMed);
+      poop.leftMin = Math.round((qMed - (now - lm.ts)) / 60000);
+      poop.title = 'Mercy is due a poop soon';
+      poop.alarm = 'She usually goes about ' + gapText(qMed) + ' after a meal.';
+    }
+  }
+  out.push(poop);
+
+  /* --- walk: already on the plan --- */
+  var w = walkWindow();
+  var walk = { key: 'walk', cls: 'b-walk', label: 'Walk', ready: false, pct: 0,
+               due: false, mark: ZONE_WARN };
+  if(!w.next){
+    walk.none = 'No walk on the plan.';
+  } else {
+    walk.ready = true;
+    walk.value = gapClock(Math.max(0, w.next.ts - now));
+    walk.basis = 'until ' + walkName(w.next.row);
+    walk.est = 'at ' + hhmm(new Date(w.next.ts));
+    var from = w.prev ? w.prev.ts : now;
+    var span = w.next.ts - from;
+    walk.pct = span > 0 ? (now - from) / span * 100 : 100;
+    walk.leftMin = Math.round((w.next.ts - now) / 60000);
+    /* The mark is a fixed lead rather than a share of the span, because the span is
+       whatever the plan happens to leave between two walks: on a home day the gap
+       from 07:15 to 19:05 is nearly twelve hours, and three quarters of that is 4pm.
+       Putting the tick where the lead actually falls keeps the drawing and the ping
+       the same event, which is the whole point of them sharing this function. */
+    walk.mark = span > 0 ? Math.max(0, 100 - (WALK_LEAD_MIN * 60000) / span * 100) : 0;
+    walk.title = 'Her walk is coming up';
+    walk.alarm = walkName(w.next.row) + ' at ' + hhmm(new Date(w.next.ts)) + '.';
+  }
+  out.push(walk);
+
+  /* Each card warns at its OWN mark. Two of them sit at ZONE_WARN; the walk's moves
+     with the length of today's gap between walks. */
+  for(var k = 0; k < out.length; k++)
+    out[k].due = out[k].ready && out[k].pct >= out[k].mark;
+  return out;
+}
+
+/* Is the day awake? Nothing in config declares quiet hours, and nothing needs to:
+   the plan already answers it, because its earliest row is the morning outing and
+   its latest is the last call before the crate. Outside that span these bars stay
+   silent. This is not a nicety. On 31 August he decided against a 2am potty alarm
+   and chose the sleep, and a poop bar that fires at 03:40 because a median says so
+   would quietly reverse that decision on his behalf. The bars still DRAW overnight;
+   they just do not make a noise. */
+function planDayNow(){
+  if(!PLAN || !PLAN.length) return true;
+  var lo = null, hi = null;
+  for(var i = 0; i < PLAN.length; i++){
+    var t = planAt(PLAN[i][1], 0);
+    if(lo === null || t < lo) lo = t;
+    if(hi === null || t > hi) hi = t;
+  }
+  var now = Date.now();
+  return now >= lo && now <= hi;
+}
+
+/* The plan row's own label reads "Walk 2" or "Walk after learning". A third of a
+   phone will not hold the long ones, so those become "her walk". */
+function walkName(row){
+  var t = row[2] || 'her walk';
+  return t.length > 12 ? 'her walk' : t;
+}
+/* h:mm under a day, then days: the same shape the old sub-clock printed, so a number
+   he has been reading for a week does not change under him. */
+function gapClock(ms){
+  var mins = Math.floor(ms / 60000), h = Math.floor(mins / 60), m = mins % 60;
+  return h >= 24 ? Math.floor(h / 24) + 'd ' + (h % 24) + 'h' : h + ':' + pad(m);
+}
+function overdueText(ms){
+  var mins = Math.round(ms / 60000);
+  return mins < 5 ? 'due now' : 'over by ' + gapText(ms);
+}
+
 function renderSubClocks(){
-  const box = document.getElementById('subclocks');
+  var box = document.getElementById('subclocks');
   if(!box) return;
-  const cards = [
-    {label:'Last pee',  e:lastOfEvent('Pee'),  none:'She has not peed since you started logging.'},
-    {label:'Last poop', e:lastOfEvent('Poop'), none:'No stool logged yet.'},
-  ];
-  box.innerHTML = cards.map(c => {
-    if(!c.e) return '<div class="none"><div class="sl">' + c.label + '</div>' +
-      '<div class="sv">--:--</div><div class="sw">' + c.none + '</div></div>';
-    const mins = Math.floor((Date.now() - c.e.ts) / 60000);
-    const h = Math.floor(mins / 60), m = mins % 60;
-    const acc = c.e.where === 'Indoor Accident' || c.e.where === 'Crate Accident';
-    return '<div class="' + (acc ? 'acc' : '') + '">' +
+  box.innerHTML = forecast().map(function(c){
+    if(c.none) return '<div class="' + c.cls + ' none"><div class="sl">' + c.label +
+      '</div><div class="sv">--:--</div><div class="sw">' + c.none + '</div></div>';
+    /* Only the bar is clamped. The words are allowed to say 140 per cent, because
+       "over by 40 min" is the sentence that matters; a fill wider than its own track
+       just spills out of the card. */
+    var w = Math.max(0, Math.min(100, c.pct));
+    return '<div class="' + c.cls + (c.due ? ' due' : '') + (c.thin ? ' thin' : '') +
+      (c.acc ? ' acc' : '') + '">' +
+      '<div class="scf" style="width:' + w.toFixed(1) + '%"></div>' +
+      (c.ready ? '<div class="sct" style="left:' + c.mark.toFixed(1) + '%"></div>' : '') +
       '<div class="sl">' + c.label + '</div>' +
-      '<div class="sv">' + (h >= 24 ? Math.floor(h/24) + 'd ' + (h%24) + 'h' : h + ':' + pad(m)) + '</div>' +
-      '<div class="sw"><b>' + hhmm(new Date(c.e.ts)) + '</b> ' + whereWord(c.e) +
-      (c.e.stool ? ' &middot; score ' + c.e.stool : '') + '</div></div>';
+      '<div class="sv">' + c.value + '</div>' +
+      '<div class="sw">' + c.basis + '<br>' + c.est + '</div></div>';
   }).join('');
 }
 
