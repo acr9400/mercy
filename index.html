@@ -961,7 +961,7 @@ body.gon #ver{display:none}
 <h1><img src="./avatar.jpg" alt="" onerror="this.style.display='none'">
   <span>Mercy &middot; <span id="age"></span></span></h1>
 <div class="who" id="who"></div>
-<div id="ver">v95 <button onclick="forceUpdate()">Force update</button></div>
+<div id="ver">v96 <button onclick="forceUpdate()">Force update</button></div>
 <div class="sync off" id="sync"><span class="led"></span><span id="synctext">Local only</span></div>
 
 <div class="shab" id="shab"></div>
@@ -1254,6 +1254,9 @@ const FORECAST_DAYS = 10;
 const FORECAST_MIN_PEE = 4;
 const FORECAST_MIN_POOP = 3;
 const WALK_LEAD_MIN = 30;
+const GAP_CAP_PEE  = 8 * 3600000;
+const GAP_CAP_POOP = 6 * 3600000;
+const GAP_CAP_POOP_GAP = 18 * 3600000;
 const WATER_LAG_MIN = 20;
 const WATER_WINDOW_H = 3;
 const MEALS_UNTIL_6MO = 3;
@@ -1779,29 +1782,15 @@ let PLAN = PLANS[DEFAULT_VARIANT[new Date().getDay()]];
    throws rather than reading undefined. */
 let dayView = 0;
 
-/* The two caps that decide what counts as a measurable gap, in ONE place. patterns()
-   on the Trends tab and forecast() under the clock ask the same two questions of the
-   same log, and when the numbers were written out twice they were free to drift: a
-   Trends row saying her meal-to-poop window is 22 minutes while the bar under the
-   clock counted a different set of poops would be indefensible, and neither screen
-   would look wrong on its own.
+/* The three gap caps are GENERATED, from rules.gap_cap_*_hours. They used to be typed
+   here, and two of them were the same number because the poop cap was copied from the
+   pee cap: she poops twice a day, so an 8 hour cap threw out ten of her eleven gaps and
+   the bar asked for more data forever. A number that is wrong about this particular dog
+   is invisible in the code and obvious in the log, so it belongs in config beside a note
+   that quotes the log. See rules._gap_cap_note.
 
-   Eight hours for a pee gap drops the overnight: she does not hold for nine hours
-   because her bladder is good, she holds because everyone is asleep, and letting that
-   into the median would push her typical gap out past anything real. Six hours for a
-   meal is generous on purpose -- her actual window sits far below it, and the cap is
-   only there to stop a poop that follows no meal at all from being attributed to
-   breakfast.
-
-   Declared up here with PLAN and dayView, not beside forecast() at the foot of the
-   file, because render() reaches renderSubClocks() near the top and a const read
-   before its declaration line runs is a TypeError that kills the whole page. */
-const GAP_CAP_PEE  = 8 * 3600000;
-const GAP_CAP_POOP = 6 * 3600000;
-/* Poop to poop, which is what the bar falls back on once she has already been and there
-   is no meal to count from yet. Eight hours for the same reason the pee cap is eight:
-   it drops the overnight, which is not her rhythm, it is everybody being asleep. */
-const GAP_CAP_POOP_GAP = 8 * 3600000;
+   patterns() on Trends and forecastGaps() under the clock both read them, so the two
+   screens cannot answer the same question differently. */
 
 const PAT_HELP = {
   'Her meal to poop window': {
