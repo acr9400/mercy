@@ -966,7 +966,7 @@ body.gon #ver{display:none}
 <h1><img src="./avatar.jpg" alt="" onerror="this.style.display='none'">
   <span>Mercy &middot; <span id="age"></span></span></h1>
 <div class="who" id="who"></div>
-<div id="ver">v101 <button onclick="forceUpdate()">Force update</button></div>
+<div id="ver">v102 <button onclick="forceUpdate()">Force update</button></div>
 <div class="sync off" id="sync"><span class="led"></span><span id="synctext">Local only</span></div>
 
 <div class="shab" id="shab"></div>
@@ -2654,10 +2654,23 @@ var VOMIT_NOTE = {
    to what happened in the following three quarters of an hour, is the only way that
    pattern ever becomes visible instead of being recalled wrong.
 
-   The sheet asks WHERE SHE WAS rather than how long, because that is the half that
-   cannot be reconstructed later and the half that changes what it means. Length is a
-   second tap he does not have to take while a dog is barking: the row opens the ordinary
-   edit sheet, and Bark is in DURATIONS, so 'Change how long it was' is offered there.
+   The sheet asks WHERE SHE WAS first, because that is the half that cannot be
+   reconstructed later and the half that changes what it means, and because it is the one
+   that survives if he taps away before the second sheet. Then how long.
+
+   MINS ON A BARK RUNS BACKWARDS, and this is the one thing to keep straight about it. On
+   a Walk, mins runs FORWARD from the stamp: tripReach() adds it to decide how long that
+   outing stays open. On a Bark it is how long she had ALREADY been going when he tapped,
+   so the barking started at ts minus mins and the stamp is the END of what he is
+   describing, not the beginning. That is deliberate rather than sloppy. He reaches for
+   the phone after listening to it for a while, so the honest question is "how long has
+   this been going on", and barkOutcome() then reads forward from the moment he tapped,
+   which is what the following pee is actually following. Stamping the start instead
+   would push a pee three minutes after an hour of barking to 63 minutes later and
+   straight out of the window.
+
+   Nothing sums a Bark's mins: every reader that adds minutes up filters on Walk or Play
+   first. Check that again before changing this.
 
    where stays N/A. Barking is not an outing and not an accident. */
 var BARK_WHERE = [
@@ -2676,9 +2689,30 @@ var BARK_NOTE = {
 };
 function logBark(){
   openSheet('She is barking',
-    'Where she was is the part you will not be able to reconstruct tomorrow. How long is '
-    + 'a tap on the row afterwards, whenever you have a hand free.',
-    BARK_WHERE, function(v){ push('Bark', 'N/A', {notes: BARK_NOTE[v] || BARK_NOTE['']}); });
+    'Two quick questions. Where she was is the part you will not be able to reconstruct '
+    + 'tomorrow, so it comes first.',
+    BARK_WHERE, function(v){
+      var note = BARK_NOTE[v] || BARK_NOTE[''];
+      setTimeout(function(){ barkMinutes(note); }, 240);
+    });
+}
+
+/* Its own sheet rather than logDuration(), because logDuration's options are labelled
+   with the time each one ENDS at, which is right for a walk you are about to take and
+   backwards for barking you have already been listening to. Same numbers, opposite
+   direction, and a note that says the wrong direction is worse than no note. */
+function barkMinutes(note){
+  var base = exactTs !== null ? exactTs : Date.now() - offsetMin*60000;
+  var opts = (DURATIONS['Bark'] || [5,10,20,30,45,60]).map(function(m){
+    return {value:m, label:m+'m', note:'started around ' + hhmm(new Date(base - m*60000))};
+  });
+  opts.push({value:0, label:'Skip', note:'do not know, or it only just started'});
+  openSheet('How long has it been going?',
+    'Counted backwards from now: how long she has ALREADY been at it, not how long you '
+    + 'think it will last. If it carries on, tap the row and raise the number.',
+    opts, function(m){
+      push('Bark', 'N/A', m ? {mins:m, notes:note} : {notes:note});
+    });
 }
 
 /* What FOLLOWED a bark, inside rules.bark_outcome_window_minutes. Deliberately worded as
