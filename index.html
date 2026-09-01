@@ -966,7 +966,7 @@ body.gon #ver{display:none}
 <h1><img src="./avatar.jpg" alt="" onerror="this.style.display='none'">
   <span>Mercy &middot; <span id="age"></span></span></h1>
 <div class="who" id="who"></div>
-<div id="ver">v99 <button onclick="forceUpdate()">Force update</button></div>
+<div id="ver">v100 <button onclick="forceUpdate()">Force update</button></div>
 <div class="sync off" id="sync"><span class="led"></span><span id="synctext">Local only</span></div>
 
 <div class="shab" id="shab"></div>
@@ -2562,10 +2562,15 @@ function logOvernight(){
   var w = overnightSpan();
   var mid = w.start + Math.round((w.end - w.start) / 2);
   var span = hhmm(new Date(w.start)) + ' and ' + hhmm(new Date(w.end));
-  var note = UNKNOWN_TIME + '. Overnight crate accident, found in the morning. Nobody '
-    + 'was awake for it, so nothing about the timing was observed. The stamp is the '
-    + 'midpoint between her ' + hhmm(new Date(w.start)) + ' outing and her '
+  /* The derived half is the same sentence whatever she did; only the opening phrase
+     changes. Written as one string it said "Overnight crate accident" on a vomit, which
+     is both wrong and the sort of wrong that ends up read out to a vet. */
+  var derived = 'Nobody was awake for it, so nothing about the timing was observed. The '
+    + 'stamp is the midpoint between her ' + hhmm(new Date(w.start)) + ' outing and her '
     + hhmm(new Date(w.end)) + ' one, derived so the entry can be ordered, not seen.';
+  var note = UNKNOWN_TIME + '. Overnight crate accident, found in the morning. ' + derived;
+  var vnote = UNKNOWN_TIME + '. Vomit, found in the morning. Not seen, and what it was '
+    + 'made of was not recorded. ' + derived;
 
   /* push() stamps the clock and then runs feedback(), whose "only 20 minutes after she
      was outside" line is exactly the false reading this button exists to prevent. So
@@ -2597,8 +2602,7 @@ function logOvernight(){
          rather than her bladder, which is why it does not ask for a stool score and
          goes straight to done(). */
       if(v === 'vom'){
-        put('Vomit', {where:'N/A',
-          notes: note + ' Vomit, found in the morning, not seen and not described.'});
+        put('Vomit', {where:'N/A', notes: vnote});
         done(); return;
       }
       if(v === 'pee' || v === 'both') put('Pee');
