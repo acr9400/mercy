@@ -966,7 +966,7 @@ body.gon #ver{display:none}
 <h1><img src="./avatar.jpg" alt="" onerror="this.style.display='none'">
   <span>Mercy &middot; <span id="age"></span></span></h1>
 <div class="who" id="who"></div>
-<div id="ver">v105 <button onclick="forceUpdate()">Force update</button></div>
+<div id="ver">v106 <button onclick="forceUpdate()">Force update</button></div>
 <div class="sync off" id="sync"><span class="led"></span><span id="synctext">Local only</span></div>
 
 <div class="shab" id="shab"></div>
@@ -1026,7 +1026,7 @@ the gaps for you.</p>
 
 <h2>Accident indoors</h2>
 <div class="grid">
-  <button class="b-acc" onclick="log('Pee','Indoor Accident')">Pee<span class="hint">inside</span></button>
+  <button class="b-acc" onclick="logAccident('Pee','Indoor Accident')">Pee<span class="hint">inside</span></button>
   <button class="b-acc" onclick="logPoop('Indoor Accident')">Poop<span class="hint">inside</span></button>
 </div>
 
@@ -2522,12 +2522,71 @@ const STOOL = [
   {value:7,label:'7',note:'liquid, a puddle'},
   {value:0,label:'Skip',note:'did not look'},
 ];
+/* ---- where in the apartment it landed -------------------------------------------
+   Two accidents on 1 September: one at the front door, half on the mat and half over the
+   threshold, and one on the grey bed lying beside her crate. Different rooms, and he
+   noticed both without the app being able to hold either.
+
+   The surface is the part worth capturing, not the room. That bed is the bedding that was
+   STRIPPED OUT of her crate on 27 August because she soiled it, now on the floor. Soft,
+   absorbent, and already established with her. A doormat is the same material argument.
+   Bare wood is not. Whether that means anything is exactly the question this is here to
+   answer, and it cannot be answered from memory a week later.
+
+   Only Indoor Accident is asked. A crate accident already knows where it happened, and
+   spotOf() fills that in rather than spending a tap on it. */
+var ACCIDENT_SPOTS = [
+  {value:'bed',   label:'Her bed, or a mat',  note:'a soft absorbent thing she also lies on'},
+  {value:'door',  label:'At the door',        note:'the doormat, the threshold, just inside'},
+  {value:'rug',   label:'A rug or carpet',    note:'one she does not sleep on'},
+  {value:'floor', label:'Bare floor',         note:'wood or tile, nothing on it'},
+  {value:'',      label:'Not sure',           note:'did not see where it started'}
+];
+var SPOT_LABEL = {bed:'her bed or a mat', door:'at the door', rug:'a rug or carpet',
+                  floor:'bare floor', crate:'in her crate'};
+
+/* Rides in notes after a pipe, the way Held and Away already do, so it survives the trip
+   through the shared sheet without a schema change. Never at position 0: an overnight
+   entry opens with "time not recorded" and timeUnknown() reads that first character. */
+function spotOf(e){
+  if(typeof e.notes === 'string'){
+    var parts = e.notes.split('|');
+    for(var i = 0; i < parts.length; i++){
+      var p = parts[i].trim();
+      if(p.indexOf('spot:') === 0) return p.slice(5);
+    }
+  }
+  return e.where === 'Crate Accident' ? 'crate' : '';
+}
+function withSpot(notes, v){
+  if(!v) return notes || '';
+  return (notes ? notes + ' ' : '') + '| spot:' + v;
+}
+function askSpot(cb){
+  openSheet('Where did it land?',
+    'The surface matters more than the room. Same place twice is a different problem from '
+    + 'two different places, and neither is visible a week later unless it is written down.',
+    ACCIDENT_SPOTS, cb);
+}
+function logAccident(event, where){
+  if(where !== 'Indoor Accident'){ push(event, where); return; }
+  askSpot(function(v){ push(event, where, {notes: withSpot('', v)}); });
+}
+
 function logPoop(where){
   openSheet('Stool score',
     'The test: pick it up. Does it leave anything behind? 3 picks up clean. ' +
     'Two days running at 5 or above is a vet question, not a training one, and so is ' +
     'several days running at 1 or 2.',
-    STOOL, v => push('Poop', where, v ? {stool:v} : {}));
+    STOOL, function(v){
+      var extra = v ? {stool:v} : {};
+      if(where !== 'Indoor Accident'){ push('Poop', where, extra); return; }
+      /* the 240ms every chained sheet in this file waits, so the first has finished
+         sliding out before the second slides in */
+      setTimeout(function(){
+        askSpot(function(sp){ extra.notes = withSpot('', sp); push('Poop', where, extra); });
+      }, 240);
+    });
 }
 
 /* ---- an accident found in the morning -----------------------------------------
@@ -2976,10 +3035,11 @@ var ACCIDENT_REASONS = [
 
   {title:'The spot itself',
    what:'If it smells like a toilet to her it stays a toilet, and enzymatic cleaner is the '
-      + 'only thing that removes it rather than covering it.',
-   test:'Note where in the apartment each one lands. The same place twice is a different '
-      + 'problem from two different places.',
-   fits:null},
+      + 'only thing that removes it rather than covering it. A soft absorbent surface is '
+      + 'also just easier to choose than bare wood.',
+   test:'Watch whether they land on the same KIND of surface rather than the same room. '
+      + 'Enzymatic cleaner on every one, and give it the full time on the label.',
+   fits:function(f){ return f.sameSpot >= 2; }},
 
   {title:'Submissive or greeting wee',
    what:'Happens when a person approaches, reaches or leans over. Ears back, lips pulled '
@@ -3027,6 +3087,21 @@ function whyAccident(e){
   /* What was NOT logged. An empty slot is not evidence it did not happen, and a sheet
      that quietly treated absence as absence would be teaching him a false picture of a
      day he simply did not have a free hand on. */
+  /* How many accidents have landed on this same surface, this one included. Two is where
+     it stops being a coincidence worth mentioning and starts being a thing to test. */
+  var sp = spotOf(e);
+  if(sp){
+    var same = events.filter(function(x){
+      return (x.where === 'Indoor Accident' || x.where === 'Crate Accident')
+             && x.ts <= e.ts && spotOf(x) === sp; }).length;
+    body += '<p style="margin:0 0 12px;font-size:14.5px;line-height:1.6">Landed <b>'
+         +  gesc(SPOT_LABEL[sp] || sp) + '</b>. That is '
+         +  (same === 1 ? 'the first one logged there.'
+                        : 'the ' + same + ' accident logged on that surface.')
+         +  '</p>';
+    f.sameSpot = same;
+  }
+
   var missing = [];
   if(!f.lastPlay  || f.lastPlayMin  > 6 * 60) missing.push('play');
   if(!f.lastWater || f.lastWaterMin > 6 * 60) missing.push('water');
