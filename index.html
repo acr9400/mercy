@@ -966,7 +966,7 @@ body.gon #ver{display:none}
 <h1><img src="./avatar.jpg" alt="" onerror="this.style.display='none'">
   <span>Mercy &middot; <span id="age"></span></span></h1>
 <div class="who" id="who"></div>
-<div id="ver">v103 <button onclick="forceUpdate()">Force update</button></div>
+<div id="ver">v104 <button onclick="forceUpdate()">Force update</button></div>
 <div class="sync off" id="sync"><span class="led"></span><span id="synctext">Local only</span></div>
 
 <div class="shab" id="shab"></div>
@@ -1289,6 +1289,8 @@ const VOMIT_NOW_12H = 2;
 const VOMIT_NOW_24H = 3;
 const VOMIT_CARD_HOURS = 48;
 const BARK_WINDOW_MIN = 45;
+const ACC_LOOKBACK_MIN = 30;
+const ACC_SOON_MIN = 60;
 const DURATIONS = {"Walk": [5, 10, 15, 20, 30], "Play": [10, 15, 20, 25, 30], "Alone": [30, 60, 90, 120, 180, 300], "Bark": [5, 10, 20, 30, 45, 60]};
 const PUSH_URL = "https://travelling-condo-poet-diff.trycloudflare.com";
 const VAPID_KEY = "BFCqwk4kKDp2lwfFfElkdFtXBrsmtjTlts53TfUEM7eklz4D6ud0RYVOQskn_MDYsMaqhMKT-IYpHloRypdPzzQ";
@@ -2826,11 +2828,156 @@ function replaceEntry(e, changes){
   toast('<b>Changed</b><br>' + entryLabel(next));
 }
 
+/* ---- why an accident might have happened ---------------------------------------
+   He asked it in the plainest possible way: why would she pee inside at 10:40 when she
+   went outside at 10:08. The app was holding the answer to the first half of that and
+   nothing was showing it to him.
+
+   THIS SHEET RECONSTRUCTS, IT DOES NOT DIAGNOSE, and that line is not squeamishness. Her
+   own guide, v-urination, says of exactly this pattern: "You cannot tell at home whether
+   this is an infection, incomplete emptying, excitement, or incomplete housetraining, and
+   those need a urine test to separate. Do not debug it yourself." A sheet that ranked
+   likely causes would be doing the thing her guide names and warns against, in a
+   confident typeface. So it prints what the log holds, says which known triggers were
+   present, is honest about what was never logged, and hands the repeated case to the vet.
+
+   The 30 minute window is not a guess either. g-accident-floor: "Look at the thirty
+   minutes before it happened; almost every accident traces back to a missed trigger."
+
+   The absent half matters as much as the present half. Play is a trigger, and on the day
+   he asked there was no Play row at all, so the sheet says what it could not see rather
+   than letting a gap in the log read as a quiet nothing-happened. */
+function accidentFacts(e){
+  var mins = function(x){ return Math.round((e.ts - x.ts) / 60000); };
+  var f = {
+    lastPeeOut: lastBefore(e.ts, function(x){ return x.event === 'Pee' && x.where === 'Outside'; }),
+    lastTrip:   lastBefore(e.ts, function(x){ return OUTSIDE.indexOf(x.event) >= 0 || x.where === 'Outside'; }),
+    lastMeal:   lastBefore(e.ts, function(x){ return x.event === 'Meal'; }),
+    lastWater:  lastBefore(e.ts, function(x){ return x.event === 'Water'; }),
+    lastPlay:   lastBefore(e.ts, function(x){ return x.event === 'Play'; }),
+    lastWake:   lastBefore(e.ts, function(x){ return x.event === 'Wake' || x.event === 'Crate Out'; }),
+    lastBark:   lastBefore(e.ts, function(x){ return x.event === 'Bark'; })
+  };
+  Object.keys(f).forEach(function(k){ if(f[k]) f[k + 'Min'] = mins(f[k]); });
+  return f;
+}
+
+function fmtGap(m){
+  var h = Math.floor(m / 60);
+  return h ? h + 'h ' + (m % 60) + 'm' : m + 'm';
+}
+
+/* Every trigger here is one her own guide already names, and each says what it was
+   measured from so he can disagree with it. The third element marks the one that is a
+   vet question rather than a scheduling miss. */
+function accidentTriggers(e, f){
+  var t = [];
+  if(f.lastPeeOut && f.lastPeeOutMin <= ACC_SOON_MIN)
+    t.push(['She had been emptied ' + f.lastPeeOutMin + ' minutes earlier',
+            'She peed outside at ' + hhmm(new Date(f.lastPeeOut.ts)) + '. Going again '
+            + 'within the hour of being emptied is the pattern already written on her vet '
+            + 'list, and it is the one thing here you are not meant to work out at home.',
+            true]);
+  /* The 08:10 accident on 1 September had no trigger at all until this one existed: she
+     was walked at 07:55 for ten minutes, produced nothing, came in, and went on the mat
+     at 08:10. s-leash-indoors names it exactly: "If you did not see a proper squat, treat
+     her as full." A trip that produced nothing is not an emptied bladder, it is an
+     unanswered one, and it reads on the day as if she has just been. */
+  if(f.lastTrip && f.lastTripMin <= ACC_LOOKBACK_MIN
+     && OUTSIDE.indexOf(f.lastTrip.event) >= 0
+     && tripResult(f.lastTrip, events) === 'nothing')
+    t.push(['She was out ' + f.lastTripMin + ' minutes earlier and did nothing',
+            'A trip that produced nothing is not an empty bladder, it is an unanswered '
+            + 'one. Her guide: if you did not see a proper squat, treat her as full.', false]);
+  if(f.lastMeal && f.lastMealMin <= 45)
+    t.push(['She ate ' + f.lastMealMin + ' minutes earlier',
+            'Her gut fires 5 to 30 minutes after she finishes, and the plan puts a trip '
+            + 'within 15 minutes of every meal.', false]);
+  if(f.lastWater && f.lastWaterMin >= WATER_LAG_MIN && f.lastWaterMin <= WATER_WINDOW_H * 60)
+    t.push(['She drank ' + f.lastWaterMin + ' minutes earlier',
+            'A drink shows up as a pee about ' + WATER_LAG_MIN + ' minutes later, and for '
+            + 'up to ' + WATER_WINDOW_H + ' hours after.', false]);
+  if(f.lastPlay && f.lastPlayMin <= ACC_LOOKBACK_MIN)
+    t.push(['Play, ' + f.lastPlayMin + ' minutes earlier',
+            'After every play bout is one of the fixed trips in her plan. Excitement also '
+            + 'empties a puppy bladder on its own, with no warning squat.', false]);
+  if(f.lastWake && f.lastWakeMin <= ACC_LOOKBACK_MIN)
+    t.push(['She woke ' + f.lastWakeMin + ' minutes earlier',
+            'On waking is the first of the fixed trips, before anything else happens.', false]);
+  if(f.lastBark && f.lastBarkMin <= ACC_LOOKBACK_MIN)
+    t.push(['She was barking ' + f.lastBarkMin + ' minutes earlier',
+            'On 31 August she barked for five to ten minutes and then peed in the crate. '
+            + 'That is not proof she was asking, but it is the second time it has run in '
+            + 'this order.', false]);
+  if(f.lastTrip && f.lastTripMin >= 120)
+    t.push(['It had been ' + fmtGap(f.lastTripMin) + ' since she was outside',
+            'The plan is at least every two hours between the fixed trips.', false]);
+  return t;
+}
+
+function whyAccident(e){
+  var f = accidentFacts(e);
+  var trig = accidentTriggers(e, f);
+  var what = e.event === 'Poop' ? 'pooped' : 'peed';
+  var where = e.where === 'Crate Accident' ? 'in her crate' : 'inside';
+
+  var body = '<p style="margin:0 0 12px;font-size:14.5px;line-height:1.6">She ' + what
+    + ' ' + where + ' at <b>' + gesc(logTime(e)) + '</b>. This is what the log holds about '
+    + 'the ' + ACC_LOOKBACK_MIN + ' minutes before it, and nothing else. A reconstruction, '
+    + 'not a diagnosis.</p>';
+
+  if(trig.length){
+    body += '<p style="margin:0 0 6px;font-size:11px;letter-spacing:.14em;'
+         +  'text-transform:uppercase;color:var(--muted);font-weight:700">What was going on</p>';
+    trig.forEach(function(t){
+      body += '<div style="margin:0 0 10px;padding-left:10px;border-left:2px solid '
+           +  (t[2] ? 'var(--alert)' : 'var(--line)') + '">'
+           +  '<div style="font-size:14.5px;font-weight:600">' + gesc(t[0]) + '</div>'
+           +  '<div style="font-size:13.5px;color:var(--muted);line-height:1.55">'
+           +  gesc(t[1]) + '</div></div>';
+    });
+  } else {
+    body += '<p style="margin:0 0 12px;font-size:14.5px;line-height:1.6">'
+         +  '<b>Nothing in the log explains this one.</b> No meal, no drink, no play, no '
+         +  'waking, and no overdue gap in the ' + ACC_LOOKBACK_MIN + ' minutes before it. '
+         +  'That is worth knowing rather than worth shrugging at: an accident with no '
+         +  'missed trigger behind it is the kind the vet wants to hear about.</p>';
+  }
+
+  /* What was NOT logged. An empty slot is not evidence it did not happen, and a sheet
+     that quietly treated absence as absence would be teaching him a false picture of a
+     day he simply did not have a free hand on. */
+  var missing = [];
+  if(!f.lastPlay  || f.lastPlayMin  > 6 * 60) missing.push('play');
+  if(!f.lastWater || f.lastWaterMin > 6 * 60) missing.push('water');
+  if(!f.lastMeal  || f.lastMealMin  > 8 * 60) missing.push('meals');
+  if(missing.length)
+    body += '<p style="margin:14px 0 0;font-size:13.5px;color:var(--muted);line-height:1.55">'
+         +  '<b>Not logged, so not looked at:</b> ' + gesc(missing.join(', ')) + '. Absent '
+         +  'from the log is not the same as it did not happen, and this sheet can only '
+         +  'read what is there.</p>';
+
+  body += '<p style="margin:14px 0 0;font-size:13.5px;color:var(--muted);line-height:1.55">'
+       +  'Her guide is blunt about the limit here: infection, incomplete emptying, '
+       +  'excitement and incomplete housetraining cannot be told apart at home and need a '
+       +  'urine test. Read <b>She keeps squatting, or went again right after going '
+       +  'outside</b> on the Guide tab.</p>';
+
+  openSheet('Why might this have happened?', '', [], null, body);
+  document.getElementById('sh-opts').classList.add('stack');
+}
+
 function editEntry(id){
   if(!canWrite()){ refuse(); return; }
   var e = events.find(function(x){ return x.id === id; });
   if(!e) return;
-  var opts = [{value:'time', label:'Change the time', note:'says ' + logTime(e) + ' now'}];
+  var opts = [];
+  /* First, above the editing, because it is the question he actually has when he taps an
+     accident row. The edits are housekeeping; this is why he opened it. */
+  if(e.where === 'Indoor Accident' || e.where === 'Crate Accident')
+    opts.push({value:'why', label:'Why might this have happened?',
+               note:'reads the ' + ACC_LOOKBACK_MIN + ' minutes before it'});
+  opts.push({value:'time', label:'Change the time', note:'says ' + logTime(e) + ' now'});
   if(DURATIONS[e.event] || e.mins)
     opts.push({value:'mins', label:'Change how long it was',
                note: e.mins ? 'says ' + e.mins + ' minutes now' : 'no length on it yet'});
@@ -2848,7 +2995,8 @@ function editEntry(id){
       /* the 240ms is what every other chained sheet in this file waits, so the first
          one has finished sliding out before the second slides in */
       setTimeout(function(){
-        if(v === 'mins') editMins(e);
+        if(v === 'why') whyAccident(e);
+        else if(v === 'mins') editMins(e);
         else if(v === 'stool') editStool(e);
         else editTime(e);
       }, 240);
