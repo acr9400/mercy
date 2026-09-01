@@ -966,7 +966,7 @@ body.gon #ver{display:none}
 <h1><img src="./avatar.jpg" alt="" onerror="this.style.display='none'">
   <span>Mercy &middot; <span id="age"></span></span></h1>
 <div class="who" id="who"></div>
-<div id="ver">v102 <button onclick="forceUpdate()">Force update</button></div>
+<div id="ver">v103 <button onclick="forceUpdate()">Force update</button></div>
 <div class="sync off" id="sync"><span class="led"></span><span id="synctext">Local only</span></div>
 
 <div class="shab" id="shab"></div>
@@ -2701,15 +2701,29 @@ function logBark(){
    with the time each one ENDS at, which is right for a walk you are about to take and
    backwards for barking you have already been listening to. Same numbers, opposite
    direction, and a note that says the wrong direction is worse than no note. */
+/* The reference point is the STAMP, which is not always now. With a backdate armed the
+   two questions come apart: "an hour ago" plus "45 minutes" is barking that ran from
+   2h15 ago to 1h ago, and a sheet that says "counted backwards from now" while the entry
+   is being written an hour into the past is quietly lying about the one thing this sheet
+   exists to pin down. So the wording follows the stamp, and every option prints the span
+   it means rather than a single edge of it. */
 function barkMinutes(note){
   var base = exactTs !== null ? exactTs : Date.now() - offsetMin*60000;
+  var backdated = exactTs !== null || offsetMin !== 0;
   var opts = (DURATIONS['Bark'] || [5,10,20,30,45,60]).map(function(m){
-    return {value:m, label:m+'m', note:'started around ' + hhmm(new Date(base - m*60000))};
+    var from = hhmm(new Date(base - m*60000));
+    return {value:m, label:m+'m',
+            note: backdated ? from + ' to ' + hhmm(new Date(base))
+                            : 'started around ' + from};
   });
   opts.push({value:0, label:'Skip', note:'do not know, or it only just started'});
-  openSheet('How long has it been going?',
-    'Counted backwards from now: how long she has ALREADY been at it, not how long you '
-    + 'think it will last. If it carries on, tap the row and raise the number.',
+  openSheet('How long had it been going?',
+    backdated
+      ? 'Counted backwards from ' + hhmm(new Date(base)) + ', the time you set, not from '
+        + 'now: how long she had already been at it BY THEN. Each option shows the stretch '
+        + 'it means.'
+      : 'Counted backwards from now: how long she has ALREADY been at it, not how long '
+        + 'you think it will last. If it carries on, tap the row and raise the number.',
     opts, function(m){
       push('Bark', 'N/A', m ? {mins:m, notes:note} : {notes:note});
     });
