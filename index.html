@@ -943,7 +943,7 @@ body.gon #ver{display:none}
 <h1><img src="./avatar.jpg" alt="" onerror="this.style.display='none'">
   <span>Mercy &middot; <span id="age"></span></span></h1>
 <div class="who" id="who"></div>
-<div id="ver">v93 <button onclick="forceUpdate()">Force update</button></div>
+<div id="ver">v94 <button onclick="forceUpdate()">Force update</button></div>
 <div class="sync off" id="sync"><span class="led"></span><span id="synctext">Local only</span></div>
 
 <div class="shab" id="shab"></div>
@@ -1236,6 +1236,8 @@ const FORECAST_DAYS = 10;
 const FORECAST_MIN_PEE = 4;
 const FORECAST_MIN_POOP = 3;
 const WALK_LEAD_MIN = 30;
+const WATER_LAG_MIN = 20;
+const WATER_WINDOW_H = 3;
 const MEALS_UNTIL_6MO = 3;
 const MEALS_AFTER_6MO = 2;
 const WALK_PER_MONTH = 5.0;
@@ -3018,13 +3020,20 @@ function lastBefore(ts, test){
 function feedback(e){
   const bits=[];
   const meal=lastBefore(e.ts, x=>x.event==='Meal');
-  const water=lastBefore(e.ts, x=>x.event==='Water');
+  /* NOT the most recent drink: the most recent drink OLD ENOUGH to be the cause.
+     Water taken four minutes before a pee is still in her stomach, and naming it in a
+     list of causes is a claim the app cannot support. Stepping the window back finds
+     the drink that could actually be responsible, which was in the log all along. */
+  const water=lastBefore(e.ts - WATER_LAG_MIN*60000, x=>x.event==='Water');
   const out=lastBefore(e.ts, x=>OUTSIDE.includes(x.event)||x.where==='Outside');
   const same=lastBefore(e.ts, x=>x.event===e.event);
 
   if((e.event==='Pee'||e.event==='Poop')){
     if(meal && e.ts-meal.ts < 6*3600000) bits.push(gapText(e.ts-meal.ts)+' after her meal');
-    if(water && e.ts-water.ts < 3*3600000) bits.push(gapText(e.ts-water.ts)+' after drinking');
+    /* Pee only. Water is a pee input; a poop follows a meal, and the line above this
+       one already says how long after her meal it came. */
+    if(e.event==='Pee' && water && e.ts-water.ts < WATER_WINDOW_H*3600000)
+      bits.push(gapText(e.ts-water.ts)+' after drinking');
     if(same) bits.push(gapText(e.ts-same.ts)+' since her last '+e.event.toLowerCase());
   }
   if(e.where==='Indoor Accident' && out) bits.push('only '+gapText(e.ts-out.ts)+' after she was outside');
