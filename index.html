@@ -966,7 +966,7 @@ body.gon #ver{display:none}
 <h1><img src="./avatar.jpg" alt="" onerror="this.style.display='none'">
   <span>Mercy &middot; <span id="age"></span></span></h1>
 <div class="who" id="who"></div>
-<div id="ver">v100 <button onclick="forceUpdate()">Force update</button></div>
+<div id="ver">v101 <button onclick="forceUpdate()">Force update</button></div>
 <div class="sync off" id="sync"><span class="led"></span><span id="synctext">Local only</span></div>
 
 <div class="shab" id="shab"></div>
@@ -1042,6 +1042,11 @@ the gaps for you.</p>
 <h2>She threw up</h2>
 <div class="row">
   <button class="small b-acc" onclick="logVomit()">Vomit<span class="hint">one is a vet call at her age</span></button>
+</div>
+
+<h2>She is barking</h2>
+<div class="row">
+  <button class="small" onclick="logBark()">Barking<span class="hint">where she was, and what followed</span></button>
 </div>
 
 <h2>Other</h2>
@@ -1283,7 +1288,8 @@ const TRIP_PAIR_MINUTES = 5;
 const VOMIT_NOW_12H = 2;
 const VOMIT_NOW_24H = 3;
 const VOMIT_CARD_HOURS = 48;
-const DURATIONS = {"Walk": [5, 10, 15, 20, 30], "Play": [10, 15, 20, 25, 30], "Alone": [30, 60, 90, 120, 180, 300]};
+const BARK_WINDOW_MIN = 45;
+const DURATIONS = {"Walk": [5, 10, 15, 20, 30], "Play": [10, 15, 20, 25, 30], "Alone": [30, 60, 90, 120, 180, 300], "Bark": [5, 10, 20, 30, 45, 60]};
 const PUSH_URL = "https://travelling-condo-poet-diff.trycloudflare.com";
 const VAPID_KEY = "BFCqwk4kKDp2lwfFfElkdFtXBrsmtjTlts53TfUEM7eklz4D6ud0RYVOQskn_MDYsMaqhMKT-IYpHloRypdPzzQ";
 const PLANS = {
@@ -2640,6 +2646,67 @@ var VOMIT_NOTE = {
   blood:'Vomit: BLOOD, or coffee ground material.', object:'Vomit: contained something that was not food.',
   '':'Vomit: not seen or not described.'
 };
+/* ---- barking ------------------------------------------------------------------
+   Logged as a SIGNAL, not as a complaint. On 31 August she barked for five to ten
+   minutes and then peed in the crate at 78 per cent of her hold, and it was read at the
+   time as her being early; her own log entry for it is in capitals. One barking episode
+   remembered afterwards is an anecdote. The same episode with a time on it, sitting next
+   to what happened in the following three quarters of an hour, is the only way that
+   pattern ever becomes visible instead of being recalled wrong.
+
+   The sheet asks WHERE SHE WAS rather than how long, because that is the half that
+   cannot be reconstructed later and the half that changes what it means. Length is a
+   second tap he does not have to take while a dog is barking: the row opens the ordinary
+   edit sheet, and Bark is in DURATIONS, so 'Change how long it was' is offered there.
+
+   where stays N/A. Barking is not an outing and not an accident. */
+var BARK_WHERE = [
+  {value:'crate', label:'In her crate',        note:'shut in, you are here'},
+  {value:'alone', label:'Shut in, you are out', note:'crate or pen, nobody home'},
+  {value:'loose', label:'Loose in the flat',   note:'not confined'},
+  {value:'at',    label:'At something',        note:'the door, a noise, the window'},
+  {value:'',      label:'Just log it',         note:'no detail'},
+];
+var BARK_NOTE = {
+  crate:'Barking: in her crate, someone home.',
+  alone:'Barking: shut in and left alone.',
+  loose:'Barking: loose in the apartment.',
+  at:'Barking: at something, door or noise or window.',
+  '':'Barking.'
+};
+function logBark(){
+  openSheet('She is barking',
+    'Where she was is the part you will not be able to reconstruct tomorrow. How long is '
+    + 'a tap on the row afterwards, whenever you have a hand free.',
+    BARK_WHERE, function(v){ push('Bark', 'N/A', {notes: BARK_NOTE[v] || BARK_NOTE['']}); });
+}
+
+/* What FOLLOWED a bark, inside rules.bark_outcome_window_minutes. Deliberately worded as
+   a sequence and never as a cause: "then peed in the crate" is a fact about the log,
+   "she was asking" is a story about the dog. She barks for a dozen reasons and most of
+   them are not her bladder.
+
+   It reads forward only. A pee twenty minutes BEFORE she started barking explains
+   nothing about the barking, and pairing symmetrically the way tripResult() does would
+   have quietly credited it. */
+function barkOutcome(bark, all){
+  if(bark.event !== 'Bark') return null;
+  const w = BARK_WINDOW_MIN * 60000;
+  let best = null;
+  all.forEach(x => {
+    if(x.event !== 'Pee' && x.event !== 'Poop') return;
+    if(x.ts < bark.ts || x.ts > bark.ts + w) return;
+    if(!best || x.ts < best.ts) best = x;
+  });
+  if(!best) return Date.now() <= bark.ts + w ? 'open' : 'nothing followed';
+  const what = best.event === 'Pee' ? 'peed' : 'pooped';
+  const where = best.where === 'Crate Accident' ? ' in the crate'
+              : best.where === 'Indoor Accident' ? ' inside'
+              : best.where === 'Outside' ? ' outside' : '';
+  const mins = Math.round((best.ts - bark.ts) / 60000);
+  return 'then ' + what + where + ', ' + mins + 'm later';
+}
+
 function logVomit(){
   openSheet('She threw up',
     'One vomit at her age is a call to the vet today, even if she is bright and it only '
@@ -3726,6 +3793,14 @@ function render(){
       else if(e.where==='Crate Accident'){ cls='tag acc'; label='accident in crate'; }
       else if(nil){ cls='tag nil'; label='nothing'; }
       else if(tr==='open'){ cls='tag open'; label='out now'; }
+      /* A bark wears what came after it, in the muted tone, because the row is a
+         sequence and not a verdict about her. */
+      else if(e.event==='Bark'){
+        const bo = barkOutcome(e, tAll);
+        if(bo === 'open'){ cls='tag open'; label='waiting'; }
+        else if(bo === 'nothing followed'){ cls='tag nil'; label='nothing followed'; }
+        else { cls='tag'; label=bo; }
+      }
       else if(e.where==='Outside'||OUTSIDE.includes(e.event)){ cls='tag out'; label='outside'; }
       else label='';
       let name=e.event;
