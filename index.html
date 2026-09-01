@@ -807,30 +807,47 @@ body.ro #recent{margin-top:0}
    position:relative lifts it above .fill, which is absolute inset:0 and would
    otherwise wash the progress gradient straight through the text.
 
-   Each panel now carries its OWN fill, on the same idea as the big one, but the two
-   are not the same kind of thing and must not look the same. The big bar fills toward
-   her ceiling, which is a rule out of config and cannot be wrong. These fill toward a
-   median of her own last ten days, which is a guess. So a guess bar is drawn at lower
-   opacity than the rule above it, and an estimate with too few events behind it draws
-   a dotted empty track instead of a confident line. */
-#subclocks{position:relative;display:flex;margin:17px -20px -18px;
-  border-top:1px solid var(--line)}
+   Each panel carries its own rail. It is a RAIL and not a background wash like the big
+   one above it, and that is not only a size decision: the big bar fills toward her
+   ceiling, which is a rule out of config and cannot be wrong, while these fill toward a
+   median of her own last ten days, which is a guess. A guess should not be wearing the
+   same clothes as a rule. An estimate with too few events behind it draws a dashed empty
+   track instead of a confident line, and a panel with nothing to count toward draws no
+   track at all rather than one stuck at zero. */
+/* The opaque ground is load bearing. .clock > .fill is absolute inset:0, so without
+   it the big ceiling fill runs behind these three panels too and its edge cuts a
+   vertical line through them at whatever per cent she is at. On the phone that read as
+   one set of tan blocks with no way to tell which belonged to which bar. The big fill
+   now stops at this border, which is also the honest picture: above the line is her
+   ceiling, below it is three separate questions. */
+#subclocks{position:relative;z-index:2;display:flex;margin:17px -20px -18px;
+  background:var(--raised);border-top:1px solid var(--line)}
 /* Three panels, not two. At 20px of padding a side each one had about 90px of usable
    width on a 393px phone, which cut "usually ~1:10" in half, so the inner padding is
    tighter and only the two outer edges keep the card's own 20px. */
 #subclocks > div{flex:1;padding:11px 12px 12px;min-width:0;position:relative;
-  overflow:hidden}
+  overflow:hidden;display:flex;flex-direction:column}
 #subclocks > div:first-child{padding-left:20px}
 #subclocks > div:last-child{padding-right:20px}
 #subclocks > div + div{border-left:1px solid var(--line)}
-/* The id makes this two-specific, which beats the bare .fill trap the big clock fell
-   into: a one-class .scf lost the tie to any later rule and resolved to height 0. */
-#subclocks > div > .scf{position:absolute;left:0;top:0;bottom:0;width:0%;opacity:.16;
-  transition:width .6s ease,opacity .35s ease}
-#subclocks > div > .sct{position:absolute;top:0;bottom:0;width:1px;background:var(--muted);
-  opacity:.28;pointer-events:none}
-/* The text has to be lifted the same way the whole band is lifted off .fill. */
-#subclocks > div > .sl,#subclocks > div > .sv,#subclocks > div > .sw{position:relative}
+/* A RAIL, not a wash. The big card fills its own background because it is big enough
+   for that to be unmistakable; a third of a phone is not, and the same trick there just
+   looked like the panel had a different shade. This is an explicit track with an
+   explicit fill, which is what a progress bar looks like at this size.
+   In normal flow under the text, so it cannot be pulled out from under its own panel
+   the way an absolutely positioned fill was. */
+#subclocks .scr{position:relative;height:5px;margin-top:auto;border-radius:3px;
+  background:var(--line);overflow:hidden;padding-top:0}
+/* auto pushes it to the foot of its panel so all three rails land on one line whatever
+   the words above them did. The min-height keeps that line off the text when a panel
+   wraps to three. */
+#subclocks .sw{padding-bottom:9px}
+#subclocks .scr > .scf{display:block;height:100%;width:0%;border-radius:3px;
+  transition:width .6s ease}
+/* The warning mark, drawn AFTER the fill so it stays visible over it. This is the point
+   the bar pings at, and for the walk it is not 75 per cent: see forecast(). */
+#subclocks .scr > .sct{position:absolute;top:0;bottom:0;width:1px;background:var(--paper);
+  opacity:.38;pointer-events:none}
 #subclocks .sl{font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);
   font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 #subclocks .sv{font-size:20px;font-weight:200;letter-spacing:-.02em;line-height:1.1;margin:3px 0 2px;
@@ -843,22 +860,22 @@ body.ro #recent{margin-top:0}
    and three identical gold bars are three bars you have to stop and label. The label
    takes the colour too, so the panel is identified twice: once by a word and once by a
    hue, which is what makes it survive a phone held at arm's length. */
-#subclocks .b-pee  > .scf{background:var(--pee)}
-#subclocks .b-pee  > .sl{color:var(--pee)}
-#subclocks .b-poop > .scf{background:var(--poop)}
-#subclocks .b-poop > .sl{color:var(--poop)}
-#subclocks .b-walk > .scf{background:var(--walk)}
-#subclocks .b-walk > .sl{color:var(--walk)}
-/* Due keeps the panel's own hue on the fill and puts alert on the number only. Turning
-   the fill red as well would mean three red bars whenever she is due for everything at
-   once, which is exactly the moment the strip has to stay readable. */
-#subclocks .due > .scf{opacity:.30}
-#subclocks .due > .sv{color:var(--alert);font-weight:400}
-/* Not enough events yet. An empty dotted track says "this is coming" without drawing a
-   number she has not earned. */
-#subclocks .thin > .scf{width:0% !important}
-#subclocks .thin{background:repeating-linear-gradient(135deg,transparent 0 6px,
-  var(--tint) 6px 12px)}
+#subclocks .b-pee  .scf{background:var(--pee)}
+#subclocks .b-pee  .sl{color:var(--pee)}
+#subclocks .b-poop .scf{background:var(--poop)}
+#subclocks .b-poop .sl{color:var(--poop)}
+#subclocks .b-walk .scf{background:var(--walk)}
+#subclocks .b-walk .sl{color:var(--walk)}
+/* Due keeps the bar's own hue and puts alert on the number. Turning three rails red
+   would mean three red bars the moment she is due for everything at once, which is
+   exactly when the strip has to stay readable. The fill sitting past its own mark is
+   the second signal, and that one needs no colour at all. */
+#subclocks .due .sv{color:var(--alert);font-weight:400}
+#subclocks .due .scr{background:var(--tint)}
+/* Not enough events yet: a dashed empty track. It says "this is coming" without
+   drawing a line she has not earned. */
+#subclocks .thin .scr{background:repeating-linear-gradient(90deg,var(--line) 0 3px,
+  transparent 3px 6px)}
 /* --line, the near invisible one, is right for the none state because there is
    genuinely nothing there. Here the elapsed time is real and readable even with no
    forecast behind it, so it stays muted rather than being greyed almost out. */
@@ -922,7 +939,7 @@ body.gon #ver{display:none}
 <h1><img src="./avatar.jpg" alt="" onerror="this.style.display='none'">
   <span>Mercy &middot; <span id="age"></span></span></h1>
 <div class="who" id="who"></div>
-<div id="ver">v89 <button onclick="forceUpdate()">Force update</button></div>
+<div id="ver">v90 <button onclick="forceUpdate()">Force update</button></div>
 <div class="sync off" id="sync"><span class="led"></span><span id="synctext">Local only</span></div>
 
 <div class="shab" id="shab"></div>
@@ -5921,7 +5938,7 @@ function forecast(){
        him to stand outside with a dog who has nothing left to give. */
     poop.value = gapClock(now - lq.ts);
     poop.basis = 'since her poop';
-    poop.est = 'done after her meal';
+    poop.est = 'already gone';
     poop.acc = lq.where === 'Indoor Accident' || lq.where === 'Crate Accident';
   } else {
     poop.value = gapClock(now - lm.ts);
@@ -6020,13 +6037,20 @@ function renderSubClocks(){
        "over by 40 min" is the sentence that matters; a fill wider than its own track
        just spills out of the card. */
     var w = Math.max(0, Math.min(100, c.pct));
+    /* The rail goes last, under the words, and only where there is something to draw:
+       a panel with nothing to count toward gets no track at all rather than an empty
+       one, which would read as a bar stuck at zero. */
+    var rail = (c.ready || c.thin)
+      ? '<div class="scr">' +
+        (c.ready ? '<i class="scf" style="width:' + w.toFixed(1) + '%"></i>' +
+                   '<u class="sct" style="left:' + c.mark.toFixed(1) + '%"></u>' : '') +
+        '</div>'
+      : '';
     return '<div class="' + c.cls + (c.due ? ' due' : '') + (c.thin ? ' thin' : '') +
       (c.acc ? ' acc' : '') + '">' +
-      '<div class="scf" style="width:' + w.toFixed(1) + '%"></div>' +
-      (c.ready ? '<div class="sct" style="left:' + c.mark.toFixed(1) + '%"></div>' : '') +
       '<div class="sl">' + c.label + '</div>' +
       '<div class="sv">' + c.value + '</div>' +
-      '<div class="sw">' + c.basis + '<br>' + c.est + '</div></div>';
+      '<div class="sw">' + c.basis + '<br>' + c.est + '</div>' + rail + '</div>';
   }).join('');
 }
 
