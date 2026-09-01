@@ -196,6 +196,10 @@ body.ro .loghint{display:none}
 /* The third state. Gold and green both read as "she went", red reads as an accident,
    so nothing happened gets the muted tone: present, readable, and clearly neither. */
 .tag.nil{color:var(--neutral);border-color:var(--neutral);border-color:color-mix(in srgb,var(--neutral) 45%,transparent)}
+/* A trip still in progress. Dashed for the same reason the low-confidence forecast
+   bars draw a dotted track: the app has no finding yet and must not dress an
+   absence of data as one. */
+.tag.open{color:var(--muted);border-style:dashed}
 .stat{display:flex;gap:20px;font-size:13px;color:var(--muted);margin-top:12px;flex-wrap:wrap}
 .stat b{color:var(--paper);font-weight:600;font-variant-numeric:tabular-nums}
 .empty{color:var(--muted);font-size:14px;padding:14px 0}
@@ -322,6 +326,7 @@ footer{margin-top:30px;font-size:12px;color:var(--muted);line-height:1.6}
 .recent li.acc .w{color:var(--alert)}
 .recent li.out .w{color:var(--ok)}
 .recent li.nil .w{color:var(--neutral)}
+.recent li.open .w{color:var(--muted)}
 
 /* tap sheet */
 #veil{position:fixed;inset:0;background:var(--veil);opacity:0;pointer-events:none;
@@ -624,27 +629,27 @@ body.gon #daycap{display:none}
 
 
 /* ---- bare crate countdown ---- */
-#crate{background:var(--raised);border:1px solid var(--line);border-radius:16px;
+#crate,#vomit{background:var(--raised);border:1px solid var(--line);border-radius:16px;
   padding:15px 16px;margin:14px 0 4px}
-#crate[hidden]{display:none}
-#crate h3{font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);
+#crate[hidden],#vomit[hidden]{display:none}
+#crate h3,#vomit h3{font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);
   font-weight:700;margin:0 0 10px}
-#crate .pips{display:flex;gap:6px;margin-bottom:10px}
-#crate .pips i{flex:1;height:8px;border-radius:4px;background:var(--line);display:block}
-#crate .pips i.f{background:var(--ok)}
-#crate .cn{font-size:17px;font-weight:600;line-height:1.3;margin-bottom:4px}
-#crate .cs{font-size:13.5px;color:var(--muted);line-height:1.55}
-#crate.reset .pips i.f{background:var(--alert)}
-#crate.done{border-color:var(--ok);border-left:3px solid var(--ok)}
-#crate.done .cn{color:var(--ok)}
+#crate .pips,#vomit .pips{display:flex;gap:6px;margin-bottom:10px}
+#crate .pips i,#vomit .pips i{flex:1;height:8px;border-radius:4px;background:var(--line);display:block}
+#crate .pips i.f,#vomit .pips i.f{background:var(--ok)}
+#crate .cn,#vomit .cn{font-size:17px;font-weight:600;line-height:1.3;margin-bottom:4px}
+#crate .cs,#vomit .cs{font-size:13.5px;color:var(--muted);line-height:1.55}
+#crate.reset .pips i.f,#vomit.reset .pips i.f{background:var(--alert)}
+#crate.done,#vomit.done{border-color:var(--ok);border-left:3px solid var(--ok)}
+#crate.done .cn,#vomit.done .cn{color:var(--ok)}
 
 
-#crate .clock2{font-size:34px;font-weight:200;letter-spacing:-.02em;line-height:1.05;
+#crate .clock2,#vomit .clock2{font-size:34px;font-weight:200;letter-spacing:-.02em;line-height:1.05;
   margin:2px 0 3px;font-variant-numeric:tabular-nums}
-#crate .clab{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);
+#crate .clab,#vomit .clab{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);
   font-weight:700;margin-bottom:12px}
-#crate.reset .clock2{color:var(--paper)}
-#crate.done .clock2{color:var(--ok)}
+#crate.reset .clock2,#vomit.reset .clock2{color:var(--paper)}
+#crate.done .clock2,#vomit.done .clock2{color:var(--ok)}
 
 
 /* A sheet that explains rather than asks: it can be long, so it has to scroll, and
@@ -961,7 +966,7 @@ body.gon #ver{display:none}
 <h1><img src="./avatar.jpg" alt="" onerror="this.style.display='none'">
   <span>Mercy &middot; <span id="age"></span></span></h1>
 <div class="who" id="who"></div>
-<div id="ver">v98 <button onclick="forceUpdate()">Force update</button></div>
+<div id="ver">v99 <button onclick="forceUpdate()">Force update</button></div>
 <div class="sync off" id="sync"><span class="led"></span><span id="synctext">Local only</span></div>
 
 <div class="shab" id="shab"></div>
@@ -1034,6 +1039,11 @@ the gaps for you.</p>
   <button class="small b-acc" onclick="logOvernight()">Found it in the morning<span class="hint">overnight, you were asleep, no time to give</span></button>
 </div>
 
+<h2>She threw up</h2>
+<div class="row">
+  <button class="small b-acc" onclick="logVomit()">Vomit<span class="hint">one is a vet call at her age</span></button>
+</div>
+
 <h2>Other</h2>
 <div class="grid">
   <button class="small" onclick="log('Meal','N/A')">Meal</button>
@@ -1053,6 +1063,7 @@ mouthy, not sleepy.</p>
 
 <section class="tab" id="tab-day">
 
+<div id="vomit" hidden></div>
 <div id="crate" hidden></div>
 <div id="visit" hidden></div>
 
@@ -1269,6 +1280,9 @@ const SEED_MEMBERS = [{name:"Ariel", color:"#E8B04B"}, {name:"Shira", color:"#5F
 const PLAN_MISSED_WINDOW = 120;
 const MEAL_MARGIN_AWAY = 45;
 const TRIP_PAIR_MINUTES = 5;
+const VOMIT_NOW_12H = 2;
+const VOMIT_NOW_24H = 3;
+const VOMIT_CARD_HOURS = 48;
 const DURATIONS = {"Walk": [5, 10, 15, 20, 30], "Play": [10, 15, 20, 25, 30], "Alone": [30, 60, 90, 120, 180, 300]};
 const PUSH_URL = "https://travelling-condo-poet-diff.trycloudflare.com";
 const VAPID_KEY = "BFCqwk4kKDp2lwfFfElkdFtXBrsmtjTlts53TfUEM7eklz4D6ud0RYVOQskn_MDYsMaqhMKT-IYpHloRypdPzzQ";
@@ -2574,8 +2588,19 @@ function logOvernight(){
     + 'marked as a time nobody knows.',
     [{value:'pee',  label:'Pee',  note:'wet bedding, no stool'},
      {value:'poop', label:'Poop', note:'stool only'},
-     {value:'both', label:'Both', note:'she did both'}],
+     {value:'both', label:'Both', note:'she did both'},
+     {value:'vom',  label:'Vomit', note:'she was sick in the night'}],
     function(v){
+      /* A vomit found in the morning is the same unknown-time problem and gets the same
+         midpoint stamp, but it is NOT a crate accident: where stays N/A so it cannot
+         reset the clean night count. It is the one option here that is about her health
+         rather than her bladder, which is why it does not ask for a stool score and
+         goes straight to done(). */
+      if(v === 'vom'){
+        put('Vomit', {where:'N/A',
+          notes: note + ' Vomit, found in the morning, not seen and not described.'});
+        done(); return;
+      }
       if(v === 'pee' || v === 'both') put('Pee');
       if(v === 'poop' || v === 'both'){
         setTimeout(function(){ openSheet('Stool score',
@@ -2585,6 +2610,37 @@ function logOvernight(){
           STOOL, function(sc){ put('Poop', sc ? {stool:sc} : {}); done(); }); }, 240);
       } else done();
     });
+}
+
+/* ---- she threw up -------------------------------------------------------------
+   A vomit is not an outing and not an accident, so it carries where 'N/A' and keeps its
+   detail in notes. That is deliberate on both counts: 'Outside' would invent a potty
+   trip out of a vomit on the pavement, and 'Crate Accident' would send the seven clean
+   nights back to zero. A sick puppy is not a house training failure, and the count is
+   about whether she can hold it.
+
+   The sheet asks what it looked like because that is the first thing a vet asks and the
+   thing nobody can recall an hour later. WHAT_VOMIT is the guide's own list, from the
+   "She is vomiting" entry: the last two options are the ones that move her straight to
+   an emergency call. */
+var WHAT_VOMIT = [
+  {value:'food',   label:'Food',            note:'kibble, recognisable, whole or part digested'},
+  {value:'bile',   label:'Yellow foam',     note:'bile, an empty stomach'},
+  {value:'clear',  label:'Clear liquid',    note:'water or saliva, no colour'},
+  {value:'blood',  label:'Blood',           note:'red, or dark like coffee grounds. Call now.'},
+  {value:'object', label:'Something not food', note:'fabric, plastic, stone, leaves. Call now.'},
+  {value:'',       label:'I did not see it', note:'cleaned up, or found later'},
+];
+var VOMIT_NOTE = {
+  food:'Vomit: food.', bile:'Vomit: yellow foam, bile.', clear:'Vomit: clear liquid.',
+  blood:'Vomit: BLOOD, or coffee ground material.', object:'Vomit: contained something that was not food.',
+  '':'Vomit: not seen or not described.'
+};
+function logVomit(){
+  openSheet('She threw up',
+    'One vomit at her age is a call to the vet today, even if she is bright and it only '
+    + 'happened once. What it looked like is the first thing they will ask.',
+    WHAT_VOMIT, function(v){ push('Vomit', 'N/A', {notes: VOMIT_NOTE[v] || VOMIT_NOTE['']}); });
 }
 
 /* Keyed on the entry's id, not its array position. events is re-sorted by timestamp on
@@ -3360,12 +3416,15 @@ function renderRecent(){
     const out = e.where==='Outside' || OUTSIDE.includes(e.event);
     /* Same three states as the log list below. This card list is a separate renderer
        and reads off the same tripResult, so the two cannot disagree about a trip. */
-    const nil = OUTSIDE.includes(e.event) && tripResult(e, all)==='nothing';
-    if(acc) li.className='acc'; else if(nil) li.className='nil'; else if(out) li.className='out';
+    const tr = OUTSIDE.includes(e.event) ? tripResult(e, all) : null;
+    const nil = tr==='nothing', open = tr==='open';
+    if(acc) li.className='acc'; else if(nil) li.className='nil';
+    else if(open) li.className='open'; else if(out) li.className='out';
     if(idx===0 && Date.now()-e.ts < 8000) li.className+=' fresh';
     let w = e.where==='Crate Accident' ? 'accident in crate'
           : e.where==='Indoor Accident' ? 'accident inside'
           : nil ? 'nothing'
+          : open ? 'out now'
           : (out ? 'outside' : '');
     if(e.mins) w = (w?w+' · ':'')+e.mins+'m';
     li.innerHTML='<span class="t">'+logTime(e)+'</span><span>'+e.event+
@@ -3566,6 +3625,7 @@ function render(){
   syncPlan();
   renderDaySel();
   renderVisit();
+  renderVomit();
   renderCrate();
   renderDateNav();
   renderHist();
@@ -3656,10 +3716,12 @@ function render(){
          same tag as one that produced something. "outside" in the positive colour says
          she went; she did not. Neutral, because nothing happened is neither a success
          nor an accident. */
-      const nil = OUTSIDE.includes(e.event) && tripResult(e, tAll)==='nothing';
+      const tr = OUTSIDE.includes(e.event) ? tripResult(e, tAll) : null;
+      const nil = tr==='nothing';
       if(e.where==='Indoor Accident'){ cls='tag acc'; label='accident inside'; }
       else if(e.where==='Crate Accident'){ cls='tag acc'; label='accident in crate'; }
       else if(nil){ cls='tag nil'; label='nothing'; }
+      else if(tr==='open'){ cls='tag open'; label='out now'; }
       else if(e.where==='Outside'||OUTSIDE.includes(e.event)){ cls='tag out'; label='outside'; }
       else label='';
       let name=e.event;
@@ -3777,7 +3839,7 @@ function outings(list){
     .slice()
     .sort(function(a, b){ return a.ts - b.ts; })
     .forEach(function(e){
-      var ends = e.ts + w + (e.event === 'Walk' && e.mins ? e.mins * 60000 : 0);
+      var ends = e.ts + tripReach(e);
       if(reach !== null && e.ts <= reach){
         groups[groups.length - 1].push(e);
         reach = Math.max(reach, ends);
@@ -3790,22 +3852,60 @@ function outings(list){
 }
 function outCount(list){ return outings(list).length; }
 
+/* How far a trip reaches for its own result. TRIP_PAIR_MINUTES both sides, PLUS the
+   walk's own logged length forward, because a ten minute walk is ten minutes of chances
+   to pee and she is plainly still on the same outing at minute eight.
+
+   outings() has always done this. tripResult() did not: it compared against a flat
+   symmetric five minutes from the moment the walk was logged, so a pee eight minutes
+   into a ten minute walk was in the same OUTING but was not that outing's RESULT, and
+   the row said "nothing" about a walk on which she had gone. CLAUDE.md says these two
+   can never be based on different ideas of what one trip is. They were. One function
+   now, read by both. */
+function tripReach(t){
+  return TRIP_PAIR_MINUTES * 60000
+       + (t.event === 'Walk' && t.mins ? t.mins * 60000 : 0);
+}
+/* Symmetric behind, reach ahead: results are logged before their own trip often enough
+   that the window has to open both ways. */
+function tripCovers(t, x){
+  return x.ts >= t.ts - TRIP_PAIR_MINUTES * 60000 && x.ts <= t.ts + tripReach(t);
+}
+
+/* THREE outcomes, not two. 'nothing' used to be the fallback return, which meant one
+   word carried two opposite meanings: she went out and did nothing, and no result has
+   been logged yet. So tapping Walk labelled the walk "nothing" instantly, before she
+   had had the chance, and the app looked like it was answering a question nobody had
+   asked. It is also the exact claim the "Out, nothing" button exists to let him make
+   deliberately, and an inference must never be dressed up as his statement.
+
+   'open' is the trip whose window has not closed: no result yet, and there is still
+   time for one. Once the window passes it becomes 'nothing' on its own, with no second
+   tap, because by then the log really does say she did nothing. Historical days are
+   unaffected: their windows closed long ago. */
 function tripResult(trip, all){
   if(!OUTSIDE.includes(trip.event)) return null;
-  const w = TRIP_PAIR_MINUTES*60000;
   const trips = all.filter(x => OUTSIDE.includes(x.event));
   let pee=false, poo=false;
   all.forEach(x => {
     if(x.event!=='Pee' && x.event!=='Poop') return;
     if(x.where!=='Outside') return;
-    if(Math.abs(x.ts-trip.ts) > w) return;
+    if(!tripCovers(trip, x)) return;
+    /* Nearest trip wins, but only among the trips that could actually claim it. A walk
+       whose reach covers the pee must not lose it to a Potty Trip that happens to be
+       closer in time yet does not cover it at all. */
     let best=trip, bd=Math.abs(x.ts-trip.ts);
-    trips.forEach(c => { const d=Math.abs(x.ts-c.ts); if(d<bd){ bd=d; best=c; } });
+    trips.forEach(c => {
+      if(!tripCovers(c, x)) return;
+      const d=Math.abs(x.ts-c.ts); if(d<bd){ bd=d; best=c; }
+    });
     if(best.id!==trip.id) return;
     if(x.event==='Pee') pee=true; else poo=true;
   });
   if(pee&&poo) return 'pee + poop';
-  return pee ? 'pee' : poo ? 'poop' : 'nothing';
+  if(pee) return 'pee';
+  if(poo) return 'poop';
+  return Date.now() <= trip.ts + tripReach(trip) ? 'open' : 'nothing';
 }
 
 /* ---- the away window ---------------------------------------------------------
@@ -5782,6 +5882,80 @@ function cleanForStr(ms){
   if(d > 0) return d + (d === 1 ? ' day' : ' days') + (h ? ' ' + h + 'h' : '');
   if(h > 0) return h + 'h' + (m ? ' ' + m + 'm' : '');
   return m + 'm';
+}
+
+/* ---- the vomit card ------------------------------------------------------------
+   NOT a fourth forecast bar, and the reason is the one already written down about the
+   poop bar: a rail counting up from the last vomit ticks through 9, 14, 19 hours and
+   never means anything. Worse here, because healthy is forever, so its resting state
+   would be a number growing without limit that either says nothing or quietly implies
+   she is due one.
+
+   Her vet thresholds are not durations at all, they are COUNTS IN A WINDOW, straight
+   out of the guide's "She is vomiting" entry: one, and she is bright, is a call today;
+   two inside 12 hours or three inside 24 is a call now. That is arithmetic across
+   timestamps at an hour when nobody is going to do it on their fingers, which is the
+   one thing the app is better at than he is. So it is a card that says which rung she
+   is on, and it is not there at all on the days there is nothing to say. */
+function vomitState(){
+  const now = Date.now(), all = [];
+  events.forEach(e => { if(e.event === 'Vomit' && now - e.ts <= VOMIT_CARD_HOURS*3600000) all.push(e); });
+  if(!all.length) return null;
+  all.sort((a,b) => a.ts - b.ts);
+  const in12 = all.filter(e => now - e.ts <= 12*3600000).length;
+  const in24 = all.filter(e => now - e.ts <= 24*3600000).length;
+  return {all: all, in12: in12, in24: in24, last: all[all.length-1],
+          now: in12 >= VOMIT_NOW_12H || in24 >= VOMIT_NOW_24H,
+          derived: all.some(timeUnknown)};
+}
+
+function renderVomit(){
+  const box = document.getElementById('vomit');
+  if(!box) return;
+  const v = vomitState();
+  if(!v){ box.hidden = true; return; }
+  box.hidden = false;
+  box.className = v.now ? 'reset' : '';
+
+  /* The in24 === 0 branch is not a rounding case. The card outlives the 24 hour window
+     on purpose, so that a vomit two days ago is still in front of him when he is on the
+     phone to the vet about something else. Without its own wording it read "0 vomits in
+     24 hours", which is a true sentence that sounds like an alarm. */
+  const head = v.now
+    ? 'Call the vet now, not later.'
+    : v.in24 === 0 ? 'She threw up, but not in the last 24 hours.'
+    : v.in24 === 1 ? 'One vomit. That is a call today.'
+    : v.in24 + ' vomits in 24 hours.';
+  let sub = v.now
+    ? VOMIT_NOW_12H + ' inside 12 hours, or ' + VOMIT_NOW_24H + ' inside 24, is the '
+      + 'threshold her guide puts in the call-now column. She is at ' + v.in12
+      + ' in 12 and ' + v.in24 + ' in 24.'
+    : v.in24 === 0
+    ? 'Nothing since. This card clears itself once her last one is '
+      + VOMIT_CARD_HOURS + ' hours behind her. It is here so it is still in front of '
+      + 'you the next time you have the vet on the phone.'
+    : 'Her DAPP series is not finished, so one is enough on its own. It stops being a '
+      + 'today and becomes a now at ' + VOMIT_NOW_12H + ' inside 12 hours or '
+      + VOMIT_NOW_24H + ' inside 24, or at any blood, or if she vomits straight after '
+      + 'drinking. She is at ' + v.in12 + ' in 12 and ' + v.in24 + ' in 24.';
+  if(v.derived) sub += ' One of these was found in the morning, so its time is worked '
+    + 'out, not observed, and the 12 and 24 hour counts are only as good as that.';
+
+  const last = v.last;
+  const when = timeUnknown(last) ? 'found in the morning' : 'at ' + hhmm(new Date(last.ts));
+  /* Plain string work, no regex. CLAUDE.md: a backslash escape typed into a patch here
+     can arrive as the control character it names. */
+  let what = last.notes ? String(last.notes).split('Vomit: ')[1] || '' : '';
+  if(what.slice(-1) === '.') what = what.slice(0, -1);
+
+  box.innerHTML = '<h3>She threw up</h3>' +
+    '<div class="clock2">' + cleanForStr(Date.now() - last.ts) + '</div>' +
+    '<div class="clab">Since the last one, ' + gesc(when) +
+      (what ? ' &middot; ' + gesc(what) : '') + '</div>' +
+    '<div class="cn">' + gesc(head) + '</div>' +
+    '<div class="cs">' + gesc(sub) + '</div>' +
+    '<div class="cs">Sayrebrook, Dr. Chiosi &middot; ' +
+    '<a href="tel:7327271303" style="color:inherit">732-727-1303</a></div>';
 }
 
 function renderCrate(){
