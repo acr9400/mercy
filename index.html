@@ -966,7 +966,7 @@ body.gon #ver{display:none}
 <h1><img src="./avatar.jpg" alt="" onerror="this.style.display='none'">
   <span>Mercy &middot; <span id="age"></span></span></h1>
 <div class="who" id="who"></div>
-<div id="ver">v104 <button onclick="forceUpdate()">Force update</button></div>
+<div id="ver">v105 <button onclick="forceUpdate()">Force update</button></div>
 <div class="sync off" id="sync"><span class="led"></span><span id="synctext">Local only</span></div>
 
 <div class="shab" id="shab"></div>
@@ -2859,8 +2859,20 @@ function accidentFacts(e){
     lastBark:   lastBefore(e.ts, function(x){ return x.event === 'Bark'; })
   };
   Object.keys(f).forEach(function(k){ if(f[k]) f[k + 'Min'] = mins(f[k]); });
+  /* Play is the one where the START is the wrong end to measure from. Play mins run
+     FORWARD from the stamp, so a half hour session logged at 10:10 was still running at
+     10:40, and calling that "play, 30 minutes earlier" describes it as long over when it
+     had in fact only just stopped. Negative means it had not stopped at all. */
+  if(f.lastPlay){
+    var end = f.lastPlay.ts + (f.lastPlay.mins || 0) * 60000;
+    f.playEndMin = Math.round((e.ts - end) / 60000);
+    f.playRunning = f.playEndMin < 0;
+  }
   return f;
 }
+
+/* "1 minutes earlier" in a sheet about her health reads as something nobody proofread. */
+function mstr(n){ return n + ' minute' + (n === 1 ? '' : 's'); }
 
 function fmtGap(m){
   var h = Math.floor(m / 60);
@@ -2873,7 +2885,7 @@ function fmtGap(m){
 function accidentTriggers(e, f){
   var t = [];
   if(f.lastPeeOut && f.lastPeeOutMin <= ACC_SOON_MIN)
-    t.push(['She had been emptied ' + f.lastPeeOutMin + ' minutes earlier',
+    t.push(['She had been emptied ' + mstr(f.lastPeeOutMin) + ' earlier',
             'She peed outside at ' + hhmm(new Date(f.lastPeeOut.ts)) + '. Going again '
             + 'within the hour of being emptied is the pattern already written on her vet '
             + 'list, and it is the one thing here you are not meant to work out at home.',
@@ -2886,26 +2898,29 @@ function accidentTriggers(e, f){
   if(f.lastTrip && f.lastTripMin <= ACC_LOOKBACK_MIN
      && OUTSIDE.indexOf(f.lastTrip.event) >= 0
      && tripResult(f.lastTrip, events) === 'nothing')
-    t.push(['She was out ' + f.lastTripMin + ' minutes earlier and did nothing',
+    t.push(['She was out ' + mstr(f.lastTripMin) + ' earlier and did nothing',
             'A trip that produced nothing is not an empty bladder, it is an unanswered '
             + 'one. Her guide: if you did not see a proper squat, treat her as full.', false]);
   if(f.lastMeal && f.lastMealMin <= 45)
-    t.push(['She ate ' + f.lastMealMin + ' minutes earlier',
+    t.push(['She ate ' + mstr(f.lastMealMin) + ' earlier',
             'Her gut fires 5 to 30 minutes after she finishes, and the plan puts a trip '
             + 'within 15 minutes of every meal.', false]);
   if(f.lastWater && f.lastWaterMin >= WATER_LAG_MIN && f.lastWaterMin <= WATER_WINDOW_H * 60)
-    t.push(['She drank ' + f.lastWaterMin + ' minutes earlier',
+    t.push(['She drank ' + mstr(f.lastWaterMin) + ' earlier',
             'A drink shows up as a pee about ' + WATER_LAG_MIN + ' minutes later, and for '
             + 'up to ' + WATER_WINDOW_H + ' hours after.', false]);
-  if(f.lastPlay && f.lastPlayMin <= ACC_LOOKBACK_MIN)
-    t.push(['Play, ' + f.lastPlayMin + ' minutes earlier',
-            'After every play bout is one of the fixed trips in her plan. Excitement also '
-            + 'empties a puppy bladder on its own, with no warning squat.', false]);
+  if(f.lastPlay && f.playEndMin !== undefined && f.playEndMin <= ACC_LOOKBACK_MIN)
+    t.push([f.playRunning
+              ? 'Play was still running, ' + mstr(-f.playEndMin + f.lastPlayMin) + ' in'
+              : f.playEndMin === 0 ? 'Play had just that moment finished'
+              : 'Play finished ' + mstr(f.playEndMin) + ' earlier',
+            'Started ' + hhmm(new Date(f.lastPlay.ts)) + ', logged as ' + f.lastPlay.mins
+            + ' minutes. After every play bout is one of the fixed trips in her plan.', false]);
   if(f.lastWake && f.lastWakeMin <= ACC_LOOKBACK_MIN)
-    t.push(['She woke ' + f.lastWakeMin + ' minutes earlier',
+    t.push(['She woke ' + mstr(f.lastWakeMin) + ' earlier',
             'On waking is the first of the fixed trips, before anything else happens.', false]);
   if(f.lastBark && f.lastBarkMin <= ACC_LOOKBACK_MIN)
-    t.push(['She was barking ' + f.lastBarkMin + ' minutes earlier',
+    t.push(['She was barking ' + mstr(f.lastBarkMin) + ' earlier',
             'On 31 August she barked for five to ten minutes and then peed in the crate. '
             + 'That is not proof she was asking, but it is the second time it has run in '
             + 'this order.', false]);
@@ -2914,6 +2929,71 @@ function accidentTriggers(e, f){
             'The plan is at least every two hours between the fixed trips.', false]);
   return t;
 }
+
+/* ---- the candidate reasons ------------------------------------------------------
+   He asked for these directly and then again after I pushed back, and he was right about
+   the distinction: writing down what might explain a thing is how you find out, and it is
+   not the same act as deciding what is wrong with her. So these are theories with a test
+   attached to each one, never a ranking and never a verdict.
+
+   Every one of them is a cause her own content already describes: the four in b-pee-after
+   (needed to go, delayed stress, submissive, excitement), the supervision case in
+   s-leash-indoors, and the surface case in g-accident-floor. Nothing here is invented for
+   the sheet.
+
+   `fits` is what the LOG supports, not what is likeliest. A reason with no fits function
+   is one the log can never speak to, and it is listed anyway, because the ones the app
+   cannot see are exactly the ones he has to notice himself. */
+var ACCIDENT_REASONS = [
+  {title:'The let-down after arousal',
+   what:'Arousal suppresses urinating while it lasts, and the bladder empties when the '
+      + 'excitement drops. Normal volume, once, just after something ends rather than '
+      + 'during it.',
+   test:'Note what STOPPED in the five minutes before, not what was happening. If it lands '
+      + 'after the game rather than in it, this is the shape.',
+   fits:function(f){ return f.playEndMin !== undefined && f.playEndMin >= 0 && f.playEndMin <= 15; }},
+
+  {title:'Excitement weeing',
+   what:'Happens standing or walking during play or greeting, with no submissive body '
+      + 'language and often no proper squat at all.',
+   test:'Watch whether it lands mid-game and whether she squats properly or just lets go '
+      + 'while moving.',
+   fits:function(f){ return !!f.playRunning; }},
+
+  {title:'She did not finish outside',
+   what:'A pee outside is not the same as an empty bladder. A ten week old often goes in '
+      + 'two or three goes, and the first one can be the small one.',
+   test:'Time the outside pee, and give her a second chance in the same spot before coming '
+      + 'in rather than leaving on the first squat.',
+   fits:function(f){ return !!f.lastPeeOut && f.lastPeeOutMin <= ACC_SOON_MIN; }},
+
+  {title:'Nobody was on the other end of the leash',
+   what:'Circling, sniffing the floor, drifting to a quiet corner. There are about two '
+      + 'seconds of warning and they only exist if somebody is watching for them.',
+   test:'House leash clipped to your belt during play, especially when your attention is '
+      + 'somewhere else. Log whether you were watching or not; that is a real variable.',
+   fits:null},
+
+  {title:'The spot itself',
+   what:'If it smells like a toilet to her it stays a toilet, and enzymatic cleaner is the '
+      + 'only thing that removes it rather than covering it.',
+   test:'Note where in the apartment each one lands. The same place twice is a different '
+      + 'problem from two different places.',
+   fits:null},
+
+  {title:'Submissive or greeting wee',
+   what:'Happens when a person approaches, reaches or leans over. Ears back, lips pulled '
+      + 'back, avoiding eye contact, cowering. Usually a dribble rather than a full void.',
+   test:'Who was approaching her, and from what height, in the ten seconds before.',
+   fits:null},
+
+  {title:'Medical',
+   what:'Infection, or not emptying fully. This is the one that looks identical to the '
+      + 'others from across a room and different under a microscope.',
+   test:'A urine sample, caught naturally in a clean container. Frequency and volume are '
+      + 'the two things worth writing down every time until then.',
+   fits:function(f){ return !!f.lastPeeOut && f.lastPeeOutMin <= ACC_SOON_MIN; }}
+];
 
 function whyAccident(e){
   var f = accidentFacts(e);
@@ -2957,11 +3037,29 @@ function whyAccident(e){
          +  'from the log is not the same as it did not happen, and this sheet can only '
          +  'read what is there.</p>';
 
-  body += '<p style="margin:14px 0 0;font-size:13.5px;color:var(--muted);line-height:1.55">'
-       +  'Her guide is blunt about the limit here: infection, incomplete emptying, '
-       +  'excitement and incomplete housetraining cannot be told apart at home and need a '
-       +  'urine test. Read <b>She keeps squatting, or went again right after going '
-       +  'outside</b> on the Guide tab.</p>';
+  body += '<p style="margin:18px 0 6px;font-size:11px;letter-spacing:.14em;text-transform:'
+       +  'uppercase;color:var(--muted);font-weight:700">Possible reasons</p>'
+       +  '<p style="margin:0 0 10px;font-size:13px;color:var(--muted);line-height:1.5">'
+       +  'Theories, not findings, and in no particular order. Each one says how you would '
+       +  'tell. THE LOG FITS marks the ones today\u2019s entries happen to be consistent '
+       +  'with, which is not the same as the ones that are true.</p>';
+  ACCIDENT_REASONS.forEach(function(r){
+    var hit = r.fits ? r.fits(f) : false;
+    body += '<div style="margin:0 0 12px;padding-left:10px;border-left:2px solid '
+         +  (hit ? 'var(--gold)' : 'var(--line)') + '">'
+         +  '<div style="font-size:14.5px;font-weight:600">' + gesc(r.title)
+         +  (hit ? ' <span style="font-size:10px;letter-spacing:.12em;color:var(--gold);'
+                 + 'border:1px solid var(--gold);border-radius:99px;padding:1px 6px;'
+                 + 'vertical-align:middle">THE LOG FITS</span>' : '')
+         +  '</div>'
+         +  '<div style="font-size:13.5px;color:var(--muted);line-height:1.55">'
+         +  gesc(r.what) + '</div>'
+         +  '<div style="font-size:13.5px;color:var(--muted);line-height:1.55;margin-top:3px">'
+         +  '<b>How you would tell:</b> ' + gesc(r.test) + '</div></div>';
+  });
+  body += '<p style="margin:14px 0 0;font-size:13px;color:var(--muted);line-height:1.55">'
+       +  'The Guide tab has the longer version under <b>She keeps squatting, or went again '
+       +  'right after going outside</b>.</p>';
 
   openSheet('Why might this have happened?', '', [], null, body);
   document.getElementById('sh-opts').classList.add('stack');
