@@ -943,7 +943,7 @@ body.gon #ver{display:none}
 <h1><img src="./avatar.jpg" alt="" onerror="this.style.display='none'">
   <span>Mercy &middot; <span id="age"></span></span></h1>
 <div class="who" id="who"></div>
-<div id="ver">v92 <button onclick="forceUpdate()">Force update</button></div>
+<div id="ver">v93 <button onclick="forceUpdate()">Force update</button></div>
 <div class="sync off" id="sync"><span class="led"></span><span id="synctext">Local only</span></div>
 
 <div class="shab" id="shab"></div>
@@ -5869,6 +5869,34 @@ function planAt(hm, dayOffset){
   d.setHours(+p[0], +p[1], 0, 0);
   return d.getTime();
 }
+/* Which WALK rows she has actually had today.
+
+   Deliberately NOT planDoneIds. That answers "which plan rows are done", and for that a
+   Walk rightly satisfies a Potty Trip row, so a walk at 18:00 on a home day is claimed
+   by the 18:10 "Out, in the door" row ten minutes away rather than by Walk 2 at 19:05
+   sixty five minutes away. Both readings are true at once -- that outing WAS the 18:10
+   trip, and it was also her second walk moved early -- and the bar only cares about the
+   second. Matching walks to walk rows is the question it is actually asking.
+
+   An explicit tick still wins, the same order planDoneIds uses: a row he ticked by hand
+   is a statement, and a nearest-match is a guess. */
+function walkDoneIds(k){
+  var done = new Set(), claimed = new Set(), rows = planWalks(PLAN);
+  var today = events.filter(function(e){
+    return e.event === 'Walk' && dayKey(new Date(e.ts)) === k; });
+  today.forEach(function(e){ if(e.planId){ done.add(e.planId); claimed.add(e.planId); } });
+  today.filter(function(e){ return !e.planId; }).forEach(function(e){
+    var d = new Date(e.ts), mins = d.getHours() * 60 + d.getMinutes();
+    var best = null, bestGap = Infinity;
+    rows.forEach(function(r){
+      if(claimed.has(r[0])) return;
+      var gap = Math.abs(toMins(r[1]) - mins);
+      if(gap < bestGap && gap <= PLAN_TOLERANCE_MIN){ best = r[0]; bestGap = gap; }
+    });
+    if(best){ claimed.add(best); done.add(best); }
+  });
+  return done;
+}
 function planWalks(rows){
   var out = [];
   for(var i = 0; i < (rows || []).length; i++) if(rows[i][3] === 'Walk') out.push(rows[i]);
@@ -5876,13 +5904,33 @@ function planWalks(rows){
 }
 /* The walk either side of now. Today's shape can be overridden in the shared log and
    PLAN already carries that; yesterday's and tomorrow's fall back to the weekday
-   default, which is all that is knowable about a day nobody has touched yet. */
+   default, which is all that is knowable about a day nobody has touched yet.
+
+   This reads the LOG as well as the plan, and both halves matter:
+
+   Which walk is next skips any row walkDoneIds() says she has already had, so a walk
+   taken at 18:00 moves the bar past the 19:05 row instead of counting down to a walk
+   that has happened. See the note on walkDoneIds for why it is not planDoneIds.
+
+   Where the bar fills FROM is her actual last walk whenever that is later than the last
+   scheduled one. Without it, walking her early left the bar filling from a scheduled
+   time hours back and reading half full moments after she came in, which breaks the one
+   rule the strip rests on: empty means she has just been.
+
+   A row that has passed and was NOT done stays as `next` for PLAN_MISSED_WINDOW, so a
+   missed walk reads as overdue rather than rolling silently to tomorrow at 19:06. That
+   is the same window the Day tab paints a row as missed with. */
 function walkWindow(){
   var now = Date.now(), today = planWalks(PLAN), prev = null, next = null;
+  var done = walkDoneIds(dayKey(new Date()));
+  var missedFrom = now - PLAN_MISSED_WINDOW * 60000;
   for(var i = 0; i < today.length; i++){
-    var t = planAt(today[i][1], 0);
-    if(t <= now) prev = { ts: t, row: today[i] };
-    else if(next === null) next = { ts: t, row: today[i] };
+    var t = planAt(today[i][1], 0), id = today[i][0];
+    if(next === null && !done.has(id) && (t > now || t >= missedFrom)){
+      next = { ts: t, row: today[i], overdue: t <= now };
+    } else if(t <= now && next === null){
+      prev = { ts: t, row: today[i] };
+    }
   }
   var dow = new Date().getDay();
   if(next === null){
@@ -5893,6 +5941,10 @@ function walkWindow(){
     var yd = planWalks(PLANS[DEFAULT_VARIANT[(dow + 6) % 7]]);
     if(yd.length) prev = { ts: planAt(yd[yd.length - 1][1], -1), row: yd[yd.length - 1] };
   }
+  /* Her real last walk wins over a scheduled time that is older than it. */
+  var lw = lastOfEvent('Walk');
+  if(lw && lw.ts <= now && lw.ts < next.ts && (!prev || lw.ts > prev.ts))
+    prev = { ts: lw.ts, row: null, logged: true };
   return { prev: prev, next: next };
 }
 
@@ -5982,9 +6034,12 @@ function forecast(){
     walk.none = 'No walk on the plan.';
   } else {
     walk.ready = true;
-    walk.value = gapClock(Math.max(0, w.next.ts - now));
-    walk.basis = 'until ' + walkName(w.next.row);
-    walk.est = 'at ' + hhmm(new Date(w.next.ts));
+    var late = w.next.ts <= now;
+    /* Overdue counts UP from the time it should have happened, the way the ceiling
+       clock does, rather than sitting at 0:00 pretending it is still coming. */
+    walk.value = gapClock(Math.abs(w.next.ts - now));
+    walk.basis = (late ? 'past ' : 'until ') + walkName(w.next.row);
+    walk.est = late ? overdueText(now - w.next.ts) : 'at ' + hhmm(new Date(w.next.ts));
     var from = w.prev ? w.prev.ts : now;
     var span = w.next.ts - from;
     walk.pct = span > 0 ? (now - from) / span * 100 : 100;
