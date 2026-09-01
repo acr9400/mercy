@@ -961,7 +961,7 @@ body.gon #ver{display:none}
 <h1><img src="./avatar.jpg" alt="" onerror="this.style.display='none'">
   <span>Mercy &middot; <span id="age"></span></span></h1>
 <div class="who" id="who"></div>
-<div id="ver">v97 <button onclick="forceUpdate()">Force update</button></div>
+<div id="ver">v98 <button onclick="forceUpdate()">Force update</button></div>
 <div class="sync off" id="sync"><span class="led"></span><span id="synctext">Local only</span></div>
 
 <div class="shab" id="shab"></div>
@@ -3141,15 +3141,18 @@ function renderPatterns(){
 function renderHistory(){
   const ul=document.getElementById('hist');
   ul.innerHTML='';
-  const byDay={};
+  const byDay={}, perDay={};
   events.filter(e=>isLogEvent(e)).forEach(e=>{
     const k=dayKey(new Date(e.ts));
     byDay[k]=byDay[k]||{out:0,acc:0,walk:0,play:0};
-    if(OUTSIDE.includes(e.event)||e.where==='Outside') byDay[k].out++;
+    (perDay[k]=perDay[k]||[]).push(e);
     if(e.where==='Indoor Accident'||e.where==='Crate Accident') byDay[k].acc++;
     if(e.event==='Walk') byDay[k].walk+=(e.mins||0);
     if(e.event==='Play') byDay[k].play+=(e.mins||0);
   });
+  /* Outings are counted per day AFTER the pass, because one outing is a group of rows
+     and you cannot decide group membership one row at a time. */
+  Object.keys(byDay).forEach(k=>{ byDay[k].out = outCount(perDay[k]); });
   const days=Object.keys(byDay).sort().slice(-10).reverse();
   if(!days.length){ ul.innerHTML='<li class="empty">No history yet.</li>'; return; }
   days.forEach(k=>{
@@ -3679,7 +3682,7 @@ function render(){
     });
   }
 
-  const outs=t.filter(e=>OUTSIDE.includes(e.event)||e.where==='Outside').length;
+  const outs=outCount(t);
   const accs=t.filter(e=>e.where==='Indoor Accident'||e.where==='Crate Accident').length;
   const wmin=t.filter(e=>e.event==='Walk').reduce((s,e)=>s+(e.mins||0),0);
   document.getElementById('sOut').textContent=outs;
@@ -3757,6 +3760,36 @@ function render(){
 
    Note what this can and cannot know: it reports what the LOG says. A trip whose
    result was never logged reads as nothing, because that is what the record holds. */
+/* One OUTING, not one row. See the note on this in CLAUDE.md before changing it.
+
+   Consecutive outside entries within TRIP_PAIR_MINUTES are one trip. A Walk also holds
+   its outing open for its whole logged length: she can pee ten minutes into a ten minute
+   walk and that is plainly still the same trip, and without it a walk with a late pee
+   scored as two.
+
+   This reads the same TRIP_PAIR_MINUTES that tripResult() pairs on, so the number of
+   outings and the pee-or-nothing label under each one can never be based on different
+   ideas of what one trip is. */
+function outings(list){
+  var w = TRIP_PAIR_MINUTES * 60000, groups = [], reach = null;
+  list.filter(function(e){
+      return isLogEvent(e) && (OUTSIDE.indexOf(e.event) >= 0 || e.where === 'Outside'); })
+    .slice()
+    .sort(function(a, b){ return a.ts - b.ts; })
+    .forEach(function(e){
+      var ends = e.ts + w + (e.event === 'Walk' && e.mins ? e.mins * 60000 : 0);
+      if(reach !== null && e.ts <= reach){
+        groups[groups.length - 1].push(e);
+        reach = Math.max(reach, ends);
+      } else {
+        groups.push([e]);
+        reach = ends;
+      }
+    });
+  return groups;
+}
+function outCount(list){ return outings(list).length; }
+
 function tripResult(trip, all){
   if(!OUTSIDE.includes(trip.event)) return null;
   const w = TRIP_PAIR_MINUTES*60000;
@@ -4798,7 +4831,7 @@ function dayGo(n){ dayView = n; render(); }
 function dayCounts(offset){
   const t = eventsOn(offset);
   return {
-    out: t.filter(e=>OUTSIDE.includes(e.event)||e.where==='Outside').length,
+    out: outCount(t),
     acc: t.filter(e=>e.where==='Indoor Accident'||e.where==='Crate Accident').length,
     n: t.length,
   };
@@ -4967,14 +5000,15 @@ function visitWindow(){
 function visitStats(){
   /* the numbers worth quoting, straight off the log */
   const poops = events.filter(e => e.event==='Poop').slice(-8);
-  const days = {};
+  const days = {}, dayEv = {};
   events.forEach(e => {
     if(!isLogEvent(e)) return;
     const k = dayKey(new Date(e.ts));
     days[k] = days[k] || {out:0, acc:0};
-    if(OUTSIDE.includes(e.event) || e.where==='Outside') days[k].out++;
+    (dayEv[k] = dayEv[k] || []).push(e);
     if(e.where==='Indoor Accident' || e.where==='Crate Accident') days[k].acc++;
   });
+  Object.keys(days).forEach(k => { days[k].out = outCount(dayEv[k]); });
   const keys = Object.keys(days).sort().slice(-4);
   return {poops:poops, days:keys.map(k => ({k:k, d:days[k]}))};
 }
@@ -5092,19 +5126,20 @@ function setRange(n){ chartRange = n; renderCharts(); }
 /* One entry per calendar day from her first logged event to today, holes included,
    so a chart can draw a gap where there is a gap. */
 function dayRows(){
-  var byDay = {}, first = null;
+  var byDay = {}, evByDay = {}, first = null;
   events.forEach(function(e){
     if(!isLogEvent(e)) return;
     if(first === null || e.ts < first) first = e.ts;
     var k = dayKey(new Date(e.ts));
     var r = byDay[k] || (byDay[k] = {out:0, acc:0, house:0, crate:0,
                                      peeOut:0, peeIn:0, poopOut:0, poopIn:0});
-    if(OUTSIDE.includes(e.event) || e.where === 'Outside') r.out++;
+    (evByDay[k] = evByDay[k] || []).push(e);
     if(e.where === 'Indoor Accident'){ r.acc++; r.house++; }
     if(e.where === 'Crate Accident'){ r.acc++; r.crate++; }
     if(e.event === 'Pee'){ if(e.where === 'Outside') r.peeOut++; else if(e.where !== 'N/A') r.peeIn++; }
     if(e.event === 'Poop'){ if(e.where === 'Outside') r.poopOut++; else if(e.where !== 'N/A') r.poopIn++; }
   });
+  Object.keys(byDay).forEach(function(k){ byDay[k].out = outCount(evByDay[k]); });
   if(first === null) return [];
   var out = [];
   var d = new Date(first); d.setHours(0,0,0,0);
