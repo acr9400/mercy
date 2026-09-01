@@ -961,7 +961,7 @@ body.gon #ver{display:none}
 <h1><img src="./avatar.jpg" alt="" onerror="this.style.display='none'">
   <span>Mercy &middot; <span id="age"></span></span></h1>
 <div class="who" id="who"></div>
-<div id="ver">v96 <button onclick="forceUpdate()">Force update</button></div>
+<div id="ver">v97 <button onclick="forceUpdate()">Force update</button></div>
 <div class="sync off" id="sync"><span class="led"></span><span id="synctext">Local only</span></div>
 
 <div class="shab" id="shab"></div>
@@ -1254,6 +1254,7 @@ const FORECAST_DAYS = 10;
 const FORECAST_MIN_PEE = 4;
 const FORECAST_MIN_POOP = 3;
 const WALK_LEAD_MIN = 30;
+const DUPE_GUARD_MS = 60 * 1000;
 const GAP_CAP_PEE  = 8 * 3600000;
 const GAP_CAP_POOP = 6 * 3600000;
 const GAP_CAP_POOP_GAP = 18 * 3600000;
@@ -2423,8 +2424,31 @@ function drawTimer(){
   if(!tick) tick=setInterval(paint,1000);
 }
 
+/* The same entry, from the same person, moments ago. events is sorted by ts, so the
+   scan walks backwards and stops as soon as it is out of the window.
+   Same person on purpose: two people arriving at the log within a minute of each other
+   is a real thing in a house with three carers, and refusing the second would silently
+   drop somebody else's entry. Only a repeated tap by one thumb is a duplicate. */
+function recentDuplicate(event, where, ts){
+  for(var i = events.length - 1; i >= 0; i--){
+    var e = events[i];
+    if(ts - e.ts > DUPE_GUARD_MS) break;
+    if(e.event === event && e.where === where && e.by === me) return e;
+  }
+  return null;
+}
+
 function push(event, where, extra){
   if(!canWrite()){ refuse(); return null; }
+  /* The armed backdate is read WITHOUT consuming it, so a refused tap does not silently
+     throw away a "45m ago" he had just set. stamp() clears it; this must not. */
+  const ts = exactTs !== null ? exactTs : Date.now() - offsetMin*60000;
+  const dup = recentDuplicate(event, where, ts);
+  if(dup){
+    toast('<b>Already logged</b><br>' + event + ' at ' + hhmm(new Date(dup.ts)) +
+          '. Tapping again would count it twice.');
+    return null;
+  }
   const e = Object.assign({ id: uid(), ts: stamp(), by: me, event, where }, extra||{});
   events.push(e);
   events.sort((a,b)=>a.ts-b.ts);
