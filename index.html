@@ -872,10 +872,9 @@ body.ro #recent{margin-top:0}
    the second signal, and that one needs no colour at all. */
 #subclocks .due .sv{color:var(--alert);font-weight:400}
 #subclocks .due .scr{background:var(--tint)}
-/* Done: a full rail, but pale. At full strength it would shout across the strip as
-   loudly as a bar that is actually due, and this is the one state that wants nothing
-   from you. The muted number says the same thing a second time. */
-#subclocks .done .scf{opacity:.34}
+/* Done: an empty track. The words underneath carry the meaning, and the muted number
+   says it a second time. There is deliberately nothing here to make it look urgent,
+   because this is the one state that wants nothing from you. */
 #subclocks .done .sv{color:var(--muted)}
 /* Not enough events yet: a dashed empty track. It says "this is coming" without
    drawing a line she has not earned. */
@@ -944,7 +943,7 @@ body.gon #ver{display:none}
 <h1><img src="./avatar.jpg" alt="" onerror="this.style.display='none'">
   <span>Mercy &middot; <span id="age"></span></span></h1>
 <div class="who" id="who"></div>
-<div id="ver">v91 <button onclick="forceUpdate()">Force update</button></div>
+<div id="ver">v92 <button onclick="forceUpdate()">Force update</button></div>
 <div class="sync off" id="sync"><span class="led"></span><span id="synctext">Local only</span></div>
 
 <div class="shab" id="shab"></div>
@@ -5945,12 +5944,18 @@ function forecast(){
     poop.basis = 'since her poop';
     poop.est = 'already gone';
     poop.acc = lq.where === 'Indoor Accident' || lq.where === 'Crate Accident';
-    /* A full rail, and `ready` stays false. Those two are doing different jobs and must
-       not be conflated: the rail says the window is behind her, and `ready` false is
-       what keeps this state out of `due` and out of forecastPing, so a finished bar can
-       never buzz. Nothing is measured against a median here, so there is no mark either. */
+    /* EMPTY, not full. The fill answers one question on all three bars -- how close is
+       she to needing this -- so a bar has to be empty at the moment she needs it least,
+       and that moment is right after she has been. It was drawn full here first, which
+       made a full bar mean "due now" on two panels and "already done" on the third. Two
+       opposite meanings wearing the same picture, and it was the first thing anyone
+       asked about. The pee bar has always emptied the instant she pees; this is the
+       same rule, applied to the same event.
+       `ready` stays false, which is what keeps the state out of `due` and out of
+       forecastPing: nothing is being measured against a median, so there is no mark
+       and nothing to warn about. */
     poop.done = true;
-    poop.pct = 100;
+    poop.pct = 0;
   } else {
     poop.value = gapClock(now - lm.ts);
     poop.basis = 'since her meal';
