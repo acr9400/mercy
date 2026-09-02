@@ -2,10 +2,10 @@
  "_note": "The Food tab's own content: the recipes and the kitchen rules around them. Everything that answers 'can she eat X' lives in guide.json as kind 'food' and is rendered here from there, so there is one source for a verdict and not two. Edit, then run scripts/sync_app_config.py and re-upload the app.",
  "_sources": "Stockman, Fascetti, Kass & Larsen, Evaluation of recipes of home-prepared maintenance diets for dogs, JAVMA 242(11):1500-1505, 2013. Merck Veterinary Manual on Allium toxicosis and on salmon poisoning disease. VCA on vitamin A toxicosis. AKC and PetMD food guidance. Pet Poison Helpline on tomatoes. Calorie figures are USDA rounded, and they are estimates: they are here to keep the 10 percent budget honest, not to be precise.",
  "gate": {
-  "until": "2026-09-10",
-  "t": "Not this week. Around the second week of September.",
-  "b": "Three things are open at once. She changed to Pro Plan on 28 August, so a transition is still running. Her comprehensive fecal is still at the lab. And five stools in a row before the switch were hard pellets or a log that broke apart. Add tomato and beef and pumpkin into that week and if her stool changes nobody can say which one did it, including her vet. Wait for seven clear days on Pro Plan alone AND the fecal result, then start with one thing, the way the introducing-anything-new entry says.",
-  "after": "The gate date has passed. If her stools settled and the fecal came back, start cooking. If either is still open, it is still not the week."
+  "until": "2026-10-15",
+  "t": "Still shut. The fecal came back positive.",
+  "b": "The fecal that this gate was waiting on resulted on 29 August and it is POSITIVE: Cystoisospora by oocyst and antigen, and Giardia antigen. Both cause loose stool and urgency, so the five abnormal stools this gate was built around now have a named cause and it is not her food. Nothing new goes in her until she has been treated and a REPEAT fecal comes back clean. The date on this gate is a placeholder, not the condition: the condition is a negative re-test, and if that lands sooner or later the date moves with it. Adding tomato or beef or pumpkin on top of an active protozoal infection would make her stool unreadable to the one person who needs to read it.",
+  "after": "The placeholder date has passed. Do NOT read that as permission. Check health.fecal_2026_08_28: if treatment_started is still null, or retest_done is null, or the re-test was not clean, the gate is still shut whatever the calendar says."
  },
  "exception": {
   "t": "One thing you do not have to wait for",
