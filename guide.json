@@ -539,6 +539,76 @@
    "cat": "House training"
   },
   {
+   "id": "g-wet-ground",
+   "kind": "do",
+   "title": "She will not go outside when the ground is wet",
+   "tags": [
+    "rain",
+    "wet",
+    "weather",
+    "snow",
+    "ground",
+    "surface",
+    "wet grass",
+    "puddle",
+    "housetraining",
+    "holding it",
+    "refuses",
+    "doormat",
+    "mat"
+   ],
+   "lead": "At ten weeks, outside is a texture underfoot, not a place. Change the texture and you have changed the instruction.",
+   "now": [
+    "Take a pee pad OUTSIDE and put it on the ground, so there is a surface out there she recognises. Then shrink it and fade it. That is her own vet's fix, given on 28 August for exactly this.",
+    "Pick one covered spot, an awning or scaffolding or the lee of the building, and make it the wet-weather default every time.",
+    "Umbrella over her, not over you.",
+    "Pay her the moment she finishes, outside, in the rain. Plain boiled chicken is already what she works for. Rain is when that payment matters most.",
+    "If she will not go: back in, crate or house line for ten minutes, straight back out. Do not let her loose in the flat on a full bladder."
+   ],
+   "not": [
+    "Do not wait it out indoors off-lead. That is the loop that teaches her the doormat works.",
+    "Do not read one wet-ground accident as proof of anything. Log the ground on the trip and let the tally answer it."
+   ],
+   "why": "Wet ground and falling rain are not the same variable, and the ground is the one that tracks. On 1 September she peed outside early on dry-ish ground, went on the doormat right after it rained, then went again once it had stopped raining but the ground was still wet. A doormat is soft and absorbent and it is the surface argument in g-accident-floor pointed the other way: she is not refusing to go, she is refusing the surface, and then choosing one she knows. This explains a trip that produced NOTHING. It does not explain an accident that followed a proper squat outside; that one is v-urination and it goes to the vet.",
+   "cat": "House training"
+  },
+  {
+   "id": "g-accident-building",
+   "kind": "do",
+   "title": "She went in the hallway, the lobby or the stairs",
+   "tags": [
+    "hallway",
+    "hall",
+    "lobby",
+    "stairs",
+    "stairwell",
+    "building",
+    "common area",
+    "neighbours",
+    "corridor",
+    "accident",
+    "poop",
+    "pee",
+    "landing",
+    "threshold",
+    "door"
+   ],
+   "lead": "Not an accident in your flat, and not the same problem. She got in off the street and did not get through your door.",
+   "now": [
+    "Clean it properly and immediately, with enzymatic cleaner, not detergent. This is a shared surface: it is a neighbour problem and a building problem before it is a training one, and an uncleaned spot re-marks itself for her and for every other dog in the building.",
+    "Carry bags and a small bottle of cleaner on the walk, so you are not going back upstairs to fetch them.",
+    "Say nothing to her. Same rule as any accident, and it is the rule the whole house-training entry runs on.",
+    "Log it as an Indoor Accident and pick the building spot: on the way in, or your floor."
+   ],
+   "not": [
+    "Do not walk her straight from the pavement to the stairs. That is the loop.",
+    "Do not read it as spite or as a protest. Puppies do not do that, and reading it that way makes you angrier than the situation deserves.",
+    "Do not skip cleaning because it is not your floor."
+   ],
+   "why": "The through line is that she does not empty outside and then empties as soon as she is inside. The hallway is warm, dry, quiet, out of the wind, and it smells of home; to a ten week old that reads as arrival rather than as indoors, which is the same surface preference argument as g-wet-ground and g-accident-floor pointed at the journey instead of the floor. Where it lands tells you which version you have. On the way in, on the ground floor, means she was waiting for shelter and released the moment she had it. On your own floor at the top of the stairs means she held it the whole way up, and there the climb is a candidate in its own right: four flights is real exercise and exercise moves a puppy gut, so the poop at the top may have been made by the stairs rather than merely delayed until then. The fix for both is the same and it is boring: stop ending the walk at the door. Stand outside, still and uninteresting, for five more minutes after you would have gone in, and pay her heavily the instant she goes out there. A walk is not the same event as a toilet trip, and five to seven minutes of walking with nothing produced is an unanswered bladder, not an empty one.",
+   "cat": "House training"
+  },
+  {
    "id": "g-did-she-go",
    "kind": "do",
    "cat": "House training",

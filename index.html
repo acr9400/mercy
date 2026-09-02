@@ -41,7 +41,14 @@
 html,body{margin:0;background:var(--ground);color:var(--paper);
   font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
   font-size:16px;line-height:1.4;overscroll-behavior-y:contain}
-body{padding:max(12px,env(safe-area-inset-top)) var(--pad) calc(28px + env(safe-area-inset-bottom))}
+/* The bar is fixed, so it is out of flow and reserves no space of its own. Body has to
+   reserve it instead. It was 28px against a bar that measures about 58px, so the last
+   stretch of every tab sat underneath it -- worst on Guide and Papers, which are the
+   long scrolling ones. --tabbar-h is the measured height at the smallest step, plus
+   room to breathe, and it lives here rather than in the theme block so the sync script
+   does not overwrite it. */
+:root{--tabbar-h:58px}
+body{padding:max(12px,env(safe-area-inset-top)) var(--pad) calc(var(--tabbar-h) + 14px + env(safe-area-inset-bottom))}
 h1{font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);
   font-weight:600;margin:0 0 14px;display:flex;align-items:center;gap:10px}
 h1 img{width:30px;height:30px;border-radius:50%;object-fit:cover;flex:none;
@@ -90,8 +97,21 @@ h2{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--mute
 .tab{display:none}
 .tab.on{display:block}
 .tab > h2:first-child{margin-top:18px}
+/* NO backdrop-filter here, deliberately, and it must not come back.
+
+   On iOS a position:fixed element carrying backdrop-filter is promoted to its own
+   compositing layer, and during momentum scrolling WebKit paints that layer at a stale
+   offset: the bar detaches from the bottom of the screen and lands across the middle of
+   the page. He reported it in exactly those words. #tabbar is a direct child of body
+   with no transformed ancestor, so the positioning itself was never wrong; the blur was.
+
+   Nothing was lost. --navbg is rgba(255,255,255,.94), so the blur was operating on the
+   6% of backdrop that showed through and was very close to invisible. The tint is now
+   layered over --ground so the bar is fully opaque, which is what it needs to be with
+   the blur gone, and it still follows the theme rather than hardcoding a colour. */
 #tabbar{position:fixed;left:0;right:0;bottom:0;z-index:15;display:flex;box-shadow:0 -2px 14px rgba(0,0,0,.05);
-  background:var(--navbg);backdrop-filter:blur(12px);
+  background-color:var(--ground);
+  background-image:linear-gradient(var(--navbg),var(--navbg));
   border-top:1px solid var(--line);
   padding:6px 4px calc(6px + env(safe-area-inset-bottom))}
 /* flex:1 alone is not enough. A flex item defaults to min-width:auto, so it refuses to
@@ -560,6 +580,15 @@ body.gon #daysel{display:none}
 .awaytag{font-size:10px;color:var(--alert);text-transform:uppercase;
   letter-spacing:.08em;font-weight:700;margin-left:6px}
 body.gon #awaybox{display:none}
+#groundbox{margin:-8px 0 14px;padding:0 4px;font-size:12px;line-height:1.45;color:var(--muted);
+  display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+#groundbox .glbl{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:700}
+#groundbox .gbtn{background:transparent;border:1px solid var(--line);border-radius:999px;
+  color:var(--muted);font:inherit;font-size:11.5px;padding:3px 9px;cursor:pointer}
+#groundbox .gbtn.on{border-color:var(--gold);color:var(--gold);font-weight:600}
+#groundbox .gage{font-size:11px;opacity:.75}
+#groundbox .gage.warn{color:var(--alert);opacity:1}
+body.gon #groundbox{display:none}
 #daycap a{color:var(--gold);font-weight:600;text-decoration:none;border-bottom:1px solid}
 body.gon #daycap{display:none}
 
@@ -966,7 +995,7 @@ body.gon #ver{display:none}
 <h1><img src="./avatar.jpg" alt="" onerror="this.style.display='none'">
   <span>Mercy &middot; <span id="age"></span></span></h1>
 <div class="who" id="who"></div>
-<div id="ver">v106 <button onclick="forceUpdate()">Force update</button></div>
+<div id="ver">v110 <button onclick="forceUpdate()">Force update</button></div>
 <div class="sync off" id="sync"><span class="led"></span><span id="synctext">Local only</span></div>
 
 <div class="shab" id="shab"></div>
@@ -981,6 +1010,8 @@ body.gon #ver{display:none}
 
 <div id="daysel"></div>
 <div id="daycap" hidden></div>
+
+<div id="groundbox"></div>
 
 <div id="awaybox">
   <div id="awaysum"></div>
@@ -1291,6 +1322,7 @@ const VOMIT_CARD_HOURS = 48;
 const BARK_WINDOW_MIN = 45;
 const ACC_LOOKBACK_MIN = 30;
 const ACC_SOON_MIN = 60;
+const GROUND_STALE_MIN = 180;
 const DURATIONS = {"Walk": [5, 10, 15, 20, 30], "Play": [10, 15, 20, 25, 30], "Alone": [30, 60, 90, 120, 180, 300], "Bark": [5, 10, 20, 30, 45, 60]};
 const PUSH_URL = "https://travelling-condo-poet-diff.trycloudflare.com";
 const VAPID_KEY = "BFCqwk4kKDp2lwfFfElkdFtXBrsmtjTlts53TfUEM7eklz4D6ud0RYVOQskn_MDYsMaqhMKT-IYpHloRypdPzzQ";
@@ -2472,6 +2504,14 @@ function push(event, where, extra){
     return null;
   }
   const e = Object.assign({ id: uid(), ts: stamp(), by: me, event, where }, extra||{});
+  /* Outings carry the ground they happened on, so the trip and the condition cannot
+     drift apart in memory later. Only the TRIP: the Pee row is a result, and an indoor
+     accident has no ground of its own. Silent when the setting is stale, which is the
+     honest answer rather than a guess. */
+  if(OUTSIDE.indexOf(event) >= 0){
+    const g = currentGround();
+    if(g) e.notes = withGround(e.notes, g);
+  }
   events.push(e);
   events.sort((a,b)=>a.ts-b.ts);
   /* Order matters. feedback() is cosmetic and goes LAST, so if it ever fails again it
@@ -2535,15 +2575,38 @@ const STOOL = [
 
    Only Indoor Accident is asked. A crate accident already knows where it happened, and
    spotOf() fills that in rather than spending a tap on it. */
+/* The two building values are not a room-vs-room distinction, which is the thing this
+   list otherwise refuses to make. They are a distinction about HOW FAR THROUGH THE WAY
+   HOME she got, and that is a different axis from surface entirely.
+
+   Reported 2 September, both on the same day; the log carries the real timestamps and
+   this comment deliberately does not guess at them. Once on the ground floor, straight in
+   off the morning walk, before any stairs. Once on his own floor, having walked outside
+   for five to seven minutes and produced nothing, then climbed four flights, then gone in
+   the hallway a few feet short of his door. Those look identical in a log that can only say "Indoor
+   Accident", and they are not identical: the first is released the moment she was under a
+   roof, the second is held all the way up and released at the threshold. Only the second
+   one can be about the stairs.
+
+   Neither is an accident in his flat, and he was right to say so. They stay Indoor
+   Accident in `where` because the schema has four values and none of them is "the
+   building", and inventing a fifth would break the shared sheet for no gain. The spot
+   carries it. */
 var ACCIDENT_SPOTS = [
   {value:'bed',   label:'Her bed, or a mat',  note:'a soft absorbent thing she also lies on'},
   {value:'door',  label:'At the door',        note:'the doormat, the threshold, just inside'},
   {value:'rug',   label:'A rug or carpet',    note:'one she does not sleep on'},
   {value:'floor', label:'Bare floor',         note:'wood or tile, nothing on it'},
+  {value:'lobby', label:'Building, on the way in', note:'lobby or ground floor, before the stairs'},
+  {value:'hall',  label:'Building, your floor',    note:'the hallway outside your door'},
   {value:'',      label:'Not sure',           note:'did not see where it started'}
 ];
 var SPOT_LABEL = {bed:'her bed or a mat', door:'at the door', rug:'a rug or carpet',
-                  floor:'bare floor', crate:'in her crate'};
+                  floor:'bare floor', crate:'in her crate',
+                  lobby:'in the building, on the way in', hall:'in the hallway on your floor'};
+/* The class that matters is "in the building at all", so the two are counted together
+   as well as separately. */
+var SPOT_BUILDING = ['lobby','hall'];
 
 /* Rides in notes after a pipe, the way Held and Away already do, so it survives the trip
    through the shared sheet without a schema change. Never at position 0: an overnight
@@ -2564,13 +2627,127 @@ function withSpot(notes, v){
 }
 function askSpot(cb){
   openSheet('Where did it land?',
-    'The surface matters more than the room. Same place twice is a different problem from '
-    + 'two different places, and neither is visible a week later unless it is written down.',
+    'Surface first: same kind of surface twice is a different problem from two different '
+    + 'ones. The two building options are not about the room either, they are about how '
+    + 'far through the way home she got. None of it is visible a week later unless it is '
+    + 'written down now.',
     ACCIDENT_SPOTS, cb);
 }
 function logAccident(event, where){
   if(where !== 'Indoor Accident'){ push(event, where); return; }
   askSpot(function(v){ push(event, where, {notes: withSpot('', v)}); });
+}
+
+/* ---- ground condition ----------------------------------------------------------
+   Rides on the OUTING, not on the day, and records the GROUND rather than the sky.
+   Both of those come straight off 1 September. She peed outside early on dry-ish
+   ground; went on the doormat right after it rained; went again in the hallway once it
+   had STOPPED raining but the ground was still wet. A per-day flag would have collapsed
+   all three into one value and erased the only variable that tracked, and a
+   raining/not-raining field cannot express the third one at all.
+
+   Same argument as the accident spot: the condition underfoot is the point, not the
+   category of the day. Same storage trick too, so it crosses the shared sheet with no
+   schema change. Never at position 0, because timeUnknown() reads that first character. */
+var GROUND = [
+  {value:'dry',  label:'Dry',             note:'the ground she learned on'},
+  {value:'wet',  label:'Wet',             note:'after the rain, or morning damp, nothing falling'},
+  {value:'rain', label:'Rain',            note:'coming down while she is out'},
+  {value:'snow', label:'Snow',            note:'snow or ice underfoot'}
+];
+var GROUND_LABEL = {dry:'dry', wet:'wet', rain:'raining', snow:'snow or ice'};
+var GROUND_WET = ['wet','rain','snow'];
+
+function groundOf(e){
+  if(e && typeof e.notes === 'string'){
+    var parts = e.notes.split('|');
+    for(var i = 0; i < parts.length; i++){
+      var p = parts[i].trim();
+      if(p.indexOf('ground:') === 0) return p.slice(7);
+    }
+  }
+  return '';
+}
+function withGround(notes, v){
+  if(!v) return notes || '';
+  return (notes ? notes + ' ' : '') + '| ground:' + v;
+}
+
+/* The sticky setting is local to this phone. It is a convenience for whoever is holding
+   the door, not a claim about the world, so it does not sync. What crosses the shared
+   log is the stamp on each outing, which is a fact about that trip.
+
+   It EXPIRES. Weather moves on the scale of hours, so a setting nobody has touched for
+   GROUND_STALE_MIN minutes stops stamping rather than carrying this morning's rain into
+   the evening. Outings logged after that carry no ground at all, and the Why sheet lists
+   it as not logged. Same rule as the dotted forecast track: an absence of data must not
+   be dressed as a finding. */
+var ground = null;
+try { ground = JSON.parse(localStorage.getItem('mercy.ground') || 'null'); } catch(e){ ground = null; }
+
+function groundAgeMin(){
+  if(!ground || !ground.at) return null;
+  return Math.round((Date.now() - ground.at) / 60000);
+}
+function groundStale(){
+  var a = groundAgeMin();
+  return a === null || a > GROUND_STALE_MIN;
+}
+function currentGround(){
+  return groundStale() ? '' : (ground.v || '');
+}
+function setGround(v){
+  ground = v ? {v: v, at: Date.now()} : null;
+  try { localStorage.setItem('mercy.ground', JSON.stringify(ground)); } catch(e){}
+  renderGround();
+  toast(v
+    ? '<b>Ground: ' + (GROUND_LABEL[v] || v) + '</b><br>Stamped on every outing for the '
+      + 'next ' + Math.round(GROUND_STALE_MIN / 60) + ' hours, then it stops on its own.'
+    : '<b>Ground cleared</b><br>Outings will log without it.');
+}
+/* Index rather than a quoted value, so the handler carries no quote characters into an
+   HTML attribute. Tapping the active one clears it, which keeps this at one tap. */
+function setGroundIdx(i){
+  var v = GROUND[i].value;
+  setGround(currentGround() === v ? '' : v);
+}
+function renderGround(){
+  var el = document.getElementById('groundbox');
+  if(!el) return;
+  var cur = currentGround(), h = '<span class="glbl">Ground</span>';
+  for(var i = 0; i < GROUND.length; i++)
+    h += '<button class="gbtn' + (cur === GROUND[i].value ? ' on' : '')
+      +  '" onclick="setGroundIdx(' + i + ')">' + gesc(GROUND[i].label) + '</button>';
+  if(cur) h += '<span class="gage">set ' + fmtGap(groundAgeMin()) + ' ago</span>';
+  else if(ground) h += '<span class="gage warn">stale, not stamping</span>';
+  else h += '<span class="gage">not set</span>';
+  el.innerHTML = h;
+}
+
+/* Of the accidents that followed a trip carrying a ground stamp, how many followed wet
+   ground and how many followed dry. Unstamped trips count in neither and are reported
+   separately, because a tally that quietly folded them into "dry" would invent the
+   result. Two numbers to watch move, not a verdict. */
+/* Accidents anywhere in the building, counted as one class. lobby and hall tally
+   separately too, through the ordinary same-spot count, but the number he actually wants
+   is how often she gets through the front door and does not get through his. */
+function buildingTally(uptoTs){
+  return events.filter(function(x){
+    return x.ts <= uptoTs && x.where === 'Indoor Accident'
+           && SPOT_BUILDING.indexOf(spotOf(x)) >= 0; }).length;
+}
+
+function groundTally(uptoTs){
+  var w = 0, d = 0, u = 0;
+  events.forEach(function(x){
+    if(x.ts > uptoTs) return;
+    if(x.where !== 'Indoor Accident' && x.where !== 'Crate Accident') return;
+    if(x.event !== 'Pee' && x.event !== 'Poop') return;
+    var tr = lastBefore(x.ts, function(y){ return OUTSIDE.indexOf(y.event) >= 0; });
+    var g = tr ? groundOf(tr) : '';
+    if(!g) u++; else if(GROUND_WET.indexOf(g) >= 0) w++; else d++;
+  });
+  return {wet:w, dry:d, unstamped:u};
 }
 
 function logPoop(where){
@@ -2927,6 +3104,9 @@ function accidentFacts(e){
     f.playEndMin = Math.round((e.ts - end) / 60000);
     f.playRunning = f.playEndMin < 0;
   }
+  /* The ground the last trip was logged on. Empty when the setting was stale or never
+     set, and the sheet says so rather than assuming dry. */
+  f.lastTripGround = f.lastTrip ? groundOf(f.lastTrip) : '';
   return f;
 }
 
@@ -2960,6 +3140,19 @@ function accidentTriggers(e, f){
     t.push(['She was out ' + mstr(f.lastTripMin) + ' earlier and did nothing',
             'A trip that produced nothing is not an empty bladder, it is an unanswered '
             + 'one. Her guide: if you did not see a proper squat, treat her as full.', false]);
+  /* Wet ground is a scheduling and surface problem, not a vet question, so it does not
+     draw in --alert. It fires ONLY on a trip that produced nothing. A trip she completed
+     properly is not explained by the weather, and letting it say otherwise would hand
+     him a comfortable answer for precisely the case v-urination says to take to a vet. */
+  if(f.lastTrip && f.lastTripMin <= ACC_LOOKBACK_MIN
+     && GROUND_WET.indexOf(f.lastTripGround) >= 0
+     && tripResult(f.lastTrip, events) === 'nothing')
+    t.push(['The ground was ' + (GROUND_LABEL[f.lastTripGround] || f.lastTripGround)
+            + ' on that trip',
+            'Logged on the ' + hhmm(new Date(f.lastTrip.ts)) + ' trip, which produced '
+            + 'nothing. At ten weeks "outside" is a texture underfoot, not a place, and a '
+            + 'surface she does not recognise is one she will hold on rather than squat '
+            + 'on. That is a surface problem, not a vet one.', false]);
   if(f.lastMeal && f.lastMealMin <= 45)
     t.push(['She ate ' + mstr(f.lastMealMin) + ' earlier',
             'Her gut fires 5 to 30 minutes after she finishes, and the plan puts a trip '
@@ -3041,6 +3234,30 @@ var ACCIDENT_REASONS = [
       + 'Enzymatic cleaner on every one, and give it the full time on the label.',
    fits:function(f){ return f.sameSpot >= 2; }},
 
+  {title:'The building is where outside ends for her',
+   what:'She holds it on the walk and lets go the moment she is back under a roof. The '
+      + 'hallway is warm, dry, quiet, and it smells of home and of every other dog in the '
+      + 'building, so to her it reads as the arrival, not as indoors. Her guide entry is '
+      + 'g-accident-building. If it lands at the top of the stairs rather than on the way '
+      + 'in, add the climb itself: four flights is hard exercise and exercise moves a '
+      + 'puppy gut.',
+   test:'Which of the two building spots it lands on, over several goes. On the way in '
+      + 'means she is waiting for shelter. On your floor after the stairs means she was '
+      + 'holding and something at the top released it. Then stop walking her straight '
+      + 'home: stand outside, boring and still, for five minutes after the walk ends.',
+   fits:function(f){ return SPOT_BUILDING.indexOf(f.spot) >= 0; }},
+
+  {title:'The ground she was asked to go on',
+   what:'Wet grass, wet pavement, snow. The same preference as the spot indoors, pointed '
+      + 'the other way: a surface she does not recognise is one she will hold on rather '
+      + 'than squat on, and she then goes on something she does recognise inside. Her '
+      + 'guide entry is g-wet-ground.',
+   test:'Compare her outings on WET ground against her outings on DRY, not wet days '
+      + 'against dry days; the ground can be wet hours after the rain stops. Put a pee '
+      + 'pad down outside so there is a surface she knows, then shrink it and fade it. '
+      + 'Her vet gave you that one on 28 August.',
+   fits:function(f){ return GROUND_WET.indexOf(f.lastTripGround) >= 0; }},
+
   {title:'Submissive or greeting wee',
    what:'Happens when a person approaches, reaches or leans over. Ears back, lips pulled '
       + 'back, avoiding eye contact, cowering. Usually a dribble rather than a full void.',
@@ -3101,11 +3318,41 @@ function whyAccident(e){
          +  '</p>';
     f.sameSpot = same;
   }
+  f.spot = sp;
+
+  /* Not a surface observation. It says she got in off the street and did not get inside
+     the flat, which is a fact about the journey and not about the floor covering. */
+  if(SPOT_BUILDING.indexOf(sp) >= 0){
+    var nb = buildingTally(e.ts);
+    body += '<p style="margin:0 0 12px;font-size:14.5px;line-height:1.6">This one was in '
+         +  '<b>the building, not the flat</b>. That is <b>' + nb + '</b> in the common '
+         +  'areas so far'
+         +  (f.lastTrip ? ', and the trip before it was at '
+              + gesc(hhmm(new Date(f.lastTrip.ts))) + '.' : '.')
+         +  ' Common areas are a neighbour problem as well as a training one: clean it '
+         +  'with enzymatic cleaner now, or it stays a toilet for her and for every other '
+         +  'dog in the building.</p>';
+  }
+
+  /* Deliberately about the TRIP, not the accident: it happened indoors, so it has no
+     ground of its own. The tally is the whole point of collecting this. */
+  if(f.lastTripGround && f.lastTrip){
+    var gt = groundTally(e.ts);
+    body += '<p style="margin:0 0 12px;font-size:14.5px;line-height:1.6">The '
+         +  gesc(hhmm(new Date(f.lastTrip.ts))) + ' trip before it was logged on <b>'
+         +  gesc(GROUND_LABEL[f.lastTripGround] || f.lastTripGround) + ' ground</b>. '
+         +  'Accidents after a stamped trip so far: <b>' + gt.wet + '</b> after wet, <b>'
+         +  gt.dry + '</b> after dry'
+         +  (gt.unstamped ? ', and ' + gt.unstamped + ' after a trip with no ground '
+              + 'logged, counted in neither.' : '.')
+         +  '</p>';
+  }
 
   var missing = [];
   if(!f.lastPlay  || f.lastPlayMin  > 6 * 60) missing.push('play');
   if(!f.lastWater || f.lastWaterMin > 6 * 60) missing.push('water');
   if(!f.lastMeal  || f.lastMealMin  > 8 * 60) missing.push('meals');
+  if(f.lastTrip && !f.lastTripGround) missing.push('ground condition');
   if(missing.length)
     body += '<p style="margin:14px 0 0;font-size:13.5px;color:var(--muted);line-height:1.55">'
          +  '<b>Not logged, so not looked at:</b> ' + gesc(missing.join(', ')) + '. Absent '
@@ -4222,6 +4469,7 @@ function render(){
   }
   const awayNow = dayView===0 ? awayFor() : null;
   renderAway();
+  renderGround();
   const now=minsNow(), sched=document.getElementById('sched');
   const k=dayKey(new Date());
   const doneIds=planDoneIds(k);
