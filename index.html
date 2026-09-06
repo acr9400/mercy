@@ -376,6 +376,20 @@ footer{margin-top:30px;font-size:12px;color:var(--muted);line-height:1.6}
   background:var(--ground);border:1px solid var(--line);border-radius:13px;margin:0 0 10px}
 #sheet input:focus{outline:none;border-color:var(--gold)}
 #sheet .tlab{font-size:12px;color:var(--muted);margin:0 0 5px}
+#sheet textarea{width:100%;height:190px;padding:13px 12px;font:inherit;font-size:15px;
+  line-height:1.5;color:var(--paper);background:var(--ground);border:1px solid var(--line);
+  border-radius:13px;margin:0 0 10px;resize:vertical;
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+#sheet textarea:focus{outline:none;border-color:var(--gold)}
+/* The read-back list. It is the whole point of the paste flow: he has to be able to see
+   what the app understood before any of it becomes a record. */
+#sheet .plan{max-height:240px;overflow:auto;text-align:left;margin:0 0 12px;
+  border:1px solid var(--line);border-radius:13px}
+#sheet .plan div{display:flex;gap:9px;padding:8px 12px;font-size:13px;
+  border-bottom:1px solid var(--line)}
+#sheet .plan div:last-child{border-bottom:0}
+#sheet .plan .pt{width:96px;flex:none;color:var(--muted);font-variant-numeric:tabular-nums}
+#sheet .plan .pbad{color:var(--alert)}
 #sheet .go{width:100%;background:var(--gold);color:var(--onaccent);border-color:var(--gold);
   font-weight:600;padding:15px}
 #sheet .swatches{display:flex;gap:8px;margin:0 0 14px}
@@ -1009,7 +1023,7 @@ body.gon #ver{display:none}
 <h1><img src="./avatar.jpg" alt="" onerror="this.style.display='none'">
   <span>Mercy &middot; <span id="age"></span></span></h1>
 <div class="who" id="who"></div>
-<div id="ver">v115 <button onclick="forceUpdate()">Force update</button></div>
+<div id="ver">v116 <button onclick="forceUpdate()">Force update</button></div>
 <div class="sync off" id="sync"><span class="led"></span><span id="synctext">Local only</span></div>
 
 <div class="shab" id="shab"></div>
@@ -3874,13 +3888,233 @@ function catchUp(){
     'A stretch with nothing in the log: Shabbat, yom tov, or a phone left in a drawer.',
     [{value:'real', label:'I remember the day', accent:true,
       note:'write it up entry by entry, at the times it happened'},
+     {value:'paste', label:'I have it written down',
+      note:'paste the whole day as a list, one line each'},
      {value:'rough', label:'Only roughly how many',
       note:'a count, spread evenly across the gap and marked as an estimate'}],
     function(v){
       if(v === 'real'){ startBackfill(); return; }
-      setTimeout(countUp, 240);
+      setTimeout(v === 'paste' ? pasteDay : countUp, 240);
     });
   document.getElementById('sh-opts').classList.add('stack');
+}
+/* ---- a whole day, pasted ---------------------------------------------------------
+   Tapping it in is twenty taps, and twenty taps at 9 PM on a Saturday is how a day ends
+   up half entered or not entered at all. A day that has already been described once, out
+   loud or in a message, should go in as the thing it already is: a list.
+
+   The format is deliberately readable rather than compact, because he is the one
+   certifying it is true and he cannot certify a blob. One line per entry:
+
+     5:15 pee                  a pee outside
+     5:15 poop 6               with a stool score
+     6:40 walk 15m             fifteen minutes
+     11:30 poop 6
+     18:10-20:30 pee inside door   NOBODY SAW IT: a range, not a time
+
+   A RANGE IS THE WHOLE POINT of the second form. It is the same rule the buttons already
+   follow: a stretch nobody was watching gets no time, a midpoint so the row can be
+   ordered, and no vote in any figure that reads a clock. Written 22:00-05:15 pee crate it
+   is the overnight one; written 18:10-20:30 pee inside it is the one that happened while
+   he was at shul.
+
+   Nothing is written until the parse is read back to him line by line, and a line the
+   app cannot read stops the whole paste rather than being skipped quietly: half a day,
+   silently, is worse than a message saying which line is wrong. */
+var IMPORT_EVENT = {
+  pee:'Pee', poop:'Poop', out:'Potty Trip', trip:'Potty Trip', walk:'Walk',
+  play:'Play', meal:'Meal', food:'Meal', water:'Water', nap:'Nap', training:'Training'
+};
+var IMPORT_WHERE = {
+  outside:'Outside', out:'Outside', inside:'Indoor Accident', indoors:'Indoor Accident',
+  indoor:'Indoor Accident', crate:'Crate Accident'
+};
+function importSpot(w){
+  for(var i = 0; i < ACCIDENT_SPOTS.length; i++)
+    if(ACCIDENT_SPOTS[i].value === w) return true;
+  return false;
+}
+/* "5:15", "17:40", "5:15pm". No am/pm means the 24 hour clock, which is what the rest of
+   the app's inputs give him. Returns minutes past midnight, or null. */
+function importMins(tok){
+  var t = String(tok).toLowerCase(), ap = '';
+  if(t.slice(-2) === 'am' || t.slice(-2) === 'pm'){ ap = t.slice(-2); t = t.slice(0, -2).trim(); }
+  var bits = t.split(':');
+  if(bits.length !== 2) return null;
+  var h = Number(bits[0]), m = Number(bits[1]);
+  if(!(h >= 0 && h < 24) || !(m >= 0 && m < 60)) return null;
+  if(bits[1].length !== 2) return null;
+  if(ap){
+    if(h < 1 || h > 12) return null;
+    if(ap === 'pm' && h < 12) h += 12;
+    if(ap === 'am' && h === 12) h = 0;
+  }
+  return h * 60 + m;
+}
+function importAt(mins){
+  var d = new Date();
+  d.setHours(Math.floor(mins / 60), mins % 60, 0, 0);
+  return d.getTime();
+}
+function parseDay(text){
+  var rows = [], errs = [];
+  String(text).split('\n').forEach(function(raw, i){
+    var line = raw.trim();
+    if(!line || line.charAt(0) === '#') return;
+    var bad = function(why){ errs.push({n:i+1, line:line, why:why}); };
+    var words = line.replace(/,/g, ' ').split(/\s+/);
+    var when = words.shift(), from = null, to = null, mins = null;
+    var dash = when.indexOf('-');
+    if(dash > 0){
+      from = importMins(when.slice(0, dash)); to = importMins(when.slice(dash+1));
+      if(from === null || to === null){ bad('that is not a pair of times'); return; }
+    } else {
+      mins = importMins(when);
+      if(mins === null){ bad('that is not a time. 5:15, 17:40 or 5:15pm'); return; }
+    }
+    var w = String(words.shift() || '').toLowerCase();
+    var ev = IMPORT_EVENT[w];
+    if(!ev){ bad(w ? '"' + w + '" is not something she does' : 'nothing after the time'); return; }
+    var row = { event: ev, where: (ev === 'Pee' || ev === 'Poop') ? 'Outside' : 'N/A' };
+    var ok = true;
+    words.forEach(function(x){
+      var t = String(x).toLowerCase();
+      if(!t) return;
+      if(IMPORT_WHERE[t]){ row.where = IMPORT_WHERE[t]; return; }
+      if(importSpot(t)){ row.spot = t; return; }
+      if(t.slice(-1) === 'm' && Number(t.slice(0, -1)) > 0){ row.mins = Number(t.slice(0, -1)); return; }
+      if(String(Number(t)) === t && Number(t) >= 1 && Number(t) <= 7){ row.stool = Number(t); return; }
+      ok = false; bad('"' + x + '" means nothing here');
+    });
+    if(!ok) return;
+    if(row.stool && row.event !== 'Poop'){ bad('a stool score belongs on a poop'); return; }
+    /* An unseen stretch is the range form and nothing else. Reading a range as a plain
+       entry would put a time on the one kind of row that must never carry one. */
+    if(from !== null){
+      var start = importAt(from), end = importAt(to);
+      /* A NIGHT CROSSES MIDNIGHT. 22:00-05:15 is last night into this morning, so the
+         opening time belongs to yesterday, and reading it as one clock face would throw
+         out the one accident that is always overnight. */
+      if(end <= start) start -= 86400000;
+      if(end > Date.now()){ bad('that stretch has not finished yet'); return; }
+      row.unseen = { start: start, end: end };
+      row.ts = start + Math.round((end - start) / 2);
+      if(row.where === 'Outside'){ bad('a range is for something nobody saw, so it cannot be an outing'); return; }
+    } else {
+      row.ts = importAt(mins);
+      if(row.ts > Date.now()){ bad('that is later today'); return; }
+    }
+    rows.push(row);
+  });
+  rows.sort(function(a, b){ return a.ts - b.ts; });
+  return { rows: rows, errors: errs };
+}
+function importLabel(r){
+  var what = r.event + (r.mins ? ' ' + r.mins + 'm' : '') + (r.stool ? ' \u00b7 stool ' + r.stool : '');
+  var where = r.where === 'Indoor Accident' ? 'accident inside'
+            : r.where === 'Crate Accident' ? 'accident in crate'
+            : r.where === 'Outside' ? 'outside' : '';
+  if(r.spot) where += ', ' + SPOT_LABEL[r.spot];
+  return { when: r.unseen ? hhmm(new Date(r.unseen.start)) + '\u2013' + hhmm(new Date(r.unseen.end))
+                          : hhmm(new Date(r.ts)),
+           what: what + (where ? ' \u00b7 ' + where : '') };
+}
+function importRows(rows){
+  var made = [];
+  rows.forEach(function(r){
+    var notes = '';
+    if(r.unseen){
+      var span = hhmm(new Date(r.unseen.start)) + ' and ' + hhmm(new Date(r.unseen.end));
+      notes = UNKNOWN_TIME + '. '
+        + (r.where === 'Crate Accident' ? 'Overnight crate accident, found in the morning. '
+                                        : 'Indoor accident, ' + UNSEEN_AWAY + '. ')
+        + 'Nobody saw it, so nothing about the timing was observed. The stamp is the '
+        + 'midpoint between ' + span + ', derived so the entry can be ordered, not seen.';
+    } else {
+      notes = CATCHUP_NOTE;
+    }
+    if(r.spot) notes = withSpot(notes, r.spot);
+    var e = { id: uid(), ts: r.ts, by: me, event: r.event, where: r.where, notes: notes };
+    if(r.mins) e.mins = r.mins;
+    if(r.stool) e.stool = r.stool;
+    made.push(e);
+  });
+  made.forEach(function(e){ events.push(e); });
+  events.sort(function(a, b){ return a.ts - b.ts; });
+  save(); render();
+  made.forEach(queue);
+  toast('<b>' + made.length + ' entries added</b><br>The timed ones are marked as written '
+      + 'up from memory. Anything given as a range carries no time at all, and stays out '
+      + 'of her hour and gap figures.');
+}
+function confirmDay(text){
+  var out = parseDay(text);
+  var box = document.getElementById('sh-opts');
+  document.getElementById('sh-title').textContent =
+    out.errors.length ? 'Two of us have to agree on this' : 'Add these ' + out.rows.length + '?';
+  document.getElementById('sh-sub').textContent = out.errors.length
+    ? 'Nothing has been added. Fix the lines below and paste again: half a day, quietly, '
+      + 'is worse than being told which line is wrong.'
+    : 'This is what the app read. Check it against what actually happened before it '
+      + 'becomes a record.';
+  box.innerHTML = ''; box.style.display = 'block';
+  var list = document.createElement('div');
+  list.className = 'plan';
+  if(out.errors.length){
+    out.errors.forEach(function(e){
+      list.insertAdjacentHTML('beforeend', '<div><span class="pt">line ' + e.n +
+        '</span><span class="pbad">' + gesc(e.line) + ' \u2014 ' + gesc(e.why) + '</span></div>');
+    });
+  } else if(!out.rows.length){
+    list.insertAdjacentHTML('beforeend', '<div><span>Nothing to add.</span></div>');
+  } else {
+    out.rows.forEach(function(r){
+      var l = importLabel(r);
+      list.insertAdjacentHTML('beforeend', '<div><span class="pt">' + gesc(l.when) +
+        '</span><span>' + gesc(l.what) + '</span></div>');
+    });
+  }
+  box.appendChild(list);
+  var go = document.createElement('button');
+  go.className = 'go';
+  go.textContent = out.errors.length || !out.rows.length ? 'Back to the paste' : 'Add them';
+  go.onclick = function(){
+    closeSheet();
+    if(out.errors.length || !out.rows.length){ setTimeout(function(){ pasteDay(text); }, 240); return; }
+    importRows(out.rows);
+  };
+  box.appendChild(go);
+  document.getElementById('veil').classList.add('on');
+  document.getElementById('sheet').classList.add('on');
+}
+function pasteDay(prefill){
+  if(!me){ openJoin(true); return; }
+  if(!canWrite()){ refuse(); return; }
+  var box = document.getElementById('sh-opts');
+  document.getElementById('sh-title').textContent = 'Paste the day';
+  document.getElementById('sh-sub').textContent =
+    'One line each: a time, then what she did. 5:15 pee \u00b7 5:15 poop 6 \u00b7 6:40 walk 15m '
+    + '\u00b7 11:30 poop 6 inside. A pair of times instead of one, 18:10-20:30 pee inside, means '
+    + 'nobody saw it: that one gets no time at all. Nothing is added until you have read '
+    + 'it back.';
+  box.innerHTML = ''; box.style.display = 'block';
+  var ta = document.createElement('textarea');
+  ta.setAttribute('autocapitalize','none');
+  ta.setAttribute('autocorrect','off');
+  ta.setAttribute('spellcheck','false');
+  ta.value = prefill || '';
+  box.appendChild(ta);
+  var go = document.createElement('button');
+  go.className = 'go'; go.textContent = 'Read it back';
+  go.onclick = function(){
+    var v = ta.value;
+    closeSheet();
+    setTimeout(function(){ confirmDay(v); }, 240);
+  };
+  box.appendChild(go);
+  document.getElementById('veil').classList.add('on');
+  document.getElementById('sheet').classList.add('on');
+  setTimeout(function(){ ta.focus(); }, 260);
 }
 function startBackfill(){
   backfill = true; backfilled = 0; exactTs = null; offsetMin = 0;
