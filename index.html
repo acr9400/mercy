@@ -291,6 +291,9 @@ footer{margin-top:30px;font-size:12px;color:var(--muted);line-height:1.6}
 .when button.on{background:var(--paper);color:var(--ground);border-color:var(--paper);font-weight:600}
 /* A back-dated tap is easy to leave armed by accident, so it goes gold, not white. */
 .when button.on.back{background:var(--gold);border-color:var(--gold);color:var(--onaccent)}
+/* Writing up a day that is already over, an offset from now means nothing. The bar
+   carries two things instead: the time being written up, and the way back to the clock. */
+.when.fill{grid-template-columns:1fr 1fr}
 .whenhint{font-size:11px;color:var(--muted);margin:0 0 12px}
 .whenhint.armed{color:var(--gold)}
 .covernote{font-size:12px;color:var(--muted);line-height:1.5;margin:0 0 12px}
@@ -372,6 +375,7 @@ footer{margin-top:30px;font-size:12px;color:var(--muted);line-height:1.6}
 #sheet input{width:100%;padding:15px 14px;font:inherit;font-size:17px;color:var(--paper);
   background:var(--ground);border:1px solid var(--line);border-radius:13px;margin:0 0 10px}
 #sheet input:focus{outline:none;border-color:var(--gold)}
+#sheet .tlab{font-size:12px;color:var(--muted);margin:0 0 5px}
 #sheet .go{width:100%;background:var(--gold);color:var(--onaccent);border-color:var(--gold);
   font-weight:600;padding:15px}
 #sheet .swatches{display:flex;gap:8px;margin:0 0 14px}
@@ -1005,7 +1009,7 @@ body.gon #ver{display:none}
 <h1><img src="./avatar.jpg" alt="" onerror="this.style.display='none'">
   <span>Mercy &middot; <span id="age"></span></span></h1>
 <div class="who" id="who"></div>
-<div id="ver">v113 <button onclick="forceUpdate()">Force update</button></div>
+<div id="ver">v115 <button onclick="forceUpdate()">Force update</button></div>
 <div class="sync off" id="sync"><span class="led"></span><span id="synctext">Local only</span></div>
 
 <div class="shab" id="shab"></div>
@@ -1069,6 +1073,9 @@ the gaps for you.</p>
 <div class="grid">
   <button class="b-acc" onclick="logAccident('Pee','Indoor Accident')">Pee<span class="hint">inside</span></button>
   <button class="b-acc" onclick="logPoop('Indoor Accident')">Poop<span class="hint">inside</span></button>
+</div>
+<div class="row">
+  <button class="small b-acc" onclick="logHomeAccident()">Found it when you got back<span class="hint">it happened while you were out, no time to give</span></button>
 </div>
 
 <h2>Accident in the crate</h2>
@@ -1819,7 +1826,14 @@ function timeUnknown(e){
 }
 /* Every list that prints a time goes through this, so an entry whose time nobody
    knows can never show a clock face that looks like something he watched happen. */
-function logTime(e){ return timeUnknown(e) ? 'overnight' : hhmm(new Date(e.ts)); }
+/* Two different unseen stretches now, and they must not both print "overnight": a
+   puddle found at 8:30 PM after three hours at shul is not the night, and a row that
+   says it is reads as a crate problem in a list somebody scans in ten seconds. */
+var UNSEEN_AWAY = 'found when you got back';
+function logTime(e){
+  if(!timeUnknown(e)) return hhmm(new Date(e.ts));
+  return String(e.notes).indexOf(UNSEEN_AWAY) >= 0 ? 'while you were out' : 'overnight';
+}
 
 /* Which window the day charts cover: 7, 14, or 0 for all of it. Up here rather than
    beside the chart code because render() reaches renderCharts() near the top of the
@@ -2135,6 +2149,32 @@ let offsetMin = 0;
    to minutes and reapplying it at tap time loses the seconds, so asking for 6:30 landed
    on 6:29:50. */
 let exactTs = null;
+/* ---- catching up on a day nobody logged ----------------------------------------
+   Written the night of 6 September, off a Shabbat that arrived as a paragraph once it
+   was out: three stools, all of them mushy, at about 5:15, 11:30 and 6; a crate
+   accident found on waking and an indoor one that happened somewhere inside the two
+   hours and twenty minutes he was at shul; seven or so pees outside, and a walk after
+   havdalah. He remembered all of it. None of it was loggable.
+
+   The chips are offsets from NOW and stop at two hours, and the time picker resets to
+   Now after every single tap, which is right when you have forgotten one thing and
+   wrong when you are writing up fifteen. So there is a mode where the picked time
+   SURVIVES the tap, and everything logged in it says in its notes that it was written
+   up from memory rather than watched. It is off by default and it says on screen, in
+   gold, that it is on: a mode that silently stamps 5 AM onto tonight's entries would be
+   worse than no mode at all. */
+let backfill = false;
+let backfilled = 0;
+var CATCHUP_NOTE = 'written up later, from memory';
+function armedTs(){ return exactTs !== null ? exactTs : Date.now()-offsetMin*60000; }
+/* Never at position 0 when something is already there: spot: and ground: ride after a
+   pipe, and timeUnknown() reads the first characters of notes. */
+function withCatchUp(notes){
+  notes = notes || '';
+  if(notes.indexOf(CATCHUP_NOTE) >= 0) return notes;
+  if(notes.charAt(0) === '|') return CATCHUP_NOTE + ' ' + notes;
+  return notes ? CATCHUP_NOTE + '. ' + notes : CATCHUP_NOTE;
+}
 /* BACKDATE_MIN comes from config.json (app.backdate_minutes). Labels are derived so
    config only ever holds numbers. */
 function offsetLabel(m){
@@ -2150,6 +2190,21 @@ function offsetLabel(m){
 function renderWhen(){
   const bar=document.getElementById('when');
   bar.innerHTML='';
+  bar.className = 'when' + (backfill ? ' fill' : '');
+  /* Catching up, the nine offsets are noise: 45m ago is not a thing you know about a
+     day you are reconstructing. The bar becomes the time itself and the way out. */
+  if(backfill){
+    const p=document.createElement('button');
+    p.className='on back';
+    p.textContent = exactTs === null ? 'Pick the time' : hhmm(new Date(exactTs));
+    p.onclick=pickTime;
+    bar.appendChild(p);
+    const d=document.createElement('button');
+    d.textContent='Done catching up';
+    d.onclick=endBackfill;
+    bar.appendChild(d);
+    return;
+  }
   BACKDATE_MIN.forEach(m=>{
     const b=document.createElement('button');
     b.textContent=offsetLabel(m);
@@ -2170,9 +2225,11 @@ function pickTime(){
   const now=new Date();
   const box=document.getElementById('sh-opts');
   document.getElementById('sh-title').textContent='What time was it?';
-  document.getElementById('sh-sub').textContent=
-    'Today only, and it cannot be in the future. Your next tap is logged at this time, '+
-    'then it goes back to Now.';
+  document.getElementById('sh-sub').textContent = backfill
+    ? 'Today only, and it cannot be in the future. It stays on this time until you move '
+      + 'it, so one trip can be two entries.'
+    : 'Today only, and it cannot be in the future. Your next tap is logged at this time, '
+      + 'then it goes back to Now.';
   box.innerHTML=''; box.style.display='block';
   const inp=document.createElement('input');
   inp.type='time'; inp.step=60;
@@ -2200,19 +2257,33 @@ function pickTime(){
 }
 function hint(){
   const h=document.getElementById('whenhint');
-  h.className = 'whenhint' + (offsetMin ? ' armed' : '');
+  h.className = 'whenhint' + (offsetMin || backfill ? ' armed' : '');
+  if(backfill){
+    h.innerHTML = exactTs === null
+      ? 'Catching up. Pick the time of the first thing you are writing up, then tap what '
+        + 'she did.'
+      : 'Catching up. Every tap logs at <b>'+hhmm(new Date(exactTs))+'</b> and the time '
+        + 'stays there, so the pee and the poop from one trip take one time. Tap the time '
+        + 'to move on to the next one.';
+    return;
+  }
   if(offsetMin===0){
     h.textContent='Every tap below stamps the real clock time and works out the gaps for you.';
   } else {
-    const t=new Date(exactTs !== null ? exactTs : Date.now()-offsetMin*60000);
+    const t=new Date(armedTs());
     h.innerHTML='Next tap logs at <b>'+hhmm(t)+'</b>, '+
       (offsetMin<60 ? offsetMin+' minutes' : offsetLabel(offsetMin))+
       ' ago. Resets to Now straight after.';
   }
 }
 function stamp(){
-  const t = exactTs !== null ? exactTs : Date.now()-offsetMin*60000;
-  offsetMin=0; exactTs=null; renderWhen(); hint();
+  const t = armedTs();
+  /* Catching up, the armed time SURVIVES the tap. One trip is usually two entries, and
+     re-picking 11:30 for the poop that came with the pee is where writing up a day gets
+     abandoned half done. Everything else still resets to Now, and that part must not be
+     lost: a backdate left armed by accident is a wrong stamp on the next thing logged. */
+  if(!backfill){ offsetMin=0; exactTs=null; }
+  renderWhen(); hint();
   return t;
 }
 
@@ -2225,7 +2296,7 @@ function logDuration(kind){
     value:m, label:m+'m',
     note: kind==='Walk' && m>walkCeiling() ? 'over her limit'
         : kind==='Play' && m>PLAY.max ? 'too long'
-        : 'ends '+hhmm(new Date(Date.now()-offsetMin*60000+m*60000))
+        : 'ends '+hhmm(new Date(armedTs()+m*60000))
   }));
   /* Deliberately tense-neutral. You might be logging a walk you just finished, one you
      are on, or one you are about to start. The entry is the same either way: an event
@@ -2502,7 +2573,14 @@ function drawTimer(){
 function recentDuplicate(event, where, ts){
   for(var i = events.length - 1; i >= 0; i--){
     var e = events[i];
+    /* events is sorted, so once one is more than the guard BEFORE ts, so is every
+       earlier one, and the walk can stop. */
     if(ts - e.ts > DUPE_GUARD_MS) break;
+    /* The other direction has to be skipped rather than matched. Writing up a missed
+       day enters rows out of order, and a signed comparison read tonight's 8:50 pee as
+       a duplicate of the 5:15 one being entered: the difference is negative, so it
+       never stopped the walk and the first row of the same kind won. */
+    if(e.ts - ts > DUPE_GUARD_MS) continue;
     if(e.event === event && e.where === where && e.by === me) return e;
   }
   return null;
@@ -2512,7 +2590,16 @@ function push(event, where, extra){
   if(!canWrite()){ refuse(); return null; }
   /* The armed backdate is read WITHOUT consuming it, so a refused tap does not silently
      throw away a "45m ago" he had just set. stamp() clears it; this must not. */
-  const ts = exactTs !== null ? exactTs : Date.now() - offsetMin*60000;
+  const ts = armedTs();
+  /* Nothing takes the stamp of the clock while a day that is over is being written up.
+     With no time picked yet the tap is refused and the picker opens, because the one
+     failure this mode could produce is a 5 AM pee quietly filed at 9 PM. */
+  if(backfill && exactTs === null){
+    toast('<b>Which time?</b><br>You are catching up, so this does not get stamped with '
+        + 'the clock. Give it the time it happened.', true);
+    pickTime();
+    return null;
+  }
   const dup = recentDuplicate(event, where, ts);
   if(dup){
     toast('<b>Already logged</b><br>' + event + ' at ' + hhmm(new Date(dup.ts)) +
@@ -2524,10 +2611,15 @@ function push(event, where, extra){
      drift apart in memory later. Only the TRIP: the Pee row is a result, and an indoor
      accident has no ground of its own. Silent when the setting is stale, which is the
      honest answer rather than a guess. */
-  if(OUTSIDE.indexOf(event) >= 0){
+  /* Ground is a sticky setting on this phone and it describes the ground NOW. Stamping
+     tonight's condition onto a trip being written up from this morning would invent the
+     one variable the field exists to measure, so a catch-up entry carries no ground at
+     all and the Why sheet reads it as not logged, which is the truth. */
+  if(OUTSIDE.indexOf(event) >= 0 && !backfill){
     const g = currentGround();
     if(g) e.notes = withGround(e.notes, g);
   }
+  if(backfill){ e.notes = withCatchUp(e.notes); backfilled++; }
   events.push(e);
   events.sort((a,b)=>a.ts-b.ts);
   /* Order matters. feedback() is cosmetic and goes LAST, so if it ever fails again it
@@ -2900,6 +2992,120 @@ var VOMIT_NOTE = {
   blood:'Vomit: BLOOD, or coffee ground material.', object:'Vomit: contained something that was not food.',
   '':'Vomit: not seen or not described.'
 };
+/* ---- an accident that happened while you were out ------------------------------
+   6 September: out of the door at 6:10 PM, back at 8:30 PM, and a puddle indoors that
+   happened at some point in those two hours and twenty minutes. Logged with the button
+   that was there, it takes the stamp of the moment he walked in and found it, which is
+   the one time it certainly did not happen, and that invented 8:30 PM then teaches the
+   riskiest-hour chart and the gap between pees as though somebody had stood and watched.
+
+   Exactly the problem a crate accident found in the morning already has, so it gets
+   exactly the same answer: no time, a midpoint so the row can still be ordered against
+   everything else, and out of every figure that reads a clock. The window comes from the
+   away window when today has one and is asked for when it does not, because those two
+   times are the only part of this anybody actually knows.
+
+   It still asks where it landed. He knew that at 8:30 and will not in a week. */
+function todayAtHHMM(v){
+  const parts = String(v).split(':');
+  const d = new Date();
+  d.setHours(+parts[0], +parts[1], 0, 0);
+  return d.getTime();
+}
+function askWindow(cb){
+  const now = new Date();
+  const a = awayFor();
+  const box = document.getElementById('sh-opts');
+  document.getElementById('sh-title').textContent = 'When were you out?';
+  document.getElementById('sh-sub').textContent =
+    'The two times you do know. The entry goes in the middle of them and says on its face '
+    + 'that nobody saw it.';
+  box.innerHTML = ''; box.style.display = 'block';
+  const mk = function(label, val){
+    const l = document.createElement('div');
+    l.className = 'tlab'; l.textContent = label;
+    box.appendChild(l);
+    const i = document.createElement('input');
+    i.type = 'time'; i.step = 60; i.value = val;
+    box.appendChild(i);
+    return i;
+  };
+  const f = mk('You left at', a ? a.from : '');
+  const t = mk('You got back at', pad(now.getHours()) + ':' + pad(now.getMinutes()));
+  const go = document.createElement('button');
+  go.className = 'go'; go.textContent = 'Use these times';
+  go.onclick = function(){
+    if(!isHHMM(f.value) || !isHHMM(t.value)){
+      toast('Need both a leaving time and a back time.', true); return;
+    }
+    if(toMins(t.value) <= toMins(f.value)){
+      toast('The time you got back has to be after the time you left.', true); return;
+    }
+    const end = todayAtHHMM(t.value);
+    if(end > Date.now()){
+      toast('That is later today. Give the time you actually got back.', true); return;
+    }
+    closeSheet();
+    cb({ start: todayAtHHMM(f.value), end: end });
+  };
+  box.appendChild(go);
+  document.getElementById('veil').classList.add('on');
+  document.getElementById('sheet').classList.add('on');
+  setTimeout(function(){ f.focus(); }, 260);
+}
+function logHomeAccident(){
+  if(!me){ openJoin(true); return; }
+  if(!canWrite()){ refuse(); return; }
+  /* An armed backdate means nothing here, and must not be left armed for the next tap
+     either, so it is cleared exactly as any other log would clear it. */
+  stamp();
+  askWindow(function(w){
+    const mid = w.start + Math.round((w.end - w.start) / 2);
+    const span = hhmm(new Date(w.start)) + ' and ' + hhmm(new Date(w.end));
+    const note = UNKNOWN_TIME + '. Indoor accident, ' + UNSEEN_AWAY + '. Nobody was in for '
+      + 'it, so nothing about the timing was observed. The stamp is the midpoint of the '
+      + 'stretch you were out, between ' + span + ', derived so the entry can be ordered, '
+      + 'not seen.';
+    /* push() stamps the clock and then runs feedback(), whose "only 20 minutes after she
+       was outside" line is the exact false reading this exists to prevent. So the entry
+       is built and queued directly, the way the overnight one is. */
+    function put(event, spot, extra){
+      const e = Object.assign({ id: uid(), ts: mid, by: me, event: event,
+                                where: 'Indoor Accident',
+                                notes: withSpot(note, spot) }, extra || {});
+      events.push(e); events.sort(function(a, b){ return a.ts - b.ts; });
+      save(); render(); queue(e);
+    }
+    function done(){
+      toast('<b>Logged with no time</b><br>It sits between ' + span + ' in the log, and '
+        + 'stays out of her hour and gap figures so it cannot teach them a time nobody '
+        + 'knows.', true);
+    }
+    setTimeout(function(){
+      openSheet('Found it when you got back',
+        'You were out, so there is no time on this and the app will not invent one. It '
+        + 'goes in between ' + span + ', the middle of the stretch nobody was here.',
+        [{value:'pee',  label:'Pee',  note:'a puddle, no stool'},
+         {value:'poop', label:'Poop', note:'stool only'},
+         {value:'both', label:'Both', note:'she did both'}],
+        function(v){
+          setTimeout(function(){
+            askSpot(function(sp){
+              if(v === 'pee' || v === 'both') put('Pee', sp);
+              if(v === 'poop' || v === 'both'){
+                setTimeout(function(){ openSheet('Stool score',
+                  'A stool found hours later has dried out and reads firmer than it was, '
+                  + 'so score it a rung softer than it looks, or skip it. Two days running '
+                  + 'at 5 or above is a vet question, not a training one.',
+                  STOOL, function(sc){ put('Poop', sp, sc ? {stool:sc} : {}); done(); }); }, 240);
+              } else done();
+            });
+          }, 240);
+        });
+    }, 240);
+  });
+}
+
 /* ---- barking ------------------------------------------------------------------
    Logged as a SIGNAL, not as a complaint. On 31 August she barked for five to ten
    minutes and then peed in the crate at 78 per cent of her hold, and it was read at the
@@ -3595,6 +3801,35 @@ function shabbatNext(at){
   }
   return null;
 }
+/* ---- the hole Shabbat leaves ---------------------------------------------------
+   The banner says "Tap Catch up afterwards" while Shabbat is running, which is the one
+   stretch of the week he cannot read it. The moment it is useful is havdalah, and at
+   havdalah the banner went blank and Catch up was three taps away at the bottom of
+   Trends, under Data, next to Clear this phone.
+
+   So the banner has an afterwards. It counts what is logged INSIDE the window rather
+   than assuming: a Shabbat he wrote up already, or one a helper logged through, is not
+   a hole and does not get nagged about. It stops after CATCHUP_WINDOW_H because a
+   prompt to remember Saturday morning that is still there on Monday is asking him to
+   make something up, and the whole point of the flow it opens is that he is not. */
+var CATCHUP_WINDOW_H = 24;
+function shabbatJustEnded(at){
+  var t = (at || new Date()).getTime();
+  for(var i = SHABBAT.length - 1; i >= 0; i--){
+    var b = zdt(SHABBAT[i][1]);
+    if(!b) continue;
+    if(b.getTime() > t) continue;              /* still to come, or running now */
+    /* The table is in date order, so the first window that has ended is the last one
+       there was. Nothing older than it can be the one he has just come out of. */
+    return (t - b.getTime() <= CATCHUP_WINDOW_H*3600000) ? shabWin(SHABBAT[i]) : null;
+  }
+  return null;
+}
+function loggedInWindow(w){
+  return events.filter(function(e){
+    return isLogEvent(e) && e.ts >= w.start.getTime() && e.ts <= w.end.getTime();
+  }).length;
+}
 function noLogDay(dt){
   const d = dt || new Date();
   const noon = new Date(d.getFullYear(), d.getMonth(), d.getDate(), 12, 0).getTime();
@@ -3625,7 +3860,48 @@ function dayTime(d){
   return (same ? '' : nm + ' ') + hhmm(d);
 }
 
+/* Two different days end with nothing in the log, and until now they got the same
+   answer. The day you cannot account for wants a count spread across the gap and marked
+   as a guess, which is what this always did. The day you can wants writing down: the
+   times, which stool was which, which accident was in the crate and which was on the
+   floor, and the difference between a pee outside and a pee indoors. Counting that day
+   throws away everything he actually knows about it and replaces it with rows nobody
+   observed. So the first question is which of the two days it was. */
 function catchUp(){
+  if(!me){ openJoin(true); return; }
+  if(!canWrite()){ refuse(); return; }
+  openSheet('Catch up',
+    'A stretch with nothing in the log: Shabbat, yom tov, or a phone left in a drawer.',
+    [{value:'real', label:'I remember the day', accent:true,
+      note:'write it up entry by entry, at the times it happened'},
+     {value:'rough', label:'Only roughly how many',
+      note:'a count, spread evenly across the gap and marked as an estimate'}],
+    function(v){
+      if(v === 'real'){ startBackfill(); return; }
+      setTimeout(countUp, 240);
+    });
+  document.getElementById('sh-opts').classList.add('stack');
+}
+function startBackfill(){
+  backfill = true; backfilled = 0; exactTs = null; offsetMin = 0;
+  showTab('log');
+  /* The whole screen, not just the bar: the Shabbat banner is what sent him here and it
+     has to stop telling him to start something he is now in the middle of. */
+  render();
+  /* The 240ms every chained sheet in this file waits, so the first has finished sliding
+     out before the picker slides in. */
+  setTimeout(pickTime, 240);
+}
+function endBackfill(){
+  const n = backfilled;
+  backfill = false; backfilled = 0; exactTs = null; offsetMin = 0;
+  render();
+  if(!n){ toast('Back to the clock. Nothing was written up.'); return; }
+  toast('<b>' + n + ' ' + (n === 1 ? 'entry' : 'entries') + ' written up</b><br>They sit in '
+      + 'the log at the times you gave, each one marked as written from memory rather '
+      + 'than watched. Back to stamping the clock.');
+}
+function countUp(){
   openSheet('Catch up',
     'Roughly how many times did she go outside since you last logged? An estimate is fine, it is marked as one.',
     [4,6,8,10,12].map(n=>({value:n,label:String(n),note:'outings'})),
@@ -3662,6 +3938,20 @@ function shabbatBanner(){
       '<br>Out at <strong>'+dayTime(now.end)+'</strong>, in '+longGap(now.end-Date.now())+'.'+
       '<br>The app is quiet. Use the printed card. Out before you go anywhere, out the '+
       'moment you are back. Tap Catch up afterwards.';
+    return;
+  }
+  /* Not while the catch-up mode is already running: the when bar is sitting there in
+     gold saying so, and a banner telling him to start what he is in the middle of is
+     noise. It comes back by itself if he stops with the window still empty. */
+  const over = backfill ? null : shabbatJustEnded();
+  if(over && !loggedInWindow(over)){
+    const hrs = Math.round((over.end - over.start)/3600000);
+    el.className='shab on pre';
+    el.innerHTML='<b>'+over.name+' is over</b>'+
+      '<br><strong>'+hrs+' hours</strong> with nothing in the log. Candles '+
+      dayTime(over.start)+', out again '+dayTime(over.end)+'. Write it up now, while you '+
+      'still have the times, the stools and which accident was where.'+
+      '<br><button onclick="catchUp()">Write up '+over.name+'</button>';
     return;
   }
   if(nx && nx.start-Date.now() <= PREP_LEAD_H*3600000){
