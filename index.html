@@ -1009,7 +1009,7 @@ body.gon #ver{display:none}
 <h1><img src="./avatar.jpg" alt="" onerror="this.style.display='none'">
   <span>Mercy &middot; <span id="age"></span></span></h1>
 <div class="who" id="who"></div>
-<div id="ver">v114 <button onclick="forceUpdate()">Force update</button></div>
+<div id="ver">v115 <button onclick="forceUpdate()">Force update</button></div>
 <div class="sync off" id="sync"><span class="led"></span><span id="synctext">Local only</span></div>
 
 <div class="shab" id="shab"></div>
@@ -3801,6 +3801,35 @@ function shabbatNext(at){
   }
   return null;
 }
+/* ---- the hole Shabbat leaves ---------------------------------------------------
+   The banner says "Tap Catch up afterwards" while Shabbat is running, which is the one
+   stretch of the week he cannot read it. The moment it is useful is havdalah, and at
+   havdalah the banner went blank and Catch up was three taps away at the bottom of
+   Trends, under Data, next to Clear this phone.
+
+   So the banner has an afterwards. It counts what is logged INSIDE the window rather
+   than assuming: a Shabbat he wrote up already, or one a helper logged through, is not
+   a hole and does not get nagged about. It stops after CATCHUP_WINDOW_H because a
+   prompt to remember Saturday morning that is still there on Monday is asking him to
+   make something up, and the whole point of the flow it opens is that he is not. */
+var CATCHUP_WINDOW_H = 24;
+function shabbatJustEnded(at){
+  var t = (at || new Date()).getTime();
+  for(var i = SHABBAT.length - 1; i >= 0; i--){
+    var b = zdt(SHABBAT[i][1]);
+    if(!b) continue;
+    if(b.getTime() > t) continue;              /* still to come, or running now */
+    /* The table is in date order, so the first window that has ended is the last one
+       there was. Nothing older than it can be the one he has just come out of. */
+    return (t - b.getTime() <= CATCHUP_WINDOW_H*3600000) ? shabWin(SHABBAT[i]) : null;
+  }
+  return null;
+}
+function loggedInWindow(w){
+  return events.filter(function(e){
+    return isLogEvent(e) && e.ts >= w.start.getTime() && e.ts <= w.end.getTime();
+  }).length;
+}
 function noLogDay(dt){
   const d = dt || new Date();
   const noon = new Date(d.getFullYear(), d.getMonth(), d.getDate(), 12, 0).getTime();
@@ -3856,7 +3885,9 @@ function catchUp(){
 function startBackfill(){
   backfill = true; backfilled = 0; exactTs = null; offsetMin = 0;
   showTab('log');
-  renderWhen(); hint();
+  /* The whole screen, not just the bar: the Shabbat banner is what sent him here and it
+     has to stop telling him to start something he is now in the middle of. */
+  render();
   /* The 240ms every chained sheet in this file waits, so the first has finished sliding
      out before the picker slides in. */
   setTimeout(pickTime, 240);
@@ -3864,7 +3895,7 @@ function startBackfill(){
 function endBackfill(){
   const n = backfilled;
   backfill = false; backfilled = 0; exactTs = null; offsetMin = 0;
-  renderWhen(); hint();
+  render();
   if(!n){ toast('Back to the clock. Nothing was written up.'); return; }
   toast('<b>' + n + ' ' + (n === 1 ? 'entry' : 'entries') + ' written up</b><br>They sit in '
       + 'the log at the times you gave, each one marked as written from memory rather '
@@ -3907,6 +3938,20 @@ function shabbatBanner(){
       '<br>Out at <strong>'+dayTime(now.end)+'</strong>, in '+longGap(now.end-Date.now())+'.'+
       '<br>The app is quiet. Use the printed card. Out before you go anywhere, out the '+
       'moment you are back. Tap Catch up afterwards.';
+    return;
+  }
+  /* Not while the catch-up mode is already running: the when bar is sitting there in
+     gold saying so, and a banner telling him to start what he is in the middle of is
+     noise. It comes back by itself if he stops with the window still empty. */
+  const over = backfill ? null : shabbatJustEnded();
+  if(over && !loggedInWindow(over)){
+    const hrs = Math.round((over.end - over.start)/3600000);
+    el.className='shab on pre';
+    el.innerHTML='<b>'+over.name+' is over</b>'+
+      '<br><strong>'+hrs+' hours</strong> with nothing in the log. Candles '+
+      dayTime(over.start)+', out again '+dayTime(over.end)+'. Write it up now, while you '+
+      'still have the times, the stools and which accident was where.'+
+      '<br><button onclick="catchUp()">Write up '+over.name+'</button>';
     return;
   }
   if(nx && nx.start-Date.now() <= PREP_LEAD_H*3600000){
